@@ -1,15 +1,1247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Circles | Shailesh Classes</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circles — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+#angleHandle{cursor:grab;}
+#angleHandle:active{cursor:grabbing;}
+
+/* ===================== DIAGRAM (interactive labelled) ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:center;}
+.circ-legend{flex:1; min-width:220px; display:flex; flex-direction:column; gap:.55rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none;}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+
+/* ===================== THEOREM CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.92rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== COMPLEMENTARY / PAIRS ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.25rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:1rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formula){display:none !important;}
+  #formula{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
 </head>
 <body>
 
-<h1>Circles Chapter</h1>
+<div id="readbar"></div>
 
-<p>This chapter is under development.</p>
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">⊙ Circ<span>les</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
 
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="parts" href="#parts"><span class="dot"></span>Parts of a Circle</a>
+    <a class="navlink" data-target="chords" href="#chords"><span class="dot"></span>Chord Properties</a>
+    <a class="navlink" data-target="angles" href="#angles"><span class="dot"></span>Angle Properties</a>
+    <a class="navlink" data-target="tangents" href="#tangents"><span class="dot"></span>Tangent Properties</a>
+    <a class="navlink" data-target="cyclic" href="#cyclic"><span class="dot"></span>Cyclic Quadrilaterals</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formula" href="#formula"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Circles</div>
+        <h1>The geometry of<br>circles &amp; tangents.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">One circle, one fixed chord, and a point that refuses to break the rule. Drag P anywhere along the outer arc — the angle it sees never changes, and it's always exactly half of the angle at the center.</p>
+        <div class="hero-cta">
+          <a href="#parts" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <svg id="heroSvg" viewBox="0 0 320 300" style="width:100%; height:auto;">
+          <circle id="heroCircle" cx="160" cy="150" r="110" fill="none" stroke="#E1D9C6" stroke-width="2"/>
+          <line id="lineOA" x1="160" y1="150" x2="89.3" y2="234.3" stroke="#C97A2B" stroke-width="2"/>
+          <line id="lineOB" x1="160" y1="150" x2="230.7" y2="234.3" stroke="#C97A2B" stroke-width="2"/>
+          <line id="chordAB" x1="89.3" y1="234.3" x2="230.7" y2="234.3" stroke="#2E7D5B" stroke-width="3"/>
+          <line id="linePA" x1="160" y1="40" x2="89.3" y2="234.3" stroke="#1B2A4A" stroke-width="2.5"/>
+          <line id="linePB" x1="160" y1="40" x2="230.7" y2="234.3" stroke="#1B2A4A" stroke-width="2.5"/>
+          <circle cx="160" cy="150" r="3.5" fill="#1B2A4A"/>
+          <circle cx="89.3" cy="234.3" r="4" fill="#2E7D5B"/>
+          <circle cx="230.7" cy="234.3" r="4" fill="#2E7D5B"/>
+          <circle id="angleHandle" cx="160" cy="40" r="10" fill="#C97A2B" stroke="#fff" stroke-width="2"/>
+          <text x="167" y="146" font-family="IBM Plex Mono" font-size="12" fill="#1B2A4A">O</text>
+          <text x="70" y="252" font-family="IBM Plex Mono" font-size="12" fill="#2E7D5B" font-weight="600">A</text>
+          <text x="236" y="252" font-family="IBM Plex Mono" font-size="12" fill="#2E7D5B" font-weight="600">B</text>
+          <text id="ptPLabel" x="167" y="34" font-family="IBM Plex Mono" font-size="12" fill="#C97A2B" font-weight="600">P</text>
+        </svg>
+        <div class="instrument-readout">
+          <div>∠APB <b id="rInsc">40°</b></div>
+          <div>∠AOB <b id="rCent">80°</b></div>
+          <div>Ratio <b id="rRatio">2.00</b></div>
+          <div>Segment <b id="rSeg">Major arc</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is a Circle?</h2>
+        <p class="lede">A circle is the set of all points in a plane that are the same fixed distance — the radius — from a fixed point, the center. Nearly every result in this chapter is really a statement about angles: how they relate to arcs, chords, and tangents, no matter where a point sits on the circle.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Circle theorems let you find unknown angles and lengths without measuring anything directly — a single fact, like a central angle or one tangent length, unlocks every other angle or length connected to it. This "one clue, whole picture" idea is what makes circle geometry so useful in construction, design, and exam problems alike.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Wheels, gears &amp; rotating machinery</li>
+              <li>Arches, domes &amp; architecture</li>
+              <li>Satellite &amp; planetary orbits</li>
+              <li>Lenses &amp; optical design</li>
+              <li>Road curves &amp; roundabout design</li>
+              <li>GPS triangulation &amp; navigation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="9"/><path d="M12 3 V21 M3 12 H21"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Wheels &amp; Gears</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 21 V12 A8 8 0 0 1 20 12 V21"/><path d="M4 21 H20"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Architecture</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="9" ry="4"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Orbits</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="9" cy="12" r="7"/><circle cx="15" cy="12" r="7"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Optics</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ Basic angle facts — angles on a line, angles in a triangle sum to 180°</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ The <b>Pythagoras Theorem</b>: \( a^2+b^2=c^2 \)</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ What a line, ray, and perpendicular are</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. PARTS OF A CIRCLE ===================== -->
+    <section id="parts">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Parts of a Circle</h2>
+        <p class="lede">Every theorem in this chapter is built from these parts. Hover a label below, or the diagram itself, to see exactly which piece is which — precise vocabulary is half the battle in circle geometry.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <svg id="partsSvg" viewBox="0 0 360 300" style="flex:1; min-width:280px; width:100%; max-width:400px;">
+            <circle cx="180" cy="150" r="100" fill="#FAF8F2" stroke="#1B2A4A" stroke-width="2"/>
+            <path id="segmentFill" d="M93.4,100 A100,100 0 0 1 274,115.8 Z" fill="#DDEFE5" opacity="1"/>
+            <path id="sectorFill" d="M180,150 L86,184.2 A100,100 0 0 1 162.6,248.5 Z" fill="#F3DDBB" opacity="1"/>
+            <path id="arcHighlight" d="M86,184.2 A100,100 0 0 0 274,184.2" fill="none" stroke="#B4453C" stroke-width="6" stroke-linecap="round"/>
+            <line id="diameterLine" x1="80" y1="150" x2="280" y2="150" stroke="#2E7D5B" stroke-width="3"/>
+            <line id="radiusLine" x1="180" y1="150" x2="230" y2="63.4" stroke="#3D5A80" stroke-width="3"/>
+            <line id="chordLine" x1="93.4" y1="100" x2="274" y2="115.8" stroke="#C97A2B" stroke-width="3"/>
+            <line id="tangentLine" x1="110" y1="250" x2="250" y2="250" stroke="#1B2A4A" stroke-width="3"/>
+            <circle cx="180" cy="150" r="3.5" fill="#1B2A4A"/>
+            <circle cx="180" cy="250" r="3.5" fill="#1B2A4A"/>
+            <text x="186" y="146" font-family="IBM Plex Mono" font-size="12" fill="#1B2A4A">O</text>
+            <text x="205" y="60" font-family="IBM Plex Mono" font-size="12" fill="#3D5A80" font-weight="600">Radius</text>
+            <text x="85" y="167" font-family="IBM Plex Mono" font-size="12" fill="#2E7D5B" font-weight="600">Diameter</text>
+            <text x="155" y="90" font-family="IBM Plex Mono" font-size="12" fill="#C97A2B" font-weight="600">Chord</text>
+            <text x="160" y="272" font-family="IBM Plex Mono" font-size="12" fill="#1B2A4A" font-weight="600">Tangent</text>
+            <text x="160" y="205" font-family="IBM Plex Mono" font-size="11" fill="#A15E1B" font-weight="600">Sector</text>
+            <text x="163" y="78" font-family="IBM Plex Mono" font-size="11" fill="#2E7D5B" font-weight="600">Segment</text>
+            <text x="150" y="262" font-family="IBM Plex Mono" font-size="11" fill="#B4453C" font-weight="600">Arc</text>
+          </svg>
+          <div class="circ-legend">
+            <div class="circ-chip" data-target="radiusLine" style="border-color:#3D5A80;"><span class="sw" style="background:#3D5A80;"></span> Radius — a segment from the center to any point on the circle.</div>
+            <div class="circ-chip" data-target="diameterLine" style="border-color:#2E7D5B;"><span class="sw" style="background:#2E7D5B;"></span> Diameter — a chord through the center; the longest chord, equal to 2×radius.</div>
+            <div class="circ-chip" data-target="chordLine" style="border-color:#C97A2B;"><span class="sw" style="background:#C97A2B;"></span> Chord — a segment joining any two points on the circle.</div>
+            <div class="circ-chip" data-target="arcHighlight" style="border-color:#B4453C;"><span class="sw" style="background:#B4453C;"></span> Arc — a part of the circumference, cut off by two points.</div>
+            <div class="circ-chip" data-target="sectorFill" style="border-color:#A15E1B;"><span class="sw" style="background:#F3DDBB;"></span> Sector — the region between two radii and the arc between them.</div>
+            <div class="circ-chip" data-target="segmentFill" style="border-color:#2E7D5B;"><span class="sw" style="background:#DDEFE5;"></span> Segment — the region between a chord and its arc.</div>
+            <div class="circ-chip" data-target="tangentLine" style="border-color:#1B2A4A;"><span class="sw" style="background:#1B2A4A;"></span> Tangent — a line touching the circle at exactly one point.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. CHORD PROPERTIES ===================== -->
+    <section id="chords">
+      <div class="section-head">
+        <div class="eyebrow">03 · Chord Theorems</div>
+        <h2>Chord Properties</h2>
+        <p class="lede">Four facts govern how chords behave. Learn "perpendicular bisects the chord" first — it is the single most useful line you can draw in a chord problem.</p>
+      </div>
+      <div class="ratio-grid" id="chordGrid"></div>
+    </section>
+
+    <!-- ===================== 4. ANGLE PROPERTIES ===================== -->
+    <section id="angles">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Angle Properties</h2>
+        <p class="lede">These five theorems cover almost every angle question you'll be asked. The Angle at the Center theorem is the parent result — the other four follow from it as special cases or direct consequences.</p>
+      </div>
+      <div class="ratio-grid" id="angleGrid"></div>
+    </section>
+
+    <!-- ===================== 5. TANGENT PROPERTIES ===================== -->
+    <section id="tangents">
+      <div class="section-head">
+        <div class="eyebrow">05 · Tangent Theorems</div>
+        <h2>Tangent Properties</h2>
+        <p class="lede">Tangent problems almost always start the same way: draw the radius to the point of contact and mark the right angle it creates.</p>
+      </div>
+      <div class="ratio-grid" id="tangentGrid"></div>
+    </section>
+
+    <!-- ===================== 6. CYCLIC QUADRILATERALS ===================== -->
+    <section id="cyclic">
+      <div class="section-head">
+        <div class="eyebrow">06 · Identity</div>
+        <h2>Cyclic Quadrilaterals</h2>
+        <p class="lede">A quadrilateral is cyclic when all four vertices lie on one circle. Whenever that happens, each pair of opposite angles is supplementary — they always add to 180°.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="cyclicLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>Drag the slider to change ∠A of cyclic quadrilateral ABCD. Watch ∠C update instantly so the pair always sums to 180°.</p>
+            <input type="range" min="30" max="150" value="80" id="cyclicSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>∠A = <b id="cyclicA">80°</b></span>
+              <span>∠C = <b id="cyclicC">100°</b></span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="cyclicSum">∠A + ∠C = 80° + 100° = 180°</span> — always true for opposite angles of a cyclic quadrilateral.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 7. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">07 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 8. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">08 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across parts, chords, angles, tangents, and cyclic quadrilaterals — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">09 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 10. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">10 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 11. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">11 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">∠ at center = 2 × ∠ at circumference</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">∠ in a semicircle = 90°</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Angles in same segment are equal</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Cyclic quad: opposite ∠s sum to 180°</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Tangent Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Tangent ⟂ radius at point of contact</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Two tangents from a point are equal</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Tangent-chord ∠ = ∠ in alternate segment</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Theorems (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always draw the radius to the point of tangency — it creates a right angle you can use immediately.</li>
+              <li>Check whether an angle is at the center or the circumference before applying the 2:1 rule.</li>
+              <li>In cyclic quadrilateral problems, only opposite angles are supplementary — adjacent angles are not, in general.</li>
+              <li>Remember that two tangents from the same external point are always equal, before reaching for trigonometry.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formula">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Circles — Theorem Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Chord Theorems</h5>
+            <p>Equal chords → equal central angles</p><p>⟂ from center bisects the chord</p><p>Equal chords → equidistant from center</p><p>AE×EB = CE×ED (intersecting chords)</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Angle Theorems</h5>
+            <p>∠ at center = 2 × ∠ at circumference</p><p>Angles in same segment are equal</p><p>∠ in a semicircle = 90°</p>
+            <p>Cyclic quad: opposite ∠s sum to 180°</p><p>Exterior ∠ = interior opposite ∠</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Tangent Theorems</h5>
+            <p>Tangent ⟂ radius at point of contact</p><p>Tangents from a point are equal</p><p>Tangent-chord ∠ = ∠ in alternate segment</p>
+            <p>Tangential quad: AB+CD = BC+AD</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const CHORD_THEOREMS=[
+ {name:'Equal Chords, Equal Angles', color:'#3D5A80', statement:'Equal chords of a circle subtend equal angles at the center.', trick:'Works both ways — equal central angles also mean equal chords (the converse holds too).', ex:'If AB = CD, then ∠AOB = ∠COD.'},
+ {name:'Perpendicular Bisects the Chord', color:'#2E7D5B', statement:'The perpendicular drawn from the center of a circle to a chord bisects the chord.', trick:'This is the fastest way to find half a chord\'s length using Pythagoras.', ex:'If OM ⟂ AB, then AM = MB.'},
+ {name:'Equal Chords, Equal Distance', color:'#C97A2B', statement:'Equal chords of a circle are equidistant from the center.', trick:'"Distance" here means the length of the perpendicular from the center to the chord.', ex:'If AB = CD = 10 cm, both are the same distance from O.'},
+ {name:'Intersecting Chords', color:'#3D5A80', statement:'If two chords AB and CD intersect at a point E inside a circle, then AE × EB = CE × ED.', trick:'This is a special case of the Power of a Point theorem.', ex:'If AE=6, EB=4, CE=8, then ED = 24/8 = 3.'}
+];
+const ANGLE_THEOREMS=[
+ {name:'Angle at the Center', color:'#C97A2B', statement:'The angle subtended by an arc at the center is twice the angle it subtends at any point on the remaining (major) arc.', trick:'Remember the ratio 2 : 1 — the center is always double.', ex:'∠AOB=100° ⟹ ∠APB=50°.'},
+ {name:'Angles in the Same Segment', color:'#3D5A80', statement:'Angles subtended by the same arc at points in the same segment of a circle are equal.', trick:'No matter where P sits in that segment, the angle stays the same.', ex:'∠APB = ∠AQB, if P and Q lie in the same segment.'},
+ {name:'Angle in a Semicircle', color:'#2E7D5B', statement:'The angle subtended by a diameter at any point on the circle is a right angle (90°).', trick:'This is just the Angle at the Center theorem with a 180° central angle.', ex:'If AB is a diameter, ∠ACB = 90° for any C on the circle.'},
+ {name:'Cyclic Quadrilateral', color:'#C97A2B', statement:'The sum of either pair of opposite angles of a cyclic quadrilateral is 180°.', trick:'A quadrilateral is cyclic only if all four vertices lie on one circle.', ex:'∠A=110° ⟹ ∠C=70°.'},
+ {name:'Exterior Angle of Cyclic Quadrilateral', color:'#3D5A80', statement:'If a side of a cyclic quadrilateral is produced, the exterior angle formed equals the interior opposite angle.', trick:'A quick shortcut so you don\'t always need the 180° subtraction.', ex:'Exterior ∠CBE=80° ⟹ interior opposite ∠ADC=80°.'}
+];
+const TANGENT_THEOREMS=[
+ {name:'Tangent ⟂ Radius', color:'#2E7D5B', statement:'The tangent at any point of a circle is perpendicular to the radius through the point of contact.', trick:'Always draw this radius first in any tangent problem — it usually creates a right triangle.', ex:'If PT is tangent at T, ∠OTP=90°.'},
+ {name:'Two Tangents, Equal Length', color:'#C97A2B', statement:'The lengths of the two tangents drawn from an external point to a circle are equal.', trick:'Combined with the radius, this gives a pair of congruent right triangles.', ex:'If PA and PB are tangents from P, PA = PB.'},
+ {name:'Alternate Segment Theorem', color:'#3D5A80', statement:'The angle between a tangent and a chord equals the angle subtended by the chord in the alternate segment.', trick:'"Alternate" means the segment on the other side of the chord from the angle.', ex:'∠PTQ=55° ⟹ ∠TRQ=55° (R in the alternate segment).'},
+ {name:'Tangential Quadrilateral', color:'#2E7D5B', statement:'If a circle touches all four sides of a quadrilateral, the sums of opposite sides are equal: AB + CD = BC + AD.', trick:'This follows directly from equal tangent lengths at each vertex.', ex:'AB=6, BC=7, CD=5 ⟹ AD = 6+5−7 = 4.'}
+];
+const CYCLIC_PAIRS=[
+ ['∠A + ∠C','180°'],['∠B + ∠D','180°'],['Exterior angle at A','Interior opposite ∠C'],['∠A + ∠B + ∠C + ∠D','360°']
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'A chord AB subtends an angle of 70° at the center O. Find the angle subtended by AB at a point P on the major arc.',steps:['Central angle ∠AOB = 70°.','By the Angle at the Center theorem, the angle at the circumference is half the central angle.','∠APB = 70°/2 = 35°.'],ans:'35°'},
+ {level:'easy',q:'AB is a diameter of a circle and C is a point on the circle. Find ∠ACB.',steps:['AB is a diameter, so it subtends a straight (180°) angle at the center.','By the Angle in a Semicircle theorem, the angle at the circumference is half of 180°.','∠ACB = 90°.'],ans:'90°'},
+ {level:'easy',q:'ABCD is a cyclic quadrilateral with ∠A = 110°. Find ∠C.',steps:['Opposite angles of a cyclic quadrilateral are supplementary.','∠A + ∠C = 180°.','∠C = 180° − 110° = 70°.'],ans:'70°'},
+ {level:'easy',q:'In cyclic quadrilateral ABCD, side AB is produced to E. The exterior angle ∠CBE = 80°. Find the interior opposite angle ∠ADC.',steps:['By the Exterior Angle of a Cyclic Quadrilateral theorem, the exterior angle equals the interior opposite angle.','∠ADC = ∠CBE.','∠ADC = 80°.'],ans:'80°'},
+ {level:'easy',q:'Two chords AB and CD of a circle subtend equal angles at the center. What can you conclude about AB and CD?',steps:['Equal central angles correspond to equal chords (Equal Chords, Equal Angles theorem, converse direction).','So AB and CD must be equal in length.'],ans:'AB = CD'},
+ {level:'easy',q:'A tangent PT touches a circle at T, with center O. Find ∠OTP.',steps:['The tangent at any point is perpendicular to the radius through that point.','OT is the radius to the point of contact T.','∠OTP = 90°.'],ans:'90°'},
+ {level:'medium',q:'A chord AB subtends ∠AOB = 100° at the center O. Find the angle subtended by AB at a point Q on the minor arc.',steps:['A point on the minor arc lies in the segment cut off by the major arc, so it "sees" the reflex central angle.','Reflex ∠AOB = 360° − 100° = 260°.','∠AQB = 260°/2 = 130°.'],ans:'130°'},
+ {level:'medium',q:'Two equal chords AB and CD of a circle, each 10 cm long, lie in a circle of radius 13 cm. Find the distance of each chord from the center.',steps:['A perpendicular from the center bisects the chord, so half the chord = 5 cm.','By Pythagoras: distance² = radius² − (half-chord)² = 13² − 5² = 169 − 25 = 144.','Distance = √144 = 12 cm.'],ans:'12 cm'},
+ {level:'medium',q:'In cyclic quadrilateral ABCD, ∠A : ∠C = 2 : 3. Find ∠A and ∠C.',steps:['∠A + ∠C = 180° (opposite angles of a cyclic quadrilateral).','Let ∠A = 2x, ∠C = 3x, so 2x + 3x = 180° ⟹ 5x = 180° ⟹ x = 36°.','∠A = 72°, ∠C = 108°.'],ans:'∠A = 72°, ∠C = 108°'},
+ {level:'medium',q:'PA and PB are tangents from an external point P to a circle with center O, and ∠APB = 60°. Find ∠AOB.',steps:['∠OAP = ∠OBP = 90° (tangent ⟂ radius).','Angles of quadrilateral OAPB sum to 360°.','∠AOB = 360° − 90° − 90° − 60° = 120°.'],ans:'120°'},
+ {level:'medium',q:'PA and PB are tangents to a circle from an external point P, and ∠AOB = 110° (O is the center). Find ∠APB.',steps:['∠OAP = ∠OBP = 90° (tangent ⟂ radius).','Angles of quadrilateral OAPB sum to 360°.','∠APB = 360° − 90° − 90° − 110° = 70°.'],ans:'70°'},
+ {level:'medium',q:'A tangent to a circle at point T makes an angle of 50° with chord TQ. Find the angle subtended by TQ at a point R on the alternate segment.',steps:['By the Alternate Segment theorem, the tangent-chord angle equals the angle in the alternate segment.','∠TRQ = tangent-chord angle.','∠TRQ = 50°.'],ans:'50°'},
+ {level:'medium',q:'Find the length of a tangent drawn from a point 25 cm away from the center of a circle of radius 7 cm.',steps:['Let the tangent length be l. By Pythagoras: l² = (distance)² − (radius)².','l² = 25² − 7² = 625 − 49 = 576.','l = √576 = 24 cm.'],ans:'24 cm'},
+ {level:'medium',q:'Two chords AB and CD of a circle are equidistant from the center. If AB = 8 cm, find CD.',steps:['Chords equidistant from the center are equal in length.','So CD = AB.','CD = 8 cm.'],ans:'8 cm'},
+ {level:'medium',q:'Triangle ABC is inscribed in a circle with BC as diameter. If ∠ABC = 35°, find ∠BAC and ∠ACB.',steps:['Since BC is a diameter, the angle at A subtended by it is 90° (Angle in a Semicircle).','∠BAC = 90°.','By the angle sum of a triangle: ∠ACB = 180° − 90° − 35° = 55°.'],ans:'∠BAC = 90°, ∠ACB = 55°'},
+ {level:'hard',q:'Chords AB and CD of a circle intersect inside the circle at point E. Given AE = 6 cm, EB = 4 cm, CE = 8 cm, find ED.',steps:['By the Intersecting Chords theorem: AE × EB = CE × ED.','6 × 4 = 8 × ED ⟹ 24 = 8 × ED.','ED = 24/8 = 3 cm.'],ans:'3 cm'},
+ {level:'hard',q:'Two tangents PA and PB are drawn from an external point P to a circle of radius 5 cm such that ∠APB = 60°. Find the length PA.',steps:['OP bisects ∠APB (by symmetry of the two equal tangents), so ∠APO = 30°.','In right triangle OAP (right-angled at A): tan(∠APO) = OA/PA.','PA = OA / tan 30° = 5 / (1/√3) = 5√3 cm ≈ 8.66 cm.'],ans:'5√3 cm ≈ 8.66 cm'},
+ {level:'hard',q:'In cyclic quadrilateral ABCD, ∠A = (2x+10)°, ∠C = (3x−10)°, and ∠B = (x+20)°. Find x and all four angles.',steps:['∠A + ∠C = 180° (opposite angles supplementary): (2x+10) + (3x−10) = 180° ⟹ 5x = 180° ⟹ x = 36.','∠A = 2(36)+10 = 82°, ∠C = 3(36)−10 = 98°, ∠B = 36+20 = 56°.','Since all four angles sum to 360°, ∠D = 360 − 82 − 98 − 56 = 124°.'],ans:'x = 36; ∠A=82°, ∠B=56°, ∠C=98°, ∠D=124°'},
+ {level:'hard',q:'A circle touches all four sides of quadrilateral ABCD. If AB = 6 cm, BC = 7 cm, CD = 5 cm, find AD.',steps:['For a tangential quadrilateral, AB + CD = BC + AD (equal tangent lengths from each vertex).','6 + 5 = 7 + AD ⟹ 11 = 7 + AD.','AD = 4 cm.'],ans:'4 cm'},
+ {level:'hard',q:'PQ is a tangent to a circle at point A, and AB is a chord such that ∠PAB = 65°. C is a point on the major arc. Find ∠ACB, and hence find ∠AOB where O is the center.',steps:['By the Alternate Segment theorem, ∠ACB (angle in the alternate segment) = tangent-chord angle ∠PAB = 65°.','∠ACB = 65°.','By the Angle at the Center theorem, ∠AOB = 2 × ∠ACB = 130°.'],ans:'∠ACB = 65°, ∠AOB = 130°'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Angle Properties',time:'3 min',q:'A chord of a circle subtends an angle of 84° at the center. Find the angle subtended by the chord at a point on the major arc.',sol:'Angle at the circumference = half the central angle = 84°/2 = 42°.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Cyclic Quadrilateral',time:'5 min',q:'In cyclic quadrilateral PQRS, ∠P = (3x+5)° and ∠R = (2x+15)°. Find x and ∠P.',sol:'∠P+∠R=180° ⟹ 5x+20=180° ⟹ x=32. ∠P = 3(32)+5 = 101°.'},
+ {year:'2022',diff:'Medium',marks:3,topic:'Tangents',time:'5 min',q:'Two tangents PA and PB are drawn from an external point P to a circle with center O such that ∠AOB = 130°. Find ∠APB.',sol:'In quadrilateral OAPB, ∠OAP=∠OBP=90°. ∠APB = 360°−90°−90°−130° = 50°.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Alternate Segment',time:'8 min',q:'A tangent PT touches a circle at T. A chord TQ is drawn such that the tangent-chord angle ∠PTQ = 55°. R is a point on the major arc on the other side of TQ. Prove that ∠TRQ = 55°, and find ∠TOQ where O is the center.',sol:'By the Alternate Segment theorem, ∠TRQ = ∠PTQ = 55°. The central angle for the same arc is twice the inscribed angle: ∠TOQ = 2×55° = 110°.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Chords',time:'3 min',q:'Two chords AB and CD of a circle are equidistant from the center, and AB = 16 cm. Find the length of CD.',sol:'Chords equidistant from the center are equal, so CD = AB = 16 cm.'},
+ {year:'2021',diff:'Medium',marks:4,topic:'Semicircle',time:'6 min',q:'AB is a diameter of a circle with center O, and C is a point on the circle such that ∠BAC = 40°. Find ∠ACB and ∠ABC.',sol:'∠ACB = 90° (angle in a semicircle). By the triangle angle sum: ∠ABC = 180°−90°−40° = 50°.'}
+];
+
+const MISTAKES=[
+ 'Assuming an inscribed angle equals the central angle instead of half of it — remember the 2 : 1 relationship, not equality.',
+ 'Applying "angle in a semicircle = 90°" to a chord that is not actually a diameter.',
+ 'Mixing up the Alternate Segment theorem — the tangent-chord angle equals the angle in the segment on the opposite side of the chord, not the same side.',
+ 'Assuming all four angles of a cyclic quadrilateral are equal, rather than just the two opposite pairs being supplementary.',
+ 'Confusing major and minor arcs when finding an inscribed angle — a point on the minor arc "sees" the reflex central angle, not the one drawn in the diagram.'
+];
+
+const FLASH=[
+ {f:'Angle at the center',b:'= 2 × angle at the circumference (same arc)'},
+ {f:'Angle in a semicircle',b:'90° (right angle)'},
+ {f:'Angles in the same segment',b:'Equal'},
+ {f:'Opposite angles of a cyclic quadrilateral',b:'Sum to 180° (supplementary)'},
+ {f:'Exterior angle of a cyclic quadrilateral',b:'= interior opposite angle'},
+ {f:'Tangent at the point of contact',b:'Perpendicular to the radius'},
+ {f:'Two tangents from an external point',b:'Equal in length'},
+ {f:'Tangent-chord angle',b:'= angle in the alternate segment'},
+ {f:'Perpendicular from the center to a chord',b:'Bisects the chord'},
+ {f:'Equal chords',b:'Subtend equal angles at the center'},
+ {f:'Equal chords',b:'Are equidistant from the center'},
+ {f:'Intersecting chords (inside circle)',b:'AE × EB = CE × ED'},
+ {f:'Tangent length formula',b:'PT² = OP² − r² (P external, O center)'},
+ {f:'Tangential quadrilateral',b:'AB + CD = BC + AD'},
+ {f:'Line joining center to midpoint of chord',b:'Perpendicular to the chord'},
+ {f:'Three non-collinear points',b:'Determine exactly one circle'}
+];
+
+const CC_MCQ=[
+ {t:'parts',q:'The longest chord of a circle is called its:',opts:['Radius','Diameter','Tangent','Secant'],a:1},
+ {t:'parts',q:'A line that touches a circle at exactly one point is called a:',opts:['Chord','Secant','Tangent','Diameter'],a:2},
+ {t:'parts',q:'The region between a chord and the arc it cuts off is called a:',opts:['Sector','Segment','Radius','Tangent'],a:1},
+ {t:'parts',q:'A part of the circumference of a circle is called a(n):',opts:['Arc','Chord','Sector','Segment'],a:0},
+ {t:'chords',q:'Equal chords of a circle subtend equal angles at the:',opts:['Circumference','Center','Tangent point','Diameter'],a:1},
+ {t:'chords',q:'The perpendicular from the center to a chord always:',opts:['Doubles the chord','Bisects the chord','Is parallel to the chord','Equals the radius'],a:1},
+ {t:'angles',q:'The angle subtended by an arc at the center is __ the angle at the circumference.',opts:['Equal to','Half of','Twice','Three times'],a:2},
+ {t:'angles',q:'The angle in a semicircle is:',opts:['45°','60°','90°','180°'],a:2},
+ {t:'angles',q:'Opposite angles of a cyclic quadrilateral are:',opts:['Equal','Complementary','Supplementary','Always 90° each'],a:2},
+ {t:'angles',q:'Angles subtended by the same arc in the same segment are:',opts:['Supplementary','Equal','Complementary','Twice each other'],a:1},
+ {t:'tangents',q:'A tangent to a circle is always __ to the radius at the point of contact.',opts:['Parallel','Perpendicular','Equal','At 45°'],a:1},
+ {t:'tangents',q:'Two tangents drawn from an external point to a circle are:',opts:['Perpendicular to each other','Equal in length','Parallel','Equal to the radius'],a:1},
+ {t:'tangents',q:'The Alternate Segment theorem relates the tangent-chord angle to:',opts:['The central angle','The angle in the alternate segment','The radius','The diameter'],a:1},
+ {t:'cyclic',q:'A quadrilateral is cyclic if its vertices:',opts:['Form a square','Lie on a single circle','Are all equal in length','Have equal diagonals'],a:1},
+ {t:'cyclic',q:'If one pair of opposite angles of a quadrilateral is supplementary, the quadrilateral is:',opts:['A parallelogram','Cyclic','A rhombus','A trapezium'],a:1}
+];
+const CC_FIB=[
+ {t:'parts',q:'A line segment joining the center to a point on the circle is called the ______.',a:'radius'},
+ {t:'parts',q:'A ______ is a line that intersects a circle at two points.',a:'secant'},
+ {t:'parts',q:'The region enclosed by two radii and an arc is called a ______.',a:'sector'},
+ {t:'parts',q:'The distance from the center to any point on the circle is called the ______.',a:'radius'},
+ {t:'chords',q:'Chords that are the same distance from the center are ______ in length.',a:'equal'},
+ {t:'chords',q:'The line from the center to the midpoint of a chord is ______ to the chord.',a:'perpendicular'},
+ {t:'angles',q:'If the central angle is 80°, the angle at the circumference (same arc) is ______.',a:'40'},
+ {t:'angles',q:'The angle subtended by a diameter at any point on the circle is ______ degrees.',a:'90'},
+ {t:'angles',q:'In a cyclic quadrilateral, ∠A + ∠C = ______ degrees.',a:'180'},
+ {t:'angles',q:'The exterior angle of a cyclic quadrilateral equals the ______ opposite angle.',a:'interior'},
+ {t:'tangents',q:'A tangent touches a circle at ______ point(s).',a:'one'},
+ {t:'tangents',q:'PA and PB are tangents from P; if PA = 7 cm, then PB = ______ cm.',a:'7'},
+ {t:'tangents',q:'The tangent-chord angle equals the angle in the ______ segment.',a:'alternate'},
+ {t:'cyclic',q:'A quadrilateral inscribed in a circle is called a ______ quadrilateral.',a:'cyclic'},
+ {t:'cyclic',q:'For a tangential quadrilateral ABCD, AB + CD = BC + ______.',a:'ad'}
+];
+const CC_TF=[
+ {t:'parts',q:'A diameter is twice the length of the radius.',a:true},
+ {t:'parts',q:'A tangent intersects a circle at two points.',a:false},
+ {t:'parts',q:'An arc is a part of the circumference.',a:true},
+ {t:'chords',q:'Equal chords of a circle are always equidistant from the center.',a:true},
+ {t:'chords',q:'The perpendicular bisector of any chord passes through the center of the circle.',a:true},
+ {t:'angles',q:'The angle at the center is always half the angle at the circumference.',a:false},
+ {t:'angles',q:'Angles in the same segment of a circle are equal.',a:true},
+ {t:'angles',q:'The angle in a semicircle is always 90°.',a:true},
+ {t:'angles',q:'The sum of all four angles of a cyclic quadrilateral is 180°.',a:false},
+ {t:'tangents',q:'A tangent to a circle is perpendicular to the radius at the point of contact.',a:true},
+ {t:'tangents',q:'Tangents drawn from an external point to a circle can have different lengths.',a:false},
+ {t:'tangents',q:'The tangent-chord angle equals the angle in the same segment as the chord.',a:false},
+ {t:'cyclic',q:'Every quadrilateral is a cyclic quadrilateral.',a:false},
+ {t:'cyclic',q:'In a cyclic quadrilateral, the exterior angle equals the interior opposite angle.',a:true},
+ {t:'cyclic',q:'Opposite angles of a cyclic quadrilateral are supplementary.',a:true}
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'State the theorem relating the angle at the center to the angle at the circumference.','Think 2 : 1.','Angle at center = 2 × angle at circumference'),
+ mk(2,'What is the angle in a semicircle?',"It's a right angle.",'90°'),
+ mk(3,'If chord AB subtends 60° at the center, find the angle it subtends at the circumference (major arc).','Half the central angle.','30°'),
+ mk(4,'State the property of two tangents drawn from an external point.','Think about length.','They are equal in length'),
+ mk(5,'A tangent touches a circle at how many points?','Just one.','1 point'),
+ mk(6,'What is the sum of opposite angles of a cyclic quadrilateral?','Supplementary.','180°'),
+ mk(7,'If ∠A of a cyclic quadrilateral is 95°, find ∠C.','180 − 95.','85°'),
+ mk(8,'Name the theorem: "tangent is perpendicular to the radius at the point of contact."',"It has 'tangent' in the name.",'Tangent–radius theorem'),
+ mk(9,'If two chords are equal, what can you say about their distances from the center?','Equal chords, equal distance.','They are equal'),
+ mk(10,'State what a segment of a circle is.','Chord + arc.','The region between a chord and its arc'),
+ mk(11,'If ∠AOB (central) = 130°, find the inscribed angle on the major arc.','Half of 130.','65°'),
+ mk(12,'A chord that passes through the center is called what?','It is the longest chord.','Diameter'),
+ mk(13,'What do you call the region enclosed by two radii and an arc?','A slice of a pie.','Sector'),
+ mk(14,'If PA and PB are tangents from P and PA = 9 cm, find PB.','Equal tangents.','9 cm'),
+ mk(15,'Find ∠ACB if AB is a diameter and C lies on the circle.','Angle in semicircle.','90°'),
+ mk(16,'A cyclic quadrilateral has ∠B = 70°. Find ∠D.','180 − 70.','110°'),
+ mk(17,'What is the relationship between a tangent and the radius at the point of contact?','90°.','They are perpendicular'),
+ mk(18,'Name the theorem used to prove ∠TRQ = ∠PTQ for a tangent-chord angle.','Alternate ___ theorem.','Alternate segment theorem'),
+ mk(19,'If two circles touch each other, where does the point of contact lie?','Joins the centers.','On the line joining their centers'),
+ mk(20,'State the theorem for chords equidistant from the center.','Equal distance implies...','Chords equidistant from the center are equal')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'Chord AB subtends an angle of 92° at the center. Find the angle it subtends at a point on the minor arc.','Use the reflex central angle: 360°−92°.','134°'),
+ mk(2,'Two tangents PA, PB from external point P make ∠APB = 70°. Find ∠AOB (O is the center).','Angles of quadrilateral OAPB sum to 360°.','110°'),
+ mk(3,'In a cyclic quadrilateral, ∠A : ∠C = 4 : 5. Find ∠A and ∠C.','Use ∠A+∠C=180°.','80°, 100°'),
+ mk(4,'Two equal chords of a circle are each 24 cm and the radius is 13 cm. Find the distance of each chord from the center.','Use half-chord and Pythagoras.','5 cm'),
+ mk(5,'Two chords AB and CD are equidistant from center O, and AB = 12 cm. Find CD.','Equidistant chords are equal.','12 cm'),
+ mk(6,'Find the length of a tangent from a point 17 cm from the center of a circle of radius 8 cm.','tangent² = d² − r².','15 cm'),
+ mk(7,'A tangent PT touches a circle at T, and chord TQ makes a tangent-chord angle of 48°. Find the angle in the alternate segment.','Equal to the tangent-chord angle.','48°'),
+ mk(8,'In cyclic quadrilateral ABCD, side AB is produced to E. If ∠CBE = 75°, find ∠ADC.','Exterior = interior opposite.','75°'),
+ mk(9,'PA and PB are tangents from P, with ∠AOB = 100°. Find ∠APB.','Quadrilateral angle sum = 360°.','80°'),
+ mk(10,'Chord PQ subtends 46° at the center. Find the angle PQ subtends at a point on the major arc, and name the theorem used.','Half the central angle.','23°, Angle at Center theorem'),
+ mk(11,'ABCD is a tangential quadrilateral (circle inscribed) with AB=9, BC=11, CD=7. Find AD.','AB+CD = BC+AD.','5'),
+ mk(12,'Triangle ABC is inscribed in a circle with BC as diameter. If ∠ABC = 42°, find ∠BAC and ∠ACB.','Angle in semicircle at A is 90°.','∠BAC = 90°, ∠ACB = 48°'),
+ mk(13,'Two tangents from an external point 20 cm from the center of a circle of radius 12 cm are drawn. Find the length of each tangent.','Use Pythagoras.','16 cm'),
+ mk(14,'Chords AB and CD intersect inside a circle at E. AE = 5, EB = 9, CE = 3. Find ED.','AE·EB = CE·ED.','15'),
+ mk(15,'Find x if two opposite angles of a cyclic quadrilateral are (2x+15)° and (3x−5)°.','Sum = 180°.','x = 34'),
+ mk(16,'AB is a chord of a circle with center O; the perpendicular from O to AB has length 6 cm. If the radius is 10 cm, find AB.','Half-chord via Pythagoras, then double.','16 cm'),
+ mk(17,'PA, PB are tangents from external point P. If OA = 5 cm and OP = 13 cm (O = center), find PA.','Use Pythagoras.','12 cm'),
+ mk(18,'In cyclic quadrilateral PQRS, ∠P = 3x, ∠R = 2x+10. Find x.','∠P + ∠R = 180°.','x = 34'),
+ mk(19,'A circle touches all sides of quadrilateral ABCD. If AB=10, BC=8, CD=6, find AD.','AB+CD = BC+AD.','8'),
+ mk(20,'Two equal chords, 14 cm each, lie in a circle of radius 25 cm. Find the distance of each from the center.','Half-chord and Pythagoras.','24 cm')
+];
+const PZ3=[ // Level 3 - ICSE exam style
+ mk(1,'Prove that the angle in a semicircle is 90°, using the Angle at the Center theorem.','Central angle for a diameter is 180°.','Identity verified: 180°/2 = 90°'),
+ mk(2,'Chord AB subtends 3x° at the center and (x+15)° at a point P on the major arc. Find x, the central angle, and the inscribed angle.','Central = 2 × inscribed.','x=30; central=90°, inscribed=45°'),
+ mk(3,'In cyclic quadrilateral ABCD, ∠A=(3x+10)°, ∠C=(2x+20)°, ∠B=(4x−15)°. Find x and all four angles.','Use ∠A+∠C=180° first.','x=30; ∠A=100°, ∠B=105°, ∠C=80°, ∠D=75°'),
+ mk(4,'PA, PB are tangents from external point P to a circle of radius r, with OP = 2r. Prove ∠APB = 60°.','sin(∠APO) = r/OP.','Identity verified: ∠APB = 60°'),
+ mk(5,'Two circles of radii 5 cm and 3 cm touch externally. Find the distance between their centers.','Distance = sum of radii for external tangency.','8 cm'),
+ mk(6,'A tangent PT touches a circle at T with center O. If OP=26 cm and PT=24 cm, find the radius.','OT² = OP² − PT².','10 cm'),
+ mk(7,'Two secants from an external point E cut a circle so EA=12, EB=4 on one secant, and ED=6 on the other. Find EC.','Power of a Point: EA×EB = EC×ED.','EC = 8'),
+ mk(8,'Chords AB and CD intersect inside a circle at E. AE=(x+1) cm, EB=8 cm, CE=4 cm, ED=(x+3) cm. Find x.','AE·EB = CE·ED.','x = 1'),
+ mk(9,'Prove that if two chords of a circle are equal, they cut off equal arcs.','Equal chords → equal central angles → equal arcs.','Identity verified: equal chords give equal arcs'),
+ mk(10,'Two tangents PA and PB from external point P to a circle of radius 6 cm meet at ∠APB=90°. Find OP.','Right triangle OAP with ∠APO=45°.','OP = 6√2 cm ≈ 8.49 cm'),
+ mk(11,'In cyclic quadrilateral ABCD, diagonal AC bisects ∠BAD. Prove that CB = CD.','Equal angles → equal arcs → equal chords.','Identity verified: CB = CD'),
+ mk(12,'A chord of length 16 cm is at a distance of 6 cm from the center of a circle. Find the radius.','r² = (half-chord)² + distance².','10 cm'),
+ mk(13,'Two parallel chords of lengths 24 cm and 10 cm lie on the same side of the center in a circle of radius 13 cm. Find the distance between them.','Find each chord\'s distance from the center, then subtract.','7 cm'),
+ mk(14,'Two tangents are drawn to a circle of radius 5 cm from a point 13 cm from the center. Find the area of the quadrilateral formed by the tangents and the radii to the points of contact.','Area = 2 × (½ × r × tangent length).','60 cm²'),
+ mk(15,'Two circles with radii 9 cm and 4 cm touch internally. Find the distance between their centers.','Distance = difference of radii for internal tangency.','5 cm'),
+ mk(16,'Prove that if two circles touch each other, the point of contact lies on the line joining the centers.','Use symmetry of the tangent circles.','Identity verified: point of contact is collinear with both centers'),
+ mk(17,'In cyclic quadrilateral ABCD, ∠A = 90°. What can you conclude about diagonal BD?','Angle in semicircle, converse.','BD must be a diameter of the circle'),
+ mk(18,'AB is a common tangent to two circles touching each other externally at point P. Prove that ∠APB = 90°.','Use tangent ⟂ radius from both centers.','Identity verified: ∠APB = 90°'),
+ mk(19,'A tangential quadrilateral ABCD has AB=13 cm, BC=10 cm, CD=(x+7) cm, AD=(2x−3) cm. Find x, CD, and AD.','AB+CD = BC+AD.','x=13; CD=20 cm, AD=23 cm'),
+ mk(20,'The perimeter of a tangential quadrilateral ABCD is 60 cm. Find AB + CD.','AB+CD = BC+AD, and both pairs sum to the perimeter.','AB + CD = 30 cm')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (chords / angles / tangents)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('chordGrid',CHORD_THEOREMS);
+buildTheoremCards('angleGrid',ANGLE_THEOREMS);
+buildTheoremCards('tangentGrid',TANGENT_THEOREMS);
+
+// Revision theorem table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=CHORD_THEOREMS.concat(ANGLE_THEOREMS,TANGENT_THEOREMS);
+  let head='<tr><th>Theorem</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Cyclic quadrilateral pairs list
+const cyclicLeft=document.getElementById('cyclicLeft');
+const cpCard=el('div','card pad');
+CYCLIC_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">=</span><span class="eq">'+pair[1]+'</span>'));
+});
+cyclicLeft.appendChild(cpCard);
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('circ_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('circ_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase()===item.a.toLowerCase();
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('circ_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('circ_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+// Parts-of-circle legend hover
+document.querySelectorAll('.circ-chip').forEach(chip=>{
+  const allIds=['radiusLine','diameterLine','chordLine','arcHighlight','sectorFill','segmentFill','tangentLine'];
+  chip.addEventListener('mouseenter',()=>{
+    allIds.forEach(id=>{ const node=document.getElementById(id); if(node) node.style.opacity=.2; });
+    const target=document.getElementById(chip.dataset.target);
+    if(target) target.style.opacity=1;
+  });
+  chip.addEventListener('mouseleave',()=>{
+    allIds.forEach(id=>{ const node=document.getElementById(id); if(node) node.style.opacity=1; });
+  });
+});
+
+// Hero interactive instrument — drag P around the major arc
+const svg=document.getElementById('heroSvg');
+const handle=document.getElementById('angleHandle');
+const cx=160, cy=150, R=110;
+const A_ANGLE=230, B_ANGLE=310;
+function ptAt(deg){ const rad=deg*Math.PI/180; return {x:cx+R*Math.cos(rad), y:cy-R*Math.sin(rad)}; }
+const A=ptAt(A_ANGLE), B=ptAt(B_ANGLE);
+function angleAt(P,X,Y){
+  const v1={x:X.x-P.x,y:X.y-P.y}, v2={x:Y.x-P.x,y:Y.y-P.y};
+  const dot=v1.x*v2.x+v1.y*v2.y;
+  const m1=Math.hypot(v1.x,v1.y), m2=Math.hypot(v2.x,v2.y);
+  let c=dot/(m1*m2); c=Math.max(-1,Math.min(1,c));
+  return Math.acos(c)*180/Math.PI;
+}
+function clampDeg(deg){
+  deg=((deg%360)+360)%360;
+  if(deg>A_ANGLE && deg<B_ANGLE){
+    deg=(deg-A_ANGLE < B_ANGLE-deg)?A_ANGLE:B_ANGLE;
+  }
+  return deg;
+}
+const linePA=document.getElementById('linePA'), linePB=document.getElementById('linePB'), ptPLabel=document.getElementById('ptPLabel');
+function setP(deg){
+  deg=clampDeg(deg);
+  const P=ptAt(deg);
+  linePA.setAttribute('x1',P.x); linePA.setAttribute('y1',P.y);
+  linePB.setAttribute('x1',P.x); linePB.setAttribute('y1',P.y);
+  handle.setAttribute('cx',P.x); handle.setAttribute('cy',P.y);
+  ptPLabel.setAttribute('x',P.x+7); ptPLabel.setAttribute('y',P.y-6);
+  const insc=angleAt(P,A,B);
+  const cent=angleAt({x:cx,y:cy},A,B);
+  document.getElementById('rInsc').textContent=Math.round(insc)+'°';
+  document.getElementById('rCent').textContent=Math.round(cent)+'°';
+  document.getElementById('rRatio').textContent=(cent/insc).toFixed(2);
+}
+let dragging=false;
+handle.addEventListener('pointerdown',()=>dragging=true);
+window.addEventListener('pointerup',()=>dragging=false);
+svg.addEventListener('pointermove',(e)=>{
+  if(!dragging) return;
+  const rect=svg.getBoundingClientRect();
+  const vb=svg.viewBox.baseVal;
+  const px=(e.clientX-rect.left)/rect.width*vb.width;
+  const py=(e.clientY-rect.top)/rect.height*vb.height;
+  const dx=px-cx, dy=cy-py;
+  let deg=Math.atan2(dy,dx)*180/Math.PI;
+  setP(deg);
+});
+setP(90);
+
+// Cyclic quadrilateral slider
+const cyclicSlider=document.getElementById('cyclicSlider');
+function updateCyclic(){
+  const a=parseInt(cyclicSlider.value);
+  const c=180-a;
+  document.getElementById('cyclicA').textContent=a+'°';
+  document.getElementById('cyclicC').textContent=c+'°';
+  document.getElementById('cyclicSum').textContent=`∠A + ∠C = ${a}° + ${c}° = 180°`;
+}
+cyclicSlider.addEventListener('input',updateCyclic); updateCyclic();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','parts','chords','angles','tangents','cyclic','examples','conceptcheck','practice','pyq','mistakes','revision','flashcards','formula','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('circ_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('circ_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('circ_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('circ_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('circ_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('circ_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('circ_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['circ_sectionsRead','circ_examplesOpened','circ_quizStats','circ_pz_l1','circ_pz_l2','circ_pz_l3','circ_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
 </body>
 </html>
