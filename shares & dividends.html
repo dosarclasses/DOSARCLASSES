@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shares &amp; Dividends — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+.rd-slider-row{display:flex; align-items:center; gap:.6rem; margin-bottom:.7rem;}
+.rd-slider-row label{font-family:var(--font-mono); font-size:.74rem; color:var(--ink-soft); width:132px; flex:none;}
+.rd-slider-row input[type=range]{flex:1;}
+.rd-slider-row .val{font-family:var(--font-mono); font-weight:700; color:var(--amber-dark); width:56px; text-align:right; flex:none; font-size:.85rem;}
+
+/* ===================== TYPES / EXPLORER CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:1.05rem; color:var(--ink-soft); margin:.3rem 0;}
+.result-box .rvalue{font-family:var(--font-display); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.result-box .rvalue small{display:block; font-family:var(--font-mono); font-size:.7rem; color:var(--ink-faint); font-weight:400; margin-top:.2rem;}
+
+/* ===================== THEOREM/PROPERTY CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.88rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-statement{margin:.35rem 0; font-size:.92rem; line-height:1.45;}
+.ar-statement b{color:var(--amber-dark); font-family:var(--font-mono); margin-right:.45rem;}
+.ar-note{font-size:.76rem; color:var(--ink-faint); font-family:var(--font-mono); margin:.3rem 0 .5rem;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.2rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:.95rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formulasheet){display:none !important;}
+  #formulasheet{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">💹 <span>Shares &amp; Dividends</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="explorer" href="#explorer"><span class="dot"></span>Share Explorer</a>
+    <a class="navlink" data-target="terms" href="#terms"><span class="dot"></span>Key Terms</a>
+    <a class="navlink" data-target="rules" href="#rules"><span class="dot"></span>Rules &amp; Properties</a>
+    <a class="navlink" data-target="dividendformula" href="#dividendformula"><span class="dot"></span>The Dividend &amp; Yield Formulas</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+    <a class="navlink" data-target="assertion" href="#assertion"><span class="dot"></span>Assertion &amp; Reasoning</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formulasheet" href="#formulasheet"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Shares &amp; Dividends</div>
+        <h1>Owning a piece,<br>earning your share.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the sliders to change the Market Value, the dividend rate, and the number of shares — watch the income and yield percent recompute instantly, exactly like a real share investment.</p>
+        <div class="hero-cta">
+          <a href="#terms" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <div class="rd-slider-row">
+          <label>Market Value (MV)</label>
+          <input type="range" id="heroMV" min="50" max="300" step="5" value="120">
+          <span class="val" id="heroMVVal">₹120</span>
+        </div>
+        <div class="rd-slider-row">
+          <label>Dividend Rate % (r)</label>
+          <input type="range" id="heroR" min="4" max="20" step="0.5" value="9">
+          <span class="val" id="heroRVal">9%</span>
+        </div>
+        <div class="rd-slider-row">
+          <label>Shares held (N)</label>
+          <input type="range" id="heroN" min="10" max="500" step="10" value="100">
+          <span class="val" id="heroNVal">100</span>
+        </div>
+        <div class="instrument-readout">
+          <div>Income (I) <b id="heroI">₹900.00</b></div>
+          <div>Investment <b id="heroInv">₹12000</b></div>
+          <div>Yield % <b id="heroYield">7.50%</b></div>
+          <div>Face Value Total <b id="heroFV">₹10000</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What are Shares and Dividends?</h2>
+        <p class="lede">A <b>share</b> is a unit of ownership in a company. When you buy shares, you become a part-owner and are entitled to a portion of the company's profit, called a <b>dividend</b>. This chapter looks at how to calculate income, investment, and the actual percentage return — the <b>yield</b> — on shares bought at par, at a premium, or at a discount.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Investing in the stock market is one of the most common ways people grow their savings. But the price you actually pay for a share (its Market Value) can differ significantly from the value printed on the certificate (its Face Value) — and dividend is always paid on the Face Value. Understanding how these interact is essential to comparing investment options sensibly.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Comparing dividend-paying stocks</li>
+              <li>Calculating returns on a portfolio</li>
+              <li>Understanding bonus &amp; rights issues</li>
+              <li>Evaluating brokerage costs</li>
+              <li>Long-term financial literacy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M3 21h18M4 21V10l8-6 8 6v11M9 21v-6h6v6"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">The Company</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 17l5-5 4 3 7-8M20 7h-4v4"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Buying Shares</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M3 17l6-6 4 4 8-8M21 7v6h-6"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Dividend Paid</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="9"/><path d="M9 15l6-6M9.5 10a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zM14.5 15a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Yield Earned</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ Percentages and their conversions</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Simple ratio and proportion</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Basic arithmetic with money (₹)</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. SHARE EXPLORER ===================== -->
+    <section id="explorer">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Share Explorer</h2>
+        <p class="lede">Click each preset below to see how the Face Value, Market Value, dividend rate, and number of shares combine to produce the income and the yield percent — using the same formulas every single time.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Standard Pick</div>
+            <div class="rformula" id="typeFormula">FV=100, MV=120, r=9%, N=50</div>
+            <div class="rvalue" id="typeValue">₹450.00<small>Income earned</small></div>
+            <div class="rvalue" id="typeValue2" style="margin-top:.6rem; font-size:1.3rem;">7.50%<small>Yield percent</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY TERMS ===================== -->
+    <section id="terms">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Terms in Shares &amp; Dividends</h2>
+        <p class="lede">Five quantities are all you need to solve any Shares &amp; Dividends problem — the Face Value, the Market Value, the dividend rate, and the two results they combine to produce.</p>
+      </div>
+      <div class="ratio-grid" id="termsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. RULES & PROPERTIES ===================== -->
+    <section id="rules">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Rules &amp; Properties</h2>
+        <p class="lede">Beyond the core formulas, a handful of market rules govern how shares actually behave in practice.</p>
+      </div>
+      <div class="ratio-grid" id="rulesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. THE DIVIDEND & YIELD FORMULAS ===================== -->
+    <section id="dividendformula">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>The Dividend &amp; Yield Formulas, Derived</h2>
+        <p class="lede">\( \text{Income} = N \times FV \times \dfrac{r}{100} \), &nbsp; \( \text{Investment} = N \times MV \), &nbsp; \( \text{Yield\%} = \dfrac{r \times FV}{MV} \). Scale the Market Value below with the base Face Value FV = ₹100 at r = 9% p.a. — watch how the yield falls as the market price rises.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compdivLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>Base Face Value FV = ₹100, dividend rate r = 9% p.a. Drag the slider to change the Market Value, and watch the yield percent update.</p>
+            <input type="range" min="50" max="300" step="5" value="120" id="compdivSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>MV = ₹<b id="compdivN">120</b></span>
+              <span>Yield = <b id="compdivSum">7.50</b>%</span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="compdivResult">Yield = 100 × 9 / 120 = 7.50%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across terms, formulas, and rules — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">08 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">09 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 10. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">10 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 11. ASSERTION & REASONING ===================== -->
+    <section id="assertion">
+      <div class="section-head">
+        <div class="eyebrow">11 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each is true, and whether R correctly explains A. Choose one of the four standard options, then click to reveal the answer.</p>
+      </div>
+      <div class="ar-note">Options used throughout: (a) Both A and R are true, and R is the correct explanation of A &nbsp;·&nbsp; (b) Both A and R are true, but R is NOT the correct explanation of A &nbsp;·&nbsp; (c) A is true, but R is false &nbsp;·&nbsp; (d) A is false, but R is true</div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Income: I = N × FV × r/100</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Investment: Inv = N × MV</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Yield%: (r × FV)/MV</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Number of shares: N = Investment ÷ MV</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Rules to Remember</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Dividend is always on Face Value, never Market Value</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">MV &gt; FV ⟹ premium; MV &lt; FV ⟹ discount</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Doubling MV (rate, FV fixed) halves the yield%</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Rules (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always find the Market Value first (adjust for premium/discount) before computing Investment or Number of Shares.</li>
+              <li>Income is always Rate × Face Value × Number of shares ÷ 100 — never substitute Market Value here.</li>
+              <li>When a question gives Investment and asks for income, find N first, then apply the income formula.</li>
+              <li>Yield% and the declared dividend rate are equal only when the share is trading exactly at par.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formulasheet">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Shares &amp; Dividends — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Core Formulas</h5>
+            <p>Income: I = N·FV·r/100</p><p>Investment: Inv = N·MV</p><p>Yield%: (r·FV)/MV</p><p>Number of shares: N = Inv/MV</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Market Value Rules</h5>
+            <p>At par: MV = FV</p><p>At premium: MV &gt; FV</p><p>At discount: MV &lt; FV</p>
+            <p>MV = FV + premium, or MV = FV − discount</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Rules of Thumb</h5>
+            <p>Doubling N (FV, MV, rate fixed) → I &amp; Inv both double, Yield% unchanged</p><p>Doubling MV (rate, FV fixed) → Yield% halves</p>
+            <p>Bonus shares → free, no fresh payment</p><p>Rights issue → priced below MV</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const TERMS_DATA=[
+ {name:'Face Value (FV)', color:'#C97A2B', statement:'The value printed on the share certificate, fixed by the company when the share is issued; also called Nominal Value or Par Value.', trick:'Dividend is always calculated on the Face Value, never on the Market Value.', ex:'A share with FV = ₹100 pays dividend based on that ₹100, regardless of its market price.'},
+ {name:'Market Value (MV)', color:'#3D5A80', statement:'The price at which a share is actually bought or sold in the stock market; it fluctuates daily based on demand and company performance.', trick:'If MV &gt; FV, the share is at a premium (above par); if MV &lt; FV, it is at a discount (below par).', ex:'A ₹100 share trading at ₹120 is at a premium of ₹20.'},
+ {name:'Dividend', color:'#2E7D5B', statement:'The portion of a company\'s profit distributed to shareholders, usually expressed as a percentage of the Face Value.', trick:'Dividend per share = Rate% × Face Value, then multiplied by the number of shares held for total income.', ex:'A 9% dividend on a ₹100 share pays ₹9 per share per year.'},
+ {name:'Number of Shares (N)', color:'#C97A2B', statement:'The total count of shares held by an investor, which determines both the investment made and the total income received.', trick:'N = Investment ÷ MV (when buying), or N = Total Face Value ÷ FV (when the total face value is known).', ex:'Investing ₹6000 in a share with MV = ₹120 buys 6000/120 = 50 shares.'},
+ {name:'Yield / Rate of Return', color:'#3D5A80', statement:'The actual percentage return earned on the money invested, calculated as (Income ÷ Investment) × 100 — different from the declared dividend rate.', trick:'Yield% = (Dividend Rate × FV) ÷ MV — always compare using Market Value, not Face Value.', ex:'A 9% dividend on a ₹100 share bought at ₹120 gives a yield of (9×100)/120 = 7.5%.'}
+];
+const RULES_DATA=[
+ {name:'Formula Derivation', color:'#3D5A80', statement:'Since dividend is paid on the Face Value while the investor pays the Market Value, the yield is FV/MV times the dividend rate — this is why buying at a premium lowers your effective return, and buying at a discount raises it.', trick:'Yield% = Dividend Rate × (FV/MV).', ex:'The same 9% dividend rate gives a lower yield when MV rises above FV.'},
+ {name:'Bonus Shares', color:'#C97A2B', statement:'Free additional shares issued by a company to existing shareholders out of its accumulated profits, without any extra payment.', trick:'Bonus shares increase the number of shares held but do not require fresh investment — they spread the same profit over more shares.', ex:'A shareholder holding 100 shares who receives a 1:5 bonus issue ends up with 120 shares.'},
+ {name:'Rights Issue', color:'#2E7D5B', statement:'An offer allowing existing shareholders to buy additional shares of the company, usually at a price lower than the current market value, in proportion to their existing holding.', trick:'Rights shares are optional and priced below market value, unlike bonus shares which are free.', ex:'A "1 for 4" rights issue lets a holder of 400 shares buy 100 more.'},
+ {name:'Brokerage', color:'#3D5A80', statement:'A small fee charged by a broker for buying or selling shares on behalf of an investor, usually a percentage of the Market Value.', trick:'Brokerage increases the effective buying price and decreases the effective selling price — always add it when buying, subtract when selling.', ex:'Buying a ₹120 share with 1% brokerage effectively costs ₹121.20.'},
+ {name:'At Par / Premium / Discount', color:'#C97A2B', statement:'A share is "at par" when MV = FV, "at a premium" when MV &gt; FV, and "at a discount" when MV &lt; FV.', trick:'These terms only compare Market Value with Face Value — they say nothing about whether the share is a good investment.', ex:'A ₹100 share priced at ₹90 is at a discount of ₹10, or "10% below par."'}
+];
+const EXPLORER_DATA=[
+ {label:'Small Investor', FV:10, MV:12, r:8, N:100},
+ {label:'Standard Pick', FV:100, MV:120, r:9, N:50},
+ {label:'Discount Buy', FV:100, MV:80, r:6, N:100},
+ {label:'Premium Blue-Chip', FV:100, MV:250, r:15, N:20},
+ {label:'At Par IPO', FV:100, MV:100, r:10, N:80},
+ {label:'Large Portfolio', FV:100, MV:150, r:12, N:200}
+];
+function shareIncome(N,FV,r){ return N*FV*r/100; }
+function shareInvestment(N,MV){ return N*MV; }
+function shareYield(FV,r,MV){ return FV*r/MV; }
+
+const EXAMPLES=[
+ {level:'easy',q:'Find the income from 50 shares of FV ₹100 paying an 8% dividend.',steps:['Income = N × FV × r/100.','Income = 50 × 100 × 8/100 = 40000/100 = ₹400.'],ans:'₹400'},
+ {level:'easy',q:'Find the income from 100 shares of FV ₹10 paying a 12% dividend.',steps:['Income = N × FV × r/100.','Income = 100 × 10 × 12/100 = 12000/100 = ₹120.'],ans:'₹120'},
+ {level:'easy',q:'Find the investment needed to buy 60 shares at Market Value ₹100.',steps:['Investment = N × MV.','Investment = 60 × 100 = ₹6000.'],ans:'₹6000'},
+ {level:'easy',q:'Find the number of shares bought with an investment of ₹5000 at Market Value ₹100.',steps:['N = Investment ÷ MV.','N = 5000 ÷ 100 = 50 shares.'],ans:'50 shares'},
+ {level:'easy',q:'A ₹100 share is bought at a premium of ₹20. Find its Market Value.',steps:['MV = FV + premium.','MV = 100 + 20 = ₹120.'],ans:'₹120'},
+ {level:'easy',q:'A man invests ₹9000 buying shares of FV ₹100 available at a discount of ₹10. Find the number of shares purchased.',steps:['MV = FV − discount = 100 − 10 = ₹90.','N = Investment ÷ MV = 9000 ÷ 90 = 100 shares.'],ans:'100 shares'},
+ {level:'medium',q:'A man invests ₹8750 in buying shares of FV ₹100 at MV ₹125. If the dividend rate is 10%, find his annual income and the yield percent.',steps:['N = Investment ÷ MV = 8750 ÷ 125 = 70 shares.','Income = N × FV × r/100 = 70 × 100 × 10/100 = ₹700.','Yield% = Income ÷ Investment × 100 = 700/8750 × 100 = 8%.'],ans:'Income = ₹700, Yield = 8%'},
+ {level:'medium',q:'Find the rate of dividend if a man\'s income from 200 shares of FV ₹10 is ₹300.',steps:['r = Income × 100 ÷ (N × FV).','r = 300 × 100 ÷ (200 × 10) = 30000/2000 = 15%.'],ans:'15%'},
+ {level:'medium',q:'A man invests ₹4000 in shares of FV ₹100, available at a discount of ₹20, paying an 8% dividend. Find his income and yield percent.',steps:['MV = 100 − 20 = ₹80.','N = 4000 ÷ 80 = 50 shares.','Income = 50 × 100 × 8/100 = ₹400.','Yield% = 400/4000 × 100 = 10%.'],ans:'Income = ₹400, Yield = 10%'},
+ {level:'medium',q:'A man holding 50 shares of FV ₹100 (MV ₹140, dividend 10%) sells all of them and buys shares of FV ₹100 at MV ₹70, paying the same dividend rate. Find his new number of shares and the change in income.',steps:['Proceeds from sale = 50 × 140 = ₹7000.','New shares = 7000 ÷ 70 = 100 shares.','Old income = 50 × 100 × 10/100 = ₹500. New income = 100 × 100 × 10/100 = ₹1000.','Change in income = 1000 − 500 = ₹500 increase.'],ans:'100 shares now; income increases by ₹500'},
+ {level:'medium',q:'A company declares a dividend of 9% on shares of FV ₹50. Find the income of a shareholder holding 300 shares.',steps:['Income = N × FV × r/100.','Income = 300 × 50 × 9/100 = 135000/100 = ₹1350.'],ans:'₹1350'},
+ {level:'medium',q:'How many shares of FV ₹25, MV ₹40, can be bought for ₹6000 (ignoring brokerage)? Also find the annual income if the dividend rate is 8%.',steps:['N = Investment ÷ MV = 6000 ÷ 40 = 150 shares.','Income = 150 × 25 × 8/100 = 30000/100 = ₹300.'],ans:'150 shares, income = ₹300'},
+ {level:'medium',q:'A man wants an annual income of ₹1800 from shares of FV ₹100 paying a 12% dividend. Find the number of shares he must buy, and the investment needed if MV = ₹120.',steps:['N = Income × 100 ÷ (FV × r) = 1800 × 100 ÷ (100 × 12) = 180000/1200 = 150 shares.','Investment = N × MV = 150 × 120 = ₹18000.'],ans:'150 shares, Investment = ₹18000'},
+ {level:'medium',q:'A man buys 60 shares of FV ₹100 at MV ₹150 paying a dividend of 12%. Find his income and the yield percent.',steps:['Investment = 60 × 150 = ₹9000.','Income = 60 × 100 × 12/100 = ₹720.','Yield% = 720/9000 × 100 = 8%.'],ans:'Income = ₹720, Yield = 8%'},
+ {level:'hard',q:'A man invests ₹36000 equally in shares of two companies: Company A (FV ₹100, MV ₹120, dividend 10%) and Company B (FV ₹100, MV ₹150, dividend 8%). Find his total annual income.',steps:['Amount in each company = 36000 ÷ 2 = ₹18000.','Company A: N = 18000 ÷ 120 = 150; Income = 150 × 100 × 10/100 = ₹1500.','Company B: N = 18000 ÷ 150 = 120; Income = 120 × 100 × 8/100 = ₹960.','Total income = 1500 + 960 = ₹2460.'],ans:'₹2460'},
+ {level:'hard',q:'A man invests ₹6400 in 8% shares of FV ₹100 at MV ₹80. He later sells all these shares at MV ₹100 and invests the entire proceeds in 10% shares of FV ₹100 at MV ₹125. Find his new income, and compare it with his original income.',steps:['Original: N = 6400 ÷ 80 = 80 shares; Income = 80 × 100 × 8/100 = ₹640.','Sale proceeds = 80 × 100 = ₹8000.','New shares = 8000 ÷ 125 = 64; New income = 64 × 100 × 10/100 = ₹640.','The new income equals the original income — unchanged despite the different rate and price.'],ans:'New income = ₹640 (unchanged)'},
+ {level:'hard',q:'Find the Market Value of a 9% share of FV ₹100 if the investor\'s yield is 7.5%.',steps:['Yield% = (FV × r) ÷ MV, so MV = (FV × r) ÷ Yield%.','MV = (100 × 9) ÷ 7.5 = 900/7.5 = ₹120.'],ans:'₹120'},
+ {level:'hard',q:'A man buys shares of FV ₹50 at a premium of 20%, receiving a dividend of 8% on the Face Value. Find the yield percent, correct to two decimal places.',steps:['MV = 50 × 1.20 = ₹60.','Yield% = (FV × r) ÷ MV = (50 × 8) ÷ 60 = 400/60 = 6.67% (approx).'],ans:'≈ 6.67%'},
+ {level:'hard',q:'A person invested ₹15000 in 6% shares of FV ₹100 available at a discount of 25%. Find the number of shares purchased, the annual income, and the yield percent.',steps:['MV = 100 − 25 = ₹75.','N = 15000 ÷ 75 = 200 shares.','Income = 200 × 100 × 6/100 = ₹1200.','Yield% = 1200/15000 × 100 = 8%.'],ans:'200 shares, Income = ₹1200, Yield = 8%'},
+ {level:'hard',q:'A man sold 200 shares of FV ₹10 at MV ₹15 each, and invested the entire proceeds in shares of FV ₹100 at MV ₹120, paying a 9% dividend. Find the number of new shares purchased and the income earned.',steps:['Sale proceeds = 200 × 15 = ₹3000.','New shares = 3000 ÷ 120 = 25 shares.','Income = 25 × 100 × 9/100 = ₹225.'],ans:'25 shares, income = ₹225'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Dividend Income',time:'3 min',q:'Find the annual income from 60 shares of FV ₹100 paying an 8% dividend.',sol:'Income = N × FV × r/100 = 60 × 100 × 8/100 = ₹480.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Investment &amp; Yield',time:'5 min',q:'A man invests ₹9000 in 9% shares of FV ₹100 at MV ₹150. Find his income and the yield percent.',sol:'N = 9000/150 = 60 shares. Income = 60×100×9/100 = ₹540. Yield% = 540/9000×100 = 6%.'},
+ {year:'2022',diff:'Medium',marks:4,topic:'Number of Shares',time:'6 min',q:'How many shares of FV ₹25 can a man buy for ₹9600 if the shares are available at a premium of 20%?',sol:'MV = 25×1.20 = ₹30. N = 9600/30 = 320 shares.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Comparing Investments',time:'8 min',q:'A man invests ₹24000 equally in two companies: Company X (FV ₹100, MV ₹120, dividend 10%) and Company Y (FV ₹100, MV ₹150, dividend 15%). Find the total income and state which company gives the better yield.',sol:'Half in each = ₹12000. X: N=100, income=₹1000, yield=1000/12000×100=8.33%. Y: N=80, income=₹1200, yield=1200/12000×100=10%. Total income = ₹2200. Company Y gives the better yield.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Definitions',time:'3 min',q:'Define the Face Value and Market Value of a share, and state how they differ.',sol:'Face Value is the fixed value printed on the share certificate at issue; Market Value is the fluctuating price at which the share is actually bought or sold in the market. Dividend is always calculated on the Face Value, not the Market Value.'},
+ {year:'2021',diff:'Medium',marks:4,topic:'Yield Percent',time:'5 min',q:'A 9% share of FV ₹100 is available at a discount of 10%. Find the yield percent.',sol:'MV = 100 − 10 = ₹90. Yield% = (FV × r) ÷ MV = (100 × 9) ÷ 90 = 10%.'}
+];
+
+const MISTAKES=[
+ 'Calculating dividend on the Market Value instead of the Face Value — dividend is always a percentage of Face Value.',
+ 'Confusing Number of Shares (N = Investment ÷ MV) with the Investment itself, especially when the question gives income and asks you to work backward.',
+ 'Forgetting to adjust the Market Value for a premium or discount before calculating Investment or N — MV = FV ± premium/discount, not FV alone.',
+ 'Mixing up the Dividend Rate (the declared %, based on Face Value) with the Yield Percent (the actual return, based on Market Value) — they are equal only when the share is at par.',
+ 'Forgetting to include brokerage when it is mentioned in a question, which changes the effective buying or selling price.'
+];
+
+const FLASH=[
+ {f:'Face Value (FV)', b:'The value printed on the share certificate; also called Nominal or Par Value'},
+ {f:'Market Value (MV)', b:'The current price at which a share is bought or sold'},
+ {f:'Dividend', b:'Share of profit paid to shareholders, calculated as a percentage of Face Value'},
+ {f:'Rate of Dividend', b:'The declared percentage rate applied to the Face Value to compute dividend'},
+ {f:'Number of Shares (N)', b:'N = Investment ÷ Market Value'},
+ {f:'Income Formula', b:'Income = N × FV × rate/100'},
+ {f:'Investment Formula', b:'Investment = N × MV'},
+ {f:'Yield Percent', b:'Yield% = (Income ÷ Investment) × 100 = (Rate × FV) ÷ MV'},
+ {f:'At Par', b:'When Market Value equals Face Value'},
+ {f:'At Premium', b:'When Market Value is greater than Face Value'},
+ {f:'At Discount', b:'When Market Value is less than Face Value'},
+ {f:'Bonus Shares', b:'Free extra shares issued from company profits, no extra payment required'},
+ {f:'Rights Issue', b:'Additional shares offered to existing shareholders, usually below market value'},
+ {f:'Brokerage', b:'Fee charged by a broker on buying/selling shares; added when buying, subtracted when selling'},
+ {f:'Doubling MV (rate, FV fixed)', b:'Halves the yield percent, since yield is inversely proportional to MV'},
+ {f:'Doubling N (FV, MV, rate fixed)', b:'Exactly doubles both Investment and Income; yield percent stays the same'}
+];
+
+const CC_MCQ=[
+ {t:'intro',q:'The value printed on a share certificate is called:',opts:['Market Value','Face Value','Yield Value','Brokerage Value'],a:1},
+ {t:'terms',q:'Dividend on a share is always calculated on:',opts:['Market Value','Face Value','Average of MV and FV','Brokerage'],a:1},
+ {t:'terms',q:'If MV &gt; FV, the share is said to be:',opts:['At par','At a discount','At a premium','Undervalued'],a:2},
+ {t:'formula',q:'The formula for annual income from N shares of Face Value F at dividend rate r% is:',opts:['N×F×r/100','N×MV×r/100','N×F/r','N/MV×r'],a:0},
+ {t:'formula',q:'Investment required to buy N shares at Market Value M is:',opts:['N + M','N × M','N / M','M / N'],a:1},
+ {t:'formula',q:'Yield percent is defined as:',opts:['(Income/Investment)×100','(Investment/Income)×100','Rate of dividend only','Face Value / Market Value'],a:0},
+ {t:'rules',q:'Bonus shares are:',opts:['Purchased at a discount','Purchased at a premium','Issued free from company profits','Sold only to outsiders'],a:2},
+ {t:'rules',q:'A Rights Issue allows existing shareholders to:',opts:['Receive free shares','Buy additional shares, usually below market value','Sell shares back to the company','Receive a higher dividend rate'],a:1},
+ {t:'general',q:'Brokerage paid when buying a share:',opts:['Decreases the effective cost','Increases the effective cost','Has no effect','Is subtracted from dividend'],a:1},
+ {t:'formula',q:'If a 10% share of FV ₹100 has MV ₹125, the yield percent is:',opts:['8%','10%','12.5%','7.5%'],a:0},
+ {t:'terms',q:'A share is "at par" when:',opts:['MV &gt; FV','MV &lt; FV','MV = FV','FV = 0'],a:2},
+ {t:'formula',q:'If N is doubled while FV, MV and rate stay the same, the yield percent:',opts:['Doubles','Halves','Stays the same','Becomes zero'],a:2},
+ {t:'formula',q:'If MV is doubled while FV and rate stay the same, the yield percent:',opts:['Doubles','Halves','Stays the same','Triples'],a:1},
+ {t:'rules',q:'The number of shares bought with an investment I at Market Value M is:',opts:['I × M','I / M','M / I','I + M'],a:1},
+ {t:'general',q:'Which of these best describes a share bought at a discount?',opts:['MV = FV','MV &gt; FV','MV &lt; FV','MV is unrelated to FV'],a:2}
+];
+const CC_FIB=[
+ {t:'intro',q:'The full form of FV in share terminology is ______ Value.',a:'face'},
+ {t:'terms',q:'Dividend is calculated as a percentage of the ______ Value.',a:'face'},
+ {t:'formula',q:'Income = N × FV × ______ /100.',a:'rate'},
+ {t:'formula',q:'Investment = N × ______.',a:'MV'},
+ {t:'formula',q:'Yield% = (Income ÷ Investment) × ______.',a:'100'},
+ {t:'terms',q:'If MV = FV, the share is said to be at ______.',a:'par'},
+ {t:'terms',q:'If MV is less than FV, the share is at a ______.',a:'discount'},
+ {t:'rules',q:'Free additional shares given to existing shareholders are called ______ shares.',a:'bonus'},
+ {t:'rules',q:'A ______ issue lets existing shareholders buy more shares, usually below market price.',a:'rights'},
+ {t:'general',q:'The fee charged by a broker for buying/selling shares is called ______.',a:'brokerage'},
+ {t:'formula',q:'For N=50, FV=100, rate=8%, the income is ₹______.',a:'400'},
+ {t:'formula',q:'For 50 shares bought at MV=₹120, the investment is ₹______.',a:'6000'},
+ {t:'formula',q:'If a 9% share (FV ₹100) has MV ₹120, the yield is ______% (nearest half).',a:'7.5'},
+ {t:'terms',q:'Number of shares N = Investment ÷ ______.',a:'MV'},
+ {t:'terms',q:'The declared dividend rate and the yield percent are equal only when the share is at ______.',a:'par'}
+];
+const CC_TF=[
+ {t:'intro',q:'The Face Value of a share can change daily based on market demand.',a:false},
+ {t:'terms',q:'Dividend is calculated on the Market Value of a share.',a:false},
+ {t:'formula',q:'Investment = Number of shares × Market Value.',a:true},
+ {t:'formula',q:'Yield percent is always equal to the declared rate of dividend.',a:false},
+ {t:'terms',q:'A share bought at MV greater than FV is said to be at a premium.',a:true},
+ {t:'terms',q:'A share bought at MV less than FV is at a premium.',a:false},
+ {t:'rules',q:'Bonus shares require the shareholder to pay an additional amount.',a:false},
+ {t:'rules',q:'A Rights Issue is usually offered below the current market value.',a:true},
+ {t:'general',q:'Brokerage increases the effective price paid when buying shares.',a:true},
+ {t:'formula',q:'If the Market Value doubles while the dividend rate and Face Value stay fixed, the yield percent is halved.',a:true},
+ {t:'formula',q:'If the number of shares doubles while FV, MV and rate stay fixed, the yield percent also doubles.',a:false},
+ {t:'terms',q:'A share priced exactly equal to its Face Value is said to be "at par".',a:true},
+ {t:'general',q:'Preference shareholders typically receive dividend before equity shareholders.',a:true},
+ {t:'formula',q:'Number of shares bought = Market Value ÷ Investment.',a:false},
+ {t:'terms',q:'The Face Value of a share never changes once it is fixed at issue.',a:true}
+];
+
+const AR=[
+ {a:'Dividend on a share is always calculated as a percentage of its Face Value, not its Market Value.', r:'The Face Value of a share represents the company\'s nominal share capital and remains fixed regardless of stock market price movements.', ans:0},
+ {a:'A share whose Market Value is greater than its Face Value is said to be trading "at a discount."', r:'A share is said to be "at a discount" when its Market Value is less than its Face Value.', ans:3},
+ {a:'If the Market Value of a share increases while the dividend rate and Face Value remain unchanged, the yield percent decreases.', r:'Yield percent is inversely proportional to Market Value, since Yield% = (Rate × Face Value) ÷ Market Value.', ans:0},
+ {a:'Doubling the number of shares held, while keeping Face Value, Market Value and dividend rate fixed, doubles the yield percent.', r:'Yield percent depends only on the dividend rate, the Face Value, and the Market Value — it does not depend on the number of shares held.', ans:3},
+ {a:'Bonus shares are issued to existing shareholders without requiring any additional payment.', r:'Bonus shares are sold to shareholders at a special discounted market price fixed by the company\'s board.', ans:2},
+ {a:'A Rights Issue allows only new investors, not existing shareholders, to purchase additional shares of a company.', r:'A Rights Issue is typically offered to existing shareholders in proportion to their current holding, often below the market price.', ans:3},
+ {a:'Investment made to purchase shares is calculated as the number of shares multiplied by the Face Value.', r:'Investment is the actual amount of money paid by the buyer, which depends on the price at which the share trades in the market, namely the Market Value.', ans:3},
+ {a:'Two shares with the same dividend rate and Face Value can offer different yield percentages to their respective investors.', r:'Yield percent depends on the Market Value at which the share was bought, and two investors may buy the same share at different market prices.', ans:0},
+ {a:'Brokerage paid while buying shares has no effect on an investor\'s effective yield percent.', r:'Brokerage increases the total amount an investor actually pays for the shares, which increases the effective investment without increasing the income earned.', ans:3},
+ {a:'A share bought "at par" has its Market Value exactly equal to its Face Value.', r:'When a share is at par, the declared dividend rate and the actual yield percent earned by the investor are equal.', ans:1}
+];
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A',
+ 'Both A and R are true, but R is NOT the correct explanation of A',
+ 'A is true, but R is false',
+ 'A is false, but R is true'
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'Find the income from 50 shares of FV ₹100 paying an 8% dividend.','Income = N × FV × r/100.','₹400'),
+ mk(2,'Find the income from 100 shares of FV ₹10 paying a 12% dividend.','Income = N × FV × r/100.','₹120'),
+ mk(3,'Find the investment needed to buy 60 shares at Market Value ₹100.','Investment = N × MV.','₹6000'),
+ mk(4,'Find the investment needed to buy 40 shares at Market Value ₹150.','Investment = N × MV.','₹6000'),
+ mk(5,'Find the number of shares bought with ₹5000 at Market Value ₹100.','N = Investment ÷ MV.','50 shares'),
+ mk(6,'Find the number of shares bought with ₹9000 at Market Value ₹90.','N = Investment ÷ MV.','100 shares'),
+ mk(7,'Find the income from 25 shares of FV ₹100 paying a 10% dividend.','Income = N × FV × r/100.','₹250'),
+ mk(8,'Find the income from 80 shares of FV ₹50 paying a 6% dividend.','Income = N × FV × r/100.','₹240'),
+ mk(9,'A ₹100 share is bought at a premium of ₹20. Find its Market Value.','MV = FV + premium.','₹120'),
+ mk(10,'A ₹100 share is bought at a discount of ₹15. Find its Market Value.','MV = FV − discount.','₹85'),
+ mk(11,'A man buys 30 shares of FV ₹100 at MV ₹100 paying a 9% dividend. Find his income and investment.','MV = FV here, so use both formulas directly.','Income = ₹270, Investment = ₹3000'),
+ mk(12,'Find the investment needed to buy 70 shares at Market Value ₹15.','Investment = N × MV.','₹1050'),
+ mk(13,'A man\'s income is ₹180 from shares of FV ₹100 paying a 9% dividend. Find the number of shares.','N = Income × 100 ÷ (FV × r).','20 shares'),
+ mk(14,'A man\'s income is ₹500 from shares of FV ₹100 paying a 10% dividend. Find the number of shares.','N = Income × 100 ÷ (FV × r).','50 shares'),
+ mk(15,'A man buys 45 shares of FV ₹100 at MV ₹90 paying an 8% dividend. Find his income and investment.','Income = N×FV×r/100; Investment = N×MV.','Income = ₹360, Investment = ₹4050'),
+ mk(16,'A ₹100 share has Market Value ₹125. Find the premium.','Premium = MV − FV.','₹25'),
+ mk(17,'A ₹100 share has Market Value ₹70. Find the discount.','Discount = FV − MV.','₹30'),
+ mk(18,'Find the income from 90 shares of FV ₹100 paying a 7% dividend.','Income = N × FV × r/100.','₹630'),
+ mk(19,'Find the income from 120 shares of FV ₹25 paying an 8% dividend.','Income = N × FV × r/100.','₹240'),
+ mk(20,'Find the number of shares bought with ₹8000 at Market Value ₹80.','N = Investment ÷ MV.','100 shares')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'A man buys 70 shares of FV ₹100 at MV ₹125 paying a 10% dividend. Find his income and the yield percent.','Income = N×FV×r/100; Yield% = Income/Investment×100.','Income = ₹700, Yield = 8%'),
+ mk(2,'A man\'s income from shares of FV ₹100 (9% dividend) is ₹450. Find the number of shares.','N = Income × 100 ÷ (FV × r).','50 shares'),
+ mk(3,'A man invests ₹7500 in 12% shares of FV ₹100 at MV ₹150. Find his income and yield percent.','N = Investment ÷ MV; Income = N×FV×r/100.','Income = ₹600, Yield = 8%'),
+ mk(4,'A man buys 200 shares of FV ₹10 at MV ₹15 paying a 12% dividend. Find his income and yield percent.','Income = N×FV×r/100; Yield% = Income/Investment×100.','Income = ₹240, Yield = 8%'),
+ mk(5,'A man\'s total income is ₹960 from an investment of ₹12000. Find the yield percent.','Yield% = Income ÷ Investment × 100.','8%'),
+ mk(6,'Find the Market Value of a share of FV ₹100 paying an 8% dividend, if the yield is 10%.','MV = (FV × r) ÷ Yield%.','₹80'),
+ mk(7,'Find the Market Value of a share of FV ₹50 paying a 9% dividend, if the yield is 6%.','MV = (FV × r) ÷ Yield%.','₹75'),
+ mk(8,'A man buys 150 shares of FV ₹100 at MV ₹90 paying a 9% dividend. Find his income and yield percent.','Income = N×FV×r/100; Yield% = Income/Investment×100.','Income = ₹1350, Yield = 10%'),
+ mk(9,'A man invests ₹6000 in each of two companies: Company A (rate 10%, MV ₹120) and Company B (rate 8%, MV ₹100), both FV ₹100. Find his total income.','Compute income for each company separately, then add.','₹980 total'),
+ mk(10,'Compare the yield of Share X (FV 100, MV 150, rate 15%) with Share Y (FV 100, MV 80, rate 8%). Which is higher?','Yield% = (FV×r)/MV for each share.','Equal — both give 10% yield'),
+ mk(11,'A man buys 40 shares of FV ₹100 at MV ₹110 paying an 11% dividend. Find his income and yield percent.','Income = N×FV×r/100; Yield% = (FV×r)/MV.','Income = ₹440, Yield = 10%'),
+ mk(12,'A man invests ₹10000 in 10% shares of FV ₹100 at MV ₹125. Find his income and yield percent.','N = Investment ÷ MV; Income = N×FV×r/100.','Income = ₹800, Yield = 8%'),
+ mk(13,'A man buys shares of FV ₹100 at a premium of 25%, dividend rate 10%. Find the yield percent.','MV = FV × 1.25; Yield% = (FV×r)/MV.','8%'),
+ mk(14,'A man buys shares of FV ₹50 at a discount of 20%, dividend rate 9%. Find the yield percent.','MV = FV × 0.80; Yield% = (FV×r)/MV.','11.25%'),
+ mk(15,'A man buys 60 shares of FV ₹100 at par, paying an 8% dividend. Find his income and yield percent.','At par, MV = FV.','Income = ₹480, Yield = 8%'),
+ mk(16,'A man invests ₹15000 and buys 100 shares. Find the Market Value per share.','MV = Investment ÷ N.','₹150'),
+ mk(17,'A man\'s income is ₹720 from 90 shares of FV ₹100. Find the dividend rate.','r = Income × 100 ÷ (N × FV).','8%'),
+ mk(18,'A man invests ₹18000 buying shares at MV ₹90 (FV ₹100, dividend rate 6%). Find the number of shares and his income.','N = Investment ÷ MV; Income = N×FV×r/100.','N = 200 shares, Income = ₹1200'),
+ mk(19,'Find the yield percent of a 9% share of FV ₹100 quoted at ₹135.','Yield% = (FV×r)/MV.','≈ 6.67%'),
+ mk(20,'A man sells 100 shares of FV ₹10 (MV ₹18) and invests the proceeds in shares of FV ₹100 at MV ₹90, dividend 8%. Find the new number of shares and income.','Proceeds = N×MV(old); N(new) = Proceeds ÷ MV(new).','N = 20 shares, Income = ₹160')
+];
+const PZ3=[ // Level 3 - ICSE exam
+ mk(1,'A man invests ₹24000 equally in two companies: X (FV 100, MV 120, rate 10%) and Y (FV 100, MV 150, rate 15%). Find the total income and the overall yield percent.','Split the investment equally, then compute income for each company.','Total income = ₹2200, overall yield ≈ 9.17%'),
+ mk(2,'A man sold all his 100 shares in company A (FV 100, MV ₹130) and invested the entire proceeds in company B shares (FV 100, MV ₹100, rate 12%). Find the number of new shares and the income.','Proceeds = N(old)×MV(old); N(new) = Proceeds ÷ MV(new).','130 shares, income = ₹1560'),
+ mk(3,'A man\'s income from 9% shares of FV ₹100 is ₹1350. If the shares were bought at a premium of 25%, find his total investment and yield percent.','Find N from income first, then Investment = N × MV.','N = 150 shares, Investment = ₹18750, Yield = 7.2%'),
+ mk(4,'Show that a 12% share of FV ₹100 bought at ₹150 gives the same yield as an 8% share of FV ₹100 bought at ₹100.','Compute Yield% = (FV×r)/MV for both shares.','Both give an 8% yield'),
+ mk(5,'A man had ₹40500 to invest. He bought shares of FV ₹100 at a premium of ₹35, dividend rate 9%. Find the number of shares bought and his income.','MV = FV + premium; N = Investment ÷ MV.','N = 300 shares, Income = ₹2700'),
+ mk(6,'A man invests ₹10000 in 8% shares of FV ₹100 at par, and ₹12500 in 10% shares of FV ₹100 at MV ₹125. Find his total income and overall yield percent.','Compute income for each part separately, then combine.','Total income = ₹1800, overall yield = 8%'),
+ mk(7,'A man\'s holding of 250 shares (FV ₹10 each) is worth ₹4500 at market value. Find the Market Value per share, and his income if the dividend rate is 8%.','MV = Total market value ÷ N.','MV = ₹18, Income = ₹200'),
+ mk(8,'A company with 50000 shares of FV ₹10 declares a total dividend of ₹75000 for the year. Find the rate of dividend declared.','Rate = Total dividend × 100 ÷ (N × FV).','15%'),
+ mk(9,'A man invests equal sums in 9% shares (FV 100, MV 150) and 6% shares (FV 100, MV 80). Find which investment gives the higher yield, and by how much.','Compute Yield% = (FV×r)/MV for each.','The second gives a higher yield, by 1.5%'),
+ mk(10,'A man sold 300 shares of a company (FV ₹10, MV ₹22) and used the proceeds to buy shares of another company at MV ₹110 (FV ₹100), rate 11%. Find the number of new shares bought and the income.','Proceeds = N(old)×MV(old); N(new) = Proceeds ÷ MV(new).','60 shares, income = ₹660'),
+ mk(11,'Find the Market Value of a 7.5% share of FV ₹100 such that an investor earns a yield of 6%.','MV = (FV×r) ÷ Yield%.','₹125'),
+ mk(12,'A man buys shares of FV ₹50, paying a total of ₹9000, at a premium of 20%. Find the number of shares purchased, and his income if the dividend rate is 8%.','MV = FV × 1.20; N = Investment ÷ MV.','N = 150 shares, Income = ₹600'),
+ mk(13,'An investor holds shares worth a total Face Value of ₹25000 (FV ₹100 each) in a company paying an 11% dividend, bought at a premium of 10%. Find his total investment and yield percent.','N = Total FV ÷ FV; Investment = N × MV.','Investment = ₹27500, Yield = 10%'),
+ mk(14,'A man originally held N shares of FV ₹100, 8% dividend. After buying 50 more shares at the same terms, his total annual income became ₹1200. Find his original number of shares and original income.','Total N = Total income × 100 ÷ (FV×r); subtract 50 for the original count.','Original N = 100 shares, original income = ₹800'),
+ mk(15,'An investor earns a yield of 9% on shares bought at a premium of 25% (FV ₹100). Find the declared dividend rate.','r = Yield% × MV ÷ FV.','11.25%'),
+ mk(16,'Company P (FV 100, rate 10%, MV 125) and Company Q (FV 100, rate 8%, MV 80). An investor has ₹20000 to invest in one company. Find which gives the higher income, and by how much.','Compute income for the full ₹20000 in each company.','Q gives ₹400 more income'),
+ mk(17,'A person invested ₹9600 in 6% shares of FV ₹100 at a certain Market Value and earned a yield of 8%. Find the Market Value and the number of shares bought.','MV = (FV×r) ÷ Yield%; N = Investment ÷ MV.','MV = ₹75, N = 128 shares'),
+ mk(18,'A portfolio has 40 shares of FV ₹100 at a premium of 15% (rate 9%), and 60 shares of FV ₹50 at a discount of 10% (rate 12%). Find the total income and total investment.','Compute income and investment for each holding, then add.','Total income = ₹720, total investment = ₹7300'),
+ mk(19,'A man\'s shares of FV ₹100 (bought at MV ₹140) yield an annual income of ₹1800 at a 12% dividend rate. Find the number of shares held and verify the yield percent.','N = Income × 100 ÷ (FV×r); Yield% = (FV×r)/MV.','N = 150 shares, Yield ≈ 8.57%'),
+ mk(20,'A company has issued 1,00,000 shares of FV ₹10 each and declares a 9% dividend for the year. Find the total dividend paid, and the income of a shareholder holding 500 shares.','Total dividend = Total shares × FV × r/100; individual income uses the same formula with N=500.','Total dividend = ₹90,000, shareholder income = ₹450')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (terms / rules)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('termsGrid',TERMS_DATA);
+buildTheoremCards('rulesGrid',RULES_DATA);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=TERMS_DATA.concat(RULES_DATA);
+  let head='<tr><th>Term / Rule</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Share Explorer legend chips
+const typeLegend=document.getElementById('typeLegend');
+function fmt(v){ return '₹'+(Math.round(v*100)/100).toFixed(2); }
+function fmtPct(v){ return (Math.round(v*100)/100).toFixed(2)+'%'; }
+EXPLORER_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===1?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    const I=shareIncome(item.N,item.FV,item.r), Y=shareYield(item.FV,item.r,item.MV);
+    document.getElementById('typeName').textContent=item.label;
+    document.getElementById('typeFormula').textContent=`FV=${item.FV}, MV=${item.MV}, r=${item.r}%, N=${item.N}`;
+    document.getElementById('typeValue').innerHTML=fmt(I)+'<small>Income earned</small>';
+    document.getElementById('typeValue2').innerHTML=fmtPct(Y)+'<small>Yield percent</small>';
+  });
+  typeLegend.appendChild(chip);
+});
+// initialize with the default active preset (index 1 = Standard Pick)
+(function initExplorer(){
+  const item=EXPLORER_DATA[1];
+  const I=shareIncome(item.N,item.FV,item.r), Y=shareYield(item.FV,item.r,item.MV);
+  document.getElementById('typeValue').innerHTML=fmt(I)+'<small>Income earned</small>';
+  document.getElementById('typeValue2').innerHTML=fmtPct(Y)+'<small>Yield percent</small>';
+})();
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('sd_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('sd_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','quiz-card');
+  card.innerHTML=`<div class="qtag">Assertion &amp; Reasoning · Q${i+1}</div>
+  <div class="ar-statement"><b>Assertion (A):</b>${item.a}</div>
+  <div class="ar-statement"><b>Reason (R):</b>${item.r}</div>`;
+  AR_OPTIONS.forEach((o,oi)=>{
+    const label=String.fromCharCode(97+oi);
+    const b=el('button','opt-btn','('+label+') '+o);
+    b.addEventListener('click',()=>{
+      card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){b.classList.add('correct'); recordQuiz(true);}
+      else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false);}
+    });
+    card.appendChild(b);
+  });
+  arList.appendChild(card);
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase().replace(/\s+/g,'')===item.a.toLowerCase().replace(/\s+/g,'');
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('sd_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('sd_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+// Hero interactive instrument — Share sliders
+const heroMV=document.getElementById('heroMV'), heroR=document.getElementById('heroR'), heroN=document.getElementById('heroN');
+const HERO_FV=100;
+function updateHero(){
+  const MV=parseFloat(heroMV.value), r=parseFloat(heroR.value), N=parseInt(heroN.value);
+  const I=shareIncome(N,HERO_FV,r), Inv=shareInvestment(N,MV), Y=shareYield(HERO_FV,r,MV);
+  document.getElementById('heroMVVal').textContent='₹'+MV;
+  document.getElementById('heroRVal').textContent=r+'%';
+  document.getElementById('heroNVal').textContent=N;
+  document.getElementById('heroI').textContent=fmt(I);
+  document.getElementById('heroInv').textContent='₹'+Inv;
+  document.getElementById('heroYield').textContent=fmtPct(Y);
+  document.getElementById('heroFV').textContent='₹'+(HERO_FV*N);
+}
+[heroMV,heroR,heroN].forEach(inp=>inp.addEventListener('input',updateHero));
+updateHero();
+
+// Yield-vs-Market-Value pairs list
+const compdivLeft=document.getElementById('compdivLeft');
+const cpCard=el('div','card pad');
+const COMPDIV_PAIRS=[
+ ['MV = ₹75','Yield = 12%'],['MV = ₹90','Yield = 10%'],['MV = ₹100','Yield = 9%'],
+ ['MV = ₹120','Yield = 7.5%'],['MV = ₹150','Yield = 6%']
+];
+COMPDIV_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+compdivLeft.appendChild(cpCard);
+
+// Yield formula slider
+const compdivSlider=document.getElementById('compdivSlider');
+function updateCompdiv(){
+  const MV=parseInt(compdivSlider.value);
+  const FV=100, r=9;
+  const Y=shareYield(FV,r,MV);
+  document.getElementById('compdivN').textContent=MV;
+  document.getElementById('compdivSum').textContent=(Math.round(Y*100)/100);
+  document.getElementById('compdivResult').textContent=`Yield = 100 × 9 / ${MV} = ${fmtPct(Y)}`;
+}
+compdivSlider.addEventListener('input',updateCompdiv); updateCompdiv();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','explorer','terms','rules','dividendformula','examples','conceptcheck','practice','pyq','mistakes','assertion','revision','flashcards','formulasheet','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('sd_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('sd_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('sd_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('sd_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('sd_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('sd_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('sd_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['sd_sectionsRead','sd_examplesOpened','sd_quizStats','sd_pz_l1','sd_pz_l2','sd_pz_l3','sd_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
