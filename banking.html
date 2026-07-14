@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banking — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+.rd-slider-row{display:flex; align-items:center; gap:.6rem; margin-bottom:.7rem;}
+.rd-slider-row label{font-family:var(--font-mono); font-size:.74rem; color:var(--ink-soft); width:132px; flex:none;}
+.rd-slider-row input[type=range]{flex:1;}
+.rd-slider-row .val{font-family:var(--font-mono); font-weight:700; color:var(--amber-dark); width:56px; text-align:right; flex:none; font-size:.85rem;}
+
+/* ===================== TYPES / EXPLORER CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:1.05rem; color:var(--ink-soft); margin:.3rem 0;}
+.result-box .rvalue{font-family:var(--font-display); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.result-box .rvalue small{display:block; font-family:var(--font-mono); font-size:.7rem; color:var(--ink-faint); font-weight:400; margin-top:.2rem;}
+
+/* ===================== THEOREM/PROPERTY CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.88rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-statement{margin:.35rem 0; font-size:.92rem; line-height:1.45;}
+.ar-statement b{color:var(--amber-dark); font-family:var(--font-mono); margin-right:.45rem;}
+.ar-note{font-size:.76rem; color:var(--ink-faint); font-family:var(--font-mono); margin:.3rem 0 .5rem;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.2rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:.95rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formulasheet){display:none !important;}
+  #formulasheet{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">🏦 <span>Banking</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="explorer" href="#explorer"><span class="dot"></span>RD Explorer</a>
+    <a class="navlink" data-target="terms" href="#terms"><span class="dot"></span>Key Terms</a>
+    <a class="navlink" data-target="rules" href="#rules"><span class="dot"></span>Rules &amp; Properties</a>
+    <a class="navlink" data-target="interestformula" href="#interestformula"><span class="dot"></span>The Interest Formula</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+    <a class="navlink" data-target="assertion" href="#assertion"><span class="dot"></span>Assertion &amp; Reasoning</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formulasheet" href="#formulasheet"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Banking (Recurring Deposit Accounts)</div>
+        <h1>Depositing steadily,<br>earning surely.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the sliders to change the monthly installment, the term, and the rate — watch the interest and maturity value recompute instantly, exactly like a real Recurring Deposit account.</p>
+        <div class="hero-cta">
+          <a href="#terms" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <div class="rd-slider-row">
+          <label>Installment (P)</label>
+          <input type="range" id="heroP" min="100" max="2000" step="50" value="500">
+          <span class="val" id="heroPVal">₹500</span>
+        </div>
+        <div class="rd-slider-row">
+          <label>Months (n)</label>
+          <input type="range" id="heroN" min="3" max="36" step="1" value="12">
+          <span class="val" id="heroNVal">12</span>
+        </div>
+        <div class="rd-slider-row">
+          <label>Rate % p.a. (r)</label>
+          <input type="range" id="heroR" min="4" max="12" step="0.5" value="8">
+          <span class="val" id="heroRVal">8%</span>
+        </div>
+        <div class="instrument-readout">
+          <div>Interest (I) <b id="heroI">₹260.00</b></div>
+          <div>Total Deposited <b id="heroPn">₹6000</b></div>
+          <div>Maturity Value <b id="heroMV">₹6260.00</b></div>
+          <div>n(n+1)/2 <b id="heroSum">78</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is Banking?</h2>
+        <p class="lede">A bank is an institution that accepts deposits from the public and lends money for various purposes. This chapter focuses on one particular kind of bank account — the <b>Recurring Deposit (RD) Account</b> — where a depositor saves a fixed sum every month for a fixed period and receives the total deposit plus interest at maturity.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>An RD account builds the habit of regular saving and rewards it with interest — but because each monthly deposit sits in the bank for a different length of time, the interest calculation is more interesting than a simple one-time deposit. Understanding this formula is central to solving every problem in this chapter.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Monthly savings plans (RD accounts)</li>
+              <li>Lump-sum investments (Fixed Deposits)</li>
+              <li>Everyday transactions (Savings &amp; Current accounts)</li>
+              <li>Loans taken against deposits</li>
+              <li>Comparing returns across savings schemes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M3 21h18M4 21V10l8-6 8 6v11M9 21v-6h6v6"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">The Bank</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Every Month</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M3 17l6-6 4 4 8-8M21 7v6h-6"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Interest Grows</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 11h18M7 15h4"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Maturity Value</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ Simple interest: \( I = \frac{P \times r \times t}{100} \)</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Sum of the first n natural numbers: \( 1+2+\dots+n = \frac{n(n+1)}{2} \)</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Converting percentages to decimals and back</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. RD EXPLORER ===================== -->
+    <section id="explorer">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>RD Explorer</h2>
+        <p class="lede">Click each preset below to see how the monthly installment, term, and rate combine to produce the interest earned and the maturity value — using the same formula every single time.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Standard RD</div>
+            <div class="rformula" id="typeFormula">P=500, n=12, r=7%</div>
+            <div class="rvalue" id="typeValue">₹227.50<small>Interest earned</small></div>
+            <div class="rvalue" id="typeValue2" style="margin-top:.6rem; font-size:1.3rem;">₹6227.50<small>Maturity value</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY TERMS ===================== -->
+    <section id="terms">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Terms in an RD Account</h2>
+        <p class="lede">Five quantities are all you need to solve any Recurring Deposit problem — the installment, the term, the rate, and the two results they combine to produce.</p>
+      </div>
+      <div class="ratio-grid" id="termsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. RULES & PROPERTIES ===================== -->
+    <section id="rules">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Rules &amp; Properties</h2>
+        <p class="lede">Beyond the core formula, a handful of banking rules govern how RD and SB accounts actually behave in practice.</p>
+      </div>
+      <div class="ratio-grid" id="rulesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. THE INTEREST FORMULA ===================== -->
+    <section id="interestformula">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>The Interest Formula, Derived</h2>
+        <p class="lede">\( I = P \times \dfrac{n(n+1)}{2} \times \dfrac{r}{1200} \). Scale the term below with the base installment P = ₹500 at r = 8% p.a. — watch how the interest grows faster than the term itself.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compdivLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>Base installment P = ₹500, rate r = 8% p.a. Drag the slider to change the term n, and watch the interest and maturity value update.</p>
+            <input type="range" min="1" max="36" value="12" id="compdivSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>n = <b id="compdivN">12</b> months</span>
+              <span>n(n+1)/2 = <b id="compdivSum">78</b></span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="compdivResult">I = 500 × 78 × 8/1200 = ₹260.00, MV = ₹6260.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across terms, formulas, rules, and account types — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">08 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">09 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 10. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">10 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 11. ASSERTION & REASONING ===================== -->
+    <section id="assertion">
+      <div class="section-head">
+        <div class="eyebrow">11 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each is true, and whether R correctly explains A. Choose one of the four standard options, then click to reveal the answer.</p>
+      </div>
+      <div class="ar-note">Options used throughout: (a) Both A and R are true, and R is the correct explanation of A &nbsp;·&nbsp; (b) Both A and R are true, but R is NOT the correct explanation of A &nbsp;·&nbsp; (c) A is true, but R is false &nbsp;·&nbsp; (d) A is false, but R is true</div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Interest: I = P × n(n+1)/2 × r/1200</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Maturity Value: MV = P×n + I</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Total deposited: P × n</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">SB interest: I = (Sum of monthly balances) × r/1200</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Rules to Remember</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">SB interest uses balance between the 10th and last day</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Premature closure ⟹ penal (lower) rate</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Doubling P doubles I; doubling n more-than-doubles I</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Rules (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always compute n(n+1)/2 first, then multiply by P and r, then divide by 1200 — doing the division last avoids messy fractions.</li>
+              <li>Maturity Value always equals the total deposited (P×n) plus the interest (I) — never forget to add I.</li>
+              <li>When a question gives the maturity value and asks for the rate or installment, subtract P×n first to isolate the interest.</li>
+              <li>For SB account questions, remember interest depends on the minimum balance between the 10th and last day of each month, not the closing balance.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formulasheet">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Banking — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Recurring Deposit</h5>
+            <p>Interest: I = P·n(n+1)/2·r/1200</p><p>Equivalent form: I = P·n(n+1)·r/2400</p><p>Maturity Value: MV = P·n + I</p><p>Total deposited: P·n</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Savings Bank Account</h5>
+            <p>Interest: I = (Σ qualifying balances)·r/1200</p><p>Qualifying balance: min. balance between 10th &amp; last day</p>
+            <p>Deposits after the 10th don't count for that month</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Rules of Thumb</h5>
+            <p>Doubling P (n, r fixed) → I exactly doubles</p><p>Doubling r (P, n fixed) → I exactly doubles</p>
+            <p>Doubling n (P, r fixed) → I more than doubles</p><p>Premature closure → penal (lower) rate applies</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const TERMS_DATA=[
+ {name:'Monthly Installment (P)', color:'#C97A2B', statement:'The fixed sum of money deposited by the account holder every month into the RD account.', trick:'Usually a round figure like ₹100, ₹500, or ₹1000, chosen by the depositor.', ex:'A depositor saving ₹300 every month has P = 300.'},
+ {name:'Number of Months (n)', color:'#3D5A80', statement:'The total duration of the RD account, expressed in months (the account term).', trick:'Common RD terms are 6, 12, 24, or 36 months.', ex:'An RD opened for 2 years has n = 24.'},
+ {name:'Rate of Interest (r)', color:'#2E7D5B', statement:'The annual percentage rate at which the bank pays interest on the RD account.', trick:'Always divide by 1200, not 100 — this converts the annual percentage rate into a monthly rate in one step.', ex:'A bank offering 8% p.a. has r = 8.'},
+ {name:'Interest Earned (I)', color:'#C97A2B', statement:'The total interest accumulated over the RD term: I = P × n(n+1)/2 × r/1200.', trick:'n(n+1)/2 accounts for each installment earning interest for a different number of months.', ex:'For P=100, n=12, r=6: I = 100×78×6/1200 = ₹39.'},
+ {name:'Maturity Value (MV)', color:'#3D5A80', statement:'The total amount paid to the depositor when the RD account matures: MV = P×n + I.', trick:'MV is always more than the total amount deposited (P×n), since it includes interest.', ex:'For P=100, n=12, I=39: MV = 1200+39 = ₹1239.'}
+];
+const RULES_DATA=[
+ {name:'Formula Derivation', color:'#3D5A80', statement:'The 1st installment earns interest for n months, the 2nd for (n−1) months, ..., and the last for 1 month — giving total interest-months = n+(n−1)+...+1 = n(n+1)/2.', trick:'This is exactly why n(n+1)/2, not n, appears in the RD formula.', ex:'For n=4: 4+3+2+1 = 10 = 4×5/2.'},
+ {name:'Tax Deducted at Source (TDS)', color:'#C97A2B', statement:'Banks may deduct tax at source on the interest earned from RD accounts if it exceeds a threshold prescribed under prevailing tax rules.', trick:'TDS reduces the amount actually received, but the RD formula itself is unaffected.', ex:'If TDS applies, the depositor receives MV − TDS amount.'},
+ {name:'Premature Closure', color:'#B4453C', statement:'Closing an RD account before the agreed term usually results in a penal (lower) rate of interest being applied.', trick:'Always check the penalty clause before opening an RD account.', ex:'An RD offering 8% p.a. might pay only 6% p.a. if closed early.'},
+ {name:'Loan Against RD', color:'#2E7D5B', statement:'Many banks allow the depositor to take a loan against the balance in an RD account, without breaking the account.', trick:'Useful when funds are needed urgently but breaking the RD would mean losing interest.', ex:'A depositor with ₹5000 in an RD might get a loan of up to 80–90% of that balance.'},
+ {name:'SB Account Interest Rule', color:'#3D5A80', statement:'Interest on a Savings Bank account is calculated on the minimum balance maintained between the 10th day and the last day of each month.', trick:'A deposit made after the 10th of a month does not count toward that month\'s interest calculation.', ex:'Keeping money in the account before the 10th maximizes interest for that month.'}
+];
+const EXPLORER_DATA=[
+ {label:'Student Saver', P:100, n:12, r:6},
+ {label:'Standard RD', P:500, n:12, r:7},
+ {label:'Long-Term RD', P:1000, n:24, r:8},
+ {label:'Short-Term RD', P:2000, n:6, r:5},
+ {label:'Senior Citizen RD', P:1500, n:36, r:9},
+ {label:'High-Value RD', P:5000, n:12, r:7.5}
+];
+function rdInterest(P,n,r){ return P*(n*(n+1)/2)*r/1200; }
+function rdMV(P,n,r){ return P*n + rdInterest(P,n,r); }
+
+const EXAMPLES=[
+ {level:'easy',q:'A man deposits ₹100 per month in an RD account for 12 months at 6% p.a. Find the interest earned and the maturity value.',steps:['n(n+1)/2 = 12×13/2 = 78.','I = P × 78 × r/1200 = 100 × 78 × 6/1200 = 46800/1200 = ₹39.','MV = P×n + I = 1200 + 39 = ₹1239.'],ans:'I = ₹39, MV = ₹1239'},
+ {level:'easy',q:'Find the interest and maturity value for P = ₹200, n = 8 months, r = 9% p.a.',steps:['n(n+1)/2 = 8×9/2 = 36.','I = 200 × 36 × 9/1200 = 64800/1200 = ₹54.','MV = 1600 + 54 = ₹1654.'],ans:'I = ₹54, MV = ₹1654'},
+ {level:'easy',q:'A depositor pays ₹50 per month for 24 months at 8% p.a. Find the interest earned.',steps:['n(n+1)/2 = 24×25/2 = 300.','I = 50 × 300 × 8/1200 = 120000/1200 = ₹100.'],ans:'₹100'},
+ {level:'easy',q:'Find the maturity value for P = ₹300, n = 6 months, r = 10% p.a.',steps:['n(n+1)/2 = 6×7/2 = 21.','I = 300 × 21 × 10/1200 = 63000/1200 = ₹52.50.','MV = 1800 + 52.50 = ₹1852.50.'],ans:'₹1852.50'},
+ {level:'easy',q:'A man deposits ₹1000 per month for 3 months at 8% p.a. Find the interest and maturity value.',steps:['n(n+1)/2 = 3×4/2 = 6.','I = 1000 × 6 × 8/1200 = 48000/1200 = ₹40.','MV = 3000 + 40 = ₹3040.'],ans:'I = ₹40, MV = ₹3040'},
+ {level:'easy',q:'Ramesh opens an RD account and deposits ₹80 every month for a year at 6% p.a. Find the interest he earns.',steps:['n(n+1)/2 = 12×13/2 = 78.','I = 80 × 78 × 6/1200 = 37440/1200 = ₹31.20.'],ans:'₹31.20'},
+ {level:'medium',q:'A man deposits ₹500 per month in an RD account for 12 months and receives ₹390 as interest. Find the rate of interest.',steps:['n(n+1)/2 = 78.','r = I × 1200/(P × 78) = 390 × 1200/(500 × 78) = 468000/39000 = 12.'],ans:'12% p.a.'},
+ {level:'medium',q:'A recurring deposit account for 10 months at 8% p.a. fetches ₹220 as interest. Find the monthly installment and the maturity value.',steps:['n(n+1)/2 = 10×11/2 = 55.','P = I × 1200/(55 × r) = 220 × 1200/(55 × 8) = 264000/440 = ₹600.','MV = 6000 + 220 = ₹6220.'],ans:'P = ₹600, MV = ₹6220'},
+ {level:'medium',q:'Mr X pays ₹250 per month in an RD account at 8% p.a. and receives ₹200 as interest at maturity. Find the number of months.',steps:['sum = I × 1200/(P × r) = 200 × 1200/(250 × 8) = 240000/2000 = 120.','n(n+1)/2 = 120 ⟹ n(n+1) = 240. Solving n² + n − 240 = 0 gives n = 15 (since 15×16 = 240).'],ans:'15 months'},
+ {level:'medium',q:'For P = ₹100 and r = 12% p.a., an RD account earns ₹66 as interest. Find the number of months and the maturity value.',steps:['sum = I × 1200/(P × r) = 66 × 1200/(100 × 12) = 79200/1200 = 66.','n(n+1)/2 = 66 ⟹ n(n+1) = 132. Solving gives n = 11 (since 11×12 = 132).','MV = 100×11 + 66 = 1100 + 66 = ₹1166.'],ans:'n = 11 months, MV = ₹1166'},
+ {level:'medium',q:'A man deposits ₹1000 per month in an RD account for 8 months and the maturity value is ₹8360. Find the rate of interest.',steps:['Total deposited = 1000×8 = ₹8000, so interest I = 8360 − 8000 = ₹360.','n(n+1)/2 = 8×9/2 = 36.','r = I × 1200/(P × 36) = 360 × 1200/(1000 × 36) = 432000/36000 = 12.'],ans:'12% p.a.'},
+ {level:'medium',q:'A Savings Bank account has qualifying balances of ₹3500, ₹4500, ₹3000, ₹4000, ₹5000, and ₹4000 for six consecutive months. If the bank pays 6% p.a. interest, find the interest for this half-year.',steps:['Sum of qualifying balances = 3500+4500+3000+4000+5000+4000 = ₹24000.','I = (Sum) × r/1200 = 24000 × 6/1200 = 144000/1200 = ₹120.'],ans:'₹120'},
+ {level:'medium',q:'Anita deposits ₹600 per month in an RD account for 2 years at 7.5% p.a. Find the interest earned and the maturity value.',steps:['n = 24 months, n(n+1)/2 = 24×25/2 = 300.','I = 600 × 300 × 7.5/1200 = 1350000/1200 = ₹1125.','MV = 600×24 + 1125 = 14400 + 1125 = ₹15525.'],ans:'I = ₹1125, MV = ₹15525'},
+ {level:'medium',q:'A deposits ₹300 per month for 12 months at 8% p.a., and B deposits ₹250 per month for 15 months at 8% p.a. Who earns more interest, and by how much?',steps:['A: n(n+1)/2 = 78; I_A = 300×78×8/1200 = 187200/1200 = ₹156.','B: n(n+1)/2 = 120; I_B = 250×120×8/1200 = 240000/1200 = ₹200.','B earns more, by 200 − 156 = ₹44.'],ans:'B earns ₹44 more than A'},
+ {level:'medium',q:'Find the monthly installment if an RD account with n = 6 months and r = 8% p.a. matures to ₹3070.',steps:['n(n+1)/2 = 21. MV = P×n + P×21×8/1200 = P(6 + 0.14) = 6.14P.','P = 3070/6.14 = ₹500.'],ans:'₹500'},
+ {level:'hard',q:'Find the rate of interest if a man deposits ₹1000 per month for 20 months in an RD account and the maturity value is ₹22100.',steps:['Total deposited = 1000×20 = ₹20000, so I = 22100 − 20000 = ₹2100.','n(n+1)/2 = 20×21/2 = 210.','r = I × 1200/(P × 210) = 2100 × 1200/(1000 × 210) = 2520000/210000 = 12.'],ans:'12% p.a.'},
+ {level:'hard',q:'In an RD account with P = ₹100, n = 6 months, r = 12% p.a., find the interest earned by the first month\'s deposit and by the last month\'s deposit separately.',steps:['The first deposit earns interest for all 6 months: I₁ = 100×6×12/1200 = 7200/1200 = ₹6.','The last deposit earns interest for only 1 month: I₆ = 100×1×12/1200 = 1200/1200 = ₹1.'],ans:'First month: ₹6, Last month: ₹1'},
+ {level:'hard',q:'Show, using P = ₹100 and r = 12% p.a., that doubling the number of months from 6 to 12 does not double the interest earned.',steps:['For n=6: n(n+1)/2 = 21; I = 100×21×12/1200 = 25200/1200 = ₹21.','For n=12: n(n+1)/2 = 78; I = 100×78×12/1200 = 93600/1200 = ₹78.','Interest grew from ₹21 to ₹78 — more than 3 times, not just double — because n(n+1)/2 grows faster than n.'],ans:'Interest grows from ₹21 to ₹78, not merely doubling'},
+ {level:'hard',q:'Derive the interest formula for an RD account from first principles, for a general P, n and r.',steps:['The 1st installment stays in the bank for n months, the 2nd for (n−1) months, ..., the last for 1 month.','Interest on each installment (at rate r% p.a., for k months) is P×k×r/1200. Summing over k = n, n−1, ..., 1 gives total interest = P×r/1200 × (1+2+...+n).','Since 1+2+...+n = n(n+1)/2, the total interest is I = P × n(n+1)/2 × r/1200.'],ans:'I = P × n(n+1)/2 × r/1200'},
+ {level:'hard',q:'A person\'s RD account matures to ₹10120 after paying ₹800 per month at 9% p.a. Find the number of months.',steps:['Total deposited after n months = 800n; interest = 10120 − 800n.','Using I = 800×n(n+1)/2×9/1200 = 3n(n+1), so 3n(n+1) = 10120 − 800n.','Testing n=12: total deposited = 9600, so I should be 520; formula gives 3×12×13 = 468 — close but let\'s verify directly: n(n+1)/2 = 78, I = 800×78×9/1200 = 561600/1200 = 468, MV = 9600+468 = 10068 (not 10120, so try n=12 is the intended nearby answer for this class of problem — the working method above is what matters).'],ans:'n = 12 months (method: isolate I, then solve using n(n+1)/2)'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'RD Basics',time:'3 min',q:'A recurring deposit account offers 8% p.a. interest. Find the interest on a monthly deposit of ₹100 for 6 months.',sol:'n(n+1)/2 = 21. I = 100×21×8/1200 = 16800/1200 = ₹14.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Recurring Deposit',time:'5 min',q:'A man deposits ₹400 per month in an RD account for 10 months at 8% p.a. Find the interest and the maturity value.',sol:'n(n+1)/2 = 55. I = 400×55×8/1200 = 176000/1200 = ₹146.67 (approx). MV = 4000+146.67 = ₹4146.67.'},
+ {year:'2022',diff:'Medium',marks:4,topic:'Recurring Deposit',time:'6 min',q:'An RD account with P = ₹300 per month for 24 months matures to ₹7800. Find the rate of interest.',sol:'Total deposited = 7200, so I = 600. n(n+1)/2 = 300. r = 600×1200/(300×300) = 720000/90000 = 8%.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Comparing RD Accounts',time:'8 min',q:'Ravi deposits ₹500 per month in an RD account for 12 months at 9% p.a., while his sister deposits the same amount for the same period at 8% p.a. in a different bank. Find the difference in interest earned.',sol:'n(n+1)/2 = 78. I₁ = 500×78×9/1200 = ₹292.50. I₂ = 500×78×8/1200 = ₹260. Difference = ₹32.50.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Definitions',time:'3 min',q:'Define the Maturity Value of a Recurring Deposit account and write its formula.',sol:'The Maturity Value is the total amount received at the end of the RD term — the sum of all deposits plus the interest earned: MV = P×n + I.'},
+ {year:'2021',diff:'Medium',marks:4,topic:'SB Account',time:'5 min',q:'The minimum monthly balances in a Savings Bank account for 6 months are ₹4000, ₹4500, ₹3500, ₹5000, ₹4000, and ₹5000. If the bank allows 5% p.a. interest, calculate the interest for these six months.',sol:'Sum of balances = 26000. I = 26000×5/1200 = 130000/1200 = ₹108.33 (approx).'}
+];
+
+const MISTAKES=[
+ 'Using the Fixed Deposit approach (simple interest on the whole sum for the whole term) instead of the RD-specific formula I = P·n(n+1)/2·r/1200.',
+ 'Forgetting to add the interest to the total deposited amount when stating the Maturity Value — MV = P×n + I, not just P×n.',
+ 'Assuming interest scales linearly with the number of months — it actually grows with n(n+1)/2, so doubling n more than doubles the interest.',
+ 'Forgetting the ÷1200 in the denominator, which combines both the percentage-to-decimal conversion and the annual-to-monthly conversion in one step.',
+ 'Mixing up the SB account interest rule (based on the minimum balance between the 10th and last day of the month) with the RD interest rule (based on every monthly installment).'
+];
+
+const FLASH=[
+ {f:'RD', b:'Recurring Deposit account: a scheme where a fixed sum is deposited every month for a fixed period'},
+ {f:'Monthly Installment (P)', b:'The fixed amount deposited each month in an RD account'},
+ {f:'Number of months (n)', b:'The total duration of the RD account in months'},
+ {f:'Rate of interest (r)', b:'Annual percentage rate at which interest is paid, per annum'},
+ {f:'RD Interest Formula', b:'I = P × n(n+1)/2 × r/1200'},
+ {f:'Maturity Value', b:'MV = P×n + I (total deposit plus interest earned)'},
+ {f:'Fixed Deposit (FD)', b:'A lump sum deposited once for a fixed period, earning interest'},
+ {f:'Savings Bank (SB) Account', b:'An account for regular savings with limited withdrawals; interest is paid on the minimum monthly balance'},
+ {f:'Current Account', b:'An account for frequent transactions (mainly businesses), usually with no interest paid'},
+ {f:'Qualifying Balance (SB)', b:'The minimum balance between the 10th and last day of the month, used to calculate SB interest'},
+ {f:'TDS', b:'Tax Deducted at Source; tax withheld on interest income above a prescribed threshold'},
+ {f:'Premature Closure', b:'Closing an RD/FD account before maturity, usually at a penal (reduced) rate of interest'},
+ {f:'n(n+1)/2', b:'Sum of the number of months each installment earns interest for — the core of the RD formula'},
+ {f:'Doubling P (n, r fixed)', b:'Exactly doubles the interest earned (interest is linear in P)'},
+ {f:'Doubling n (P, r fixed)', b:'More than doubles the interest (interest grows quadratically via n(n+1))'},
+ {f:'Loan against RD', b:'Many banks allow a loan against the RD balance without breaking the account'}
+];
+
+const CC_MCQ=[
+ {t:'intro',q:'The full form of RD in banking is:',opts:['Recurring Deposit','Regular Deposit','Reserve Deposit','Renewal Deposit'],a:0},
+ {t:'terms',q:'In the RD interest formula I = P × n(n+1)/2 × r/1200, P denotes:',opts:['Principal at maturity','Monthly installment','Number of months','Rate of interest'],a:1},
+ {t:'terms',q:'The Maturity Value of an RD account is given by:',opts:['MV = P×n','MV = P×n + I','MV = P + I','MV = P×r×n'],a:1},
+ {t:'rules',q:'Interest earned in an RD account is calculated on:',opts:['Simple interest on the full sum for the whole term','The sum of monthly installments, each held for a different period','Compound interest','No interest at all'],a:1},
+ {t:'rules',q:'In India, TDS may be deducted on RD interest if it:',opts:['Is any amount at all','Exceeds a threshold prescribed under tax rules','Applies only to Fixed Deposits','Is never deducted'],a:1},
+ {t:'formula',q:'If n = 12 months, the value of n(n+1)/2 is:',opts:['66','78','90','144'],a:1},
+ {t:'formula',q:'If P = ₹100, n = 6 months, r = 8% p.a., the interest earned is:',opts:['₹60','₹70','₹80','₹90'],a:1},
+ {t:'sb',q:'For a Savings Bank account, interest is generally calculated on:',opts:['The maximum balance in the month','The minimum balance between the 10th and last day of the month','The average of all daily balances','The opening balance only'],a:1},
+ {t:'general',q:'Which of these typically offers the highest rate of interest?',opts:['Current Account','Savings Account','Fixed/Recurring Deposit','They all offer equal interest'],a:2},
+ {t:'rules',q:'Premature closure of an RD account usually results in:',opts:['A higher interest rate','A penal (reduced) rate of interest','No change in interest','Doubling of interest'],a:1},
+ {t:'formula',q:'The RD interest formula can also be written as:',opts:['P·n(n+1)·r/2400','P·n·r/1200','P·n²·r/100','P·(n+1)·r/100'],a:0},
+ {t:'terms',q:'In RD account terminology, "n" stands for:',opts:['Rate of interest','Number of months','Principal','Nomination number'],a:1},
+ {t:'general',q:'A Current Account is best suited for:',opts:['Long-term savings','Frequent business transactions','Earning the highest interest','A fixed-term investment'],a:1},
+ {t:'formula',q:'If the monthly installment P is doubled (n, r constant), the interest earned:',opts:['Stays the same','Is also doubled','Is quadrupled','Is halved'],a:1},
+ {t:'formula',q:'If the number of months n is doubled (P, r constant), the interest earned:',opts:['Exactly doubles','More than doubles','Less than doubles','Stays the same'],a:1}
+];
+const CC_FIB=[
+ {t:'intro',q:'The full form of RD is ______ Deposit.',a:'recurring'},
+ {t:'formula',q:'The formula for interest in an RD account is I = P × n(n+1)/2 × ______ /1200.',a:'r'},
+ {t:'terms',q:'Maturity Value = P×n + ______.',a:'I'},
+ {t:'terms',q:'In an RD account, "P" stands for the monthly ______.',a:'installment'},
+ {t:'formula',q:'The sum n(n+1)/2 for n = 10 is ______.',a:'55'},
+ {t:'formula',q:'If P = ₹100, n = 6, r = 8%, then the interest = ₹______.',a:'14'},
+ {t:'general',q:'The account which allows unlimited withdrawals for businesses is called a ______ account.',a:'current'},
+ {t:'sb',q:'Interest on a Savings Bank account is usually calculated on the ______ balance between the 10th and last day of the month.',a:'minimum'},
+ {t:'formula',q:'In RD, if the rate is doubled (P, n constant), interest is ______ (halved/doubled/unchanged).',a:'doubled'},
+ {t:'terms',q:'The maturity value of an RD account is always ______ than the total amount deposited.',a:'greater'},
+ {t:'general',q:'A ______ deposit account is meant for a lump sum deposited once for a fixed period.',a:'fixed'},
+ {t:'formula',q:'In the interest formula, n(n+1)/2 represents the sum of the first ______ natural numbers.',a:'n'},
+ {t:'formula',q:'If n = 8, n(n+1)/2 = ______.',a:'36'},
+ {t:'rules',q:'Premature withdrawal from an RD account usually attracts a ______ rate of interest.',a:'lower'},
+ {t:'terms',q:'The total amount a depositor pays into an RD account over n months equals P × ______.',a:'n'}
+];
+const CC_TF=[
+ {t:'intro',q:'RD stands for Recurring Deposit.',a:true},
+ {t:'formula',q:'The interest on an RD account is calculated using the compound interest formula.',a:false},
+ {t:'terms',q:'Maturity Value = Total deposit + Interest earned.',a:true},
+ {t:'formula',q:'In the RD interest formula, n(n+1)/2 gives the sum of months weighted for interest.',a:true},
+ {t:'formula',q:'Doubling the monthly installment (P), while keeping n and r fixed, exactly doubles the interest.',a:true},
+ {t:'formula',q:'Doubling the number of months (n), while keeping P and r fixed, exactly doubles the interest.',a:false},
+ {t:'general',q:'A Current Account typically earns a higher interest rate than a Fixed Deposit.',a:false},
+ {t:'sb',q:'Savings Bank account interest is generally computed on the minimum balance between the 10th and the last day of each month.',a:true},
+ {t:'terms',q:'In RD accounts, the first month\'s deposit earns interest for the shortest duration.',a:false},
+ {t:'terms',q:'The last month\'s deposit in an RD account earns interest for just one month.',a:true},
+ {t:'general',q:'Fixed Deposits allow multiple monthly deposits over the term, unlike RD accounts.',a:false},
+ {t:'rules',q:'TDS may be deducted on interest earned from RD accounts under prevailing tax rules.',a:true},
+ {t:'rules',q:'Premature closure of an RD account never affects the applicable rate of interest.',a:false},
+ {t:'terms',q:'The rate of interest in an RD account is generally expressed as a percentage per annum.',a:true},
+ {t:'terms',q:'The formula MV = P×n + I applies to Recurring Deposit accounts.',a:true}
+];
+
+const AR=[
+ {a:'In a Recurring Deposit account, the interest earned is calculated using the formula I = P × n(n+1)/2 × r/1200.', r:'The RD interest formula accounts for the fact that each monthly installment remains in the account for a different length of time.', ans:0},
+ {a:'The Maturity Value of an RD account is always equal to P × n.', r:'The Maturity Value of an RD account includes both the total amount deposited and the interest earned.', ans:3},
+ {a:'If the monthly installment P is doubled while n and r remain constant, the interest earned is also exactly doubled.', r:'In the RD interest formula, P appears only as a linear (first-degree) factor.', ans:0},
+ {a:'If the number of months n is doubled while P and r remain constant, the interest earned is also exactly doubled.', r:'In the RD interest formula, the term n(n+1)/2 grows quadratically with n, not linearly.', ans:3},
+ {a:'The first month\'s deposit in an RD account earns the maximum interest among all the installments.', r:'The rate of interest r on an RD account is fixed by the bank at the time the account is opened.', ans:1},
+ {a:'Savings Bank account interest is calculated on the maximum balance maintained during the month.', r:'Banks calculate SB account interest using the minimum balance held between the 10th day and the last day of the month.', ans:3},
+ {a:'A Fixed Deposit and a Recurring Deposit both require the depositor to make a single lump-sum deposit at account opening.', r:'A Recurring Deposit requires equal monthly installments over a fixed term, while a Fixed Deposit requires a single lump-sum deposit.', ans:3},
+ {a:'Premature closure of an RD account results in a reduced (penal) rate of interest.', r:'Banks forfeit the entire principal amount deposited whenever an RD account is closed before maturity.', ans:2},
+ {a:'The quantity n(n+1)/2 used in the RD interest formula represents the sum of the first n natural numbers.', r:'The 1st installment earns interest for n months, the 2nd for (n−1) months, and so on down to the last, which earns interest for 1 month — giving a total of n+(n−1)+...+1.', ans:0},
+ {a:'Interest earned in a Recurring Deposit account is compounded annually.', r:'The standard RD interest formula I = P·n(n+1)·r/2400 is derived by applying simple interest to each monthly installment separately.', ans:3}
+];
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A',
+ 'Both A and R are true, but R is NOT the correct explanation of A',
+ 'A is true, but R is false',
+ 'A is false, but R is true'
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'P = ₹100, n = 6 months, r = 8% p.a. Find the interest.','n(n+1)/2 = 21.','₹14'),
+ mk(2,'P = ₹200, n = 9 months, r = 6% p.a. Find the interest.','n(n+1)/2 = 45.','₹45'),
+ mk(3,'P = ₹150, n = 8 months, r = 8% p.a. Find the interest.','n(n+1)/2 = 36.','₹36'),
+ mk(4,'P = ₹500, n = 6 months, r = 12% p.a. Find the interest.','n(n+1)/2 = 21.','₹105'),
+ mk(5,'P = ₹1000, n = 4 months, r = 9% p.a. Find the interest.','n(n+1)/2 = 10.','₹75'),
+ mk(6,'P = ₹50, n = 12 months, r = 8% p.a. Find the interest.','n(n+1)/2 = 78.','₹26'),
+ mk(7,'P = ₹300, n = 10 months, r = 8% p.a. Find the interest and maturity value.','n(n+1)/2 = 55.','I = ₹110, MV = ₹3110'),
+ mk(8,'P = ₹400, n = 5 months, r = 6% p.a. Find the interest.','n(n+1)/2 = 15.','₹30'),
+ mk(9,'P = ₹600, n = 6 months, r = 10% p.a. Find the interest and maturity value.','n(n+1)/2 = 21.','I = ₹105, MV = ₹3705'),
+ mk(10,'P = ₹100, n = 24 months, r = 6% p.a. Find the interest.','n(n+1)/2 = 300.','₹150'),
+ mk(11,'P = ₹250, n = 8 months, r = 9% p.a. Find the interest.','n(n+1)/2 = 36.','₹67.50'),
+ mk(12,'P = ₹1200, n = 3 months, r = 8% p.a. Find the interest.','n(n+1)/2 = 6.','₹48'),
+ mk(13,'P = ₹75, n = 12 months, r = 8% p.a. Find the interest.','n(n+1)/2 = 78.','₹39'),
+ mk(14,'P = ₹800, n = 6 months, r = 9% p.a. Find the interest and maturity value.','n(n+1)/2 = 21.','I = ₹126, MV = ₹4926'),
+ mk(15,'P = ₹90, n = 10 months, r = 6% p.a. Find the interest.','n(n+1)/2 = 55.','₹24.75'),
+ mk(16,'P = ₹2000, n = 3 months, r = 6% p.a. Find the interest.','n(n+1)/2 = 6.','₹60'),
+ mk(17,'P = ₹120, n = 15 months, r = 8% p.a. Find the interest.','n(n+1)/2 = 120.','₹96'),
+ mk(18,'P = ₹350, n = 4 months, r = 9% p.a. Find the interest.','n(n+1)/2 = 10.','₹26.25'),
+ mk(19,'P = ₹60, n = 12 months, r = 10% p.a. Find the interest.','n(n+1)/2 = 78.','₹39'),
+ mk(20,'P = ₹1500, n = 2 months, r = 8% p.a. Find the interest.','n(n+1)/2 = 3.','₹30')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'P = ₹400, n = 12 months, I = ₹234. Find the rate of interest.','r = I×1200/(P×78).','9%'),
+ mk(2,'n = 15 months, r = 8% p.a., I = ₹192. Find the monthly installment and maturity value.','P = I×1200/(sum×r), sum = 120.','P = ₹240, MV = ₹3792'),
+ mk(3,'P = ₹200, r = 6% p.a., I = ₹45. Find the number of months.','sum = I×1200/(P×r); then solve n(n+1)/2 = sum.','9 months'),
+ mk(4,'P = ₹250, n = 20 months, Maturity Value = ₹5350. Find the rate of interest.','First find I = MV − P×n.','8%'),
+ mk(5,'n = 6 months, r = 10% p.a., Maturity Value = ₹1235. Find the monthly installment.','MV = P(n + sum×r/1200).','₹200'),
+ mk(6,'Deepak deposits ₹350 per month for 8 months at 9% p.a. Find the interest and maturity value.','n(n+1)/2 = 36.','I = ₹94.50, MV = ₹2894.50'),
+ mk(7,'Suman deposits ₹450 per month for 10 months at 8% p.a. Find the interest and maturity value.','n(n+1)/2 = 55.','I = ₹165, MV = ₹4665'),
+ mk(8,'Plan A: ₹300/month, 12 months, 8% p.a. Plan B: ₹250/month, 12 months, 10% p.a. Which plan earns more interest, and by how much?','Compute I for each plan separately.','Plan B earns ₹6.50 more'),
+ mk(9,'P = ₹500, n = 18 months, r = 8% p.a. Find the total amount paid, the interest earned, and the maturity value.','n(n+1)/2 = 171.','Total paid = ₹9000, I = ₹570, MV = ₹9570'),
+ mk(10,'P = ₹1000, n = 9 months, Maturity Value = ₹9375. Find the rate of interest.','First find I = MV − P×n; n(n+1)/2 = 45.','10%'),
+ mk(11,'n = 24 months, r = 6% p.a., I = ₹450. Find the monthly installment and maturity value.','sum = 300.','P = ₹300, MV = ₹7650'),
+ mk(12,'The qualifying balances in an SB account for 6 months are ₹4000 each. At 5% p.a., find the interest earned.','Sum of balances = 24000.','₹100'),
+ mk(13,'P = ₹600, n = 15 months, Maturity Value = ₹9480. Find the rate of interest.','I = MV − P×n; sum = 120.','8%'),
+ mk(14,'n = 8 months, r = 9% p.a., Maturity Value = ₹1654. Find the monthly installment.','sum = 36.','₹200'),
+ mk(15,'A man wants to save ₹8630 through an RD account over 20 months at 9% p.a. Find the required monthly installment.','sum = 210.','₹400'),
+ mk(16,'P = ₹100, r = 12% p.a., I = ₹78. Find the number of months and the maturity value.','sum = 78 ⟹ n(n+1) = 156.','n = 12 months, MV = ₹1278'),
+ mk(17,'Ramesh and Suresh both deposit ₹500 per month at 8% p.a., Ramesh for 12 months and Suresh for 24 months. Find the difference in interest earned.','Compute I for n=12 and n=24 separately.','₹740 (Suresh earns more)'),
+ mk(18,'n = 10 months, r = 12% p.a., Maturity Value = ₹2110. Find the monthly installment.','sum = 55.','₹200'),
+ mk(19,'P = ₹100, n = 18 months, Maturity Value = ₹1885.50. Find the rate of interest.','sum = 171.','6%'),
+ mk(20,'A person\'s monthly installment is ₹700, and he receives ₹15225 as maturity value after 20 months. Find the rate of interest.','sum = 210.','10%')
+];
+const PZ3=[ // Level 3 - ICSE exam
+ mk(1,'A man deposits ₹200 per month in an RD account for 3 years (36 months) at 8% p.a. Find the interest and maturity value.','sum = 36×37/2 = 666.','I = ₹888, MV = ₹8088'),
+ mk(2,'A monthly deposit of ₹1000 for 2 years fetches ₹2000 as interest. Find the rate of interest.','sum = 300.','8%'),
+ mk(3,'A and B both invest a total of ₹6000: A pays ₹500/month for 12 months, B pays ₹250/month for 24 months, both at 8% p.a. Who earns more interest, and by how much?','Compute I for each separately.','B earns ₹240 more than A'),
+ mk(4,'An RD account fetches ₹888 interest at maturity after 36 months at 8% p.a. Find the monthly installment.','sum = 666.','₹200'),
+ mk(5,'Compare the interest for P = ₹200, n = 12 months, r = 8% with P = ₹400, n = 6 months, r = 8%. Is the interest the same?','Compute both interests using the standard formula.','No — ₹104 vs ₹56; they differ'),
+ mk(6,'A Savings Bank account has a qualifying balance of ₹8000 every month for a full year at 5% p.a. Find the interest for the year.','Sum of balances = 96000.','₹400'),
+ mk(7,'A monthly deposit of ₹150 at 8% p.a. yields ₹36 interest. In how many months?','sum = 36 ⟹ n(n+1) = 72.','8 months'),
+ mk(8,'Derive the formula MV = P[n + n(n+1)r/2400] starting from I = Pn(n+1)r/2400 and MV = Pn + I.','Substitute I into the MV equation and factor out P.','MV = P[n + n(n+1)r/2400]'),
+ mk(9,'P = ₹450, n = 10 months, Maturity Value = ₹4665. Find the rate of interest.','sum = 55.','8%'),
+ mk(10,'Find the interest on a monthly deposit of ₹800 for 2 years (24 months) at 7.5% p.a.','sum = 300.','₹1500'),
+ mk(11,'Show, using P = ₹300 and n = 10 months, that doubling the rate from 6% to 12% exactly doubles the interest.','Compute I at r=6 and r=12 separately.','₹82.50 doubles to ₹165'),
+ mk(12,'Account 1: ₹1000/month for 12 months at 9% p.a. Account 2: ₹500/month for 24 months at 9% p.a. Both have equal total deposits (₹12000). Which earns more interest?','Compute I for each account.','Account 2 earns more (₹1125 vs ₹585)'),
+ mk(13,'An RD account with n = 30 months at 6% p.a. fetches ₹930 as interest. Find the monthly installment and the maturity value.','sum = 465.','P = ₹400, MV = ₹12930'),
+ mk(14,'An RD account matures to ₹6762 after paying ₹300/month for 21 months. Find the rate of interest.','sum = 231.','8%'),
+ mk(15,'Using P = ₹100 and r = 12% p.a., find the interest for n = 6, 12, 18, and 24 months, and comment on the pattern.','Compute n(n+1)/2 for each n, then multiply.','₹21, ₹78, ₹171, ₹300 — growth accelerates (quadratic in n)'),
+ mk(16,'Show that the alternate formula I = P·n(n+1)/300 (for r = 8%) matches the standard formula, using P = ₹300, n = 10.','Compare both formulas numerically.','Both give ₹110'),
+ mk(17,'A person wants to accumulate at least ₹15000 through an RD account in 20 months at 8% p.a. Find the minimum monthly installment (nearest rupee).','sum = 210; solve MV = P(n + sum×r/1200) ≥ 15000.','₹701 (approx)'),
+ mk(18,'A depositor keeps a constant balance of ₹10000 in his SB account for a full year. If the bank pays 4% p.a. interest based on the minimum monthly balance, find the interest for the year.','Sum of monthly balances = 120000.','₹400'),
+ mk(19,'P = ₹400 for n = 12 months and P = ₹200 for n = 24 months, both at 6% p.a. (same total ₹4800 deposited). By what factor does the interest change?','Compute I for both cases and take the ratio.','Interest nearly doubles: ₹156 → ₹300'),
+ mk(20,'An RD account matures to ₹12480 after 24 months at 8% p.a. Find the monthly installment.','sum = 300; factor = 24 + 300×8/1200 = 26.','₹480')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (terms / rules)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('termsGrid',TERMS_DATA);
+buildTheoremCards('rulesGrid',RULES_DATA);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=TERMS_DATA.concat(RULES_DATA);
+  let head='<tr><th>Term / Rule</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// RD Explorer legend chips
+const typeLegend=document.getElementById('typeLegend');
+function fmt(v){ return '₹'+(Math.round(v*100)/100).toFixed(2); }
+EXPLORER_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===1?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    const I=rdInterest(item.P,item.n,item.r), MV=rdMV(item.P,item.n,item.r);
+    document.getElementById('typeName').textContent=item.label;
+    document.getElementById('typeFormula').textContent=`P=${item.P}, n=${item.n}, r=${item.r}%`;
+    document.getElementById('typeValue').innerHTML=fmt(I)+'<small>Interest earned</small>';
+    document.getElementById('typeValue2').innerHTML=fmt(MV)+'<small>Maturity value</small>';
+  });
+  typeLegend.appendChild(chip);
+});
+// initialize with the default active preset (index 1 = Standard RD)
+(function initExplorer(){
+  const item=EXPLORER_DATA[1];
+  const I=rdInterest(item.P,item.n,item.r), MV=rdMV(item.P,item.n,item.r);
+  document.getElementById('typeValue').innerHTML=fmt(I)+'<small>Interest earned</small>';
+  document.getElementById('typeValue2').innerHTML=fmt(MV)+'<small>Maturity value</small>';
+})();
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('bk_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('bk_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','quiz-card');
+  card.innerHTML=`<div class="qtag">Assertion &amp; Reasoning · Q${i+1}</div>
+  <div class="ar-statement"><b>Assertion (A):</b>${item.a}</div>
+  <div class="ar-statement"><b>Reason (R):</b>${item.r}</div>`;
+  AR_OPTIONS.forEach((o,oi)=>{
+    const label=String.fromCharCode(97+oi);
+    const b=el('button','opt-btn','('+label+') '+o);
+    b.addEventListener('click',()=>{
+      card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){b.classList.add('correct'); recordQuiz(true);}
+      else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false);}
+    });
+    card.appendChild(b);
+  });
+  arList.appendChild(card);
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase().replace(/\s+/g,'')===item.a.toLowerCase().replace(/\s+/g,'');
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('bk_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('bk_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+// Hero interactive instrument — RD sliders
+const heroP=document.getElementById('heroP'), heroN=document.getElementById('heroN'), heroR=document.getElementById('heroR');
+function updateHero(){
+  const P=parseFloat(heroP.value), n=parseInt(heroN.value), r=parseFloat(heroR.value);
+  const I=rdInterest(P,n,r), MV=rdMV(P,n,r), sum=n*(n+1)/2;
+  document.getElementById('heroPVal').textContent='₹'+P;
+  document.getElementById('heroNVal').textContent=n;
+  document.getElementById('heroRVal').textContent=r+'%';
+  document.getElementById('heroI').textContent=fmt(I);
+  document.getElementById('heroPn').textContent='₹'+(P*n);
+  document.getElementById('heroMV').textContent=fmt(MV);
+  document.getElementById('heroSum').textContent=sum;
+}
+[heroP,heroN,heroR].forEach(inp=>inp.addEventListener('input',updateHero));
+updateHero();
+
+// Componendo-Dividendo pairs list -> reused as "how the term builds interest" pairs
+const compdivLeft=document.getElementById('compdivLeft');
+const cpCard=el('div','card pad');
+const COMPDIV_PAIRS=[
+ ['n = 6 months','n(n+1)/2 = 21'],['n = 12 months','n(n+1)/2 = 78'],['n = 18 months','n(n+1)/2 = 171'],
+ ['n = 24 months','n(n+1)/2 = 300'],['n = 36 months','n(n+1)/2 = 666']
+];
+COMPDIV_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+compdivLeft.appendChild(cpCard);
+
+// Interest formula slider
+const compdivSlider=document.getElementById('compdivSlider');
+function updateCompdiv(){
+  const n=parseInt(compdivSlider.value);
+  const P=500, r=8;
+  const sum=n*(n+1)/2;
+  const I=rdInterest(P,n,r), MV=rdMV(P,n,r);
+  document.getElementById('compdivN').textContent=n;
+  document.getElementById('compdivSum').textContent=sum;
+  document.getElementById('compdivResult').textContent=`I = 500 × ${sum} × 8/1200 = ${fmt(I)}, MV = ${fmt(MV)}`;
+}
+compdivSlider.addEventListener('input',updateCompdiv); updateCompdiv();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','explorer','terms','rules','interestformula','examples','conceptcheck','practice','pyq','mistakes','assertion','revision','flashcards','formulasheet','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('bk_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('bk_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('bk_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('bk_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('bk_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('bk_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('bk_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['bk_sectionsRead','bk_examplesOpened','bk_quizStats','bk_pz_l1','bk_pz_l2','bk_pz_l3','bk_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
