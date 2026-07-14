@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonometry — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.95rem; display:block;}
+#angleHandle{cursor:grab;}
+#angleHandle:active{cursor:grabbing;}
+
+/* ===================== TRIANGLE (interactive labelled) ===================== */
+.tri-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:center;}
+.tri-legend{flex:1; min-width:220px; display:flex; flex-direction:column; gap:.6rem;}
+.tri-chip{display:flex; align-items:center; gap:.6rem; padding:.6rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.9rem;}
+.tri-chip .sw{width:14px; height:14px; border-radius:4px;}
+.tri-chip:hover, .tri-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+
+/* ===================== RATIO CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.15rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.5rem .7rem; margin:.5rem 0; font-size:1rem;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.trig-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono);}
+.trig-table th, .trig-table td{padding:.65rem .5rem; text-align:center; border-bottom:1px solid var(--border);}
+.trig-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.trig-table td.angle-col{cursor:pointer; font-weight:700; color:var(--amber-dark); background:var(--amber-tint);}
+.trig-table td.angle-col:hover{background:var(--amber);color:#fff;}
+.trig-table tr.selected td{background:var(--green-tint);}
+
+/* ===================== COMPLEMENTARY ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.05rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.3rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:1.05rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.92rem; margin:.25rem 0;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,#trigsec,.no-print,.instrument{display:none !important;}
+  section:not(#formula){display:none !important;}
+  #formula{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+/* Toast for progress saves */
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">Δ Trig<span>onometry</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="triangle" href="#triangle"><span class="dot"></span>The Triangle</a>
+    <a class="navlink" data-target="ratios" href="#ratios"><span class="dot"></span>Trig Ratios</a>
+    <a class="navlink" data-target="table" href="#table"><span class="dot"></span>Values Table</a>
+    <a class="navlink" data-target="complementary" href="#complementary"><span class="dot"></span>Complementary Angles</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formula" href="#formula"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Trigonometry</div>
+        <h1>The mathematics of<br>triangles &amp; angles.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">A right triangle, one angle θ, and three ratios — that's the whole instrument. Drag the arm on the right to see sin, cos and tan move in real time before you touch a single formula.</p>
+        <div class="hero-cta">
+          <a href="#triangle" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <svg id="heroSvg" viewBox="0 0 320 260" style="width:100%; height:auto;">
+          <line x1="30" y1="220" x2="300" y2="220" stroke="#E1D9C6" stroke-width="2"/>
+          <path id="arcPath" d="" fill="none" stroke="#C97A2B" stroke-width="2" stroke-dasharray="3 3"/>
+          <line id="oppLine" x1="30" y1="220" x2="30" y2="90" stroke="#3D5A80" stroke-width="3"/>
+          <line id="adjLine" x1="30" y1="220" x2="220" y2="220" stroke="#1B2A4A" stroke-width="3"/>
+          <line id="hypLine" x1="30" y1="220" x2="220" y2="90" stroke="#C97A2B" stroke-width="4" stroke-linecap="round"/>
+          <circle id="angleHandle" cx="220" cy="90" r="10" fill="#C97A2B" stroke="#fff" stroke-width="2"/>
+          <text x="45" y="212" font-family="IBM Plex Mono" font-size="12" fill="#1B2A4A">θ</text>
+        </svg>
+        <div class="instrument-readout">
+          <div>sin θ <b id="rSin">0.71</b></div>
+          <div>cos θ <b id="rCos">0.71</b></div>
+          <div>tan θ <b id="rTan">1.00</b></div>
+          <div>θ <b id="rTheta">45°</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is Trigonometry?</h2>
+        <p class="lede">The word comes from the Greek <em>trigonon</em> (triangle) and <em>metron</em> (measure). At its core, trigonometry studies the fixed relationship between the angles of a right triangle and the ratios of its sides.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Every right triangle with the same angle θ — no matter how big or small — has the <em>exact same ratio</em> between its sides. That single fact means that if you know one angle and one side of a triangle, you can find every other angle and side, without ever needing to measure them directly. This is the idea that let ancient surveyors measure mountains they could never climb.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Measuring heights of towers &amp; mountains</li>
+              <li>Surveying and mapmaking</li>
+              <li>Marine &amp; air navigation</li>
+              <li>Construction &amp; architecture</li>
+              <li>Astronomy — distances to stars</li>
+              <li>Engineering &amp; robotics</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M3 21 L12 4 L21 21 Z"/><path d="M12 21 V4"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Surveying</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="9"/><path d="M12 3 L12 12 L18 15"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Navigation</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><rect x="4" y="10" width="16" height="10"/><path d="M4 10 L12 3 L20 10"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Construction</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 3"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Astronomy</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ What makes a triangle <b>right-angled</b></p></div>
+          <div class="col-md-4"><p class="mb-1">✓ The <b>Pythagoras Theorem</b>: \( a^2+b^2=c^2 \)</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Basic angle &amp; triangle geometry</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2/3. TRIANGLE ===================== -->
+    <section id="triangle">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Parts of a Right Triangle</h2>
+        <p class="lede">Every trig ratio is built from just three parts. Click a label below, or hover the triangle, to see how each side is defined <em>relative to angle θ</em> — this matters, because "opposite" and "adjacent" swap if you pick the other acute angle.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="tri-wrap">
+          <svg id="labTri" viewBox="0 0 340 260" style="flex:1; min-width:280px; width:100%; max-width:380px;">
+            <polygon points="30,230 30,50 280,230" fill="#FAF8F2" stroke="#1B2A4A" stroke-width="2"/>
+            <rect x="30" y="210" width="20" height="20" fill="none" stroke="#1B2A4A" stroke-width="1.5"/>
+            <line id="sideOpp" x1="30" y1="230" x2="30" y2="50" stroke="#3D5A80" stroke-width="5" stroke-linecap="round"/>
+            <line id="sideAdj" x1="30" y1="230" x2="280" y2="230" stroke="#2E7D5B" stroke-width="5" stroke-linecap="round"/>
+            <line id="sideHyp" x1="30" y1="50" x2="280" y2="230" stroke="#C97A2B" stroke-width="5" stroke-linecap="round"/>
+            <text x="235" y="222" font-family="IBM Plex Mono" font-size="13" fill="#1B2A4A">θ</text>
+            <text x="8" y="145" font-family="IBM Plex Mono" font-size="12" fill="#3D5A80" font-weight="600">Opp</text>
+            <text x="130" y="250" font-family="IBM Plex Mono" font-size="12" fill="#2E7D5B" font-weight="600">Adj</text>
+            <text x="150" y="120" font-family="IBM Plex Mono" font-size="12" fill="#C97A2B" font-weight="600">Hyp</text>
+          </svg>
+          <div class="tri-legend">
+            <div class="tri-chip" data-side="sideHyp" style="border-color:#C97A2B;"><span class="sw" style="background:#C97A2B;"></span> Hypotenuse — the longest side, always opposite the right angle.</div>
+            <div class="tri-chip" data-side="sideOpp" style="border-color:#3D5A80;"><span class="sw" style="background:#3D5A80;"></span> Opposite — the side across from angle θ, not touching it.</div>
+            <div class="tri-chip" data-side="sideAdj" style="border-color:#2E7D5B;"><span class="sw" style="background:#2E7D5B;"></span> Adjacent — the side next to θ that is <em>not</em> the hypotenuse.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 4. RATIOS ===================== -->
+    <section id="ratios">
+      <div class="section-head">
+        <div class="eyebrow">03 · Six Ratios</div>
+        <h2>Trigonometric Ratios</h2>
+        <p class="lede">Three primary ratios, and three reciprocals. Learn the primary three cold — the other three simply flip them upside down.</p>
+      </div>
+      <div class="ratio-grid" id="ratioGrid"></div>
+    </section>
+
+    <!-- ===================== 5. TABLE ===================== -->
+    <section id="table">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Trigonometric Values Table</h2>
+        <p class="lede">Click any angle column to highlight its row across the table below.</p>
+      </div>
+      <div class="card pad" style="overflow-x:auto;">
+        <table class="trig-table" id="trigTable"></table>
+      </div>
+      <div class="card pad mt-3">
+        <h4 style="font-size:1rem;">How to remember it — the "0,1,2,3,4" trick</h4>
+        <p class="mb-1">Write \( \sqrt{0/4}, \sqrt{1/4}, \sqrt{2/4}, \sqrt{3/4}, \sqrt{4/4} \) — that row simplifies exactly to the sin values for 0°, 30°, 45°, 60°, 90°. Reverse the row for cos. Divide sin by cos to get tan. The reciprocal ratios (cosec, sec, cot) are just 1 over each of those.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 6. COMPLEMENTARY ===================== -->
+    <section id="complementary">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>Complementary Angles</h2>
+        <p class="lede">Two angles are complementary if they add to 90°. In a right triangle, the two acute angles are always complementary — which is why every ratio has a "co-" partner.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>Try it: \( \sin(90°-\theta) \). Move the slider — watch how the "co-ratio" of θ always equals the plain ratio of \( (90°-\theta) \).</p>
+            <input type="range" min="0" max="90" value="30" id="compSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>θ = <b id="compTheta">30°</b></span>
+              <span>90°−θ = <b id="compComp">60°</b></span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              sin(90°−30°) = sin 60° = <span id="compVal1">0.866</span><br>
+              cos(30°) = <span id="compVal2">0.866</span> — equal, as expected.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 7. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 8. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across ratios, the values table, and complementary angles — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">08 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 10. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">09 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 11. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">10 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">11 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Definitions &amp; Formulas</h4>
+            <p class="mb-1" style="font-family:var(--font-mono);">sin θ = Opp/Hyp &nbsp; cosec θ = Hyp/Opp</p>
+            <p class="mb-1" style="font-family:var(--font-mono);">cos θ = Adj/Hyp &nbsp; sec θ = Hyp/Adj</p>
+            <p class="mb-1" style="font-family:var(--font-mono);">tan θ = Opp/Adj &nbsp; cot θ = Adj/Opp</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono);">tan θ = sin θ / cos θ &nbsp;·&nbsp; cot θ = cos θ / sin θ</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Complementary Identities</h4>
+            <p class="mb-1" style="font-family:var(--font-mono);">sin(90°−θ) = cos θ</p>
+            <p class="mb-1" style="font-family:var(--font-mono);">tan(90°−θ) = cot θ</p>
+            <p class="mb-0" style="font-family:var(--font-mono);">sec(90°−θ) = cosec θ</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Values Table (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="trig-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always draw the triangle first and label θ before picking a ratio.</li>
+              <li>Check whether the question wants degrees or an exact ratio — don't round early.</li>
+              <li>In height/distance questions, the angle of elevation is measured <em>from the horizontal upward</em>.</li>
+              <li>Keep surds (√3, √2) exact until the final step unless told to approximate.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">12 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formula">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">13 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Trigonometry — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Primary Ratios</h5>
+            <p>sin θ = Opp/Hyp</p><p>cos θ = Adj/Hyp</p><p>tan θ = Opp/Adj</p>
+            <h5>Reciprocal Ratios</h5>
+            <p>cosec θ = 1/sin θ</p><p>sec θ = 1/cos θ</p><p>cot θ = 1/tan θ</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Complementary (θ + (90°−θ) = 90°)</h5>
+            <p>sin(90−θ)=cos θ</p><p>cos(90−θ)=sin θ</p><p>tan(90−θ)=cot θ</p>
+            <p>cot(90−θ)=tan θ</p><p>sec(90−θ)=cosec θ</p><p>cosec(90−θ)=sec θ</p>
+            <h5>Ratio Relations</h5>
+            <p>tan θ = sin θ / cos θ</p><p>cot θ = cos θ / sin θ</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Standard Values</h5>
+            <p>sin: 0°=0, 30°=1/2, 45°=√2/2, 60°=√3/2, 90°=1</p>
+            <p>cos: 0°=1, 30°=√3/2, 45°=√2/2, 60°=1/2, 90°=0</p>
+            <p>tan: 0°=0, 30°=1/√3, 45°=1, 60°=√3, 90°=∞</p>
+            <h5>Height &amp; Distance</h5>
+            <p>Elevation: angle up from horizontal to object</p>
+            <p>Depression: angle down from horizontal to object</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">14 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/14</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const ANGLES=[0,30,45,60,90];
+const TABLE={
+  sin:['0','1/2','√2/2','√3/2','1'],
+  cos:['1','√3/2','√2/2','1/2','0'],
+  tan:['0','1/√3','1','√3','∞'],
+  cosec:['∞','2','√2','2/√3','1'],
+  sec:['1','2/√3','√2','2','∞'],
+  cot:['∞','√3','1','1/√3','0']
+};
+const RATIOS=[
+  {name:'Sine', sym:'sin θ', formula:'Opposite / Hypotenuse', color:'#3D5A80', trick:'SOH — Sine = Opposite over Hypotenuse.', ex:'If Opp=3, Hyp=5 → sin θ = 3/5'},
+  {name:'Cosine', sym:'cos θ', formula:'Adjacent / Hypotenuse', color:'#2E7D5B', trick:'CAH — Cosine = Adjacent over Hypotenuse.', ex:'If Adj=4, Hyp=5 → cos θ = 4/5'},
+  {name:'Tangent', sym:'tan θ', formula:'Opposite / Adjacent', color:'#C97A2B', trick:'TOA — Tangent = Opposite over Adjacent.', ex:'If Opp=3, Adj=4 → tan θ = 3/4'},
+  {name:'Cosecant', sym:'cosec θ', formula:'Hypotenuse / Opposite', color:'#3D5A80', trick:'Flip sine upside down.', ex:'cosec θ = 1 / sin θ = 5/3'},
+  {name:'Secant', sym:'sec θ', formula:'Hypotenuse / Adjacent', color:'#2E7D5B', trick:'Flip cosine upside down.', ex:'sec θ = 1 / cos θ = 5/4'},
+  {name:'Cotangent', sym:'cot θ', formula:'Adjacent / Opposite', color:'#C97A2B', trick:'Flip tangent upside down.', ex:'cot θ = 1 / tan θ = 4/3'}
+];
+const COMP=[
+  ['sin(90°−θ)','cos θ'],['cos(90°−θ)','sin θ'],['tan(90°−θ)','cot θ'],
+  ['cot(90°−θ)','tan θ'],['sec(90°−θ)','cosec θ'],['cosec(90°−θ)','sec θ']
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'If sin θ = 3/5, find cos θ and tan θ.',steps:['Opp = 3, Hyp = 5 (given by sin θ).','By Pythagoras: Adj² = 5²−3² = 16, so Adj = 4.','cos θ = Adj/Hyp = 4/5, tan θ = Opp/Adj = 3/4.'],ans:'cos θ = 4/5, tan θ = 3/4'},
+ {level:'easy',q:'If cos θ = 12/13, find sin θ and tan θ.',steps:['Adj = 12, Hyp = 13.','Opp² = 13²−12² = 25, so Opp = 5.','sin θ = 5/13, tan θ = 5/12.'],ans:'sin θ = 5/13, tan θ = 5/12'},
+ {level:'easy',q:'Evaluate sin 30° + cos 60°.',steps:['sin 30° = 1/2.','cos 60° = 1/2.','Sum = 1/2 + 1/2 = 1.'],ans:'1'},
+ {level:'easy',q:'Evaluate tan 45° × cot 45°.',steps:['tan 45° = 1.','cot 45° = 1.','Product = 1 × 1 = 1.'],ans:'1'},
+ {level:'easy',q:'If tan θ = 1, find θ and sin θ + cos θ.',steps:['tan θ = 1 → θ = 45° (from the standard table).','sin 45° = √2/2, cos 45° = √2/2.','Sum = √2/2 + √2/2 = √2.'],ans:'θ = 45°, sum = √2'},
+ {level:'easy',q:'Verify sin²30° + cos²30° = 1.',steps:['sin 30° = 1/2 → sin²30° = 1/4.','cos 30° = √3/2 → cos²30° = 3/4.','1/4 + 3/4 = 1 — identity verified.'],ans:'Verified: equals 1'},
+ {level:'medium',q:'Find x if sin x° = cos 30°.',steps:['cos 30° = √3/2.','We need sin x = √3/2, and from the table sin 60° = √3/2.','So x = 60° (using the complementary rule sin θ = cos(90°−θ)).'],ans:'x = 60°'},
+ {level:'medium',q:'Evaluate (sin 30° + cos 60°) ÷ tan 45°.',steps:['sin 30° + cos 60° = 1/2 + 1/2 = 1.','tan 45° = 1.','1 ÷ 1 = 1.'],ans:'1'},
+ {level:'medium',q:'If sec θ = 2, find cos θ and θ.',steps:['sec θ = 1/cos θ = 2, so cos θ = 1/2.','From the table, cos 60° = 1/2.','So θ = 60°.'],ans:'cos θ = 1/2, θ = 60°'},
+ {level:'medium',q:'Evaluate sin 60° cos 30° + cos 60° sin 30°.',steps:['sin 60° cos 30° = (√3/2)(√3/2) = 3/4.','cos 60° sin 30° = (1/2)(1/2) = 1/4.','Sum = 3/4 + 1/4 = 1 (this is sin 90°).'],ans:'1'},
+ {level:'medium',q:'A ladder 10 m long leans against a wall making 60° with the ground. Find the height it reaches.',steps:['Height = Opposite side, Ladder = Hypotenuse = 10 m.','sin 60° = height / 10.','height = 10 × sin 60° = 10 × (√3/2) = 5√3 m ≈ 8.66 m.'],ans:'5√3 m ≈ 8.66 m'},
+ {level:'medium',q:'The angle of elevation of the sun is 30° and a tree casts a shadow 20 m long. Find the height of the tree.',steps:['tan 30° = height / shadow.','tan 30° = 1/√3, shadow = 20 m.','height = 20 × (1/√3) = 20/√3 = (20√3)/3 m ≈ 11.55 m.'],ans:'20/√3 m ≈ 11.55 m'},
+ {level:'medium',q:'Evaluate cosec 30° + sec 60° − cot 45°.',steps:['cosec 30° = 2.','sec 60° = 2.','cot 45° = 1, so 2 + 2 − 1 = 3.'],ans:'3'},
+ {level:'medium',q:'If A + B = 90°, express sin A in terms of B.',steps:['A and B are complementary, so A = 90° − B.','By the complementary identity, sin(90°−B) = cos B.','Therefore sin A = cos B.'],ans:'sin A = cos B'},
+ {level:'medium',q:'Simplify sin²θ + cos²θ + tan²θ − sec²θ.',steps:['sin²θ + cos²θ = 1 (fundamental identity).','tan²θ − sec²θ = −(sec²θ − tan²θ) = −1 (since sec²θ−tan²θ=1).','1 + (−1) = 0.'],ans:'0'},
+ {level:'hard',q:'Evaluate 2tan²45° + cos²30° − sin²60°.',steps:['tan 45° = 1 → 2tan²45° = 2(1) = 2.','cos 30° = √3/2 → cos²30° = 3/4.','sin 60° = √3/2 → sin²60° = 3/4, so total = 2 + 3/4 − 3/4 = 2.'],ans:'2'},
+ {level:'hard',q:'Find θ if cosec θ = √2.',steps:['cosec θ = 1/sin θ = √2, so sin θ = 1/√2 = √2/2.','From the table, sin 45° = √2/2.','So θ = 45°.'],ans:'θ = 45°'},
+ {level:'hard',q:'A kite string is 50 m long and makes an angle of elevation of 30° with the ground. Find the height of the kite.',steps:['Height = Opposite, String = Hypotenuse = 50 m.','sin 30° = height/50.','height = 50 × (1/2) = 25 m.'],ans:'25 m'},
+ {level:'hard',q:'Evaluate (sec²60° − 1) ÷ tan²60°.',steps:['sec 60° = 2 → sec²60° = 4, so numerator = 4−1 = 3.','tan 60° = √3 → tan²60° = 3.','3 ÷ 3 = 1 (this matches the identity sec²θ−1=tan²θ).'],ans:'1'},
+ {level:'hard',q:'In right triangle ABC, right-angled at B, AB = 6 cm and BC = 8 cm. Find AC and all six trigonometric ratios of angle A.',steps:['By Pythagoras: AC² = AB²+BC² = 36+64=100, so AC = 10 cm.','For angle A: Opposite = BC = 8, Adjacent = AB = 6, Hypotenuse = AC = 10.','sin A=8/10=4/5, cos A=6/10=3/5, tan A=8/6=4/3, cosec A=5/4, sec A=5/3, cot A=3/4.'],ans:'AC=10cm; sinA=4/5, cosA=3/5, tanA=4/3, cosecA=5/4, secA=5/3, cotA=3/4'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Ratios',time:'3 min',q:'If tan θ = 5/12, find the value of sin θ + cos θ.',sol:'Opp=5, Adj=12 → Hyp=13 (Pythagoras). sin θ=5/13, cos θ=12/13. Sum = 17/13.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Complementary Angles',time:'5 min',q:'Without using tables, evaluate: sin 35° / cos 55°.',sol:'cos 55° = cos(90°−35°) = sin 35°. So the ratio = sin35°/sin35° = 1.'},
+ {year:'2022',diff:'Medium',marks:3,topic:'Height & Distance',time:'6 min',q:'The angle of elevation of the top of a tower from a point 30 m from its base is 30°. Find the height of the tower.',sol:'tan 30° = height/30 → height = 30 × (1/√3) = 10√3 m ≈ 17.3 m.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Identities',time:'8 min',q:'Prove that (1 − sin θ)/(1 + sin θ) = (sec θ − tan θ)².',sol:'RHS = (1/cosθ − sinθ/cosθ)² = ((1−sinθ)/cosθ)² = (1−sinθ)²/(1−sin²θ) = (1−sinθ)²/((1−sinθ)(1+sinθ)) = (1−sinθ)/(1+sinθ) = LHS.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Values Table',time:'2 min',q:'Evaluate: 2 sin²30° + 3 cos²45° − tan²60°.',sol:'2(1/2)²+3(√2/2)²−(√3)² = 2(1/4)+3(1/2)−3 = 1/2+3/2−3 = −1.'},
+ {year:'2021',diff:'Medium',marks:4,topic:'Height & Distance',time:'7 min',q:'From the top of a cliff 80 m high, the angle of depression of a boat is 45°. Find the distance of the boat from the base of the cliff.',sol:'Angle of depression = angle of elevation from boat = 45°. tan45°=80/d → d=80/1=80 m.'}
+];
+
+const MISTAKES=[
+ 'Picking the wrong "opposite" side — it always depends on which angle you are working with, not on which side simply looks longer.',
+ 'Confusing sin and tan when the hypotenuse isn\'t obviously given — always identify all three sides before choosing a ratio.',
+ 'Forgetting that cosec, sec, and cot are reciprocals, and instead trying to derive them from scratch each time.',
+ 'Selecting the wrong angle in a height-and-distance diagram — elevation is measured up from the horizontal, not from the vertical.',
+ 'Sign errors when substituting values with fractions, especially forgetting to square the denominator too.'
+];
+
+const FLASH=[
+ {f:'sin θ',b:'Opposite / Hypotenuse'},{f:'cos θ',b:'Adjacent / Hypotenuse'},{f:'tan θ',b:'Opposite / Adjacent'},
+ {f:'cosec θ',b:'Hypotenuse / Opposite = 1/sin θ'},{f:'sec θ',b:'Hypotenuse / Adjacent = 1/cos θ'},{f:'cot θ',b:'Adjacent / Opposite = 1/tan θ'},
+ {f:'sin 30°',b:'1/2'},{f:'cos 45°',b:'√2 / 2'},{f:'tan 60°',b:'√3'},{f:'sin 90°',b:'1'},{f:'cos 0°',b:'1'},{f:'tan 0°',b:'0'},
+ {f:'sin(90°−θ)',b:'cos θ'},{f:'tan(90°−θ)',b:'cot θ'},{f:'sec(90°−θ)',b:'cosec θ'},{f:'sin²θ + cos²θ',b:'1'}
+];
+
+const CC_MCQ=[
+ {t:'ratios',q:'sin θ is defined as:',opts:['Opp/Adj','Adj/Hyp','Opp/Hyp','Hyp/Opp'],a:2},
+ {t:'ratios',q:'cot θ is the reciprocal of:',opts:['sin θ','cos θ','tan θ','sec θ'],a:2},
+ {t:'ratios',q:'The hypotenuse is always:',opts:['The shortest side','Opposite the right angle','Adjacent to θ','Equal to the opposite side'],a:1},
+ {t:'ratios',q:'cosec θ equals:',opts:['1/sin θ','1/cos θ','1/tan θ','sin θ'],a:0},
+ {t:'ratios',q:'If Opp=5, Adj=12, Hyp=13, tan θ equals:',opts:['5/12','12/5','5/13','12/13'],a:0},
+ {t:'table',q:'tan 45° equals:',opts:['0','1','√3','undefined'],a:1},
+ {t:'table',q:'sin 90° equals:',opts:['0','1/2','√2/2','1'],a:3},
+ {t:'table',q:'cos 0° equals:',opts:['0','1','1/2','undefined'],a:1},
+ {t:'table',q:'sec 60° equals:',opts:['1','2','2/√3','√2'],a:1},
+ {t:'table',q:'tan 90° is:',opts:['0','1','Undefined','√3'],a:2},
+ {t:'comp',q:'sin(90°−θ) equals:',opts:['sin θ','cos θ','tan θ','cot θ'],a:1},
+ {t:'comp',q:'Two angles that add to 90° are called:',opts:['Supplementary','Complementary','Congruent','Reciprocal'],a:1},
+ {t:'comp',q:'tan(90°−θ) equals:',opts:['tan θ','sec θ','cot θ','cos θ'],a:2},
+ {t:'comp',q:'sec(90°−θ) equals:',opts:['sec θ','cosec θ','cos θ','sin θ'],a:1},
+ {t:'comp',q:'If A + B = 90°, then cos A equals:',opts:['sin A','cos B','sin B','tan B'],a:2}
+];
+const CC_FIB=[
+ {t:'ratios',q:'sin θ = Opposite / ______.',a:'hypotenuse'},
+ {t:'ratios',q:'The memory trick for the three primary ratios is ______.',a:'soh cah toa'},
+ {t:'ratios',q:'cot θ = Adjacent / ______.',a:'opposite'},
+ {t:'ratios',q:'sec θ is the reciprocal of ______.',a:'cos'},
+ {t:'ratios',q:'tan θ = sin θ / ______.',a:'cos'},
+ {t:'table',q:'sin 30° = ______.',a:'1/2'},
+ {t:'table',q:'cos 60° = ______.',a:'1/2'},
+ {t:'table',q:'tan 60° = ______.',a:'√3'},
+ {t:'table',q:'cosec 90° = ______.',a:'1'},
+ {t:'table',q:'cot 0° is ______.',a:'undefined'},
+ {t:'comp',q:'cosec(90°−θ) = ______.',a:'sec θ'},
+ {t:'comp',q:'cot(90°−θ) = ______.',a:'tan θ'},
+ {t:'comp',q:'The two acute angles of a right triangle are always ______.',a:'complementary'},
+ {t:'comp',q:'If θ = 20°, its complement is ______ degrees.',a:'70'},
+ {t:'comp',q:'sin 50° = cos ______°.',a:'40'}
+];
+const CC_TF=[
+ {t:'ratios',q:'The hypotenuse is the side opposite the right angle.',a:true},
+ {t:'ratios',q:'tan θ can be greater than 1.',a:true},
+ {t:'ratios',q:'sin θ can be greater than 1.',a:false},
+ {t:'ratios',q:'cosec θ is defined as Hypotenuse/Adjacent.',a:false},
+ {t:'ratios',q:'sec θ and cos θ are reciprocals of each other.',a:true},
+ {t:'table',q:'tan 90° has a defined finite value.',a:false},
+ {t:'table',q:'sin 0° = cos 90°.',a:true},
+ {t:'table',q:'cos 45° equals sin 45°.',a:true},
+ {t:'table',q:'sec 0° = 1.',a:true},
+ {t:'table',q:'cot 90° = 1.',a:false},
+ {t:'comp',q:'θ and (90°−θ) are supplementary angles.',a:false},
+ {t:'comp',q:'sin θ = cos(90°−θ) for any acute angle θ.',a:true},
+ {t:'comp',q:'45° is its own complement.',a:true},
+ {t:'comp',q:'Complementary angles always sum to 180°.',a:false},
+ {t:'comp',q:'tan θ · cot θ = 1 for any acute angle θ.',a:true}
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'Write the formula for sin θ in a right triangle.','Think Opposite over ...','Opp/Hyp'),
+ mk(2,'Write the formula for cos θ.','Adjacent over ...','Adj/Hyp'),
+ mk(3,'Write the formula for tan θ.','Opposite over ...','Opp/Adj'),
+ mk(4,'What is the reciprocal of sin θ?','It starts with "cosec".','cosec θ'),
+ mk(5,'What is the reciprocal of cos θ?','It starts with "sec".','sec θ'),
+ mk(6,'What is the reciprocal of tan θ?','It starts with "cot".','cot θ'),
+ mk(7,'Find sin 30° from the standard table.','Row for 30°.','1/2'),
+ mk(8,'Find cos 60° from the standard table.','Row for 60°.','1/2'),
+ mk(9,'Find tan 45° from the standard table.','Row for 45°.','1'),
+ mk(10,'Find sin 90° from the standard table.','Row for 90°.','1'),
+ mk(11,'Find cos 0° from the standard table.','Row for 0°.','1'),
+ mk(12,'If Opp=6, Hyp=10, find sin θ.','Direct substitution.','3/5'),
+ mk(13,'If Adj=8, Hyp=17, find cos θ.','Direct substitution.','8/17'),
+ mk(14,'If Opp=9, Adj=12, find tan θ.','Direct substitution.','3/4'),
+ mk(15,'State the complementary angle of 40°.','90 − 40.','50°'),
+ mk(16,'State the complementary angle of 65°.','90 − 65.','25°'),
+ mk(17,'Simplify sin(90°−20°) in terms of cos.','Use the complementary identity.','cos 20°'),
+ mk(18,'Evaluate sin 0° + cos 90°.','Both values are the same.','0'),
+ mk(19,'Evaluate tan 0° × cot 90°.','tan0° is 0.','Indeterminate form 0 × ∞ — question intentionally excluded from exams'),
+ mk(20,'Name the longest side of a right triangle.','It is opposite the right angle.','Hypotenuse')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'If sin θ = 7/25, find cos θ.','Use Pythagoras to find the missing side.','24/25'),
+ mk(2,'If cos θ = 8/17, find tan θ.','Find Opp using Pythagoras first.','15/8'),
+ mk(3,'Evaluate sin 45° × cos 45°.','Both are √2/2.','1/2'),
+ mk(4,'Evaluate cos 30° ÷ sin 60°.','Both values are equal.','1'),
+ mk(5,'Evaluate 2 sin 30° cos 30°.','Substitute the standard values.','√3/2'),
+ mk(6,'If tan θ = √3, find θ.','Check the standard table.','60°'),
+ mk(7,'If sec θ = 2/√3, find θ.','Compare with the sec row of the table.','30°'),
+ mk(8,'Simplify cos(90°−θ)/sin θ.','Apply the complementary identity first.','1'),
+ mk(9,'Find x if cos x° = sin 40°.','Use the complementary relation.','50°'),
+ mk(10,'Evaluate sec²60° − tan²60°.','Use the identity sec²θ−tan²θ=1.','1'),
+ mk(11,'Evaluate cosec²45° − cot²45°.','Use the identity cosec²θ−cot²θ=1.','1'),
+ mk(12,'A pole casts a 12 m shadow when the sun\'s elevation is 45°. Find the pole\'s height.','tan45°=height/shadow.','12 m'),
+ mk(13,'A ladder reaches 6 m up a wall at 30° to the ground. Find the ladder\'s length.','sin30° = height/length.','12 m'),
+ mk(14,'Evaluate sin²60° + cos²60°.','This is the Pythagorean identity.','1'),
+ mk(15,'If sin A = cos B and A, B are acute, what is A+B?','Use the complementary identity.','90°'),
+ mk(16,'Evaluate 3 tan²30° − sec²30°.','Substitute exact values, watch the squares.','−1'),
+ mk(17,'Find θ if cot θ = 1/√3.','Compare with the cot row.','60°'),
+ mk(18,'Simplify (1−cos²θ) in terms of sin.','Use the Pythagorean identity.','sin²θ'),
+ mk(19,'Evaluate sin 60°/cos 30°.','Both values are equal, so ratio is 1.','1'),
+ mk(20,'A string of a kite makes 60° with the ground and is 40 m long. Find the height of the kite.','sin60° = height/length.','20√3 m ≈ 34.6 m')
+];
+const PZ3=[ // Level 3 - ICSE exam style
+ mk(1,'Prove: (sin θ + cos θ)² + (sin θ − cos θ)² = 2.','Expand both squares and use sin²+cos²=1.','2 (identity holds)'),
+ mk(2,'If 5 tan θ = 4, find the value of (5 sin θ − 3 cos θ)/(5 sin θ + 3 cos θ).','tanθ=4/5 → Opp=4,Adj=5,Hyp=√41. Substitute sin,cos.','1/7'),
+ mk(3,'From a point on the ground, the angle of elevation of a tower is 30°. Moving 20 m closer, the angle becomes 60°. Find the height of the tower.','Set up two tan equations and eliminate distance.','10√3 m ≈ 17.3 m'),
+ mk(4,'Prove: (1+tan²θ) = sec²θ using the ratio definitions.','Divide sin²+cos²=1 throughout by cos²θ.','Identity verified'),
+ mk(5,'Two towers of the same height stand on either side of a road 80 m wide. The angles of elevation from a midpoint are 30° each. Find the height.','Distance to each base is 40 m; use tan30°.','40/√3 m ≈ 23.1 m'),
+ mk(6,'Evaluate: (sin30° cos60° + cos30° sin60°).','Recognise this as sin(A+B) expansion.','1 (this equals sin 90°)'),
+ mk(7,'If tan(A+B)=√3 and tan(A−B)=1/√3 (A,B acute), find A and B.','A+B=60°, A−B=30°; solve simultaneously.','A=45°, B=15°'),
+ mk(8,'A boy 1.5 m tall stands 30 m from a tower and observes the top at 30° elevation. Find the tower\'s height.','Tower height = boy\'s height + tan30°×30.','1.5+10√3 m ≈ 18.8 m'),
+ mk(9,'Prove: cosec θ − sin θ = cos θ cot θ.','Write cosecθ as 1/sinθ and simplify LHS.','Identity verified'),
+ mk(10,'The angle of depression of a boat from the top of a 50 m cliff is 30°. Find the boat\'s distance from the cliff base.','tan30° = 50/distance.','50√3 m ≈ 86.6 m'),
+ mk(11,'Simplify: sec⁴θ − sec²θ in terms of tan θ.','Factor and use sec²θ−1=tan²θ.','tan²θ sec²θ'),
+ mk(12,'If cos θ + sin θ = √2 cos θ, show that cos θ − sin θ = √2 sin θ.','Square both given and required statements and compare.','Identity verified'),
+ mk(13,'From the top of a hill, angles of depression of two consecutive kilometre stones are 30° and 45°. Find the height of the hill.','Set up two tan equations with distances d and d+1.','1/(√3−1) km ≈ 1.37 km'),
+ mk(14,'Prove: (tan θ + sec θ − 1)/(tan θ − sec θ + 1) = tan θ + sec θ.','Use sec²θ−tan²θ=1 to factor numerator.','Identity verified'),
+ mk(15,'A vertical tower stands on a horizontal plane and is surmounted by a flagstaff of height 6 m. At a point on the plane, the angle of elevation of the bottom and top of the flagstaff are 30° and 45°. Find the height of the tower.','Two equations from the two elevation angles; subtract.','3(√3+1) m ≈ 8.2 m'),
+ mk(16,'Evaluate without tables: tan7° tan23° tan60° tan67° tan83°.','Pair complementary angles so products become 1.','√3'),
+ mk(17,'If x = r sin θ cos φ, y = r sin θ sin φ, z = r cos θ, prove x²+y²+z² = r².','Group terms and use sin²+cos²=1 twice.','Identity verified'),
+ mk(18,'The shadow of a tower is 30 m longer when the sun\'s elevation is 30° than when it is 45°. Find the tower\'s height.','h·cot30° − h·cot45° = 30; solve for h.','15(√3+1) m ≈ 41 m'),
+ mk(19,'Prove: (cosec θ − cot θ)² = (1−cos θ)/(1+cos θ).','Write in terms of sin and cos, then rationalise.','Identity verified'),
+ mk(20,'An aeroplane at height 300 m has angles of depression 45° and 60° to two boats on the same side. Find the distance between the boats.','Find each horizontal distance separately with tan, then subtract.','300(1−1/√3) m ≈ 126.8 m')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Ratio cards
+const ratioGrid=document.getElementById('ratioGrid');
+RATIOS.forEach(r=>{
+  const c=el('div','ratio-card');
+  c.style.setProperty('--c',r.color);
+  c.innerHTML=`<h4>${r.name} <span style="font-family:var(--font-mono); font-size:.95rem; color:${r.color};">${r.sym}</span></h4>
+  <div class="formula">\\(${r.sym.replace('θ','\\theta')} = \\dfrac{\\text{${r.formula.split(' / ')[0]}}}{\\text{${r.formula.split(' / ')[1]}}}\\)</div>
+  <div class="ex">Example: ${r.ex}</div>
+  <div class="trick">💡 ${r.trick}</div>`;
+  ratioGrid.appendChild(c);
+});
+
+// Trig table (both main + revision copy)
+function buildTable(id){
+  const t=document.getElementById(id);
+  let head='<tr><th>Ratio</th>'+ANGLES.map(a=>`<td class="angle-col" data-a="${a}">${a}°</td>`).join('')+'</tr>';
+  let rows='';
+  ['sin','cos','tan','cosec','sec','cot'].forEach(k=>{
+    rows+=`<tr><th style="background:var(--paper); color:var(--ink); text-align:left; padding-left:.8rem;">${k}</th>`+TABLE[k].map(v=>`<td>${v}</td>`).join('')+'</tr>';
+  });
+  t.innerHTML=head+rows;
+  t.querySelectorAll('.angle-col').forEach(td=>{
+    td.addEventListener('click',()=>{
+      const idx=ANGLES.indexOf(parseInt(td.dataset.a));
+      t.querySelectorAll('tr').forEach(tr=>tr.classList.remove('selected'));
+      t.querySelectorAll('td').forEach((cell,i)=>{});
+      Array.from(t.rows).forEach((tr,ri)=>{ if(ri>0){ tr.cells[idx+1].style.background='var(--green-tint)'; setTimeout(()=>tr.cells[idx+1].style.background='',1400);} });
+    });
+  });
+}
+buildTable('trigTable'); buildTable('revisionTable');
+
+// Complementary list
+const compLeft=document.getElementById('compLeft');
+const cpCard=el('div','card pad');
+COMP.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">=</span><span class="eq">'+pair[1]+'</span>'));
+});
+compLeft.appendChild(cpCard);
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('trig_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('trig_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',(e)=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase()===item.a.toLowerCase();
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('trig_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('trig_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+// Triangle legend hover
+document.querySelectorAll('.tri-chip').forEach(chip=>{
+  chip.addEventListener('mouseenter',()=>{
+    document.querySelectorAll('#labTri line').forEach(l=>l.style.opacity=.25);
+    document.getElementById(chip.dataset.side).style.opacity=1;
+  });
+  chip.addEventListener('mouseleave',()=>{
+    document.querySelectorAll('#labTri line').forEach(l=>l.style.opacity=1);
+  });
+});
+
+// Hero interactive instrument (drag angle)
+const svg=document.getElementById('heroSvg');
+const handle=document.getElementById('angleHandle');
+const oppLine=document.getElementById('oppLine'), adjLine=document.getElementById('adjLine'), hypLine=document.getElementById('hypLine');
+const origin={x:30,y:220}; const R=170;
+function setAngle(deg){
+  deg=Math.max(5,Math.min(85,deg));
+  const rad=deg*Math.PI/180;
+  const x=origin.x+R*Math.cos(rad), y=origin.y-R*Math.sin(rad);
+  hypLine.setAttribute('x2',x); hypLine.setAttribute('y2',y);
+  oppLine.setAttribute('y2',y); adjLine.setAttribute('x2',x);
+  handle.setAttribute('cx',x); handle.setAttribute('cy',y);
+  document.getElementById('rSin').textContent=Math.sin(rad).toFixed(2);
+  document.getElementById('rCos').textContent=Math.cos(rad).toFixed(2);
+  document.getElementById('rTan').textContent=Math.tan(rad).toFixed(2);
+  document.getElementById('rTheta').textContent=Math.round(deg)+'°';
+}
+let dragging=false;
+handle.addEventListener('pointerdown',()=>dragging=true);
+window.addEventListener('pointerup',()=>dragging=false);
+svg.addEventListener('pointermove',(e)=>{
+  if(!dragging) return;
+  const rect=svg.getBoundingClientRect();
+  const vb=svg.viewBox.baseVal;
+  const px=(e.clientX-rect.left)/rect.width*vb.width;
+  const py=(e.clientY-rect.top)/rect.height*vb.height;
+  const dx=px-origin.x, dy=origin.y-py;
+  let deg=Math.atan2(dy,dx)*180/Math.PI;
+  setAngle(deg);
+});
+setAngle(45);
+
+// Complementary slider
+const compSlider=document.getElementById('compSlider');
+function updateComp(){
+  const th=parseInt(compSlider.value);
+  document.getElementById('compTheta').textContent=th+'°';
+  document.getElementById('compComp').textContent=(90-th)+'°';
+  const rad=th*Math.PI/180, radc=(90-th)*Math.PI/180;
+  document.getElementById('compVal1').textContent=Math.cos(rad).toFixed(3);
+  document.getElementById('compVal2').textContent=Math.cos(rad).toFixed(3);
+}
+compSlider.addEventListener('input',updateComp); updateComp();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','triangle','ratios','table','complementary','examples','conceptcheck','practice','pyq','mistakes','revision','flashcards','formula','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('trig_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('trig_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('trig_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('trig_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('trig_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('trig_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('trig_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['trig_sectionsRead','trig_examplesOpened','trig_quizStats','trig_pz_l1','trig_pz_l2','trig_pz_l3','trig_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
