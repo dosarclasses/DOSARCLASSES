@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ratio and Proportion — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+#dividerHandle{cursor:grab;}
+#dividerHandle:active{cursor:grabbing;}
+
+/* ===================== TYPES-OF-RATIO CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:1.1rem; color:var(--ink-soft); margin:.3rem 0;}
+.result-box .rvalue{font-family:var(--font-display); font-size:2rem; font-weight:700; color:var(--ink);}
+
+/* ===================== THEOREM/PROPERTY CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.92rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.25rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:1rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formula){display:none !important;}
+  #formula{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">⚖ Ratio &amp; <span>Proportion</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="types" href="#types"><span class="dot"></span>Types of Ratios</a>
+    <a class="navlink" data-target="proportion" href="#proportion"><span class="dot"></span>Proportion</a>
+    <a class="navlink" data-target="properties" href="#properties"><span class="dot"></span>Properties of Proportion</a>
+    <a class="navlink" data-target="compdiv" href="#compdiv"><span class="dot"></span>Componendo-Dividendo</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formula" href="#formula"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Ratio and Proportion</div>
+        <h1>Comparing quantities,<br>one ratio at a time.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the divider to split the bar into two parts — watch the ratio, its simplest form, and even its duplicate ratio update instantly as the two pieces change.</p>
+        <div class="hero-cta">
+          <a href="#types" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <svg id="heroSvg" viewBox="0 0 320 200" style="width:100%; height:auto;">
+          <rect x="30" y="90" width="260" height="50" fill="none" stroke="#1B2A4A" stroke-width="2" rx="6"/>
+          <rect id="leftRect" x="31" y="91" width="128" height="48" fill="#F3DDBB" rx="4"/>
+          <rect id="rightRect" x="159" y="91" width="130" height="48" fill="#DDEFE5" rx="4"/>
+          <line x1="30" y1="80" x2="30" y2="140" stroke="#E1D9C6" stroke-width="1"/>
+          <line x1="290" y1="80" x2="290" y2="140" stroke="#E1D9C6" stroke-width="1"/>
+          <line id="dividerLine" x1="160" y1="70" x2="160" y2="140" stroke="#C97A2B" stroke-width="2"/>
+          <circle id="dividerHandle" cx="160" cy="70" r="10" fill="#C97A2B" stroke="#fff" stroke-width="2"/>
+          <text id="labelA" x="90" y="120" font-family="IBM Plex Mono" font-size="15" fill="#A15E1B" font-weight="700" text-anchor="middle">a</text>
+          <text id="labelB" x="225" y="120" font-family="IBM Plex Mono" font-size="15" fill="#2E7D5B" font-weight="700" text-anchor="middle">b</text>
+          <text x="160" y="160" font-family="IBM Plex Mono" font-size="11" fill="#6B7A99" text-anchor="middle">drag the divider ↑</text>
+        </svg>
+        <div class="instrument-readout">
+          <div>Ratio a:b <b id="rRatio">13:13</b></div>
+          <div>Simplified <b id="rSimple">1:1</b></div>
+          <div>Duplicate <b id="rDup">1:1</b></div>
+          <div>a of Total <b id="rFrac">13/26</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is a Ratio?</h2>
+        <p class="lede">A ratio compares two quantities of the same kind by division. Written a:b (or a/b), it tells you how many times bigger — or what fraction — one quantity is of another. A proportion is simply a statement that two ratios are equal.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Ratios let you scale things up or down while keeping their relationships intact — a recipe for 4 people can feed 12 without ever changing its "flavour," because every ingredient scales by the same factor. Proportion is the tool that makes this scaling precise and provable.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Scaling recipes and ingredients</li>
+              <li>Map scales &amp; architectural models</li>
+              <li>Mixing paint, cement &amp; concrete</li>
+              <li>Aspect ratios of screens &amp; photos</li>
+              <li>Gear and pulley ratios</li>
+              <li>Dividing profit, rent &amp; inheritance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 19h16M4 19v-3l4-6 4 3 4-8 4 5"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Recipes</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 9h18M8 4v5"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Map Scales</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><rect x="3" y="7" width="10" height="10" rx="1"/><rect x="14" y="4" width="7" height="16" rx="1"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Screen Ratios</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="8" cy="8" r="4"/><circle cx="17" cy="16" r="6"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Gears</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ How to simplify a fraction using the HCF</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Cross-multiplication: if \( \frac{a}{b}=\frac{c}{d} \), then \(ad=bc\)</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Squares, cubes, and square roots of small numbers</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. TYPES OF RATIOS ===================== -->
+    <section id="types">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Types of Ratios</h2>
+        <p class="lede">Starting from the base ratio 8 : 27 (a pair of perfect cubes, chosen to keep every result clean), click each type below to see exactly how it transforms the ratio.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Original Ratio</div>
+            <div class="rformula" id="typeFormula">a : b</div>
+            <div class="rvalue" id="typeValue">8 : 27</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. PROPORTION ===================== -->
+    <section id="proportion">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Proportion &amp; Continued Proportion</h2>
+        <p class="lede">A proportion links four quantities; a continued proportion links three, with the middle one doing double duty as the mean proportional.</p>
+      </div>
+      <div class="ratio-grid" id="proportionGrid"></div>
+    </section>
+
+    <!-- ===================== 4. PROPERTIES OF PROPORTION ===================== -->
+    <section id="properties">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Properties of Proportion</h2>
+        <p class="lede">Five standard moves let you rearrange any proportion without disturbing its truth. Componendo-Dividendo is the one you'll reach for most — it gets its own deep dive next.</p>
+      </div>
+      <div class="ratio-grid" id="propertiesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. COMPONENDO-DIVIDENDO ===================== -->
+    <section id="compdiv">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>Componendo-Dividendo</h2>
+        <p class="lede">If a/b = c/d, then (a+b)/(a−b) = (c+d)/(c−d). Scale the ratio below by any factor k — the value of (a+b)/(a−b) never changes.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compdivLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>Base ratio a:b = 4:3. Drag the slider to scale both by k, and watch (a+b)/(a−b) stay fixed at 7.</p>
+            <input type="range" min="1" max="10" value="1" id="compdivSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>a = 4k = <b id="compdivA">4</b></span>
+              <span>b = 3k = <b id="compdivB">3</b></span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="compdivSum">(4+3)/(4−3) = 7/1 = 7</span> — always true, no matter what k is.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across types, proportion, properties, componendo-dividendo, and general ratio facts — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">08 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">09 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 10. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">10 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 11. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">11 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Duplicate ratio: a²:b² · Triplicate: a³:b³</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Sub-duplicate: √a:√b · Sub-triplicate: ∛a:∛b</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Proportion: ad = bc</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Continued proportion: b² = ac</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Property Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Invertendo: b/a = d/c</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Alternendo: a/c = b/d</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Componendo-Dividendo: (a+b)/(a−b) = (c+d)/(c−d)</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Properties (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always check that a ratio compares quantities of the same kind before simplifying it.</li>
+              <li>When a proportion involves surds, look for a chance to apply componendo-dividendo before squaring anything.</li>
+              <li>To combine two ratios like a:b and b:c, make the common term (b) equal in both before joining them.</li>
+              <li>Remember: mean proportional is a geometric mean (√ac), never an arithmetic average.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 12. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">12 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FORMULA SHEET ===================== -->
+    <section id="formula">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">13 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Ratio and Proportion — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Types of Ratios</h5>
+            <p>Duplicate: a² : b²</p><p>Triplicate: a³ : b³</p><p>Sub-duplicate: √a : √b</p><p>Sub-triplicate: ∛a : ∛b</p>
+            <p>Inverse: b : a</p><p>Compounded: (a×c) : (b×d)</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Proportion</h5>
+            <p>a:b :: c:d ⟹ ad = bc</p><p>Continued proportion: a:b = b:c ⟹ b² = ac</p>
+            <p>Mean proportional: b = √(ac)</p><p>Third proportional: c = b²/a</p><p>Fourth proportional: d = bc/a</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Properties</h5>
+            <p>Invertendo: b/a = d/c</p><p>Alternendo: a/c = b/d</p>
+            <p>Componendo: (a+b)/b = (c+d)/d</p><p>Dividendo: (a−b)/b = (c−d)/d</p>
+            <p>Componendo-Dividendo: (a+b)/(a−b) = (c+d)/(c−d)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 14. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">14 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/14</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const PROPORTION_THEOREMS=[
+ {name:'Proportion', color:'#3D5A80', statement:'Four quantities a,b,c,d are in proportion if a:b = c:d, written a:b::c:d. The product of the extremes equals the product of the means: ad = bc.', trick:'a and d are the extremes; b and c are the means.', ex:'2:3 :: 4:6, since 2×6 = 3×4 = 12.'},
+ {name:'Continued Proportion', color:'#2E7D5B', statement:'Three quantities a,b,c are in continued proportion if a:b = b:c, which gives b² = ac.', trick:'b is called the mean proportional between a and c.', ex:'2, 4, 8 are in continued proportion since 4² = 2×8 = 16.'},
+ {name:'Mean Proportional', color:'#C97A2B', statement:'If a,b,c are in continued proportion, b is the mean proportional between a and c: b = √(ac).', trick:'This is a geometric mean, not an arithmetic one.', ex:'Mean proportional between 4 and 9 is √36 = 6.'},
+ {name:'Third Proportional', color:'#3D5A80', statement:'If a:b = b:c, then c is the third proportional to a and b: c = b²/a.', trick:'You only need a and b to find c.', ex:'Third proportional to 4 and 8 is 8²/4 = 16.'},
+ {name:'Fourth Proportional', color:'#2E7D5B', statement:'If a:b = c:d, then d is the fourth proportional to a, b, c: d = bc/a.', trick:'All three of a, b, c are needed to find d.', ex:'Fourth proportional to 2, 3, 4 is (3×4)/2 = 6.'}
+];
+const PROPERTY_THEOREMS=[
+ {name:'Invertendo', color:'#3D5A80', statement:'If a/b = c/d, then b/a = d/c.', trick:'Simply flip (invert) both ratios.', ex:'3/5 = 6/10 ⟹ 5/3 = 10/6.'},
+ {name:'Alternendo', color:'#2E7D5B', statement:'If a/b = c/d, then a/c = b/d.', trick:'Swap the two middle terms (the means).', ex:'2/3 = 4/6 ⟹ 2/4 = 3/6.'},
+ {name:'Componendo', color:'#C97A2B', statement:'If a/b = c/d, then (a+b)/b = (c+d)/d.', trick:'Add the denominator to the numerator, on both sides.', ex:'3/5 = 6/10 ⟹ 8/5 = 16/10.'},
+ {name:'Dividendo', color:'#3D5A80', statement:'If a/b = c/d, then (a−b)/b = (c−d)/d.', trick:'Subtract the denominator from the numerator, on both sides.', ex:'3/5 = 6/10 ⟹ −2/5 = −4/10.'},
+ {name:'Componendo-Dividendo', color:'#C97A2B', statement:'If a/b = c/d, then (a+b)/(a−b) = (c+d)/(c−d).', trick:'The single most useful property for solving equations that involve surds.', ex:'3/5 = 6/10 ⟹ 8/(−2) = 16/(−4) ⟹ −4 = −4.'}
+];
+const COMPDIV_PAIRS=[
+ ['Invertendo','b/a = d/c'],['Alternendo','a/c = b/d'],['Componendo','(a+b)/b = (c+d)/d'],['Dividendo','(a−b)/b = (c−d)/d'],['Componendo-Dividendo','(a+b)/(a−b) = (c+d)/(c−d)']
+];
+const TYPE_DATA=[
+ {label:'Original Ratio', formula:'a : b', value:'8 : 27'},
+ {label:'Duplicate Ratio', formula:'a² : b²', value:'64 : 729'},
+ {label:'Triplicate Ratio', formula:'a³ : b³', value:'512 : 19683'},
+ {label:'Sub-duplicate Ratio', formula:'√a : √b', value:'2√2 : 3√3'},
+ {label:'Sub-triplicate Ratio', formula:'∛a : ∛b', value:'2 : 3'},
+ {label:'Inverse Ratio', formula:'b : a', value:'27 : 8'},
+ {label:'Compounded with 3:2', formula:'(a×3) : (b×2)', value:'24 : 54  =  4 : 9'}
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'Express the ratio 18:24 in its simplest form.',steps:['HCF of 18 and 24 is 6.','Divide both terms by 6: 18÷6 = 3, 24÷6 = 4.'],ans:'3:4'},
+ {level:'easy',q:'Find the duplicate ratio of 4:9.',steps:['Duplicate ratio is a² : b².','4² : 9² = 16 : 81.'],ans:'16:81'},
+ {level:'easy',q:'Find the triplicate ratio of 2:5.',steps:['Triplicate ratio is a³ : b³.','2³ : 5³ = 8 : 125.'],ans:'8:125'},
+ {level:'easy',q:'Find the sub-duplicate ratio of 49:81.',steps:['Sub-duplicate ratio is √a : √b.','√49 : √81 = 7 : 9.'],ans:'7:9'},
+ {level:'easy',q:'Two numbers are in the ratio 4:7, and their sum is 33. Find the numbers.',steps:['Let the numbers be 4k and 7k.','4k + 7k = 33 ⟹ 11k = 33 ⟹ k = 3.','Numbers = 4(3) = 12 and 7(3) = 21.'],ans:'12 and 21'},
+ {level:'easy',q:'Find the fourth proportional to 2, 3, 4.',steps:['If 2:3 = 4:d, then d = (3×4)/2.','d = 12/2 = 6.'],ans:'6'},
+ {level:'medium',q:'Find the third proportional to 4 and 8.',steps:['Third proportional c = b²/a, with a=4, b=8.','c = 8²/4 = 64/4 = 16.'],ans:'16'},
+ {level:'medium',q:'Find the mean proportional between 4 and 25.',steps:['Mean proportional = √(a×c).','√(4×25) = √100 = 10.'],ans:'10'},
+ {level:'medium',q:'If x:y = 3:4, find the value of (5x+2y):(5x−2y).',steps:['Let x = 3k, y = 4k.','5x = 15k, 2y = 8k. Sum = 23k, Difference = 7k.','Ratio = 23k : 7k = 23 : 7.'],ans:'23:7'},
+ {level:'medium',q:'Two numbers are in the ratio 5:7. If 3 is added to each, the ratio becomes 3:4. Find the numbers.',steps:['Let numbers be 5k and 7k.','(5k+3)/(7k+3) = 3/4 ⟹ 4(5k+3) = 3(7k+3).','20k+12 = 21k+9 ⟹ k = 3.','Numbers = 15 and 21.'],ans:'15 and 21'},
+ {level:'medium',q:'If a:b = 2:3 and b:c = 4:5, find a:b:c.',steps:['Make b the same in both ratios: b is 3 in the first, 4 in the second (LCM = 12).','Scale a:b by 4: 8:12. Scale b:c by 3: 12:15.','So a:b:c = 8:12:15.'],ans:'8:12:15'},
+ {level:'medium',q:'Find the compounded ratio of 2:3, 4:5, and 9:8.',steps:['Multiply the antecedents: 2×4×9 = 72.','Multiply the consequents: 3×5×8 = 120.','72:120 simplifies (÷24) to 3:5.'],ans:'3:5'},
+ {level:'medium',q:'If (a+b):(a−b) = 5:1, find a:b using componendo-dividendo.',steps:['Cross-multiply: a+b = 5(a−b).','a+b = 5a−5b ⟹ 6b = 4a ⟹ a/b = 6/4.','a:b = 3:2.'],ans:'3:2'},
+ {level:'medium',q:'Divide ₹3600 among A, B, C in the ratio 2:3:4.',steps:['Total parts = 2+3+4 = 9.','Value of one part = 3600/9 = ₹400.','A = 2×400 = ₹800, B = 3×400 = ₹1200, C = 4×400 = ₹1600.'],ans:'A=₹800, B=₹1200, C=₹1600'},
+ {level:'medium',q:'If x:y = 7:9, find (y−x):(y+x).',steps:['Let x = 7k, y = 9k.','y−x = 2k, y+x = 16k.','Ratio = 2k : 16k = 1 : 8.'],ans:'1:8'},
+ {level:'hard',q:'If a:b = 3:4 and b:c = 8:9, find a:b:c.',steps:['b is 4 in the first ratio and 8 in the second — LCM(4,8) = 8.','Scale a:b by 2: 6:8. The second ratio b:c stays 8:9.','So a:b:c = 6:8:9.'],ans:'6:8:9'},
+ {level:'hard',q:'Solve for x: (√(x+1)+√(x−1))/(√(x+1)−√(x−1)) = 3, using componendo-dividendo.',steps:['Let a = √(x+1), b = √(x−1). Given (a+b)/(a−b) = 3/1.','By componendo-dividendo: a/b = (3+1)/(3−1) = 4/2 = 2, so a = 2b.','Squaring: x+1 = 4(x−1) = 4x−4 ⟹ 5 = 3x ⟹ x = 5/3.'],ans:'x = 5/3'},
+ {level:'hard',q:'If a, b, c are in continued proportion with a=4 and c=9, find the positive value of b.',steps:['For continued proportion, b² = ac.','b² = 4×9 = 36.','b = √36 = 6.'],ans:'6'},
+ {level:'hard',q:'The ratio of the ages of A and B is 3:5. After 6 years, the ratio becomes 2:3. Find their present ages.',steps:['Let present ages be 3k and 5k.','(3k+6)/(5k+6) = 2/3 ⟹ 3(3k+6) = 2(5k+6).','9k+18 = 10k+12 ⟹ k = 6.','Ages = 3(6)=18 and 5(6)=30.'],ans:'18 years and 30 years'},
+ {level:'hard',q:'If x:y = (a+b):(a−b), prove that (x+y):(x−y) = a:b.',steps:['Since x:y = (a+b):(a−b), write x = k(a+b) and y = k(a−b) for some constant k.','x+y = k(a+b) + k(a−b) = 2ak. x−y = k(a+b) − k(a−b) = 2bk.','(x+y)/(x−y) = 2ak/2bk = a/b.'],ans:'Identity verified: (x+y):(x−y) = a:b'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Types of Ratios',time:'3 min',q:'Find the triplicate ratio of 2:3.',sol:'Triplicate ratio is a³:b³. 2³:3³ = 8:27.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Proportion',time:'5 min',q:'Find the fourth proportional to 3, 5, 12.',sol:'d = (5×12)/3 = 60/3 = 20.'},
+ {year:'2022',diff:'Medium',marks:3,topic:'Continued Proportion',time:'5 min',q:'If 6, x, 24 are in continued proportion, find x.',sol:'x² = 6×24 = 144 ⟹ x = 12.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Componendo-Dividendo',time:'8 min',q:'If (3x+4y):(3x−4y) = 5:1, find x:y using componendo-dividendo.',sol:'Let a=3x, b=4y. By componendo-dividendo, a/b = (5+1)/(5−1) = 6/4 = 3/2. So 3x/4y = 3/2 ⟹ x:y = 2:1.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Ratio Basics',time:'3 min',q:'Two numbers are in the ratio 5:6. If their sum is 55, find the numbers.',sol:'Total parts = 11, one part = 5. Numbers = 5×5=25 and 6×5=30.'},
+ {year:'2021',diff:'Medium',marks:4,topic:'Proportion',time:'6 min',q:'Find the mean proportional between 9 and 16.',sol:'√(9×16) = √144 = 12.'}
+];
+
+const MISTAKES=[
+ 'Forgetting that a ratio must compare quantities of the same kind or unit before it can be simplified.',
+ 'Confusing "duplicate ratio" (a²:b²) with "double ratio" (2a:2b) — they are not the same thing.',
+ 'Applying componendo-dividendo incorrectly by changing only one side of the equation instead of both consistently.',
+ 'Mixing up which pair of terms in a proportion are the "means" and which are the "extremes."',
+ 'Assuming the mean proportional is the arithmetic average (a+c)/2 instead of the geometric mean √(ac).'
+];
+
+const FLASH=[
+ {f:'Ratio', b:'A comparison of two quantities of the same kind, written a:b'},
+ {f:'Antecedent & Consequent', b:'In a:b, a is the antecedent, b is the consequent'},
+ {f:'Duplicate ratio', b:'a² : b²'},
+ {f:'Triplicate ratio', b:'a³ : b³'},
+ {f:'Sub-duplicate ratio', b:'√a : √b'},
+ {f:'Sub-triplicate ratio', b:'∛a : ∛b'},
+ {f:'Inverse (reciprocal) ratio', b:'b : a'},
+ {f:'Compounded ratio', b:'Multiply corresponding terms: (a×c) : (b×d)'},
+ {f:'Proportion', b:'a:b = c:d ⟺ ad = bc (product of extremes = product of means)'},
+ {f:'Continued proportion', b:'a:b = b:c ⟹ b² = ac'},
+ {f:'Mean proportional', b:'b = √(ac)'},
+ {f:'Third proportional to a, b', b:'c = b²/a'},
+ {f:'Fourth proportional to a, b, c', b:'d = bc/a'},
+ {f:'Invertendo', b:'If a/b = c/d, then b/a = d/c'},
+ {f:'Alternendo', b:'If a/b = c/d, then a/c = b/d'},
+ {f:'Componendo-Dividendo', b:'If a/b = c/d, then (a+b)/(a−b) = (c+d)/(c−d)'}
+];
+
+const CC_MCQ=[
+ {t:'types',q:'The duplicate ratio of 5:7 is:',opts:['10:14','25:49','35:49','5:14'],a:1},
+ {t:'types',q:'The inverse ratio of 3:8 is:',opts:['3:8','8:3','6:16','1:1'],a:1},
+ {t:'types',q:'The sub-duplicate ratio of 9:16 is:',opts:['3:4','81:256','18:32','3:16'],a:0},
+ {t:'proportion',q:'In the proportion a:b = c:d, the means are:',opts:['a and d','b and c','a and c','b and d'],a:1},
+ {t:'proportion',q:'If a, b, c are in continued proportion, then:',opts:['b = ac','b² = ac','a = bc','c² = ab'],a:1},
+ {t:'properties',q:'Alternendo states that if a/b = c/d, then:',opts:['b/a = d/c','a/c = b/d','(a+b)/b = (c+d)/d','(a−b)/b = (c−d)/d'],a:1},
+ {t:'properties',q:'Invertendo states that if a/b = c/d, then:',opts:['a/c = b/d','b/a = d/c','(a+b)/(a−b) = (c+d)/(c−d)','ad = bc'],a:1},
+ {t:'compdiv',q:'Componendo-Dividendo gives, from a/b = c/d:',opts:['(a+b)/(a−b) = (c+d)/(c−d)','a/c = b/d','b/a = d/c','ab = cd'],a:0},
+ {t:'general',q:'The fourth proportional to a, b, c is:',opts:['ac/b','bc/a','ab/c','b²/a'],a:1},
+ {t:'general',q:'The mean proportional between 4 and 9 is:',opts:['6.5','6','13','36'],a:1},
+ {t:'types',q:'The compounded ratio of 2:3 and 3:4 is:',opts:['6:12','1:2','2:4','5:7'],a:1},
+ {t:'proportion',q:'The third proportional to 3 and 6 is:',opts:['9','12','2','18'],a:1},
+ {t:'properties',q:'Dividendo states that if a/b = c/d, then:',opts:['(a−b)/b = (c−d)/d','(a+b)/b = (c+d)/d','a/c = b/d','b/a = d/c'],a:0},
+ {t:'general',q:'A ratio must always compare quantities that are:',opts:['Whole numbers','Of the same kind/unit','Fractions','Equal in value'],a:1},
+ {t:'compdiv',q:'If (a+b)/(a−b) = 5, then a:b equals:',opts:['5:4','3:2','2:3','4:5'],a:1}
+];
+const CC_FIB=[
+ {t:'types',q:'The ______ ratio of a:b is a³:b³.',a:'triplicate'},
+ {t:'types',q:'The ______ ratio of a:b is b:a.',a:'inverse'},
+ {t:'types',q:'The sub-duplicate ratio of 25:36 is ______.',a:'5:6'},
+ {t:'proportion',q:'In a proportion, the product of the extremes equals the product of the ______.',a:'means'},
+ {t:'proportion',q:'If a, b, c are in continued proportion, b is called the ______ proportional.',a:'mean'},
+ {t:'proportion',q:'The third proportional to 2 and 4 is ______.',a:'8'},
+ {t:'proportion',q:'The fourth proportional to 2, 3, 8 is ______.',a:'12'},
+ {t:'properties',q:'______ states that if a/b=c/d, then a/c=b/d.',a:'alternendo'},
+ {t:'properties',q:'______ states that if a/b=c/d, then b/a=d/c.',a:'invertendo'},
+ {t:'compdiv',q:'Componendo-Dividendo combines componendo and ______.',a:'dividendo'},
+ {t:'compdiv',q:'If a/b = c/d, componendo alone gives (a+b)/b = ______.',a:'(c+d)/d'},
+ {t:'general',q:'A ratio, once simplified, has no ______ attached to it.',a:'units'},
+ {t:'general',q:'The mean proportional between 16 and 25 is ______.',a:'20'},
+ {t:'types',q:'The duplicate ratio of 6:5 is ______.',a:'36:25'},
+ {t:'proportion',q:'Two quantities are in ______ if the ratio of the first to the second equals the ratio of the third to the fourth.',a:'proportion'}
+];
+const CC_TF=[
+ {t:'types',q:'The duplicate ratio of a:b is always double the original ratio.',a:false},
+ {t:'types',q:'The inverse ratio of a:b is b:a.',a:true},
+ {t:'types',q:'A compounded ratio is found by multiplying the corresponding terms of two or more ratios.',a:true},
+ {t:'proportion',q:'In a proportion a:b = c:d, ad = bc.',a:true},
+ {t:'proportion',q:'If a, b, c are in continued proportion, then b is the arithmetic mean of a and c.',a:false},
+ {t:'proportion',q:'The mean proportional between two numbers is always their geometric mean.',a:true},
+ {t:'properties',q:'Alternendo and Invertendo give the same resulting equation.',a:false},
+ {t:'properties',q:'Dividendo states that (a−b)/b = (c−d)/d, given a/b = c/d.',a:true},
+ {t:'properties',q:'Componendo alone gives (a+b)/(a−b) = (c+d)/(c−d).',a:false},
+ {t:'compdiv',q:'Componendo-Dividendo is often used to simplify equations involving surds (square roots).',a:true},
+ {t:'compdiv',q:'Componendo-Dividendo requires a ≠ b and c ≠ d.',a:true},
+ {t:'general',q:'A ratio can compare a length to a weight directly, without conversion.',a:false},
+ {t:'general',q:'Simplifying a ratio means dividing both terms by their HCF.',a:true},
+ {t:'general',q:'The order of terms in a ratio does not matter — a:b is the same as b:a.',a:false},
+ {t:'general',q:'A proportion is an equality of two ratios.',a:true}
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'Simplify the ratio 18:24.','Divide both terms by their HCF (6).','3:4'),
+ mk(2,'Find the duplicate ratio of 4:9.','Square both terms.','16:81'),
+ mk(3,'Find the triplicate ratio of 2:5.','Cube both terms.','8:125'),
+ mk(4,'Find the inverse ratio of 11:13.','Swap the terms.','13:11'),
+ mk(5,'Find the sub-duplicate ratio of 49:81.','Square-root both terms.','7:9'),
+ mk(6,'Two numbers are in ratio 3:4 and their sum is 63. Find the numbers.','Divide 63 into 7 equal parts.','27 and 36'),
+ mk(7,'Find the fourth proportional to 3, 4, 9.','d = bc/a.','12'),
+ mk(8,'Find the third proportional to 5 and 10.','c = b²/a.','20'),
+ mk(9,'Find the mean proportional between 3 and 27.','√(a×c).','9'),
+ mk(10,'If a:b = 5:6, find 3a:2b.','Substitute a=5k, b=6k.','5:4'),
+ mk(11,'Divide ₹500 between A and B in the ratio 2:3.','5 parts, each ₹100.','A=₹200, B=₹300'),
+ mk(12,'State Invertendo: if a/b = c/d, then?','Flip both sides.','b/a = d/c'),
+ mk(13,'State Alternendo: if a/b = c/d, then?','Swap the means.','a/c = b/d'),
+ mk(14,'Find the compounded ratio of 2:3 and 5:7.','Multiply corresponding terms.','10:21'),
+ mk(15,'In a proportion a:b = c:d, the product of the means equals what?','Cross-multiply.','Product of the extremes (ad = bc)'),
+ mk(16,'Find x if 4:x = 8:18.','Cross-multiply.','x = 9'),
+ mk(17,'Two numbers are in ratio 7:9. Their difference is 10. Find the numbers.','2 parts = 10.','35 and 45'),
+ mk(18,'Find the duplicate ratio of the ratio obtained by inverting 2:3.','Invert first, then square.','9:4'),
+ mk(19,'Express 0.75:2 as a ratio of whole numbers.','Multiply both by 4.','3:8'),
+ mk(20,'If x:y = 4:5, find (x+y):y.','Substitute x=4k, y=5k.','9:5')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'If a:b = 3:5 and b:c = 10:13, find a:b:c.','Make b common (LCM of 5,10 = 10).','6:10:13'),
+ mk(2,'Find x such that (x+3):(x+8) = 2:3.','Cross-multiply.','x = 7'),
+ mk(3,'Two numbers are in ratio 5:6. If 4 is subtracted from each, the ratio becomes 1:2. Find the numbers.','Set up the equation and cross-multiply.','5 and 6'),
+ mk(4,'If (a+b):(a−b) = 7:3, find a:b.','Cross-multiply.','5:2'),
+ mk(5,'Find the compounded ratio of 3:4, 8:9, and 6:5.','Multiply antecedents and consequents separately.','4:5'),
+ mk(6,'If x:y = 2:3, find (5x+y):(5x−y).','Substitute x=2k, y=3k.','13:7'),
+ mk(7,'The ratio of ages of P and Q is 4:5. Eight years ago the ratio was 3:4. Find their present ages.','Set up (4k−8)/(5k−8)=3/4.','32 and 40'),
+ mk(8,'Find y in the continued proportion 3, y, 27.','y² = 3×27.','9'),
+ mk(9,'If a/b=c/d=e/f=3/5 and a+c+e=27, find b+d+f.','Use the equal-ratios property.','45'),
+ mk(10,'Find x if (x+5):(x−5) = 7:3.','Cross-multiply.','12.5'),
+ mk(11,'The sides of a triangle are in ratio 3:4:5, and its perimeter is 60 cm. Find the sides.','12 parts, each 5 cm.','15 cm, 20 cm, 25 cm'),
+ mk(12,'If a:b = 5:3, find (a²+b²):(a²−b²).','Substitute a=5k, b=3k.','17:8'),
+ mk(13,'The first of two quantities is to the second as 5 is to 9. If the second is 63, find the first.','Set up 5/9 = x/63.','35'),
+ mk(14,'If a, b, c, d are in proportion with a=6, b=8, c=15, find d.','d = bc/a.','20'),
+ mk(15,'Find the ratio compounded of the duplicate ratio of 3:4 and the ratio 8:9.','Square 3:4 first, then compound.','1:2'),
+ mk(16,'If (7x+2y):(7x−2y) = 5:3, find x:y.','Cross-multiply.','8:7'),
+ mk(17,'Divide 250 into two parts such that one part is 3/2 times the other.','The parts are in ratio 3:2.','150 and 100'),
+ mk(18,'If a:b = 7:2 and b:c = 4:5, find a:c.','Make b common.','14:5'),
+ mk(19,'The angles of a triangle are in ratio 2:3:4. Find the largest angle.','9 parts sum to 180°.','80°'),
+ mk(20,'If x:y = 4:7, find (5x+2y):(5x−2y).','Substitute x=4k, y=7k.','17:3')
+];
+const PZ3=[ // Level 3 - ICSE exam
+ mk(1,'If (2x+3y):(2x−3y) = 3:1, find x:y using componendo-dividendo.','a/b = (3+1)/(3−1), with a=2x, b=3y.','3:1'),
+ mk(2,'If a, b, c are in continued proportion, prove that a:c = a²:b².','Use b² = ac.','Identity verified: a:c = a²:b²'),
+ mk(3,'If x:y:z = 2:3:4 and x+y+z = 54, find x, y, z.','9 parts, each 6.','12, 18, 24'),
+ mk(4,'Solve for x: (√(x+9)+√(x−9))/(√(x+9)−√(x−9)) = 5, using componendo-dividendo.','a/b = (5+1)/(5−1), then square.','x = 117/5 (=23.4)'),
+ mk(5,'If a:b = c:d, prove that (a+b):(a−b) = (c+d):(c−d) from first principles.','Let a/b=c/d=k, so a=bk, c=dk.','Identity verified: (a+b):(a−b) = (c+d):(c−d)'),
+ mk(6,'The sides of a triangle are in ratio 5:12:13 and its perimeter is 90 cm. Find the sides and verify it is right-angled.','30 parts, each 3 cm; use Pythagoras.','15 cm, 36 cm, 39 cm (right-angled, since 15²+36²=39²)'),
+ mk(7,'If x,y,z are in continued proportion with x:y = y:z = 2:3, and x=8, find y and z.','Scale by the common ratio.','y=12, z=18'),
+ mk(8,'Find two numbers such that their mean proportional is 12 and one of them is 9.','b² = ac.','16'),
+ mk(9,'If a/b = c/d, prove that (a²+b²):(a²−b²) = (c²+d²):(c²−d²).','Square both sides first, then apply componendo-dividendo.','Identity verified: (a²+b²):(a²−b²) = (c²+d²):(c²−d²)'),
+ mk(10,'Three numbers in continued proportion have a sum of 14, and the first and third sum to 10. Find the numbers.','Middle number = 14−10 = 4; use b²=ac.','2, 4, 8'),
+ mk(11,'If (5x−3y):(5x+3y) = 1:3, find x:y.','Cross-multiply.','6:5'),
+ mk(12,'₹7000 is divided among A, B, C such that A:B = 2:3 and B:C = 4:5. Find each share.','Combine ratios via common B, then divide.','A=₹1600, B=₹2400, C=₹3000'),
+ mk(13,'If a:b = 3:2, find (3a²+2b²):(3a²−2b²).','Substitute a=3k, b=2k.','35:19'),
+ mk(14,'Prove: if a/b = c/d = e/f, then (a+c+e)/(b+d+f) = a/b.','Let each ratio = k, so a=bk, c=dk, e=fk.','Identity verified: (a+c+e):(b+d+f) = a:b'),
+ mk(15,'If a=4, b=5, and (a+x):(b+x) = 5:6, find x.','Substitute the known values and cross-multiply.','x = 1'),
+ mk(16,'Find the ratio in which 60 must be divided into two parts so that twice the first part equals thrice the second.','First:Second = 3:2.','36 and 24'),
+ mk(17,'If (a+b+c):(b+c) = 7:4, find a:(b+c).','Subtract 1 from both sides of the ratio.','3:4'),
+ mk(18,'The ratio of boys to girls in a school is 8:7. There are 60 more boys than girls. Find the total number of students.','The difference is 1 part.','900'),
+ mk(19,'If a/b=c/d, show that (ma+nb):(pa+qb) = (mc+nd):(pc+qd) for any constants m,n,p,q.','Let a=bk, c=dk and substitute throughout.','Identity verified: (ma+nb):(pa+qb) = (mc+nd):(pc+qd)'),
+ mk(20,'Three numbers are in the ratio 1:2:3, and the sum of their squares is 504. Find the numbers.','Let numbers be k, 2k, 3k; sum of squares = 14k².','6, 12, 18')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (proportion / properties)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('proportionGrid',PROPORTION_THEOREMS);
+buildTheoremCards('propertiesGrid',PROPERTY_THEOREMS);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=PROPORTION_THEOREMS.concat(PROPERTY_THEOREMS);
+  let head='<tr><th>Definition / Property</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Componendo-Dividendo pairs list
+const compdivLeft=document.getElementById('compdivLeft');
+const cpCard=el('div','card pad');
+COMPDIV_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+compdivLeft.appendChild(cpCard);
+
+// Types of ratios legend chips
+const typeLegend=document.getElementById('typeLegend');
+TYPE_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===0?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('typeName').textContent=item.label;
+    document.getElementById('typeFormula').textContent=item.formula;
+    document.getElementById('typeValue').textContent=item.value;
+  });
+  typeLegend.appendChild(chip);
+});
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('rp_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('rp_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase().replace(/\s+/g,'')===item.a.toLowerCase().replace(/\s+/g,'');
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('rp_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('rp_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+// Hero interactive instrument — drag the divider to split the bar
+const heroSvg=document.getElementById('heroSvg');
+const dividerHandle=document.getElementById('dividerHandle');
+const dividerLine=document.getElementById('dividerLine');
+const leftRect=document.getElementById('leftRect');
+const rightRect=document.getElementById('rightRect');
+const BAR_X0=30, BAR_X1=290, UNIT_PX=10, TOTAL_UNITS=26;
+function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ [a,b]=[b,a%b]; } return a||1; }
+function setDivider(leftUnits){
+  leftUnits=Math.max(1,Math.min(TOTAL_UNITS-1,leftUnits));
+  const rightUnits=TOTAL_UNITS-leftUnits;
+  const dx=BAR_X0+leftUnits*UNIT_PX;
+  leftRect.setAttribute('width',leftUnits*UNIT_PX-2);
+  rightRect.setAttribute('x',dx+1);
+  rightRect.setAttribute('width',rightUnits*UNIT_PX-2);
+  dividerLine.setAttribute('x1',dx); dividerLine.setAttribute('x2',dx);
+  dividerHandle.setAttribute('cx',dx);
+  document.getElementById('labelA').setAttribute('x', BAR_X0 + (leftUnits*UNIT_PX)/2);
+  document.getElementById('labelB').setAttribute('x', dx + (rightUnits*UNIT_PX)/2);
+
+  const g=gcd(leftUnits,rightUnits);
+  const sa=leftUnits/g, sb=rightUnits/g;
+  document.getElementById('rRatio').textContent=leftUnits+':'+rightUnits;
+  document.getElementById('rSimple').textContent=sa+':'+sb;
+  document.getElementById('rDup').textContent=(sa*sa)+':'+(sb*sb);
+  document.getElementById('rFrac').textContent=leftUnits+'/'+TOTAL_UNITS;
+}
+let dragging=false;
+dividerHandle.addEventListener('pointerdown',()=>dragging=true);
+window.addEventListener('pointerup',()=>dragging=false);
+heroSvg.addEventListener('pointermove',(e)=>{
+  if(!dragging) return;
+  const rect=heroSvg.getBoundingClientRect();
+  const vb=heroSvg.viewBox.baseVal;
+  const px=(e.clientX-rect.left)/rect.width*vb.width;
+  const leftUnits=Math.round((px-BAR_X0)/UNIT_PX);
+  setDivider(leftUnits);
+});
+setDivider(13);
+
+// Componendo-Dividendo slider
+const compdivSlider=document.getElementById('compdivSlider');
+function updateCompdiv(){
+  const k=parseInt(compdivSlider.value);
+  const a=4*k, b=3*k;
+  document.getElementById('compdivA').textContent=a;
+  document.getElementById('compdivB').textContent=b;
+  document.getElementById('compdivSum').textContent=`(${a}+${b})/(${a}−${b}) = ${a+b}/${a-b} = 7`;
+}
+compdivSlider.addEventListener('input',updateCompdiv); updateCompdiv();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','types','proportion','properties','compdiv','examples','conceptcheck','practice','pyq','mistakes','revision','flashcards','formula','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('rp_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('rp_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('rp_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('rp_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('rp_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('rp_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('rp_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['rp_sectionsRead','rp_examplesOpened','rp_quizStats','rp_pz_l1','rp_pz_l2','rp_pz_l3','rp_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
