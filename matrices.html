@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrices — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+.mx-slider-row{display:flex; align-items:center; gap:.6rem; margin-bottom:.6rem;}
+.mx-slider-row label{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); width:132px; flex:none;}
+.mx-slider-row input[type=range]{flex:1;}
+.mx-slider-row .val{font-family:var(--font-mono); font-weight:700; color:var(--amber-dark); width:36px; text-align:right; flex:none; font-size:.85rem;}
+
+/* ===================== TYPES / EXPLORER CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:.95rem; color:var(--ink-soft); margin:.3rem 0; line-height:1.5;}
+.result-box .rvalue{font-family:var(--font-mono); font-size:1.15rem; font-weight:700; color:var(--ink); line-height:1.5;}
+.result-box .rvalue small{display:block; font-family:var(--font-mono); font-size:.7rem; color:var(--ink-faint); font-weight:400; margin-top:.2rem;}
+
+/* ===================== THEOREM/PROPERTY CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.88rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.0rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-statement{margin:.35rem 0; font-size:.92rem; line-height:1.45;}
+.ar-statement b{color:var(--amber-dark); font-family:var(--font-mono); margin-right:.45rem;}
+.ar-note{font-size:.76rem; color:var(--ink-faint); font-family:var(--font-mono); margin:.3rem 0 .5rem;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.2rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:.95rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formulasheet){display:none !important;}
+  #formulasheet{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">🔢 <span>Matrices</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="explorer" href="#explorer"><span class="dot"></span>Matrix Explorer</a>
+    <a class="navlink" data-target="terms" href="#terms"><span class="dot"></span>Key Terms</a>
+    <a class="navlink" data-target="rules" href="#rules"><span class="dot"></span>Rules &amp; Properties</a>
+    <a class="navlink" data-target="matrixmultiplication" href="#matrixmultiplication"><span class="dot"></span>Multiplication Rule</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+    <a class="navlink" data-target="assertion" href="#assertion"><span class="dot"></span>Assertion &amp; Reasoning</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formulasheet" href="#formulasheet"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Matrices</div>
+        <h1>Numbers in rows,<br>numbers in columns.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the sliders to change the size of two matrices A and B — watch instantly whether A×B is even possible, and what order the result would take.</p>
+        <div class="hero-cta">
+          <a href="#terms" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <div class="mx-slider-row">
+          <label>Rows of A</label>
+          <input type="range" id="heroRA" min="1" max="6" step="1" value="2">
+          <span class="val" id="heroRAVal">2</span>
+        </div>
+        <div class="mx-slider-row">
+          <label>Columns of A</label>
+          <input type="range" id="heroCA" min="1" max="6" step="1" value="3">
+          <span class="val" id="heroCAVal">3</span>
+        </div>
+        <div class="mx-slider-row">
+          <label>Rows of B</label>
+          <input type="range" id="heroRB" min="1" max="6" step="1" value="3">
+          <span class="val" id="heroRBVal">3</span>
+        </div>
+        <div class="mx-slider-row">
+          <label>Columns of B</label>
+          <input type="range" id="heroCB" min="1" max="6" step="1" value="2">
+          <span class="val" id="heroCBVal">2</span>
+        </div>
+        <div class="instrument-readout">
+          <div>Order of A <b id="heroOrderA">2×3</b></div>
+          <div>Order of B <b id="heroOrderB">3×2</b></div>
+          <div>AB defined? <b id="heroDefined">Yes</b></div>
+          <div>Order of AB <b id="heroOrderAB">2×2</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is a Matrix?</h2>
+        <p class="lede">A <b>matrix</b> is simply a rectangular arrangement of numbers, organized into rows and columns and enclosed in brackets. Matrices let us handle whole tables of related numbers — like sales figures across cities and products — as a single mathematical object, with their own rules for addition, subtraction, and multiplication.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Once numbers are arranged into a matrix, entire systems of data can be combined in one operation instead of many. But matrices don't behave exactly like ordinary numbers — you can't always add or multiply any two of them, and even when you can multiply them, the order you multiply in usually matters. Learning these rules is the heart of this chapter.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Organizing tabular data (sales, marks, inventory)</li>
+              <li>Representing systems of linear equations</li>
+              <li>Computer graphics and image transformations</li>
+              <li>Encoding and solving real-world "combination" problems</li>
+              <li>Foundations for higher studies in Class 11–12</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 10h16M4 16h16M10 4v16M16 4v16"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Rows &amp; Columns</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 6h6M4 12h6M4 18h6M14 6h6M14 12h6M14 18h6"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Order (m×n)</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Operations</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 8l8-4 8 4-8 4-8-4zM4 8v8l8 4 8-4V8"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Transpose</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ Basic arithmetic (addition, subtraction, multiplication)</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Solving simple linear equations</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Reading a table of rows and columns</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. MATRIX EXPLORER ===================== -->
+    <section id="explorer">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Matrix Explorer</h2>
+        <p class="lede">Click each preset below to see a matrix operation carried out in full, from the given matrices to the final result.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Matrix Multiplication</div>
+            <div class="rformula" id="typeFormula">A = [1,2 / 3,4], B = [2,0 / 1,2]</div>
+            <div class="rvalue" id="typeValue">[4,4 / 10,8]<small>Result</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY TERMS ===================== -->
+    <section id="terms">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Terms in Matrices</h2>
+        <p class="lede">Five ideas are all you need to describe any matrix — its order, its elements, its type, its equality with another matrix, and its transpose.</p>
+      </div>
+      <div class="ratio-grid" id="termsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. RULES & PROPERTIES ===================== -->
+    <section id="rules">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Rules &amp; Properties</h2>
+        <p class="lede">Beyond the definitions, these rules govern how matrices are actually combined with one another.</p>
+      </div>
+      <div class="ratio-grid" id="rulesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. MULTIPLICATION RULE ===================== -->
+    <section id="matrixmultiplication">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>The Multiplication Rule, Explored</h2>
+        <p class="lede">For A(m×n) × B(p×q) to be defined, n must equal p — and the result then has order m×q. Adjust the order of B below (keeping A fixed at 2×3) and watch compatibility switch on and off.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compdivLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>A is fixed at order 2×3. Drag the slider to change the number of rows of B (columns of B stay fixed at 4), and watch whether the product is defined.</p>
+            <input type="range" min="1" max="6" value="3" step="1" id="compdivSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>Rows of B = <b id="compdivRB">3</b></span>
+              <span>Order of B = <b id="compdivOrderB">3×4</b></span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="compdivResult">Columns of A (3) = Rows of B (3) → AB is defined, with order 2×4.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across terms, formulas, and rules — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">08 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">09 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 10. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">10 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 11. ASSERTION & REASONING ===================== -->
+    <section id="assertion">
+      <div class="section-head">
+        <div class="eyebrow">11 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each is true, and whether R correctly explains A. Choose one of the four standard options, then click to reveal the answer.</p>
+      </div>
+      <div class="ar-note">Options used throughout: (a) Both A and R are true, and R is the correct explanation of A &nbsp;·&nbsp; (b) Both A and R are true, but R is NOT the correct explanation of A &nbsp;·&nbsp; (c) A is true, but R is false &nbsp;·&nbsp; (d) A is false, but R is true</div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Order = rows × columns</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Addition/Subtraction: same order only</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Multiplication: A(m×n)×B(n×p) → order m×p</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Transpose: rows and columns interchanged</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Rules to Remember</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">AB ≠ BA in general (not commutative)</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">AI = IA = A (identity matrix property)</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Equal matrices: same order AND same elements</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Rules (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Before adding or subtracting, always check that both matrices have exactly the same order.</li>
+              <li>Before multiplying, always check that the columns of the first matrix equal the rows of the second.</li>
+              <li>When solving for unknowns, write both sides in the same order and compare corresponding elements one by one.</li>
+              <li>Never assume AB = BA — always compute both separately unless the question tells you they are equal.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formulasheet">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Matrices — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Order &amp; Types</h5>
+            <p>Order = (rows) × (columns)</p><p>Row matrix: 1×n · Column matrix: m×1</p><p>Square matrix: rows = columns</p><p>Zero matrix: all elements 0</p><p>Identity matrix: 1's on diagonal, 0's elsewhere</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Operations</h5>
+            <p>Addition/Subtraction: same order, combine corresponding elements</p><p>Scalar multiplication: multiply every element by k</p><p>Matrix multiplication: A(m×n)×B(n×p) → order m×p</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Key Properties</h5>
+            <p>AB ≠ BA in general</p><p>AI = IA = A</p><p>(A^T)^T = A</p><p>(A+B)^T = A^T + B^T</p><p>Equal matrices: same order AND same elements</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   MATRIX HELPERS
+============================================================ */
+function matAdd(A,B){ return A.map((row,i)=>row.map((v,j)=>v+B[i][j])); }
+function matSub(A,B){ return A.map((row,i)=>row.map((v,j)=>v-B[i][j])); }
+function matScalar(A,k){ return A.map(row=>row.map(v=>v*k)); }
+function matMul(A,B){
+  const m=A.length, n=A[0].length, p=B[0].length;
+  const R=Array.from({length:m},()=>Array(p).fill(0));
+  for(let i=0;i<m;i++) for(let j=0;j<p;j++) for(let k=0;k<n;k++) R[i][j]+=A[i][k]*B[k][j];
+  return R;
+}
+function matTranspose(A){
+  const m=A.length, n=A[0].length;
+  const R=Array.from({length:n},()=>Array(m).fill(0));
+  for(let i=0;i<m;i++) for(let j=0;j<n;j++) R[j][i]=A[i][j];
+  return R;
+}
+function matToStr(A){
+  return '['+A.map(row=>row.join(',')).join(' / ')+']';
+}
+
+/* ============================================================
+   DATA
+============================================================ */
+const TERMS_DATA=[
+ {name:'Order of a Matrix', color:'#C97A2B', statement:'The size of a matrix, written as (number of rows) × (number of columns).', trick:'Always state rows first, then columns — "2×3" means 2 rows and 3 columns, not the other way round.', ex:'The matrix [1,2,3 / 4,5,6] has order 2×3.'},
+ {name:'Element (aᵢⱼ)', color:'#3D5A80', statement:'The individual entry located in row i and column j of a matrix, usually written aᵢⱼ.', trick:'The row number always comes before the column number in the subscript.', ex:'In [1,2 / 3,4], the element a₂₁ (row 2, column 1) is 3.'},
+ {name:'Types of Matrices', color:'#2E7D5B', statement:'Row matrix (1×n), column matrix (m×1), square matrix (rows=columns), zero matrix (all entries 0), identity matrix (1\'s on the diagonal, 0\'s elsewhere), diagonal matrix (0\'s off the diagonal).', trick:'A matrix can belong to more than one type at once — the identity matrix is also a square matrix and a diagonal matrix.', ex:'[1,0 / 0,1] is a 2×2 identity matrix, a diagonal matrix, and a square matrix.'},
+ {name:'Equal Matrices', color:'#C97A2B', statement:'Two matrices are equal only if they have exactly the same order AND every corresponding element matches.', trick:'Same order alone is not enough — every single entry in the same position must also match.', ex:'[[x,2],[3,y]] = [[4,2],[3,5]] gives x=4 and y=5.'},
+ {name:'Transpose of a Matrix (Aᵀ)', color:'#3D5A80', statement:'Formed by interchanging the rows and columns of A — the first row becomes the first column, and so on.', trick:'If A has order m×n, then Aᵀ has order n×m — the order flips.', ex:'For A=[1,2,3 / 4,5,6] (2×3), Aᵀ=[1,4 / 2,5 / 3,6] (3×2).'}
+];
+const RULES_DATA=[
+ {name:'Addition &amp; Subtraction Rule', color:'#3D5A80', statement:'Two matrices can be added or subtracted only if they have exactly the same order; the operation is then done element by element.', trick:'If the orders don\'t match, the operation is simply undefined — there\'s no way around it.', ex:'[1,2 / 3,4] + [5,6 / 7,8] = [6,8 / 10,12].'},
+ {name:'Scalar Multiplication Rule', color:'#C97A2B', statement:'To multiply a matrix by a number (scalar), multiply every single element of the matrix by that number.', trick:'This works for any matrix of any order — there\'s no compatibility condition to check.', ex:'3 × [1,2 / 3,4] = [3,6 / 9,12].'},
+ {name:'Matrix Multiplication Rule', color:'#2E7D5B', statement:'For A×B to be defined, the number of columns of A must equal the number of rows of B. If A is m×n and B is n×p, then AB has order m×p.', trick:'Check compatibility first (inner numbers must match), then read off the resulting order from the outer numbers.', ex:'A(2×3) × B(3×4) is defined, giving a result of order 2×4.'},
+ {name:'Matrix Multiplication is Not Commutative', color:'#B4453C', statement:'In general, AB ≠ BA — even when both products are defined and have the same order, the actual entries are usually different.', trick:'Never assume AB = BA; always compute both if a question asks you to compare them.', ex:'For A=[1,2 / 3,4], B=[2,0 / 1,2]: AB=[4,4 / 10,8] but BA=[2,4 / 7,10] — different!'},
+ {name:'Identity Matrix Property', color:'#3D5A80', statement:'For any square matrix A and the identity matrix I of the same order, AI = IA = A.', trick:'The identity matrix behaves like the number 1 does in ordinary multiplication.', ex:'[3,5 / 2,7] × [1,0 / 0,1] = [3,5 / 2,7].'}
+];
+const EXPLORER_DATA=[
+ {label:'Addition', op:'add', A:[[2,3],[1,4]], B:[[1,2],[3,1]]},
+ {label:'Subtraction', op:'sub', A:[[5,6],[7,8]], B:[[1,2],[3,4]]},
+ {label:'Scalar Multiplication', op:'scalar', A:[[1,2],[3,4]], k:3},
+ {label:'Matrix Multiplication', op:'mul', A:[[1,2],[3,4]], B:[[2,0],[1,2]]},
+ {label:'Identity Property', op:'mul', A:[[3,5],[2,7]], B:[[1,0],[0,1]]},
+ {label:'Transpose', op:'transpose', A:[[1,2,3],[4,5,6]]}
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'Given A=[1,2 / 3,4] wait — A=[[2,3],[1,4]] and B=[[5,1],[2,3]], find A+B.',steps:['Add corresponding elements: (2+5, 3+1) and (1+2, 4+3).','A+B = [[7,4],[3,7]].'],ans:'A+B = [7,4 / 3,7]'},
+ {level:'easy',q:'Given A=[[6,2],[4,8]] and B=[[1,1],[2,3]], find A−B.',steps:['Subtract corresponding elements: (6−1, 2−1) and (4−2, 8−3).','A−B = [[5,1],[2,5]].'],ans:'A−B = [5,1 / 2,5]'},
+ {level:'easy',q:'If A=[[1,2],[3,4]], find 3A.',steps:['Multiply every element by 3.','3A = [[3,6],[9,12]].'],ans:'3A = [3,6 / 9,12]'},
+ {level:'easy',q:'Find the order of the matrix [[1,2,3],[4,5,6]].',steps:['Count the rows (2) and the columns (3).'],ans:'Order = 2×3'},
+ {level:'easy',q:'Write down a 2×2 zero matrix and a 2×2 identity matrix.',steps:['A zero matrix has every entry equal to 0.','An identity matrix has 1\'s on the diagonal and 0\'s elsewhere.'],ans:'Zero = [0,0 / 0,0]; Identity = [1,0 / 0,1]'},
+ {level:'easy',q:'If A=[[2,-1],[0,3]], find the transpose of A.',steps:['Interchange rows and columns: the first row (2,−1) becomes the first column.','Aᵀ = [[2,0],[-1,3]].'],ans:'Aᵀ = [2,0 / -1,3]'},
+ {level:'medium',q:'Given A=[[1,2],[3,4]] and B=[[2,0],[1,2]], find AB.',steps:['Row 1 of A times Column 1 of B: 1×2+2×1=4. Row 1 of A times Column 2 of B: 1×0+2×2=4.','Row 2 of A times Column 1 of B: 3×2+4×1=10. Row 2 of A times Column 2 of B: 3×0+4×2=8.','AB = [[4,4],[10,8]].'],ans:'AB = [4,4 / 10,8]'},
+ {level:'medium',q:'Using the same A and B as above, find BA and show that AB ≠ BA.',steps:['Row 1 of B times Column 1 of A: 2×1+0×3=2. Row 1 of B times Column 2 of A: 2×2+0×4=4.','Row 2 of B times Column 1 of A: 1×1+2×3=7. Row 2 of B times Column 2 of A: 1×2+2×4=10.','BA = [[2,4],[7,10]], which is different from AB = [[4,4],[10,8]] — confirming AB ≠ BA.'],ans:'BA = [2,4 / 7,10] ≠ AB'},
+ {level:'medium',q:'Find x and y if [[x,2],[3,y]] = [[4,2],[3,5]].',steps:['For the matrices to be equal, corresponding elements must match.','x = 4 and y = 5.'],ans:'x = 4, y = 5'},
+ {level:'medium',q:'If A=[[3,1],[2,4]] and A+X=[[5,3],[6,7]], find X.',steps:['X = [[5,3],[6,7]] − [[3,1],[2,4]].','X = [[2,2],[4,3]].'],ans:'X = [2,2 / 4,3]'},
+ {level:'medium',q:'Given A=[[1,2,3],[4,5,6]] (order 2×3), find Aᵀ and state its order.',steps:['Interchange rows and columns: Aᵀ = [[1,4],[2,5],[3,6]].','The order flips from 2×3 to 3×2.'],ans:'Aᵀ = [1,4 / 2,5 / 3,6], order 3×2'},
+ {level:'medium',q:'If A=[[2,0],[1,3]] and B=[[1,4],[2,1]], find 2A − 3B.',steps:['2A = [[4,0],[2,6]]. 3B = [[3,12],[6,3]].','2A − 3B = [[1,-12],[-4,3]].'],ans:'2A − 3B = [1,-12 / -4,3]'},
+ {level:'medium',q:'Show that A=[[1,2],[2,1]] is a symmetric matrix (i.e., A = Aᵀ).',steps:['Aᵀ = [[1,2],[2,1]].','Since Aᵀ = A exactly, A is symmetric.'],ans:'A = Aᵀ, so A is symmetric'},
+ {level:'medium',q:'Find the product [[2,3]] × [[1],[4]] (a row matrix times a column matrix).',steps:['This is a 1×2 matrix times a 2×1 matrix, giving a 1×1 result.','2×1 + 3×4 = 2 + 12 = 14.'],ans:'[14] (a 1×1 matrix)'},
+ {level:'hard',q:'Given A=[[1,-1],[2,3]] and B=[[2,1],[0,-2]], verify that (A+B)ᵀ = Aᵀ + Bᵀ.',steps:['A+B = [[3,0],[2,1]]. So (A+B)ᵀ = [[3,2],[0,1]].','Aᵀ = [[1,2],[-1,3]], Bᵀ = [[2,0],[1,-2]]. Aᵀ+Bᵀ = [[3,2],[0,1]].','Both sides match, confirming the property.'],ans:'(A+B)ᵀ = Aᵀ+Bᵀ = [3,2 / 0,1] (verified)'},
+ {level:'hard',q:'Find matrix X such that 2X + [[1,2],[3,4]] = [[7,8],[9,10]].',steps:['2X = [[7,8],[9,10]] − [[1,2],[3,4]] = [[6,6],[6,6]].','X = [[3,3],[3,3]].'],ans:'X = [3,3 / 3,3]'},
+ {level:'hard',q:'If A=[[1,2],[0,1]], find A².',steps:['A² = A × A.','Row 1×Col 1: 1×1+2×0=1. Row 1×Col 2: 1×2+2×1=4. Row 2×Col 1: 0×1+1×0=0. Row 2×Col 2: 0×2+1×1=1.','A² = [[1,4],[0,1]].'],ans:'A² = [1,4 / 0,1]'},
+ {level:'hard',q:'Given A=[[2,1],[1,2]] and I is the 2×2 identity matrix, find A² − 4A + 3I.',steps:['A² = [[5,4],[4,5]] (computed by direct multiplication).','4A = [[8,4],[4,8]]. 3I = [[3,0],[0,3]].','A² − 4A + 3I = [[5-8+3,4-4+0],[4-4+0,5-8+3]] = [[0,0],[0,0]].'],ans:'The zero matrix [0,0 / 0,0]'},
+ {level:'hard',q:'Solve for x, y, z, w given [[x+y,2],[5,w-z]] + [[3,1],[2,4]] = [[9,3],[7,6]].',steps:['Adding the left side: [[x+y+3,3],[7,w-z+4]] = [[9,3],[7,6]].','Comparing: x+y+3=9 gives x+y=6. w-z+4=6 gives w-z=2.'],ans:'x+y = 6, w−z = 2'},
+ {level:'hard',q:'Given A=[[1,2],[3,4]] and B=[[-2,1],[1.5,-0.5]], verify that AB is the identity matrix (so B is the inverse of A).',steps:['Row 1×Col 1: 1×(-2)+2×1.5 = -2+3 = 1. Row 1×Col 2: 1×1+2×(-0.5) = 1-1 = 0.','Row 2×Col 1: 3×(-2)+4×1.5 = -6+6 = 0. Row 2×Col 2: 3×1+4×(-0.5) = 3-2 = 1.','AB = [[1,0],[0,1]] = I, confirming B is the inverse of A.'],ans:'AB = I, so B is the inverse of A'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Order & Types',time:'3 min',q:'Write down the order of the matrix [[2,4,6],[1,3,5]] and state whether it is a square matrix.',sol:'The order is 2×3 (2 rows, 3 columns). Since the number of rows does not equal the number of columns, it is not a square matrix.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Addition/Subtraction',time:'5 min',q:'If A=[[4,3],[2,5]] and B=[[1,2],[3,1]], find A+B and A−B.',sol:'A+B = [[5,5],[5,6]]. A−B = [[3,1],[-1,4]].'},
+ {year:'2022',diff:'Medium',marks:4,topic:'Matrix Multiplication',time:'6 min',q:'If A=[[2,1],[0,3]] and B=[[1,2],[4,1]], find AB.',sol:'AB = [[2×1+1×4, 2×2+1×1],[0×1+3×4, 0×2+3×1]] = [[6,5],[12,3]].'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Solving for Unknowns',time:'8 min',q:'Find x and y if [[x+2,3],[4,y-1]] = [[7,3],[4,5]].',sol:'Comparing corresponding elements: x+2=7 gives x=5. y−1=5 gives y=6.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Transpose',time:'3 min',q:'If A=[[3,-2],[5,7]], find Aᵀ.',sol:'Aᵀ = [[3,5],[-2,7]] (rows and columns interchanged).'},
+ {year:'2021',diff:'Medium',marks:4,topic:'Matrix Equation',time:'6 min',q:'Find the matrix X such that X + [[2,1],[3,4]] = [[8,6],[9,10]].',sol:'X = [[8,6],[9,10]] − [[2,1],[3,4]] = [[6,5],[6,6]].'}
+];
+
+const MISTAKES=[
+ 'Trying to add or subtract two matrices of different orders — this operation is simply undefined, not "approximately possible".',
+ 'Confusing the rule for matrix multiplication — the number of columns of the FIRST matrix must equal the number of rows of the SECOND, not the other way round.',
+ 'Assuming matrix multiplication is commutative and writing AB = BA — in general, AB ≠ BA, even when both products are defined.',
+ 'Getting the order of the product matrix wrong — if A is m×n and B is n×p, the product AB has order m×p (the two "outer" numbers), not some mix-up of the inner ones.',
+ 'Forgetting that the transpose swaps rows and columns — so a matrix of order m×n becomes n×m after transposing, with elements moved to new positions, not just relabelled.'
+];
+
+const FLASH=[
+ {f:'Matrix', b:'A rectangular array of numbers arranged in rows and columns'},
+ {f:'Order of a Matrix', b:'(number of rows) × (number of columns)'},
+ {f:'Element aᵢⱼ', b:'The entry located in row i and column j of a matrix'},
+ {f:'Row Matrix', b:'A matrix with only one row (order 1×n)'},
+ {f:'Column Matrix', b:'A matrix with only one column (order m×1)'},
+ {f:'Square Matrix', b:'A matrix in which the number of rows equals the number of columns'},
+ {f:'Zero (Null) Matrix', b:'A matrix in which every element is zero'},
+ {f:'Identity Matrix', b:'A square matrix with 1\'s on the main diagonal and 0\'s elsewhere'},
+ {f:'Diagonal Matrix', b:'A square matrix in which all non-diagonal elements are zero'},
+ {f:'Equal Matrices', b:'Matrices with the same order and identical corresponding elements'},
+ {f:'Addition/Subtraction Rule', b:'Only defined for matrices of the same order; combine corresponding elements'},
+ {f:'Scalar Multiplication', b:'Multiply every element of the matrix by the same constant'},
+ {f:'Matrix Multiplication Rule', b:'For AB to be defined, columns of A must equal rows of B'},
+ {f:'Order of a Product', b:'If A is m×n and B is n×p, then AB has order m×p'},
+ {f:'Transpose (Aᵀ)', b:'Obtained by interchanging the rows and columns of A'},
+ {f:'Non-Commutativity', b:'In general, AB ≠ BA, even when both products are defined'}
+];
+
+const CC_MCQ=[
+ {t:'terms',q:'A matrix is a rectangular array of numbers arranged in:',opts:['Only rows','Only columns','Rows and columns','A single line'],a:2},
+ {t:'terms',q:'The order of a matrix with 3 rows and 4 columns is written as:',opts:['4×3','3×4','3+4','3−4'],a:1},
+ {t:'terms',q:'A matrix with only one row is called a:',opts:['Column matrix','Row matrix','Square matrix','Zero matrix'],a:1},
+ {t:'terms',q:'A matrix with only one column is called a:',opts:['Column matrix','Row matrix','Square matrix','Diagonal matrix'],a:0},
+ {t:'terms',q:'A matrix in which the number of rows equals the number of columns is called a:',opts:['Row matrix','Column matrix','Square matrix','Zero matrix'],a:2},
+ {t:'terms',q:'A matrix in which every element is zero is called a:',opts:['Identity matrix','Zero (null) matrix','Diagonal matrix','Square matrix'],a:1},
+ {t:'terms',q:'The identity matrix has:',opts:['All elements equal to 1','1\'s on the diagonal and 0\'s elsewhere','All elements equal to 0','Only one row'],a:1},
+ {t:'rules',q:'Two matrices can be added only if they:',opts:['Have the same number of rows only','Have the same number of columns only','Have exactly the same order','Are both square'],a:2},
+ {t:'rules',q:'To multiply matrix A (order m×n) by matrix B, B must have order:',opts:['m×n','n×p (for some p)','p×m','n×m'],a:1},
+ {t:'formula',q:'If A is of order 2×3 and B is of order 3×4, the order of AB is:',opts:['2×4','3×3','4×2','2×3'],a:0},
+ {t:'terms',q:'The transpose of a matrix is obtained by:',opts:['Adding 1 to every element','Interchanging its rows and columns','Multiplying every element by −1','Deleting the last row'],a:1},
+ {t:'formula',q:'If A=[[1,2],[3,4]], its transpose Aᵀ is:',opts:['[[1,3],[2,4]]','[[4,3],[2,1]]','[[1,2],[3,4]]','[[2,1],[4,3]]'],a:0},
+ {t:'rules',q:'Matrix multiplication is, in general:',opts:['Commutative (AB=BA always)','Not commutative (AB≠BA in general)','Always equal to addition','Only defined for square matrices'],a:1},
+ {t:'terms',q:'Two matrices are said to be equal if:',opts:['They have the same number of rows only','They have the same order and all corresponding elements are equal','They have the same order only','Their sums are equal'],a:1},
+ {t:'rules',q:'Scalar multiplication of a matrix means:',opts:['Multiplying two matrices together','Multiplying every element of the matrix by a constant','Adding a constant to every element','Taking the transpose'],a:1}
+];
+const CC_FIB=[
+ {t:'terms',q:'A matrix with m rows and n columns is said to have order ______ × ______.',a:'m x n'},
+ {t:'terms',q:'A matrix with only one row is called a ______ matrix.',a:'row'},
+ {t:'terms',q:'A matrix with only one column is called a ______ matrix.',a:'column'},
+ {t:'terms',q:'A matrix in which the number of rows equals the number of columns is called a ______ matrix.',a:'square'},
+ {t:'terms',q:'A matrix in which every element is zero is called a ______ matrix.',a:'zero'},
+ {t:'terms',q:'The identity matrix has ______ on the main diagonal and 0\'s elsewhere.',a:"1's"},
+ {t:'rules',q:'Two matrices can be added or subtracted only if they have the same ______.',a:'order'},
+ {t:'rules',q:'For AB to be defined, the number of columns of A must equal the number of ______ of B.',a:'rows'},
+ {t:'formula',q:'If A is m×n and B is n×p, then AB has order ______.',a:'m x p'},
+ {t:'terms',q:'The transpose of matrix A is denoted by ______.',a:'A^T'},
+ {t:'rules',q:'Matrix multiplication is, in general, not ______.',a:'commutative'},
+ {t:'terms',q:'Two matrices are equal if they have the same order and all ______ elements are equal.',a:'corresponding'},
+ {t:'rules',q:'Multiplying every element of a matrix by a constant k is called ______ multiplication.',a:'scalar'},
+ {t:'formula',q:'The order of the transpose of a matrix originally of order m×n becomes ______.',a:'n x m'},
+ {t:'terms',q:'A square matrix in which all non-diagonal elements are zero is called a ______ matrix.',a:'diagonal'}
+];
+const CC_TF=[
+ {t:'terms',q:'A matrix is a rectangular arrangement of numbers in rows and columns.',a:true},
+ {t:'terms',q:'The order of a matrix is written as (number of columns) × (number of rows).',a:false},
+ {t:'terms',q:'A row matrix has only one column.',a:false},
+ {t:'terms',q:'A zero matrix has all its elements equal to zero.',a:true},
+ {t:'terms',q:'The identity matrix is always a square matrix.',a:true},
+ {t:'rules',q:'Two matrices of different orders can always be added.',a:false},
+ {t:'rules',q:'Matrix multiplication is always commutative.',a:false},
+ {t:'rules',q:'For AB to be defined, the number of columns of A must equal the number of rows of B.',a:true},
+ {t:'formula',q:'If A is 3×2 and B is 2×5, then AB has order 3×5.',a:true},
+ {t:'terms',q:'The transpose of a matrix is obtained by interchanging its rows and columns.',a:true},
+ {t:'terms',q:'Two matrices with the same order are always equal to each other.',a:false},
+ {t:'rules',q:'Scalar multiplication multiplies every element of the matrix by the same constant.',a:true},
+ {t:'terms',q:'A diagonal matrix is always a square matrix.',a:true},
+ {t:'rules',q:'If A is a square matrix, then A + Aᵀ is always symmetric.',a:true},
+ {t:'rules',q:'Matrix subtraction requires both matrices to have the same order.',a:true}
+];
+
+const AR=[
+ {a:'If A is a matrix of order 2×3, then its transpose Aᵀ has order 3×2.', r:'The transpose of a matrix is obtained by interchanging its rows and columns.', ans:0},
+ {a:'Two matrices of order 2×3 and 3×2 can always be added together.', r:'Matrix addition requires both matrices to have exactly the same order.', ans:3},
+ {a:'If A is of order 3×2 and B is of order 2×4, then the product AB is defined and has order 3×4.', r:'For the product AB to be defined, the number of columns of A must equal the number of rows of B.', ans:0},
+ {a:'Matrix multiplication is always commutative, so AB = BA for any two matrices A and B whenever both products are defined.', r:'In general, AB ≠ BA, even when both products exist and have the same order.', ans:3},
+ {a:'The identity matrix I always satisfies AI = IA = A for any square matrix A of the same order.', r:'The identity matrix has 1\'s on its main diagonal and 0\'s everywhere else.', ans:1},
+ {a:'A zero matrix and a null matrix refer to the same type of matrix, one in which every element is zero.', r:'A zero matrix must always be a square matrix.', ans:2},
+ {a:'The transpose of the transpose of a matrix A, i.e., (Aᵀ)ᵀ, is always equal to A itself.', r:'Transposing a matrix twice interchanges its rows and columns twice, restoring the original arrangement.', ans:0},
+ {a:'If A and B are both symmetric matrices of the same order, then A+B is also symmetric.', r:'(A+B)ᵀ = Aᵀ + Bᵀ for any two matrices of the same order, and since Aᵀ=A and Bᵀ=B here, (A+B)ᵀ = A+B.', ans:0},
+ {a:'If A is a matrix of order m×n, it is always possible to compute A×A (i.e., A²).', r:'For A² = A×A to be defined, A must be a square matrix (m=n).', ans:3},
+ {a:'Subtracting matrix B from matrix A (i.e., finding A−B) requires A and B to be of the same order.', r:'Matrix subtraction is defined by subtracting corresponding elements, which requires a one-to-one correspondence of positions between the two matrices.', ans:0}
+];
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A',
+ 'Both A and R are true, but R is NOT the correct explanation of A',
+ 'A is true, but R is false',
+ 'A is false, but R is true'
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy (addition, subtraction, scalar, order, transpose)
+ mk(1,'A=[[1,2],[3,4]], B=[[5,6],[7,8]]. Find A+B.','Add corresponding elements.','[6,8 / 10,12]'),
+ mk(2,'A=[[9,7],[5,3]], B=[[4,2],[1,1]]. Find A−B.','Subtract corresponding elements.','[5,5 / 4,2]'),
+ mk(3,'A=[[2,4],[6,8]]. Find (1/2)A.','Multiply every element by 1/2.','[1,2 / 3,4]'),
+ mk(4,'Find the order of [[1,2,3,4]].','Count the rows and columns.','1×4 (row matrix)'),
+ mk(5,'Find the order of [[1],[2],[3]].','Count the rows and columns.','3×1 (column matrix)'),
+ mk(6,'A=[[3,-2],[0,5]]. Find Aᵀ.','Interchange rows and columns.','[3,0 / -2,5]'),
+ mk(7,'A=[[1,0],[0,1]], B=[[5,2],[3,4]]. Find A+B.','Add corresponding elements.','[6,2 / 3,5]'),
+ mk(8,'A=[[6,1],[2,9]]. Find 3A.','Multiply every element by 3.','[18,3 / 6,27]'),
+ mk(9,'A=[[4,5],[6,7]], B=[[1,2],[3,4]]. Find A−B.','Subtract corresponding elements.','[3,3 / 3,3]'),
+ mk(10,'Write down a 3×3 zero matrix.','Every element is 0.','A 3×3 matrix of all zeros'),
+ mk(11,'A=[[2,3],[4,5]]. Find −A.','Multiply every element by −1.','[-2,-3 / -4,-5]'),
+ mk(12,'A=[[1,2],[3,4]], B=[[4,3],[2,1]]. Find A+B.','Add corresponding elements.','[5,5 / 5,5]'),
+ mk(13,'Find the order of a matrix with 5 rows and 2 columns.','Order = rows × columns.','5×2'),
+ mk(14,'A=[[10,20],[30,40]]. Find (1/10)A.','Multiply every element by 1/10.','[1,2 / 3,4]'),
+ mk(15,'A=[[7,8],[9,10]]. Find Aᵀ.','Interchange rows and columns.','[7,9 / 8,10]'),
+ mk(16,'A=[[0,1],[1,0]], B=[[1,0],[0,1]]. Find A+B.','Add corresponding elements.','[1,1 / 1,1]'),
+ mk(17,'A=[[5,5],[5,5]], B=[[2,2],[2,2]]. Find A−B.','Subtract corresponding elements.','[3,3 / 3,3]'),
+ mk(18,'Find the order of the identity matrix I₄.','Identity matrices are always square.','4×4'),
+ mk(19,'A=[[-1,2],[3,-4]]. Find 2A.','Multiply every element by 2.','[-2,4 / 6,-8]'),
+ mk(20,'A=[[1,2],[3,4]], B=[[1,2],[3,4]]. Are A and B equal matrices?','Check both order and every corresponding element.','Yes — same order and identical elements')
+];
+const PZ2=[ // Level 2 - medium (multiplication, equality, transpose, compatibility)
+ mk(1,'A=[[1,2],[3,4]], B=[[2,0],[1,3]]. Find AB.','Multiply row of A by column of B, entry by entry.','[4,6 / 10,12]'),
+ mk(2,'A=[[2,1],[0,3]], B=[[1,2],[2,1]]. Find AB.','Multiply row of A by column of B.','[4,5 / 6,3]'),
+ mk(3,'Find x, y if [[x,3],[4,y]] = [[7,3],[4,9]].','Compare corresponding elements.','x = 7, y = 9'),
+ mk(4,'If A=[[1,2],[3,4]] and A+X=[[6,8],[10,12]], find X.','X = (A+X) − A.','X = [5,6 / 7,8]'),
+ mk(5,'A=[[1,2,3],[4,5,6]] (2×3). Find Aᵀ and state its order.','Interchange rows and columns.','Aᵀ = [1,4 / 2,5 / 3,6], order 3×2'),
+ mk(6,'A=[[3,1],[2,2]], B is the 2×2 identity matrix. Find AB.','Use the identity matrix property.','AB = A = [3,1 / 2,2]'),
+ mk(7,'Can matrices of order 2×3 and 2×3 be multiplied together? Explain.','Compare columns of the first with rows of the second.','No — columns of first (3) ≠ rows of second (2)'),
+ mk(8,'Can matrices of order 3×2 and 2×4 be multiplied? Find the order of the product.','Compare columns of the first with rows of the second.','Yes — resulting order is 3×4'),
+ mk(9,'A=[[1,2]], B=[[3],[4]]. Find AB.','This is a 1×2 times a 2×1 matrix.','AB = [11] (a 1×1 matrix)'),
+ mk(10,'A=[[2,0],[0,2]], B=[[5,1],[3,7]]. Find AB.','A is a diagonal matrix here.','[10,2 / 6,14]'),
+ mk(11,'A=[[3,2],[1,4]], B=[[1,1],[2,3]]. Find 2A − B.','Compute 2A first, then subtract B.','[5,3 / 0,5]'),
+ mk(12,'A=[[2,3],[1,-1]]. Find A + Aᵀ.','First find Aᵀ, then add to A.','[4,4 / 4,-2]'),
+ mk(13,'Find x if [[2x,4],[1,5]] = [[10,4],[1,5]].','Compare the top-left elements.','x = 5'),
+ mk(14,'A=[[1,1],[1,1]]. Find A².','Multiply A by itself.','[2,2 / 2,2]'),
+ mk(15,'A=[[1,0],[0,-1]]. Find A².','Multiply A by itself.','[1,0 / 0,1] (the identity matrix!)'),
+ mk(16,'Find a and b if [[a+b,2],[3,a-b]] = [[6,2],[3,2]].','Set up and solve two equations.','a = 4, b = 2'),
+ mk(17,'A=[[2,-1],[3,4]], B=[[0,2],[1,-3]]. Find AB.','Multiply row of A by column of B.','[-1,7 / 4,-6]'),
+ mk(18,'A=[[1,2],[3,4]]. Find (Aᵀ)ᵀ, the transpose of the transpose.','Transposing twice restores the original.','[1,2 / 3,4] (equals A itself)'),
+ mk(19,'If A is a 2×3 matrix and B is a 3×2 matrix, find the order of AB and the order of BA.','Apply the multiplication rule both ways.','AB is 2×2; BA is 3×3'),
+ mk(20,'A=[[4,2],[1,3]]. Find A − 2I where I is the 2×2 identity.','Compute 2I first, then subtract.','[2,2 / 1,1]')
+];
+const PZ3=[ // Level 3 - ICSE exam (proofs, matrix equations, applications)
+ mk(1,'A=[[1,2],[2,1]], B=[[3,1],[1,3]]. Verify that (AB)ᵀ = Bᵀ Aᵀ.','Compute AB, then transpose it; separately compute BᵀAᵀ.','Both equal [5,7 / 7,5] — verified'),
+ mk(2,'Find matrix X such that X + [[2,-1],[3,4]] = the 2×2 zero matrix.','X equals the negative of the given matrix.','X = [-2,1 / -3,-4]'),
+ mk(3,'A=[[1,2],[0,1]]. Find A³, and identify the general pattern for Aⁿ.','First find A², then multiply by A once more.','A³ = [1,6 / 0,1]; pattern: Aⁿ = [1,2n / 0,1]'),
+ mk(4,'Solve for x and y: [[2,3],[1,4]] + [[x,1],[2,y]] = [[5,4],[3,7]].','Add the matrices on the left, then compare.','x = 3, y = 3'),
+ mk(5,'A=[[1,-2],[3,4]], B=[[2,1],[-1,3]]. Find AB and BA, and comment on commutativity.','Compute both products separately.','AB = [4,-5 / 2,15]; BA = [5,0 / 8,14] — not equal'),
+ mk(6,'Sales matrix S = [[100,150,200],[80,120,160]] (rows=cities, columns=products), price matrix P = [[10],[20],[15]]. Find the total revenue for each city using SP.','Multiply the sales matrix by the price column matrix.','City X: ₹7000, City Y: ₹5600'),
+ mk(7,'Find matrix A if A + [[1,2],[3,4]] = 2×[[2,3],[4,5]].','Compute the right side first, then isolate A.','A = [3,4 / 5,6]'),
+ mk(8,'Using A=[[1,2],[3,4]], verify that A + Aᵀ is always a symmetric matrix.','Compute A+Aᵀ, then check if it equals its own transpose.','A+Aᵀ = [2,5 / 5,8], which equals its own transpose — symmetric'),
+ mk(9,'A=[[3,2],[4,3]]. Verify that A satisfies A² − 6A + I = 0 (I = 2×2 identity, 0 = zero matrix).','Compute A², 6A, and I, then combine.','A² − 6A + I = [0,0 / 0,0] — verified'),
+ mk(10,'A is 3×4 and B is 4×2. Find (i) the order of AB, (ii) whether BA is defined, (iii) the order of Aᵀ.','Apply the compatibility rule carefully in each case.','(i) 3×2 (ii) not defined (iii) 4×3'),
+ mk(11,'Find X if 3X − [[1,2],[3,4]] = [[5,4],[3,2]].','Isolate 3X first, then divide by 3.','X = [2,2 / 2,2]'),
+ mk(12,'P=[[2,0],[1,3]], Q=[[1,-1],[2,4]]. Find P² − Q² and (P−Q)(P+Q), and comment on whether they are equal.','Compute each expression fully and compare.','P²−Q² = [5,5 / -5,-5]; (P−Q)(P+Q) = [6,6 / -6,-6] — NOT equal, since PQ≠QP'),
+ mk(13,'Find matrix B if 2A − 3B = [[4,2],[6,8]] and A=[[5,4],[6,7]].','Isolate 3B first, then divide by 3.','B = [2,2 / 2,2]'),
+ mk(14,'A=[[1,2],[3,4]], B=[[a,b],[c,d]] with a=−2, c=1.5. Given AB=I (identity), find b and d.','Use the identity equations for the second column of the product.','b = 1, d = −0.5'),
+ mk(15,'A=[[1,0],[0,0]]. Show that A² = A (A is called idempotent).','Compute A² directly.','A² = [1,0 / 0,0] = A — verified'),
+ mk(16,'Sales matrix S (3×2, rows=months) = [[50,30],[60,40],[70,50]]; cost matrix C (2×1) = [[20],[15]]. Find the total cost for each month using SC.','Multiply the sales matrix by the cost column matrix.','Month costs: ₹1450, ₹1800, ₹2150'),
+ mk(17,'Find X and Y if X+Y=[[7,0],[2,5]] and X−Y=[[3,0],[0,3]].','Add the two equations, then subtract them.','X = [5,0 / 1,4]; Y = [2,0 / 1,1]'),
+ mk(18,'A=[[0,-1],[1,0]]. Find Aᵀ and verify AAᵀ = I (the identity matrix).','Compute Aᵀ first, then multiply A by Aᵀ.','AAᵀ = [1,0 / 0,1] — verified'),
+ mk(19,'A=[[1,2],[2,3]], B=[[4,1],[1,5]] (both symmetric). Prove that A+B is also symmetric.','Compute A+B, then check whether it equals its own transpose.','A+B = [5,3 / 3,8], which equals its own transpose — symmetric'),
+ mk(20,'A=[[2,1],[1,2]]. Verify that A² − 4A + 3I = 0 (I = 2×2 identity, 0 = zero matrix).','Compute A², 4A, and 3I, then combine.','A² − 4A + 3I = [0,0 / 0,0] — verified')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (terms / rules)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('termsGrid',TERMS_DATA);
+buildTheoremCards('rulesGrid',RULES_DATA);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=TERMS_DATA.concat(RULES_DATA);
+  let head='<tr><th>Term / Rule</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Matrix Explorer legend chips
+const typeLegend=document.getElementById('typeLegend');
+EXPLORER_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===3?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderExplorer(item);
+  });
+  typeLegend.appendChild(chip);
+});
+function renderExplorer(item){
+  document.getElementById('typeName').textContent=item.label;
+  let formulaTxt, valueTxt;
+  if(item.op==='add'){
+    formulaTxt='A = '+matToStr(item.A)+', B = '+matToStr(item.B);
+    valueTxt=matToStr(matAdd(item.A,item.B))+'<small>A + B</small>';
+  } else if(item.op==='sub'){
+    formulaTxt='A = '+matToStr(item.A)+', B = '+matToStr(item.B);
+    valueTxt=matToStr(matSub(item.A,item.B))+'<small>A − B</small>';
+  } else if(item.op==='scalar'){
+    formulaTxt='A = '+matToStr(item.A)+', k = '+item.k;
+    valueTxt=matToStr(matScalar(item.A,item.k))+'<small>k × A</small>';
+  } else if(item.op==='mul'){
+    formulaTxt='A = '+matToStr(item.A)+', B = '+matToStr(item.B);
+    valueTxt=matToStr(matMul(item.A,item.B))+'<small>A × B</small>';
+  } else if(item.op==='transpose'){
+    formulaTxt='A = '+matToStr(item.A)+' (order '+item.A.length+'×'+item.A[0].length+')';
+    const T=matTranspose(item.A);
+    valueTxt=matToStr(T)+'<small>Aᵀ (order '+T.length+'×'+T[0].length+')</small>';
+  }
+  document.getElementById('typeFormula').textContent=formulaTxt;
+  document.getElementById('typeValue').innerHTML=valueTxt;
+}
+renderExplorer(EXPLORER_DATA[3]);
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('mx_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('mx_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','quiz-card');
+  card.innerHTML=`<div class="qtag">Assertion &amp; Reasoning · Q${i+1}</div>
+  <div class="ar-statement"><b>Assertion (A):</b>${item.a}</div>
+  <div class="ar-statement"><b>Reason (R):</b>${item.r}</div>`;
+  AR_OPTIONS.forEach((o,oi)=>{
+    const label=String.fromCharCode(97+oi);
+    const b=el('button','opt-btn','('+label+') '+o);
+    b.addEventListener('click',()=>{
+      card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){b.classList.add('correct'); recordQuiz(true);}
+      else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false);}
+    });
+    card.appendChild(b);
+  });
+  arList.appendChild(card);
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const norm=s=>s.trim().toLowerCase().replace(/\s+/g,'').replace(/['’]/g,'');
+      const ok=norm(input.value)===norm(item.a);
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('mx_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('mx_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+// Hero interactive instrument — order compatibility
+const heroRA=document.getElementById('heroRA'), heroCA=document.getElementById('heroCA'), heroRB=document.getElementById('heroRB'), heroCB=document.getElementById('heroCB');
+function updateHero(){
+  const rA=parseInt(heroRA.value), cA=parseInt(heroCA.value), rB=parseInt(heroRB.value), cB=parseInt(heroCB.value);
+  document.getElementById('heroRAVal').textContent=rA;
+  document.getElementById('heroCAVal').textContent=cA;
+  document.getElementById('heroRBVal').textContent=rB;
+  document.getElementById('heroCBVal').textContent=cB;
+  document.getElementById('heroOrderA').textContent=rA+'×'+cA;
+  document.getElementById('heroOrderB').textContent=rB+'×'+cB;
+  const defined = (cA===rB);
+  document.getElementById('heroDefined').textContent = defined? 'Yes':'No';
+  document.getElementById('heroOrderAB').textContent = defined? (rA+'×'+cB) : 'Not defined';
+}
+[heroRA,heroCA,heroRB,heroCB].forEach(inp=>inp.addEventListener('input',updateHero));
+updateHero();
+
+// "Compatible / Incompatible order pairs" list
+const compdivLeft=document.getElementById('compdivLeft');
+const cpCard=el('div','card pad');
+const COMPDIV_PAIRS=[
+ ['A(2×3) × B(3×2)','Valid → result 2×2'],
+ ['A(2×3) × B(2×3)','Invalid (3 ≠ 2)'],
+ ['A(3×1) × B(1×4)','Valid → result 3×4'],
+ ['A(1×5) × B(5×1)','Valid → result 1×1'],
+ ['A(4×2) × B(3×2)','Invalid (2 ≠ 3)']
+];
+COMPDIV_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+compdivLeft.appendChild(cpCard);
+
+// Multiplication rule slider (A fixed 2×3, B's rows adjustable, B's columns fixed at 4)
+const compdivSlider=document.getElementById('compdivSlider');
+function updateCompdiv(){
+  const rowsB=parseInt(compdivSlider.value);
+  const colsA=3, colsB=4, rowsA=2;
+  document.getElementById('compdivRB').textContent=rowsB;
+  document.getElementById('compdivOrderB').textContent=rowsB+'×'+colsB;
+  if(colsA===rowsB){
+    document.getElementById('compdivResult').textContent=`Columns of A (${colsA}) = Rows of B (${rowsB}) → AB is defined, with order ${rowsA}×${colsB}.`;
+  } else {
+    document.getElementById('compdivResult').textContent=`Columns of A (${colsA}) ≠ Rows of B (${rowsB}) → AB is NOT defined.`;
+  }
+}
+compdivSlider.addEventListener('input',updateCompdiv); updateCompdiv();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','explorer','terms','rules','matrixmultiplication','examples','conceptcheck','practice','pyq','mistakes','assertion','revision','flashcards','formulasheet','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('mx_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('mx_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('mx_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('mx_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('mx_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('mx_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('mx_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['mx_sectionsRead','mx_examplesOpened','mx_quizStats','mx_pz_l1','mx_pz_l2','mx_pz_l3','mx_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
