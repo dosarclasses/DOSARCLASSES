@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tangents and Intersections — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+.ti-slider-row{display:flex; align-items:center; gap:.6rem; margin-bottom:.7rem;}
+.ti-slider-row label{font-family:var(--font-mono); font-size:.74rem; color:var(--ink-soft); width:132px; flex:none;}
+.ti-slider-row input[type=range]{flex:1;}
+.ti-slider-row .val{font-family:var(--font-mono); font-weight:700; color:var(--amber-dark); width:56px; text-align:right; flex:none; font-size:.85rem;}
+
+/* ===================== TYPES / EXPLORER CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:.98rem; color:var(--ink-soft); margin:.3rem 0; line-height:1.5;}
+.result-box .rvalue{font-family:var(--font-display); font-size:1.6rem; font-weight:700; color:var(--ink);}
+.result-box .rvalue small{display:block; font-family:var(--font-mono); font-size:.7rem; color:var(--ink-faint); font-weight:400; margin-top:.2rem;}
+
+/* ===================== THEOREM/PROPERTY CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.88rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.0rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-statement{margin:.35rem 0; font-size:.92rem; line-height:1.45;}
+.ar-statement b{color:var(--amber-dark); font-family:var(--font-mono); margin-right:.45rem;}
+.ar-note{font-size:.76rem; color:var(--ink-faint); font-family:var(--font-mono); margin:.3rem 0 .5rem;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.2rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:.95rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formulasheet){display:none !important;}
+  #formulasheet{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">⭕ <span>Tangents &amp; Intersections</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="explorer" href="#explorer"><span class="dot"></span>Circle Explorer</a>
+    <a class="navlink" data-target="terms" href="#terms"><span class="dot"></span>Key Terms</a>
+    <a class="navlink" data-target="rules" href="#rules"><span class="dot"></span>Rules &amp; Properties</a>
+    <a class="navlink" data-target="powerofpoint" href="#powerofpoint"><span class="dot"></span>Power of a Point</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+    <a class="navlink" data-target="assertion" href="#assertion"><span class="dot"></span>Assertion &amp; Reasoning</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formulasheet" href="#formulasheet"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Tangents and Intersections</div>
+        <h1>One touch, or two —<br>the circle remembers.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the sliders to change the circle's radius, the external point's distance, and a secant length — watch the tangent length and every related segment recompute instantly.</p>
+        <div class="hero-cta">
+          <a href="#terms" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <div class="ti-slider-row">
+          <label>Radius (r)</label>
+          <input type="range" id="heroR" min="3" max="15" step="1" value="5">
+          <span class="val" id="heroRVal">5</span>
+        </div>
+        <div class="ti-slider-row">
+          <label>Distance OP (d)</label>
+          <input type="range" id="heroD" min="6" max="30" step="1" value="13">
+          <span class="val" id="heroDVal">13</span>
+        </div>
+        <div class="ti-slider-row">
+          <label>Secant near-part (PA)</label>
+          <input type="range" id="heroPA" min="1" max="20" step="1" value="4">
+          <span class="val" id="heroPAVal">4</span>
+        </div>
+        <div class="instrument-readout">
+          <div>Tangent Length (PT) <b id="heroPT">12</b></div>
+          <div>Secant far-part (PB) <b id="heroPB">36</b></div>
+          <div>Chord AB <b id="heroAB">32</b></div>
+          <div>Shortest distance <b id="heroShortest">8</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>Tangents, Secants, and Their Intersections</h2>
+        <p class="lede">A <b>tangent</b> touches a circle at exactly one point; a <b>secant</b> cuts through it at two. This chapter is about the elegant, predictable relationships that appear whenever lines like these meet a circle — or meet each other, inside or outside it.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Whether two chords cross inside a circle, two secants cross outside it, or a tangent and a secant meet at the same external point — the segments they create are always linked by a simple multiplication rule. Once you can spot which configuration you're looking at, the rest is arithmetic.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Finding unknown lengths in circle diagrams</li>
+              <li>Proving angle relationships in cyclic figures</li>
+              <li>Constructing tangents to a given circle</li>
+              <li>Understanding how circles touch one another</li>
+              <li>Foundations for coordinate geometry of circles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="7"/><path d="M12 5V2M19 12l3-1"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Tangent</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="7"/><path d="M4 6l16 12"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Secant</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="7"/><path d="M6 8l12 8M6 16l12-8"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Intersecting Chords</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="10" cy="12" r="6"/><circle cx="16" cy="12" r="6"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Two Circles Touching</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ Basic circle vocabulary (radius, chord, diameter)</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ The Pythagoras theorem</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Congruent triangles (RHS, SAS criteria)</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. CIRCLE EXPLORER ===================== -->
+    <section id="explorer">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Circle Explorer</h2>
+        <p class="lede">Click each preset below to see a tangent or intersection relationship worked out in full, from the given lengths to the final result.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Tangent Length</div>
+            <div class="rformula" id="typeFormula">r = 5, OP = 13</div>
+            <div class="rvalue" id="typeValue">PT = 12<small>Result</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY TERMS ===================== -->
+    <section id="terms">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Terms in Tangents &amp; Intersections</h2>
+        <p class="lede">Five ideas are all you need to describe any tangent-and-circle configuration — the tangent itself, its point of contact, the secant, the chord, and the external point they all radiate from.</p>
+      </div>
+      <div class="ratio-grid" id="termsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. RULES & PROPERTIES ===================== -->
+    <section id="rules">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Rules &amp; Properties</h2>
+        <p class="lede">Beyond the definitions, these theorems govern how tangents, secants, and chords actually relate to one another.</p>
+      </div>
+      <div class="ratio-grid" id="rulesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. POWER OF A POINT ===================== -->
+    <section id="powerofpoint">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>The "Power of a Point", Unified</h2>
+        <p class="lede">Whether it's two chords, two secants, or a tangent and a secant, one point P produces the same kind of product every time. Fix PC = 6 and PD = 8 below (product 48), then scale PA — watch PB adjust to keep PA×PB locked at 48.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compdivLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>Base chord: PC = 6, PD = 8 (product fixed at 48). Drag the slider to change PA on the other chord, and watch PB adjust to keep the product constant.</p>
+            <input type="range" min="2" max="24" value="4" step="1" id="compdivSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>PA = <b id="compdivPA">4</b></span>
+              <span>PB = <b id="compdivPB">12</b></span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="compdivResult">PA × PB = 4 × 12 = 48 = PC × PD (6 × 8) ✓</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across terms, formulas, and rules — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">08 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">09 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 10. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">10 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 11. ASSERTION & REASONING ===================== -->
+    <section id="assertion">
+      <div class="section-head">
+        <div class="eyebrow">11 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each is true, and whether R correctly explains A. Choose one of the four standard options, then click to reveal the answer.</p>
+      </div>
+      <div class="ar-note">Options used throughout: (a) Both A and R are true, and R is the correct explanation of A &nbsp;·&nbsp; (b) Both A and R are true, but R is NOT the correct explanation of A &nbsp;·&nbsp; (c) A is true, but R is false &nbsp;·&nbsp; (d) A is false, but R is true</div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Tangent length: PT = √(d² − r²)</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Intersecting chords: PA × PB = PC × PD</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Intersecting secants: PA × PB = PC × PD</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Tangent-secant: PT² = PA × PB</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Rules to Remember</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Tangents from one external point are equal</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Angle AOB = 180° − angle APB</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Tangent-chord angle = angle in alternate segment</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Rules (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>First identify the configuration — chords inside, secants outside, or a tangent with a secant — before choosing a formula.</li>
+              <li>Remember that "PB" in a secant always means the WHOLE length from P to the far point, not just the chord between the two circle points.</li>
+              <li>For tangent-secant problems, always square the tangent length: PT² = PA × PB, never PT alone.</li>
+              <li>When comparing the angle between two tangents and the angle at the center, remember they are supplementary (add to 180°), not equal.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formulasheet">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Tangents and Intersections — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Tangent Facts</h5>
+            <p>Tangent ⊥ radius at the point of contact</p><p>Tangent length: PT = √(d² − r²)</p><p>Two tangents from one point are equal</p><p>Shortest distance to circle: d − r</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Angle Facts</h5>
+            <p>Angle AOB = 180° − angle APB</p><p>OP bisects angle APB</p><p>Tangent-chord angle = angle in alternate segment</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Intersection Theorems</h5>
+            <p>Chords inside circle: PA×PB = PC×PD</p><p>Secants from external point: PA×PB = PC×PD</p><p>Tangent + secant: PT² = PA×PB</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const TERMS_DATA=[
+ {name:'Tangent', color:'#C97A2B', statement:'A straight line that touches a circle at exactly one point, without crossing into the interior of the circle.', trick:'A tangent only ever touches — it never enters the circle, no matter how far it is extended.', ex:'A wheel touching a straight road is a real-life picture of a tangent.'},
+ {name:'Point of Contact', color:'#3D5A80', statement:'The single point at which a tangent touches the circle.', trick:'The radius drawn to the point of contact is always perpendicular to the tangent there.', ex:'If a tangent touches a circle at T, then T is the point of contact.'},
+ {name:'Secant', color:'#2E7D5B', statement:'A straight line that intersects (cuts through) a circle at two distinct points.', trick:'Extending a chord beyond the circle in both directions turns it into a secant.', ex:'A line passing through points A and B on a circle is a secant through A and B.'},
+ {name:'Chord', color:'#C97A2B', statement:'A line segment whose two endpoints both lie on the circle.', trick:'A diameter is simply the longest possible chord — one that passes through the center.', ex:'AB is a chord if both A and B lie on the circle.'},
+ {name:'External Point', color:'#3D5A80', statement:'A point lying outside the circle, from which tangents and secants to the circle can be drawn.', trick:'Exactly two tangents can be drawn from an external point to a circle, and they are always equal in length.', ex:'If P lies outside a circle, tangents PA and PB can be drawn to it.'}
+];
+const RULES_DATA=[
+ {name:'Tangent-Radius Perpendicularity', color:'#3D5A80', statement:'The tangent at any point of a circle is perpendicular to the radius drawn to that point of contact.', trick:'This single fact underlies almost every tangent-length calculation using the Pythagoras theorem.', ex:'If OT is a radius and PT is a tangent at T, then angle OTP = 90°.'},
+ {name:'Equal Tangents from an External Point', color:'#C97A2B', statement:'The two tangents drawn from the same external point to a circle are always equal in length.', trick:'Proved using RHS congruency of the two right triangles formed with the center.', ex:'If PA and PB are tangents from P, then PA = PB.'},
+ {name:'Angle in the Alternate Segment', color:'#2E7D5B', statement:'The angle between a tangent and a chord (drawn from the point of contact) equals the angle subtended by that chord in the alternate segment.', trick:'"Alternate segment" means the side of the chord opposite to where the tangent-chord angle is measured.', ex:'If the tangent-chord angle is 55°, the inscribed angle in the alternate segment is also 55°.'},
+ {name:'Intersecting Chords Theorem', color:'#B4453C', statement:'If two chords of a circle intersect at a point P inside the circle, then PA × PB = PC × PD, where A,B and C,D are the endpoints of the two chords.', trick:'Both products represent the same "power of the point" P with respect to the circle.', ex:'PA=4, PB=9, PC=6 gives PD = (4×9)/6 = 6.'},
+ {name:'Intersecting Secants &amp; Tangent-Secant Theorem', color:'#3D5A80', statement:'For two secants from an external point P: PA × PB = PC × PD. For a tangent PT and a secant PAB from the same point: PT² = PA × PB.', trick:'Think of a tangent as a secant whose two intersection points have merged into one — hence PT × PT instead of PC × PD.', ex:'PA=4, PB=9 gives PT = √(4×9) = 6.'}
+];
+const EXPLORER_DATA=[
+ {label:'Tangent Length', type:'tangent', r:5, d:13},
+ {label:'Equal Tangents', type:'equal', PA:8},
+ {label:'Intersecting Chords', type:'chords', PA:4, PB:9, PC:6},
+ {label:'Intersecting Secants', type:'secants', PA:3, PB:8, PC:4},
+ {label:'Tangent-Secant', type:'tansec', PA:4, PB:9},
+ {label:'Alternate Segment Angle', type:'altseg', angle:65}
+];
+function tanLen(r,d){ return Math.sqrt(d*d - r*r); }
+function fmtNum(v){ const r=Math.round(v*1000)/1000; return r.toString(); }
+
+const EXAMPLES=[
+ {level:'easy',q:'A tangent is drawn from an external point P to a circle with center O and radius 5 cm. If OP = 13 cm, find the length of the tangent PT.',steps:['Since the tangent is perpendicular to the radius at the point of contact, triangle OTP is right-angled at T.','PT = √(OP² − r²) = √(13² − 5²) = √(169 − 25) = √144.'],ans:'PT = 12 cm'},
+ {level:'easy',q:'Two tangents PA and PB are drawn from an external point P to a circle. If PA = 7 cm, find PB.',steps:['Tangents drawn from the same external point to a circle are always equal in length.'],ans:'PB = 7 cm'},
+ {level:'easy',q:'Chords AB and CD of a circle intersect inside the circle at point P. If PA=4 cm, PB=9 cm, and PC=6 cm, find PD.',steps:['By the intersecting chords theorem: PA × PB = PC × PD.','4 × 9 = 6 × PD ⟹ 36 = 6 × PD.'],ans:'PD = 6 cm'},
+ {level:'easy',q:'Two secants from an external point P meet the circle at A,B (PA=3, PB=8) and at C,D (PC=4). Find PD.',steps:['By the intersecting secants theorem: PA × PB = PC × PD.','3 × 8 = 4 × PD ⟹ 24 = 4 × PD.'],ans:'PD = 6'},
+ {level:'easy',q:'A tangent PT and a secant PAB are drawn from an external point P, with PA=4 and PB=9. Find the length of the tangent PT.',steps:['By the tangent-secant theorem: PT² = PA × PB.','PT² = 4 × 9 = 36.'],ans:'PT = 6'},
+ {level:'easy',q:'The angle between a tangent to a circle and a chord drawn from the point of contact is 55°. Find the angle in the alternate segment.',steps:['By the tangent-chord angle theorem, this angle equals the angle in the alternate segment.'],ans:'55°'},
+ {level:'medium',q:'The radius of a circle is 7 cm, and the length of a tangent from an external point P is 24 cm. Find the distance OP.',steps:['Using the right triangle OTP: OP² = r² + PT².','OP² = 7² + 24² = 49 + 576 = 625.'],ans:'OP = 25 cm'},
+ {level:'medium',q:'Two tangents PA and PB are drawn from an external point P to a circle with center O, such that angle APB = 70°. Find angle AOB.',steps:['In quadrilateral OAPB, the angles at A and B are both 90° (tangent ⊥ radius).','So angle AOB + angle APB = 180° (the remaining two angles of the quadrilateral).','angle AOB = 180° − 70°.'],ans:'110°'},
+ {level:'medium',q:'For the same configuration, if angle AOB = 130°, find angle APB, and show that OP bisects angle APB.',steps:['angle APB = 180° − 130° = 50°.','Since triangles OAP and OBP are congruent (OA=OB, OP common, angle OAP=angle OBP=90°), angle OPA = angle OPB.','Each equals half of angle APB, i.e., 25°, confirming OP bisects angle APB.'],ans:'angle APB = 50°; OP bisects it into two 25° angles'},
+ {level:'medium',q:'Two chords AB and CD of a circle intersect at point P inside the circle. If AP=6, PB=8, and CP=PD (P bisects CD), find CP.',steps:['By the intersecting chords theorem: AP × PB = CP × PD.','Since CP = PD, this becomes 6 × 8 = CP².','CP² = 48.'],ans:'CP = √48 = 4√3 cm'},
+ {level:'medium',q:'A tangent PT to a circle has length 15 cm, and a secant from the same point P meets the circle at A and B, with PA = 9 cm. Find PB and the length AB.',steps:['By the tangent-secant theorem: PT² = PA × PB.','225 = 9 × PB ⟹ PB = 25.','AB = PB − PA = 25 − 9.'],ans:'PB = 25 cm, AB = 16 cm'},
+ {level:'medium',q:'From an external point P, one secant meets the circle at A and B (PA=5, AB=7), and another meets it at C and D (PC=6). Find PD and CD.',steps:['PB = PA + AB = 5 + 7 = 12.','By the intersecting secants theorem: PA × PB = PC × PD.','5 × 12 = 6 × PD ⟹ 60 = 6 × PD ⟹ PD = 10.','CD = PD − PC = 10 − 6.'],ans:'PD = 10 cm, CD = 4 cm'},
+ {level:'medium',q:'The tangent-chord angle between tangent PT and chord TA at the point of contact T is 62°. Find angle TBA, where B is a point on the circle in the alternate segment.',steps:['By the tangent-chord angle theorem, angle TBA in the alternate segment equals the tangent-chord angle.'],ans:'62°'},
+ {level:'medium',q:'A tangent PT = 12 cm is drawn from an external point P to a circle of radius 5 cm. Find the shortest distance from P to the circle.',steps:['OP² = r² + PT² = 25 + 144 = 169 ⟹ OP = 13 cm.','Shortest distance from P to the circle = OP − r = 13 − 5.'],ans:'8 cm'},
+ {level:'hard',q:'Two chords AB and CD of a circle intersect at P inside the circle. AP=x, PB=x+4, CP=3, PD=2x+1. Find x, and verify using the intersecting chords theorem.',steps:['By the theorem: AP × PB = CP × PD.','x(x+4) = 3(2x+1) ⟹ x² + 4x = 6x + 3 ⟹ x² − 2x − 3 = 0.','(x−3)(x+1) = 0 ⟹ x = 3 (rejecting the negative root).','Check: AP=3, PB=7, CP=3, PD=7. 3×7 = 21 = 3×7 ✓.'],ans:'x = 3'},
+ {level:'hard',q:'A tangent PT is drawn from an external point P, and a secant PAB is drawn from the same point, with PA=6 cm and AB=10 cm. Find PT.',steps:['PB = PA + AB = 6 + 10 = 16 cm.','PT² = PA × PB = 6 × 16 = 96.'],ans:'PT = √96 = 4√6 cm'},
+ {level:'hard',q:'Two tangents PA and PB are drawn from an external point P to a circle with center O and radius 9 cm, where OP = 15 cm. Find (i) the length of each tangent, and (ii) angle AOB, given that angle APB = 74°.',steps:['(i) PA = PB = √(OP² − r²) = √(225 − 81) = √144 = 12 cm.','(ii) angle AOB = 180° − angle APB = 180° − 74° = 106°.'],ans:'Tangent = 12 cm; angle AOB = 106°'},
+ {level:'hard',q:'A tangent PT and a secant PCD are drawn from an external point P, with PC=8 cm and CD=9 cm. Find the length of the tangent PT.',steps:['PD = PC + CD = 8 + 9 = 17 cm.','PT² = PC × PD = 8 × 17 = 136.'],ans:'PT = √136 = 2√34 cm ≈ 11.66 cm'},
+ {level:'hard',q:'A circle of radius 10 cm has a diameter AB passing through an internal point P, with AP=6 cm and PB=14 cm. Another chord CD intersects AB at P, with CP=8 cm. Find PD.',steps:['Since AB is a chord (in fact a diameter) and CD is another chord, both intersecting at P: AP × PB = CP × PD.','6 × 14 = 8 × PD ⟹ 84 = 8 × PD.'],ans:'PD = 10.5 cm'},
+ {level:'hard',q:'PT is a tangent to a circle at T, and PAB is a secant meeting the circle at A and B, with PT=10 cm and PA=5 cm. Find PB and AB.',steps:['By the tangent-secant theorem: PT² = PA × PB.','100 = 5 × PB ⟹ PB = 20.','AB = PB − PA = 20 − 5.'],ans:'PB = 20 cm, AB = 15 cm'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Tangent Length',time:'3 min',q:'A tangent is drawn from a point 13 cm away from the center of a circle of radius 5 cm. Find the length of the tangent.',sol:'PT = √(13² − 5²) = √(169 − 25) = √144 = 12 cm.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Equal Tangents',time:'5 min',q:'Two tangents PA and PB are drawn from an external point P to a circle. If PA=9 cm, find PB, and state the theorem used.',sol:'PB = 9 cm, since tangents drawn from an external point to a circle are equal in length.'},
+ {year:'2022',diff:'Medium',marks:4,topic:'Intersecting Chords',time:'6 min',q:'Two chords AB and CD of a circle intersect at a point P inside the circle. If PA=6 cm, PB=8 cm, and PC=4 cm, find PD.',sol:'PA×PB = PC×PD ⟹ 48 = 4×PD ⟹ PD = 12 cm.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Tangent-Secant',time:'8 min',q:'A tangent PT and a secant PAB are drawn from an external point P. If PA=4 cm and AB=12 cm, find the length of the tangent PT.',sol:'PB = PA+AB = 16 cm. PT² = PA×PB = 4×16 = 64. PT = 8 cm.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Angle in Alternate Segment',time:'3 min',q:'The angle between a tangent to a circle and a chord drawn from the point of contact is 58°. Find the angle in the alternate segment.',sol:'By the tangent-chord angle theorem, the angle in the alternate segment is also 58°.'},
+ {year:'2021',diff:'Medium',marks:4,topic:'Angle Between Tangents',time:'6 min',q:'Two tangents PA and PB are drawn from an external point P to a circle with center O. If angle APB = 64°, find angle AOB.',sol:'Since OAPB has right angles at A and B, angle AOB = 180° − 64° = 116°.'}
+];
+
+const MISTAKES=[
+ 'Confusing the tangent-secant formula — writing PT = PA × PB instead of the correct PT² = PA × PB.',
+ 'Forgetting that "PB" in the secant formulas always refers to the whole length from the external point to the FAR intersection point, not just the segment AB between the two circle points.',
+ 'Assuming the angle between two tangents from an external point equals the angle at the center (AOB) — they are actually supplementary: angle AOB = 180° − angle APB.',
+ 'Applying the intersecting chords theorem to two lines that meet OUTSIDE the circle — that situation needs the intersecting secants theorem instead, using whole secant lengths, not internal chord segments.',
+ 'Forgetting that the tangent-chord angle equals the angle in the ALTERNATE (opposite) segment, not the same segment as the chord.'
+];
+
+const FLASH=[
+ {f:'Tangent', b:'A line that touches a circle at exactly one point (the point of contact)'},
+ {f:'Point of Contact', b:'The single point where a tangent touches the circle'},
+ {f:'Secant', b:'A line that intersects a circle at two distinct points'},
+ {f:'Chord', b:'A line segment joining two points on a circle'},
+ {f:'External Point', b:'A point lying outside the circle, from which tangents and secants can be drawn'},
+ {f:'Tangent-Radius Perpendicularity', b:'The tangent at any point of a circle is perpendicular to the radius drawn to that point'},
+ {f:'Equal Tangents Theorem', b:'Two tangents drawn from the same external point to a circle are equal in length'},
+ {f:'Tangent Length Formula', b:'PT = √(d² − r²), where d = distance from external point to center, r = radius'},
+ {f:'Angle in the Alternate Segment', b:'The angle between a tangent and a chord equals the angle subtended by the chord in the alternate segment'},
+ {f:'Intersecting Chords Theorem', b:'PA × PB = PC × PD, for chords intersecting inside a circle at P'},
+ {f:'Intersecting Secants Theorem', b:'PA × PB = PC × PD, for two secants from an external point P'},
+ {f:'Tangent-Secant Theorem', b:'PT² = PA × PB, for a tangent and a secant from the same external point'},
+ {f:'Angle Between Two Tangents', b:'angle AOB = 180° − angle APB (supplementary relationship)'},
+ {f:'OP Bisects the Angle', b:'The line from the external point to the center bisects the angle between the two tangents'},
+ {f:'Shortest Distance to a Circle', b:'Distance from external point to center, minus the radius (d − r)'},
+ {f:'Two Circles Touching', b:'Circles that meet at exactly one common point are said to be tangent to each other'}
+];
+
+const CC_MCQ=[
+ {t:'terms',q:'A tangent to a circle touches it at:',opts:['Two points','Exactly one point','Three points','No points'],a:1},
+ {t:'rules',q:'The tangent to a circle at any point is always ______ to the radius at that point.',opts:['Parallel','Perpendicular','Equal in length','At 45°'],a:1},
+ {t:'rules',q:'Two tangents drawn from an external point to a circle are:',opts:['Never equal','Always equal in length','Equal only sometimes','Always perpendicular to each other'],a:1},
+ {t:'terms',q:'A line that intersects a circle at two distinct points is called a:',opts:['Tangent','Chord','Secant','Radius'],a:2},
+ {t:'rules',q:'The angle between a tangent and a chord drawn from the point of contact equals:',opts:['The angle in the alternate segment','Always 90°','Always 180°','The angle at the center'],a:0},
+ {t:'formula',q:'If two chords of a circle intersect inside the circle at P, then:',opts:['The chords are equal','PA+PB=PC+PD','PA×PB=PC×PD','PA−PB=PC−PD'],a:2},
+ {t:'formula',q:'If PT is a tangent and PAB is a secant from an external point P, then:',opts:['PT=PA+PB','PT²=PA×PB','PT=PA×PB','PT²=PA+PB'],a:1},
+ {t:'rules',q:'If two tangents PA and PB from an external point P make an angle APB, and O is the center, then angle AOB equals:',opts:['Angle APB','180° − angle APB','90° − angle APB','2× angle APB'],a:1},
+ {t:'rules',q:'The line joining an external point to the center of a circle always:',opts:['Passes through the point of contact of both tangents','Bisects the angle between the two tangents from that point','Is perpendicular to both tangents','Has no special property'],a:1},
+ {t:'formula',q:'If the radius of a circle is r and the distance from an external point P to the center is d, the tangent length PT equals:',opts:['√(d+r)','√(d²+r²)','√(d²−r²)','d−r'],a:2},
+ {t:'formula',q:'For two secants drawn from an external point P, meeting the circle at A,B and C,D respectively, the correct relation is:',opts:['PA×PC=PB×PD','PA×PB=PC×PD','PA+PC=PB+PD','PA−PB=PC−PD'],a:1},
+ {t:'terms',q:'A chord that passes through the center of a circle is called a:',opts:['Tangent','Radius','Diameter','Secant only'],a:2},
+ {t:'terms',q:'If a tangent and a chord meet at the point of contact, forming an angle, this angle is called the:',opts:['Central angle','Inscribed angle','Tangent-chord angle','Secant angle'],a:2},
+ {t:'formula',q:'The shortest distance from an external point P to a circle (radius r, distance from center d) equals:',opts:['d − r','d + r','√(d²−r²)','r − d'],a:0},
+ {t:'general',q:'Two circles that touch each other at exactly one point are said to be:',opts:['Concentric','Congruent','Tangent to each other','Intersecting'],a:2}
+];
+const CC_FIB=[
+ {t:'terms',q:'A tangent touches a circle at exactly ______ point(s).',a:'one'},
+ {t:'rules',q:'The tangent to a circle is always ______ to the radius at the point of contact.',a:'perpendicular'},
+ {t:'rules',q:'Two tangents drawn from the same external point to a circle are ______ in length.',a:'equal'},
+ {t:'terms',q:'A line that cuts a circle at two points is called a ______.',a:'secant'},
+ {t:'rules',q:'The angle between a tangent and a chord equals the angle in the ______ segment.',a:'alternate'},
+ {t:'formula',q:'For chords intersecting inside a circle at P: PA × PB = ______.',a:'PC x PD'},
+ {t:'formula',q:'For a tangent PT and a secant PAB from an external point P: PT² = ______.',a:'PA x PB'},
+ {t:'rules',q:'If angle APB (between two tangents) is given, then angle AOB = 180° − ______.',a:'angle APB'},
+ {t:'rules',q:'The line from an external point to the center of the circle ______ the angle between the two tangents.',a:'bisects'},
+ {t:'formula',q:'The tangent length formula is PT = √(d² − ______), where d is the distance from the external point to the center.',a:'r squared'},
+ {t:'terms',q:'A chord passing through the center of a circle is called a ______.',a:'diameter'},
+ {t:'formula',q:'The shortest distance from an external point to a circle equals d − ______.',a:'r'},
+ {t:'general',q:'Two circles touching at exactly one point are said to be ______ to each other.',a:'tangent'},
+ {t:'formula',q:'If two secants from an external point meet the circle at A,B and C,D respectively, then PA × PB = ______.',a:'PC x PD'},
+ {t:'formula',q:'The theorem stating PA×PB=PC×PD for chords intersecting inside a circle is called the ______ theorem.',a:'intersecting chords'}
+];
+const CC_TF=[
+ {t:'terms',q:'A tangent to a circle can touch it at two points.',a:false},
+ {t:'rules',q:'The tangent to a circle is always perpendicular to the radius at the point of contact.',a:true},
+ {t:'rules',q:'Two tangents drawn from an external point to a circle are always equal in length.',a:true},
+ {t:'terms',q:'A secant intersects a circle at exactly one point.',a:false},
+ {t:'rules',q:'The angle between a tangent and a chord equals the angle in the alternate segment.',a:true},
+ {t:'formula',q:'If two chords intersect inside a circle at P, then PA + PB = PC + PD.',a:false},
+ {t:'formula',q:'If two chords intersect inside a circle at P, then PA × PB = PC × PD.',a:true},
+ {t:'formula',q:'If PT is a tangent and PAB is a secant from an external point P, then PT² = PA × PB.',a:true},
+ {t:'rules',q:'The line joining an external point to the center of a circle bisects the angle between the two tangents from that point.',a:true},
+ {t:'formula',q:'The shortest distance from an external point to a circle equals the distance to the center plus the radius.',a:false},
+ {t:'terms',q:'A diameter is a special chord that passes through the center of the circle.',a:true},
+ {t:'general',q:'Two circles that touch each other externally intersect at exactly two points.',a:false},
+ {t:'formula',q:'For two secants from an external point meeting the circle at A,B and C,D, PA × PC = PB × PD.',a:false},
+ {t:'rules',q:'The tangent-chord angle theorem applies only when the chord is also a diameter.',a:false},
+ {t:'rules',q:'If the angle between two tangents from an external point is 90°, then the angle at the center (between the two radii to the points of contact) is also 90°.',a:true}
+];
+
+const AR=[
+ {a:'The tangent to a circle at any point is perpendicular to the radius drawn to that point.', r:'A tangent touches the circle at exactly one point, and the radius to that point is the shortest line from the center to the tangent line.', ans:0},
+ {a:'The two tangents drawn from an external point to a circle are always equal in length.', r:'The radius of the circle is always greater than the distance from the external point to the circle.', ans:2},
+ {a:'If two tangents from an external point P make an angle of 70° between them, then the angle subtended by the two radii at the center is 110°.', r:'The quadrilateral formed by the center, the two points of contact, and the external point has two right angles (at the points of contact), so its remaining two angles are supplementary.', ans:0},
+ {a:'For a tangent PT and a secant PAB drawn from an external point P, the relationship PT = PA × PB always holds.', r:'The correct relationship between a tangent and a secant from the same external point is PT² = PA × PB.', ans:3},
+ {a:'If two chords of a circle intersect at a point outside the circle (when extended), the products of their full external segments are still equal, just as with two secants from an external point.', r:'The intersecting chords theorem and the intersecting secants theorem both describe the same "power of a point" relationship, applied to a point inside or outside the circle respectively.', ans:0},
+ {a:'The angle between a tangent and a chord, drawn from the point of contact, always equals 90°.', r:'A tangent to a circle is perpendicular to the radius at the point of contact.', ans:3},
+ {a:'The shortest distance from an external point to a circle is found by subtracting the radius from the distance between the point and the center.', r:'The line from an external point to the center of a circle always passes through the nearest point on the circle.', ans:0},
+ {a:'Two circles that touch each other externally intersect the common tangent line at two different points.', r:'At the point of contact between two externally touching circles, both circles share exactly the same tangent line.', ans:3},
+ {a:'If PA and PB are the lengths of two tangents from an external point P, then triangle PAB (formed by joining A and B) is always isosceles.', r:'The radius of the circle is perpendicular to each tangent at its point of contact.', ans:1},
+ {a:'The intersecting secants theorem becomes the tangent-secant theorem when one of the two lines from the external point is a tangent rather than a secant.', r:'A tangent can be thought of as a limiting case of a secant, where the two points of intersection with the circle merge into a single point, so PC×PD becomes PT×PT = PT².', ans:0}
+];
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A',
+ 'Both A and R are true, but R is NOT the correct explanation of A',
+ 'A is true, but R is false',
+ 'A is false, but R is true'
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy (direct formula application)
+ mk(1,'Radius = 3, OP = 5. Find the tangent length PT.','PT = √(OP² − r²).','4'),
+ mk(2,'Radius = 8, OP = 17. Find the tangent length PT.','PT = √(OP² − r²).','15'),
+ mk(3,'PA (tangent) = 6. Find PB (the other tangent from the same point).','Tangents from one external point are equal.','6'),
+ mk(4,'PA (tangent) = 10. Find PB.','Tangents from one external point are equal.','10'),
+ mk(5,'Chords intersect at P: PA=4, PB=8, PC=4. Find PD.','PA×PB=PC×PD.','8'),
+ mk(6,'Chords intersect at P: PA=5, PB=6, PC=3. Find PD.','PA×PB=PC×PD.','10'),
+ mk(7,'Tangent-chord angle = 48°. Find the angle in the alternate segment.','They are always equal.','48°'),
+ mk(8,'Tangent-chord angle = 73°. Find the angle in the alternate segment.','They are always equal.','73°'),
+ mk(9,'Radius=5, tangent PT=12. Find OP.','OP² = r² + PT².','13'),
+ mk(10,'Radius=6, tangent PT=8. Find OP.','OP² = r² + PT².','10'),
+ mk(11,'Two secants from P: PA=2, PB=9, PC=3. Find PD.','PA×PB=PC×PD.','6'),
+ mk(12,'Two secants from P: PA=4, PB=12, PC=6. Find PD.','PA×PB=PC×PD.','8'),
+ mk(13,'Tangent PT=6, secant PA=4. Find PB.','PT²=PA×PB.','9'),
+ mk(14,'Tangent PT=10, secant PA=5. Find PB.','PT²=PA×PB.','20'),
+ mk(15,'Radius=9, OP=15. Find the tangent length.','PT = √(OP²−r²).','12'),
+ mk(16,'Radius=20, OP=29. Find the tangent length.','PT = √(OP²−r²).','21'),
+ mk(17,'PA (tangent) = 3. Find PB.','Tangents from one external point are equal.','3'),
+ mk(18,'PA (tangent) = 15. Find PB.','Tangents from one external point are equal.','15'),
+ mk(19,'Chords intersect at P: PA=7, PB=10, PC=5. Find PD.','PA×PB=PC×PD.','14'),
+ mk(20,'Chords intersect at P: PA=6, PB=6, PC=4. Find PD.','PA×PB=PC×PD.','9')
+];
+const PZ2=[ // Level 2 - medium (angles, reverse problems, combined secants)
+ mk(1,'Radius=7, tangent PT=24. Find OP.','OP² = r²+PT².','25'),
+ mk(2,'Two tangents from P make angle APB = 80°. Find angle AOB.','angle AOB = 180° − angle APB.','100°'),
+ mk(3,'angle AOB = 120°. Find angle APB.','angle APB = 180° − angle AOB.','60°'),
+ mk(4,'Tangent PT=12, secant PA=8. Find PB and AB.','PT²=PA×PB, then AB=PB−PA.','PB=18, AB=10'),
+ mk(5,'Secant: PA=6, AB=10. Find PB, then use PT²=PA×PB to find PT.','PB=PA+AB.','PB=16, PT=√96=4√6'),
+ mk(6,'Two secants: PA=4, AB=5 (so PB=9), PC=3. Find PD and CD.','PA×PB=PC×PD, then CD=PD−PC.','PD=12, CD=9'),
+ mk(7,'Two secants: PA=5, AB=7 (so PB=12), PC=4. Find PD and CD.','PA×PB=PC×PD, then CD=PD−PC.','PD=15, CD=11'),
+ mk(8,'Radius=5, OP=13. Find (i) the tangent length, (ii) the shortest distance from P to the circle.','PT=√(OP²−r²); shortest distance = OP−r.','PT=12, distance=8'),
+ mk(9,'Radius=8, OP=17. Find (i) the tangent length, (ii) the shortest distance.','PT=√(OP²−r²); shortest distance = OP−r.','PT=15, distance=9'),
+ mk(10,'Two tangents PA, PB from external point P; angle OPA=35°. Find angle APB.','OP bisects angle APB, so angle APB = 2 × angle OPA.','70°'),
+ mk(11,'angle OPA = 40°. Find angle APB.','angle APB = 2 × angle OPA.','80°'),
+ mk(12,'Chords intersect: AP=x, PB=6, CP=3, PD=8. Find x.','AP×PB=CP×PD.','4'),
+ mk(13,'Chords intersect: AP=5, PB=x, CP=4, PD=10. Find x.','AP×PB=CP×PD.','8'),
+ mk(14,'Secants: PA=x, PB=15, PC=5, PD=9. Find x.','PA×PB=PC×PD.','3'),
+ mk(15,'Secants: PA=x, PB=20, PC=4, PD=10. Find x.','PA×PB=PC×PD.','2'),
+ mk(16,'Tangent PT=x, secant PA=9, PB=16. Find x.','PT²=PA×PB.','12'),
+ mk(17,'Tangent PT=x, secant PA=4, PB=25. Find x.','PT²=PA×PB.','10'),
+ mk(18,'Tangent-chord angle = 54°. Find the angle in the alternate segment.','They are always equal.','54°'),
+ mk(19,'Radius=12, tangent PT=16. Find OP.','OP²=r²+PT².','20'),
+ mk(20,'Radius=9, tangent PT=40. Find OP.','OP²=r²+PT².','41')
+];
+const PZ3=[ // Level 3 - ICSE exam (quadratics, proofs, multi-part)
+ mk(1,'Two chords intersect at P: AP=x, PB=x+3, CP=2, PD=3x. Find x, then verify the theorem.','Form the equation AP×PB=CP×PD and solve.','x=3 (AP=3, PB=6, CP=2, PD=9; check 18=18)'),
+ mk(2,'Secant PAB has PA=x, AB=7 (PB=x+7); secant PCD has PC=4, PD=15. Find x.','Form the quadratic PA×PB=PC×PD.','x=5'),
+ mk(3,'A circle of radius 10 cm has a diameter AB through internal point P, with AP=6, PB=14. Chord CD meets AB at P with CP=8. Find PD.','Use the intersecting chords theorem.','10.5 cm'),
+ mk(4,'Prove, using congruent triangles, that the two tangents drawn from an external point to a circle are equal in length.','Compare triangles OAP and OBP using the RHS criterion.','PA = PB (proved by RHS congruency)'),
+ mk(5,'Prove that the tangent to a circle at any point is perpendicular to the radius drawn to that point of contact.','Use the shortest-distance argument: any other line to the tangent would be longer than the radius.','Tangent ⊥ radius (proved)'),
+ mk(6,'Two tangents from external point P to a circle satisfy OP = 2×(radius). Find angle APB.','sin(angle OPA) = r/OP = 1/2; then angle APB = 2×angle OPA.','60°'),
+ mk(7,'Two tangents from P make angle APB = 60°, and the radius is 5 cm. Find OP.','angle OPA = 30° (half of APB); sin30° = r/OP.','10 cm'),
+ mk(8,'A student claims PT = PA × √PB for a tangent-secant configuration. Explain why this is incorrect and state the correct relationship.','Compare with the standard theorem.','Incorrect; the correct relation is PT² = PA × PB'),
+ mk(9,'A circle of radius 6 cm has an external point P at distance 10 cm from the center. A secant through the center meets the circle at distances OP−r and OP+r from P. Verify PA×PB equals the square of the tangent length from P.','Compute PA×PB using OP−r and OP+r, then compare with PT²=OP²−r².','Both equal 64, so PT = 8 cm'),
+ mk(10,'Explain why the line joining the centers of two intersecting circles is the perpendicular bisector of their common chord.','Consider the two isosceles triangles formed by each center with the two intersection points.','Each center is equidistant from both intersection points, so both lie on the perpendicular bisector of the chord'),
+ mk(11,'A tangent PT=10 cm and a secant PCD (PC=5 cm) are drawn from an external point P. Find PD and CD.','PT²=PC×PD, then CD=PD−PC.','PD=20 cm, CD=15 cm'),
+ mk(12,'Two secants from P: one meets the circle at A,B with PA=6,PB=15; the other meets it at C,D with CD=9. Find PC and PD.','Form a quadratic in PC using PA×PB=PC×PD and PD=PC+CD.','PC=6, PD=15'),
+ mk(13,'Two chords AB and CD intersect at P: AP=12, PB=3, CP=6. Find PD, and state whether P is the midpoint of CD.','Use the intersecting chords theorem, then compare CP and PD.','PD=6; yes, P is the midpoint of CD'),
+ mk(14,'A circle of radius 8 cm has an external point P with OP=17 cm. A secant through the center meets the circle at distances OP−r and OP+r from P. Verify PT²=PA×PB and find PT.','Compute PA, PB from OP±r, then compare with the direct tangent-length formula.','PT = 15 cm (both methods agree)'),
+ mk(15,'Explain why the point of contact of two externally touching circles must lie on the line joining their centers.','Consider the common tangent at the point of contact and its perpendicularity to both radii.','Both centers and the point of contact are collinear, since both radii are perpendicular to the same tangent line at that point'),
+ mk(16,'Two tangents from an external point P to a circle of radius 7 cm subtend an angle of 90° at P. Find OP.','angle OPA = 45° (half of 90°); sin45° = r/OP.','7√2 ≈ 9.9 cm'),
+ mk(17,'Find the length of the tangent from a point 25 cm away from the center of a circle of radius 7 cm.','PT = √(d² − r²).','24 cm'),
+ mk(18,'Two secants from an external point P: PA=5, AB=7 (PB=12), PC=6. Find PD and CD.','PA×PB=PC×PD, then CD=PD−PC.','PD=10, CD=4'),
+ mk(19,'A tangent of length 20 cm is drawn from a point to a circle of radius 15 cm. Find the distance of the point from the center, and the shortest distance to the circle.','OP²=r²+PT²; shortest distance = OP−r.','OP=25 cm, shortest distance=10 cm'),
+ mk(20,'Outline the proof that the angle between a tangent and a chord (from the point of contact) equals the angle in the alternate segment.','Use the tangent-radius right angle together with the angle-in-a-semicircle idea as supporting steps.','Standard proof using the perpendicularity of the tangent and properties of inscribed angles')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (terms / rules)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('termsGrid',TERMS_DATA);
+buildTheoremCards('rulesGrid',RULES_DATA);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=TERMS_DATA.concat(RULES_DATA);
+  let head='<tr><th>Term / Rule</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Circle Explorer legend chips
+const typeLegend=document.getElementById('typeLegend');
+EXPLORER_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===0?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderExplorer(item);
+  });
+  typeLegend.appendChild(chip);
+});
+function renderExplorer(item){
+  document.getElementById('typeName').textContent=item.label;
+  let formulaTxt, valueTxt;
+  if(item.type==='tangent'){
+    formulaTxt='r = '+item.r+', OP = '+item.d;
+    valueTxt='PT = '+fmtNum(tanLen(item.r,item.d))+'<small>Tangent length</small>';
+  } else if(item.type==='equal'){
+    formulaTxt='PA (tangent) = '+item.PA;
+    valueTxt='PB = '+item.PA+'<small>Equal tangent</small>';
+  } else if(item.type==='chords'){
+    formulaTxt='PA='+item.PA+', PB='+item.PB+', PC='+item.PC;
+    valueTxt='PD = '+fmtNum((item.PA*item.PB)/item.PC)+'<small>Intersecting chords</small>';
+  } else if(item.type==='secants'){
+    formulaTxt='PA='+item.PA+', PB='+item.PB+', PC='+item.PC;
+    valueTxt='PD = '+fmtNum((item.PA*item.PB)/item.PC)+'<small>Intersecting secants</small>';
+  } else if(item.type==='tansec'){
+    formulaTxt='PA='+item.PA+', PB='+item.PB;
+    valueTxt='PT = '+fmtNum(Math.sqrt(item.PA*item.PB))+'<small>Tangent-secant</small>';
+  } else if(item.type==='altseg'){
+    formulaTxt='Tangent-chord angle = '+item.angle+'°';
+    valueTxt=item.angle+'°<small>Angle in alternate segment</small>';
+  }
+  document.getElementById('typeFormula').textContent=formulaTxt;
+  document.getElementById('typeValue').innerHTML=valueTxt;
+}
+renderExplorer(EXPLORER_DATA[0]);
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('ti_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('ti_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','quiz-card');
+  card.innerHTML=`<div class="qtag">Assertion &amp; Reasoning · Q${i+1}</div>
+  <div class="ar-statement"><b>Assertion (A):</b>${item.a}</div>
+  <div class="ar-statement"><b>Reason (R):</b>${item.r}</div>`;
+  AR_OPTIONS.forEach((o,oi)=>{
+    const label=String.fromCharCode(97+oi);
+    const b=el('button','opt-btn','('+label+') '+o);
+    b.addEventListener('click',()=>{
+      card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){b.classList.add('correct'); recordQuiz(true);}
+      else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false);}
+    });
+    card.appendChild(b);
+  });
+  arList.appendChild(card);
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const norm=s=>s.trim().toLowerCase().replace(/\s+/g,'');
+      const ok=norm(input.value)===norm(item.a);
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('ti_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('ti_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+// Hero interactive instrument — tangent + secant sliders
+const heroR=document.getElementById('heroR'), heroD=document.getElementById('heroD'), heroPA=document.getElementById('heroPA');
+function updateHero(){
+  const r=parseFloat(heroR.value), d=parseFloat(heroD.value), pa=parseFloat(heroPA.value);
+  document.getElementById('heroRVal').textContent=r;
+  document.getElementById('heroDVal').textContent=d;
+  document.getElementById('heroPAVal').textContent=pa;
+  if(d<=r){
+    document.getElementById('heroPT').textContent='Invalid (d ≤ r)';
+    document.getElementById('heroPB').textContent='—';
+    document.getElementById('heroAB').textContent='—';
+    document.getElementById('heroShortest').textContent='—';
+    return;
+  }
+  const pt=tanLen(r,d);
+  const pb=(pt*pt)/pa;
+  const ab=pb-pa;
+  document.getElementById('heroPT').textContent=fmtNum(pt);
+  document.getElementById('heroPB').textContent=fmtNum(pb);
+  document.getElementById('heroAB').textContent=fmtNum(ab);
+  document.getElementById('heroShortest').textContent=fmtNum(d-r);
+}
+[heroR,heroD,heroPA].forEach(inp=>inp.addEventListener('input',updateHero));
+updateHero();
+
+// "Power of a point" pairs list
+const compdivLeft=document.getElementById('compdivLeft');
+const cpCard=el('div','card pad');
+const COMPDIV_PAIRS=[
+ ['PA=2, PB=24 (chords)','Product = 48'],
+ ['PA=4, PB=12 (secants)','Product = 48'],
+ ['PA=6, PB=8 (chords)','Product = 48'],
+ ['PT=√48 (tangent)','PT² = 48'],
+ ['PA=8, PB=6 (secants)','Product = 48']
+];
+COMPDIV_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+compdivLeft.appendChild(cpCard);
+
+// Power of a point slider
+const compdivSlider=document.getElementById('compdivSlider');
+function updateCompdiv(){
+  const pa=parseFloat(compdivSlider.value);
+  const product=48; // PC=6, PD=8
+  const pb=product/pa;
+  document.getElementById('compdivPA').textContent=pa;
+  document.getElementById('compdivPB').textContent=fmtNum(pb);
+  document.getElementById('compdivResult').textContent=`PA × PB = ${pa} × ${fmtNum(pb)} = ${fmtNum(pa*pb)} = PC × PD (6 × 8) ✓`;
+}
+compdivSlider.addEventListener('input',updateCompdiv); updateCompdiv();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','explorer','terms','rules','powerofpoint','examples','conceptcheck','practice','pyq','mistakes','assertion','revision','flashcards','formulasheet','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('ti_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('ti_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('ti_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('ti_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('ti_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('ti_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('ti_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['ti_sectionsRead','ti_examplesOpened','ti_quizStats','ti_pz_l1','ti_pz_l2','ti_pz_l3','ti_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
