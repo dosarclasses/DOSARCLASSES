@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Inequations — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+#nlHandle{cursor:grab;}
+#nlHandle:active{cursor:grabbing;}
+.instrument-toggle{display:flex; gap:.5rem; margin-top:.7rem;}
+.instrument-toggle button{flex:1; font-size:.76rem; font-family:var(--font-mono); border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.35rem .5rem;}
+.instrument-toggle button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+
+/* ===================== TYPES-OF-INEQUALITY CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:1.1rem; color:var(--ink-soft); margin:.3rem 0;}
+.result-box .rvalue{font-family:var(--font-display); font-size:1.55rem; font-weight:700; color:var(--ink);}
+.result-box .rgraph{font-family:var(--font-mono); font-size:.82rem; color:var(--ink-soft); margin-top:.4rem;}
+
+/* ===================== THEOREM/PROPERTY CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.92rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-card{border:1px solid var(--border); border-radius:12px; padding:1.1rem 1.2rem; background:var(--card); margin-bottom:1rem;}
+.ar-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.ar-block{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0;}
+.ar-block b{font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:.15rem;}
+.ar-explain{display:none; margin-top:.55rem; font-size:.87rem; padding:.55rem .7rem; border-radius:8px; background:var(--green-tint); border-left:3px solid var(--green);}
+.ar-explain.show{display:block;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.25rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:1rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formula){display:none !important;}
+  #formula{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">≤ Linear <span>Inequations</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="types" href="#types"><span class="dot"></span>Types of Inequalities</a>
+    <a class="navlink" data-target="definitions" href="#definitions"><span class="dot"></span>Key Definitions</a>
+    <a class="navlink" data-target="rules" href="#rules"><span class="dot"></span>Rules for Solving</a>
+    <a class="navlink" data-target="signflip" href="#signflip"><span class="dot"></span>The Sign-Flip Rule</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="assertionreasoning" href="#assertionreasoning"><span class="dot"></span>Assertion &amp; Reasoning</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formula" href="#formula"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Linear Inequations</div>
+        <h1>Bounding the unknown,<br>one inequality at a time.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the point along the number line to set the boundary — watch the inequality, the circle type, and the solution set update instantly. Toggle between strict and non-strict to see the circle change from open to filled.</p>
+        <div class="hero-cta">
+          <a href="#types" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <svg id="nlSvg" viewBox="0 0 320 200" style="width:100%; height:auto;">
+          <line x1="20" y1="100" x2="300" y2="100" stroke="#1B2A4A" stroke-width="2"/>
+          <g id="nlTicks"></g>
+          <line id="nlShade" x1="160" y1="100" x2="300" y2="100" stroke="#C97A2B" stroke-width="6"/>
+          <polygon id="nlArrow" points="294,94 306,100 294,106" fill="#C97A2B"/>
+          <circle id="nlHandle" cx="160" cy="100" r="9" fill="#C97A2B" stroke="#fff" stroke-width="2"/>
+          <text x="160" y="185" font-family="IBM Plex Mono" font-size="11" fill="#6B7A99" text-anchor="middle">drag the point ↑</text>
+        </svg>
+        <div class="instrument-toggle">
+          <button id="nlStrict" class="on">Strict (&gt;)</button>
+          <button id="nlNonStrict">Non-strict (≥)</button>
+        </div>
+        <div class="instrument-readout">
+          <div>Inequality <b id="nlIneq">x &gt; 3</b></div>
+          <div>Boundary <b id="nlBoundary">3</b></div>
+          <div>Circle <b id="nlCircle">Open</b></div>
+          <div>Solution Set <b id="nlSet">{x : x &gt; 3, x ∈ R}</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is a Linear Inequation?</h2>
+        <p class="lede">While an equation says two expressions are equal, an inequation says they are <em>not</em> equal in a specific direction — one is less than, greater than, or at most/least the other. A linear inequation in one variable has the form ax + b &lt; c (or &gt;, ≤, ≥), where the variable appears only to the first power.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Most real situations involve limits, not exact values — a lift that can carry "at most 8 people," a budget of "no more than ₹2000," or an age that must be "at least 18." Inequations are the tool that turns these limits into solvable mathematics, giving not one answer but an entire range of valid answers.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Budgeting &amp; spending limits</li>
+              <li>Speed limits &amp; safety margins</li>
+              <li>Passing marks &amp; grade cut-offs</li>
+              <li>Load and capacity limits</li>
+              <li>Age &amp; eligibility criteria</li>
+              <li>Manufacturing tolerances</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M3 12h18M14 6l6 6-6 6"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Number Line</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Solution Set</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 6h16M4 12h10M4 18h16"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Replacement Set</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#B4453C" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M12 4v10M12 20h.01M6 8l-3 4 3 4M18 8l3 4-3 4"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Sign-Flip Rule</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ Solving linear equations in one variable</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ The number sets N (natural), W (whole), Z (integers), R (real)</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Plotting points on a number line</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. TYPES OF INEQUALITIES ===================== -->
+    <section id="types">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Symbols</div>
+        <h2>Types of Inequalities</h2>
+        <p class="lede">Every inequality compares a variable to the same fixed value, 5, in a different way. Click each type below to see exactly what it means and how it looks on a number line.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Strict — Less Than</div>
+            <div class="rformula" id="typeFormula">x &lt; 5</div>
+            <div class="rvalue" id="typeValue">5 excluded</div>
+            <div class="rgraph" id="typeGraph">Open circle at 5, ray pointing left</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY DEFINITIONS ===================== -->
+    <section id="definitions">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Definitions &amp; Terms</h2>
+        <p class="lede">Five terms you'll meet in every inequation problem — get comfortable with these before moving to the algebraic rules.</p>
+      </div>
+      <div class="ratio-grid" id="definitionsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. RULES FOR SOLVING ===================== -->
+    <section id="rules">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Rules for Solving Inequations</h2>
+        <p class="lede">Five standard moves let you isolate the variable without disturbing the truth of the inequality. The last one — multiplying or dividing by a negative number — is the one every student trips on, and gets its own deep dive next.</p>
+      </div>
+      <div class="ratio-grid" id="rulesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. SIGN-FLIP RULE ===================== -->
+    <section id="signflip">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>The Sign-Flip Rule</h2>
+        <p class="lede">If a &lt; b and c &lt; 0, then ac &gt; bc. Scale the inequality below by any factor k — watch the direction of the inequality flip the moment k turns negative.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="signflipLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>Base inequality: 2 &lt; 5. Drag the slider to multiply both sides by k, and watch the direction of the inequality flip as k crosses zero.</p>
+            <input type="range" min="-5" max="5" value="1" id="sfSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>k = <b id="sfK">1</b></span>
+              <span>2k = <b id="sfA">2</b></span>
+              <span>5k = <b id="sfB">5</b></span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="sfCheck">2×1 = 2, 5×1 = 5, so 2 &lt; 5</span> — the sign flips the instant k is negative.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across symbols, definitions, algebraic rules, the sign-flip rule, and general facts — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">08 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">09 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 10. ASSERTION & REASONING ===================== -->
+    <section id="assertionreasoning">
+      <div class="section-head">
+        <div class="eyebrow">10 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each statement is true on its own, and — if both are true — whether R actually explains A. Pick your option, then reveal the explanation.</p>
+      </div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 11. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">11 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Open circle: &lt; or &gt; (boundary excluded)</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Filled circle: ≤ or ≥ (boundary included)</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Replacement set: values the variable may take (N, W, Z, R)</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Solution set: subset of replacement set satisfying the inequation</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Rule Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Add/Subtract same number: direction unchanged</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Multiply/Divide by positive: direction unchanged</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Multiply/Divide by negative: direction reverses</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Rules (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always check the replacement set before writing the final solution set — a "correct" x range still needs filtering to N, W, Z, or R.</li>
+              <li>Whenever you multiply or divide by a variable expression (not a plain number), first confirm its sign — you cannot flip blindly.</li>
+              <li>For combined inequations like −3 &lt; 2x + 1 ≤ 7, perform every operation on all three parts at once, not just one side.</li>
+              <li>Draw the number line even when not asked — it catches sign-flip mistakes instantly.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formula">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Linear Inequations — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Symbols &amp; Circles</h5>
+            <p>&lt; strictly less than — open circle</p><p>&gt; strictly greater than — open circle</p>
+            <p>≤ less than or equal to — filled circle</p><p>≥ greater than or equal to — filled circle</p>
+            <p>≠ not equal to — open circle, both directions</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Definitions</h5>
+            <p>Linear inequation: ax + b ⋛ c</p><p>Replacement set: allowed values of x</p>
+            <p>Solution set: values of x satisfying the inequation</p><p>Combined inequation: a &lt; x ≤ b</p>
+            <p>Interval notation: −1 &lt; x ≤ 3 ⟹ (−1, 3]</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Rules</h5>
+            <p>Addition: a&lt;b ⟹ a+c &lt; b+c</p><p>Subtraction: a&lt;b ⟹ a−c &lt; b−c</p>
+            <p>Mult./Div. by c&gt;0: a&lt;b ⟹ ac &lt; bc</p>
+            <p>Mult./Div. by c&lt;0: a&lt;b ⟹ ac &gt; bc (flips!)</p>
+            <p>Transitive: a&lt;b, b&lt;c ⟹ a&lt;c</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const DEFINITIONS=[
+ {name:'Inequation', color:'#3D5A80', statement:'A statement that relates two expressions with <, >, ≤, ≥, or ≠ instead of an equals sign.', trick:'Think of it as an equation with an attitude — it points in a direction instead of balancing.', ex:'x + 3 > 10 is an inequation; x + 3 = 10 is an equation.'},
+ {name:'Linear Inequation', color:'#2E7D5B', statement:'An inequation in which the variable appears only to the first power, of the form ax + b ⋛ c.', trick:'"Linear" here means the same thing it means for equations — no x², no √x.', ex:'2x − 5 ≤ 9 is linear; x² > 4 is not.'},
+ {name:'Replacement Set', color:'#C97A2B', statement:'The set from which the variable is allowed to take its values — commonly N, W, Z, or R.', trick:'Always stated in the question; never assume it.', ex:'If x ∈ {1,2,3,...,10}, only those ten values are candidates.'},
+ {name:'Solution Set', color:'#3D5A80', statement:'The subset of the replacement set consisting of exactly those values that make the inequation true.', trick:'Solve algebraically first, then filter by the replacement set.', ex:'For x < 5, x ∈ N, the solution set is {1,2,3,4}.'},
+ {name:'Combined Inequation', color:'#2E7D5B', statement:'An inequation with two inequality signs at once, such as a < x ≤ b, meaning both conditions hold together.', trick:'Whatever you do to solve it, do to all three parts simultaneously.', ex:'−3 < 2x + 1 ≤ 7 combines two conditions on x.'}
+];
+const RULES=[
+ {name:'Addition Rule', color:'#3D5A80', statement:'If a < b, then a + c < b + c, for any real number c.', trick:'Adding the same number to both sides never changes the direction.', ex:'3 < 7 ⟹ 3+4 < 7+4 ⟹ 7 < 11.'},
+ {name:'Subtraction Rule', color:'#2E7D5B', statement:'If a < b, then a − c < b − c, for any real number c.', trick:'Subtracting is just adding a negative — the direction still holds.', ex:'10 < 15 ⟹ 10−4 < 15−4 ⟹ 6 < 11.'},
+ {name:'Multiplication/Division (positive)', color:'#C97A2B', statement:'If a < b and c > 0, then ac < bc and a/c < b/c.', trick:'Multiplying or dividing by a positive number preserves the direction.', ex:'2 < 5, c = 3 ⟹ 6 < 15.'},
+ {name:'Multiplication/Division (negative)', color:'#B4453C', statement:'If a < b and c < 0, then ac > bc and a/c > b/c — the direction reverses.', trick:'The single most-forgotten rule in this chapter. Flip the sign the instant you multiply or divide by a negative.', ex:'2 < 5, c = −1 ⟹ −2 > −5.'},
+ {name:'Transitive Rule', color:'#3D5A80', statement:'If a < b and b < c, then a < c.', trick:'Lets you chain several inequalities into one conclusion.', ex:'2 < 5 and 5 < 9 ⟹ 2 < 9.'}
+];
+const SIGNFLIP_PAIRS=[
+ ['Addition','a+c < b+c'],['Subtraction','a−c < b−c'],['Multiply/Divide by c>0','ac < bc'],['Multiply/Divide by c<0','ac > bc (reversed)'],['Transitive','a<b, b<c ⟹ a<c']
+];
+const TYPE_DATA=[
+ {label:'Strict — Less Than', formula:'x < 5', value:'5 excluded', graph:'Open circle at 5, ray pointing left'},
+ {label:'Non-strict — Less Than or Equal', formula:'x ≤ 5', value:'5 included', graph:'Filled circle at 5, ray pointing left'},
+ {label:'Strict — Greater Than', formula:'x > 5', value:'5 excluded', graph:'Open circle at 5, ray pointing right'},
+ {label:'Non-strict — Greater Than or Equal', formula:'x ≥ 5', value:'5 included', graph:'Filled circle at 5, ray pointing right'},
+ {label:'Not Equal To', formula:'x ≠ 5', value:'5 excluded, both directions valid', graph:'Open circle at 5, rays both ways'},
+ {label:'Combined / Double Inequation', formula:'2 ≤ x < 5', value:'2 included, 5 excluded', graph:'Filled circle at 2, open circle at 5, segment shaded between'}
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'Solve 2x − 3 < 7, x ∈ N.',steps:['Add 3 to both sides: 2x < 10.','Divide both sides by 2 (positive, direction unchanged): x < 5.'],ans:'x ∈ {1,2,3,4}'},
+ {level:'easy',q:'Solve x + 6 ≤ 10, x ∈ W.',steps:['Subtract 6 from both sides: x ≤ 4.','W = {0,1,2,3,...}, so filter accordingly.'],ans:'x ∈ {0,1,2,3,4}'},
+ {level:'easy',q:'Solve 3x > 15, x ∈ Z.',steps:['Divide both sides by 3 (positive): x > 5.'],ans:'x ∈ {6,7,8,...}'},
+ {level:'easy',q:'Solve −x < 3, x ∈ N.',steps:['Multiply both sides by −1; the direction reverses: x > −3.','Since x ∈ N, every natural number already satisfies x > −3.'],ans:'x ∈ {1,2,3,...} (all of N)'},
+ {level:'easy',q:'Solve x/2 ≥ 3, x ∈ N.',steps:['Multiply both sides by 2 (positive): x ≥ 6.'],ans:'x ∈ {6,7,8,...}'},
+ {level:'easy',q:'Represent the solution of x > −2, x ∈ R on a number line.',steps:['Since the inequality is strict, use an open circle at −2.','Shade/arrow to the right, since x must be greater than −2.'],ans:'Open circle at −2 with a ray extending right'},
+ {level:'medium',q:'Solve 2x + 3 < x + 9, x ∈ R.',steps:['Subtract x from both sides: x + 3 < 9.','Subtract 3 from both sides: x < 6.'],ans:'x < 6'},
+ {level:'medium',q:'Solve −2x + 5 ≤ 11, x ∈ Z.',steps:['Subtract 5 from both sides: −2x ≤ 6.','Divide both sides by −2; the direction reverses: x ≥ −3.'],ans:'x ∈ {−3,−2,−1,...}'},
+ {level:'medium',q:'Solve −3 < 2x − 1 ≤ 5, x ∈ Z.',steps:['Add 1 to all three parts: −2 < 2x ≤ 6.','Divide all three parts by 2 (positive): −1 < x ≤ 3.'],ans:'x ∈ {0,1,2,3}'},
+ {level:'medium',q:'Solve (x − 2)/3 ≥ (x − 4)/5, x ∈ R.',steps:['Both denominators are positive, so cross-multiply directly: 5(x−2) ≥ 3(x−4).','Expand: 5x − 10 ≥ 3x − 12.','Simplify: 2x ≥ −2 ⟹ x ≥ −1.'],ans:'x ≥ −1'},
+ {level:'medium',q:'Given x ∈ {−3,−2,−1,0,1,2,3}, find the solution set of x + 2 ≤ 4.',steps:['Subtract 2 from both sides: x ≤ 2.','Intersect with the given replacement set.'],ans:'x ∈ {−3,−2,−1,0,1,2}'},
+ {level:'medium',q:'Solve 4x + 3 ≥ 2x − 5, x ∈ W.',steps:['Subtract 2x from both sides: 2x + 3 ≥ −5.','Subtract 3: 2x ≥ −8 ⟹ x ≥ −4.','Since W = {0,1,2,...}, every whole number already satisfies x ≥ −4.'],ans:'x ∈ {0,1,2,...} (all of W)'},
+ {level:'hard',q:'Solve −5 ≤ (2x − 3)/4 < 1, x ∈ R.',steps:['Multiply all three parts by 4 (positive): −20 ≤ 2x − 3 < 4.','Add 3 to all three parts: −17 ≤ 2x < 7.','Divide all three parts by 2: −8.5 ≤ x < 3.5.'],ans:'−8.5 ≤ x < 3.5'},
+ {level:'hard',q:'Solve 2(x − 3) ≥ 3(2x + 1) − 5, x ∈ R.',steps:['Expand: 2x − 6 ≥ 6x + 3 − 5.','Simplify the right side: 2x − 6 ≥ 6x − 2.','Subtract 6x, add 6: −4x ≥ 4.','Divide by −4; the direction reverses: x ≤ −1.'],ans:'x ≤ −1'},
+ {level:'hard',q:'Find the solution set of x ∈ Z satisfying both 2x − 1 > 3 and 3x + 2 ≤ 14.',steps:['First inequation: 2x > 4 ⟹ x > 2.','Second inequation: 3x ≤ 12 ⟹ x ≤ 4.','Combine: 2 < x ≤ 4.'],ans:'x ∈ {3,4}'},
+ {level:'hard',q:'Solve −4 < 3 − 2x ≤ 9, x ∈ R and represent the solution on a number line.',steps:['Subtract 3 from all three parts: −7 < −2x ≤ 6.','Divide all three parts by −2; both signs reverse and the order flips: 3.5 > x ≥ −3.','Rewrite in standard order: −3 ≤ x < 3.5.'],ans:'−3 ≤ x < 3.5'},
+ {level:'hard',q:'Given the replacement set {x : x ∈ Z, −5 ≤ x ≤ 5}, solve 2x − 3 ≤ x + 2.',steps:['Subtract x from both sides: x − 3 ≤ 2.','Add 3 to both sides: x ≤ 5.','Intersect with the given replacement set.'],ans:'x ∈ {−5,−4,−3,−2,−1,0,1,2,3,4,5}'},
+ {level:'hard',q:'Solve simultaneously: 3x + 8 > 2 and 4x − 1 < 19, x ∈ R. Represent the common solution on a number line.',steps:['First inequation: 3x > −6 ⟹ x > −2.','Second inequation: 4x < 20 ⟹ x < 5.','Combine both conditions.'],ans:'−2 < x < 5'},
+ {level:'hard',q:'The solution set of a linear inequation 2x − 1 ≥ x + 3 (x ∈ R) must also satisfy x < 10. Find the final solution set.',steps:['Solve the inequation: 2x − x ≥ 3 + 1 ⟹ x ≥ 4.','Combine with the extra condition x < 10.'],ans:'4 ≤ x < 10'},
+ {level:'medium',q:'Solve 3x − 5 < x + 7, x ∈ R, and represent the solution on a number line.',steps:['Subtract x from both sides: 2x − 5 < 7.','Add 5 to both sides: 2x < 12.','Divide by 2: x < 6.'],ans:'x < 6 — open circle at 6, ray pointing left'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Medium',marks:3,topic:'Solving Inequations',time:'5 min',q:'Solve: 3x − 2 < 19, x ∈ {1,2,3,...,10}. Represent the solution on a number line.',sol:'Add 2: 3x < 21. Divide by 3: x < 7. Intersecting with the replacement set gives x ∈ {1,2,3,4,5,6}.'},
+ {year:'2023',diff:'Hard',marks:4,topic:'Combined Inequations',time:'7 min',q:'Solve: −3 ≤ 3 − 2x < 7, x ∈ R. Represent the solution on a number line.',sol:'Subtract 3: −6 ≤ −2x < 4. Divide by −2, reversing both signs and the order: −2 < x ≤ 3.'},
+ {year:'2022',diff:'Medium',marks:3,topic:'Sign-Flip Rule',time:'5 min',q:'Solve: −5x + 3 ≤ 18, x ∈ Z.',sol:'Subtract 3: −5x ≤ 15. Divide by −5, reversing direction: x ≥ −3, so x ∈ {−3,−2,−1,...}.'},
+ {year:'2022',diff:'Easy',marks:2,topic:'Number Line',time:'3 min',q:'Represent the solution set of x > −1, x ∈ R on a number line.',sol:'Since the inequality is strict, draw an open circle at −1 with the ray extending to the right.'},
+ {year:'2021',diff:'Hard',marks:4,topic:'Fractional Inequations',time:'6 min',q:'Solve: (2x − 1)/3 ≥ (x + 1)/4, x ∈ R.',sol:'Both denominators are positive; cross-multiply: 4(2x−1) ≥ 3(x+1). Expand: 8x−4 ≥ 3x+3. Simplify: 5x ≥ 7, so x ≥ 7/5.'},
+ {year:'2021',diff:'Medium',marks:3,topic:'Word Problem',time:'5 min',q:'A student\u2019s adjusted score must satisfy 40 ≤ 2x + 10 ≤ 90 to qualify for distinction, where x is the raw score. Find the range of x.',sol:'Subtract 10 from all parts: 30 ≤ 2x ≤ 80. Divide all parts by 2: 15 ≤ x ≤ 40.'}
+];
+
+const MISTAKES=[
+ 'Forgetting to reverse the inequality sign when multiplying or dividing both sides by a negative number.',
+ 'Using an open circle for ≤ or ≥ instead of a filled circle on the number line (or vice-versa for strict inequalities).',
+ 'Forgetting to restrict the algebraic solution to the given replacement set (N, W, Z, or R) before writing the final answer.',
+ 'Solving a combined inequation like −3 < 2x ≤ 7 by working on only one side instead of performing every operation on all three parts.',
+ 'Cross-multiplying an inequation involving fractions without first checking that the denominators are positive.'
+];
+
+const FLASH=[
+ {f:'Inequation', b:'A statement relating two expressions with <, >, ≤, ≥, or ≠'},
+ {f:'Linear inequation in one variable', b:'An inequation of the form ax+b ⋛ c, where the variable has power 1'},
+ {f:'Replacement set', b:'The set from which the variable is allowed to take values'},
+ {f:'Solution set', b:'The subset of the replacement set that satisfies the inequation'},
+ {f:'Open circle', b:'Used on a number line for < or > — the boundary point is excluded'},
+ {f:'Filled (closed) circle', b:'Used on a number line for ≤ or ≥ — the boundary point is included'},
+ {f:'Addition Rule', b:'If a<b, then a+c<b+c for any real c'},
+ {f:'Subtraction Rule', b:'If a<b, then a−c<b−c for any real c'},
+ {f:'Multiplication Rule (positive)', b:'If a<b and c>0, then ac<bc'},
+ {f:'Division Rule (positive)', b:'If a<b and c>0, then a/c<b/c'},
+ {f:'Sign-Flip Rule', b:'If a<b and c<0, then ac>bc — multiplying/dividing by a negative reverses the sign'},
+ {f:'Transitive Property', b:'If a<b and b<c, then a<c'},
+ {f:'Trichotomy Property', b:'For real a,b — exactly one of a<b, a=b, a>b is true'},
+ {f:'Combined (double) inequation', b:'An inequation like a<x≤b, combining two conditions on x'},
+ {f:'Interval notation', b:'−1<x≤3 is written as (−1, 3]'},
+ {f:'Assertion-Reasoning', b:'A question type with an Assertion (A) and a Reason (R); you judge whether each is true and whether R correctly explains A'}
+];
+
+const CC_MCQ=[
+ {t:'types',q:'The inequality x ≤ 7 means:',opts:['x is strictly less than 7','x is less than or equal to 7','x is greater than 7','x equals 7'],a:1},
+ {t:'types',q:'On a number line, an open circle at a point indicates:',opts:['the point is included','the point is excluded','equality','none of these'],a:1},
+ {t:'types',q:'The combined inequation 2 ≤ x < 6 means x lies:',opts:['strictly between 2 and 6','between 2 and 6, including both','between 2 and 6, including 2 but excluding 6','between 2 and 6, excluding 2 but including 6'],a:2},
+ {t:'definitions',q:'The replacement set is:',opts:['the solution of an inequation','the set from which the variable takes values','always the set of natural numbers','always empty'],a:1},
+ {t:'definitions',q:'A linear inequation in one variable has the general form:',opts:['ax² + b > 0','ax + b ⋛ c','ax·bx > c','none of these'],a:1},
+ {t:'rules',q:'If a < b, then a + c ___ b + c for any real c:',opts:['<','>','≤','cannot be determined'],a:0},
+ {t:'rules',q:'If a < b and c > 0, then ac ___ bc:',opts:['<','>','=','cannot be determined'],a:0},
+ {t:'rules',q:'Which rule lets you conclude a < c from a < b and b < c?',opts:['Trichotomy','Transitive Rule','Sign-Flip Rule','None of these'],a:1},
+ {t:'signflip',q:'If a < b and c < 0, then ac ___ bc:',opts:['<','>','=','depends on a and b'],a:1},
+ {t:'signflip',q:'Multiplying both sides of an inequation by a negative number:',opts:['keeps the direction the same','reverses the direction','turns it into an equation','has no effect'],a:1},
+ {t:'signflip',q:'If 2 < 5, multiplying both sides by −1 gives:',opts:['−2 < −5','−2 > −5','−2 = −5','cannot say'],a:1},
+ {t:'general',q:'The solution set of x > 3, x ∈ N is:',opts:['{1,2,3}','{4,5,6,...}','{3,4,5,...}','all reals greater than 3'],a:1},
+ {t:'general',q:'How many elements does the solution set of x ≤ 4, x ∈ W contain?',opts:['4','5','infinite','0'],a:1},
+ {t:'general',q:'The inequation −3x > 9 simplifies to:',opts:['x > −3','x < −3','x > 3','x < 3'],a:1},
+ {t:'general',q:'A filled (solid) circle on a number line at point 5 for x ≥ 5 shows:',opts:['5 is excluded','5 is included','x can be negative','none of these'],a:1}
+];
+const CC_FIB=[
+ {t:'types',q:"The symbol '≠' means \"not ______.\"",a:'equal to'},
+ {t:'types',q:'An inequation with ≤ or ≥ is called a ______ inequality.',a:'non-strict'},
+ {t:'types',q:'A ______ circle on the number line shows that the boundary point is excluded.',a:'open'},
+ {t:'definitions',q:'The set of values a variable is allowed to take is called the ______ set.',a:'replacement'},
+ {t:'definitions',q:'The subset of the replacement set that satisfies the inequation is called the ______ set.',a:'solution'},
+ {t:'rules',q:'If a < b, then a − c ______ b − c.',a:'<'},
+ {t:'rules',q:'If a < b and c > 0, then a/c ______ b/c.',a:'<'},
+ {t:'rules',q:'The rule "if a<b and b<c then a<c" is called the ______ property.',a:'transitive'},
+ {t:'signflip',q:'Dividing both sides of an inequation by a ______ number reverses its direction.',a:'negative'},
+ {t:'signflip',q:'If −2x < 8, dividing both sides by −2 gives x ______ −4.',a:'>'},
+ {t:'general',q:'The solution set of x < 5, x ∈ N is {1, 2, 3, ______}.',a:'4'},
+ {t:'general',q:'For x ∈ Z, the solution of x ≥ 0 excludes all ______ integers.',a:'negative'},
+ {t:'general',q:'The inequation 3x + 2 ≤ 11 simplifies to x ≤ ______.',a:'3'},
+ {t:'general',q:'In interval notation, −1 < x ≤ 3 is written as ______.',a:'(-1,3]'},
+ {t:'types',q:'A combined inequation like 2 ≤ x < 5 involves ______ inequality signs.',a:'two'}
+];
+const CC_TF=[
+ {t:'types',q:'x < 5 and x ≤ 5 represent exactly the same solution set.',a:false},
+ {t:'types',q:'An open circle on a number line means the point is included in the solution.',a:false},
+ {t:'definitions',q:'The replacement set can be N, W, Z, or R depending on the problem.',a:true},
+ {t:'definitions',q:'The solution set is always a subset of the replacement set.',a:true},
+ {t:'rules',q:'Adding the same number to both sides of an inequation never changes its direction.',a:true},
+ {t:'rules',q:'Multiplying both sides of an inequation by a positive number reverses its direction.',a:false},
+ {t:'rules',q:'The transitive property lets you conclude a<c from a<b and b<c.',a:true},
+ {t:'signflip',q:'Dividing both sides of an inequation by a negative number keeps the direction unchanged.',a:false},
+ {t:'signflip',q:'If a < b and c < 0, then ac < bc.',a:false},
+ {t:'signflip',q:'Multiplying an inequation by 0 is a valid step in solving it.',a:false},
+ {t:'general',q:'x ≥ 3, x ∈ N has infinitely many solutions.',a:true},
+ {t:'general',q:'x < 3, x ∈ N has solution set {1, 2}.',a:true},
+ {t:'general',q:'The solution set of x ≠ 4, x ∈ R excludes only the number 4.',a:true},
+ {t:'general',q:'In this chapter, a linear inequation always involves exactly one variable.',a:true},
+ {t:'general',q:'The trichotomy property states exactly one of a<b, a=b, a>b holds for real numbers a and b.',a:true}
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'Solve 2x < 10, x ∈ N.','Divide both sides by 2.','x ∈ {1,2,3,4}'),
+ mk(2,'Solve x + 4 ≤ 9, x ∈ W.','Subtract 4 from both sides.','x ∈ {0,1,2,3,4,5}'),
+ mk(3,'Solve 3x ≥ 21, x ∈ N.','Divide both sides by 3.','x ∈ {7,8,9,...}'),
+ mk(4,'Solve x − 5 > 0, x ∈ Z.','Add 5 to both sides.','x ∈ {6,7,8,...}'),
+ mk(5,'Solve −x ≤ 4, x ∈ N.','Multiply by −1 and flip the sign.','x ≥ −4, so all of N works: {1,2,3,...}'),
+ mk(6,'Solve x/4 < 3, x ∈ N.','Multiply both sides by 4.','x ∈ {1,2,...,11}'),
+ mk(7,'Solve 2x − 1 ≤ 7, x ∈ W.','Add 1, then divide by 2.','x ∈ {0,1,2,3,4}'),
+ mk(8,'Represent x > −3, x ∈ R on a number line.','Use an open circle since it is strict.','Open circle at −3, ray to the right'),
+ mk(9,'Solve −2x > −10, x ∈ N.','Divide by −2 and flip the sign.','x ∈ {1,2,3,4}'),
+ mk(10,'Solve 5x ≤ 3x + 8, x ∈ W.','Bring the x terms together first.','x ∈ {0,1,2,3,4}'),
+ mk(11,'Solve x + 3 < 8, x ∈ N.','Subtract 3 from both sides.','x ∈ {1,2,3,4}'),
+ mk(12,'Solve 3x − 2 ≥ 10, x ∈ Z.','Add 2, then divide by 3.','x ∈ {4,5,6,...}'),
+ mk(13,'Solve −4x < 20, x ∈ Z.','Divide by −4 and flip the sign.','x ∈ {−4,−3,−2,...}'),
+ mk(14,'Solve x/3 + 1 ≤ 4, x ∈ W.','Subtract 1, then multiply by 3.','x ∈ {0,1,...,9}'),
+ mk(15,'Solve 2(x − 1) > 6, x ∈ N.','Expand, then divide by 2.','x ∈ {5,6,7,...}'),
+ mk(16,'Solve 7 − x ≥ 2, x ∈ W.','Isolate x carefully — you will flip the sign.','x ∈ {0,1,2,3,4,5}'),
+ mk(17,'Solve 4x < 24, x ∈ N.','Divide both sides by 4.','x ∈ {1,2,3,4,5}'),
+ mk(18,'Solve x − 7 ≤ −2, x ∈ Z.','Add 7 to both sides.','x ≤ 5'),
+ mk(19,'Solve 3x + 1 ≥ x + 9, x ∈ N.','Collect the x terms on one side.','x ∈ {4,5,6,...}'),
+ mk(20,'Solve −3x ≥ −18, x ∈ N.','Divide by −3 and flip the sign.','x ∈ {1,2,3,4,5,6}')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'Solve 2x + 5 < 3x − 1, x ∈ R.','Collect the x terms together.','x > 6'),
+ mk(2,'Solve −3 < 2x + 1 ≤ 7, x ∈ Z.','Subtract 1, then divide by 2, across all parts.','x ∈ {−1,0,1,2,3}'),
+ mk(3,'Solve (x − 1)/2 ≥ (x − 3)/3, x ∈ R.','Cross-multiply — both denominators are positive.','x ≥ −3'),
+ mk(4,'Solve 5 − 2x > x − 4, x ∈ W.','Collect x terms on one side.','x ∈ {0,1,2}'),
+ mk(5,'Solve −6 ≤ 3x < 9, x ∈ Z.','Divide throughout by 3.','x ∈ {−2,−1,0,1,2}'),
+ mk(6,'Solve 4x − 3 ≤ 2x + 7, x ∈ N and represent on a number line.','Collect the x terms first.','x ∈ {1,2,3,4,5}'),
+ mk(7,'Solve 2(2x − 1) < 3(x + 2), x ∈ R.','Expand both sides first.','x < 8'),
+ mk(8,'Solve (3x + 1)/4 ≥ 2, x ∈ Z.','Multiply both sides by 4.','x ∈ {3,4,5,...}'),
+ mk(9,'Given the replacement set {−2,−1,0,1,2,3}, solve x + 3 ≤ 4.','Solve, then intersect with the set given.','x ∈ {−2,−1,0,1}'),
+ mk(10,'Solve −1 < (x − 2)/3 < 2, x ∈ R.','Multiply throughout by 3, then add 2.','−1 < x < 8'),
+ mk(11,'Solve 3x − 7 ≥ x + 1 combined with x < 10, x ∈ Z.','Solve first, then intersect with x < 10.','x ∈ {4,5,6,7,8,9}'),
+ mk(12,'Solve 2x + 3 > 7 and 3x − 1 < 11, x ∈ N together.','Solve both separately, then intersect.','x = 3'),
+ mk(13,'Solve x/2 − 1 ≤ x/3, x ∈ W.','Clear fractions by multiplying by 6.','x ∈ {0,1,2,3,4,5,6}'),
+ mk(14,'Solve 5(x − 2) ≥ 3(x + 2), x ∈ R.','Expand both sides.','x ≥ 8'),
+ mk(15,'Solve −5 ≤ 2 − x < 1, x ∈ Z.','Subtract 2, then multiply by −1 (flip both).','x ∈ {2,3,4,5,6,7}'),
+ mk(16,'Solve 6x − 5 < 4x + 9, x ∈ N.','Collect x terms on one side.','x ∈ {1,2,3,4,5,6}'),
+ mk(17,'Solve (2x − 3)/5 ≤ (x + 1)/2, x ∈ R.','Cross-multiply — both denominators are positive.','x ≤ 11'),
+ mk(18,'Solve −7 < 3x + 2 ≤ 11, x ∈ Z.','Subtract 2, then divide by 3, across all parts.','x ∈ {−2,−1,0,1,2,3}'),
+ mk(19,'Solve 2x + 1 ≥ 5 and 3x − 2 ≤ 10, x ∈ W together.','Solve both, then intersect.','x ∈ {2,3,4}'),
+ mk(20,'Solve x − 4/3 ≥ x/2 − 1, x ∈ R.','Clear fractions by multiplying by 6.','x ≥ 2')
+];
+const PZ3=[ // Level 3 - ICSE exam
+ mk(1,'Solve −8 ≤ (3x − 2)/4 < 1, x ∈ R and graph the solution.','Multiply throughout by 4 first.','−10 ≤ x < 2'),
+ mk(2,'Solve simultaneously 2x − 3 < x + 4 and 3x + 1 ≥ 2x − 2, x ∈ Z; list the solution set.','Solve both, then intersect.','x ∈ {−3,−2,...,6}'),
+ mk(3,'Given x ∈ {−4,...,4}, find the solution set of −2x + 1 ≤ 5 and 3x − 1 < 8.','Solve both, then intersect with the given set.','x ∈ {−2,−1,0,1,2}'),
+ mk(4,'Solve 2(x − 3) − (x − 5) ≥ 1, x ∈ R.','Expand and simplify carefully.','x ≥ 2'),
+ mk(5,'Solve −4 < 3 − 2x ≤ 10, x ∈ R and graph the result.','Subtract 3, then divide by −2 (flip both parts).','−3.5 ≤ x < 3.5'),
+ mk(6,'Solve (2x + 3)/5 − (x − 1)/3 ≥ 1, x ∈ R.','Use the LCM (15) to clear both fractions.','x ≥ 1'),
+ mk(7,'A shop must stock at least 20 and at most 50 items, x ∈ N. Write and solve the inequation.','Translate "at least" and "at most" into ≤/≥.','x ∈ {20,21,...,50}'),
+ mk(8,'Solve 2x − 3 ≤ 3x − 1 < x + 5, x ∈ Z.','Split into two inequations and intersect the results.','x ∈ {−2,−1,0,1,2}'),
+ mk(9,'Solve −(x − 4)/2 ≥ (x − 1)/3, x ∈ R.','Clear fractions with LCM 6; watch the negative sign.','x ≤ 2.8'),
+ mk(10,'Solve 3x + 8 > 2 and 2x − 1 < 15 together, x ∈ Z.','Solve each, then intersect.','x ∈ {−1,0,1,...,7}'),
+ mk(11,'Solve x/2 + x/3 ≥ 5, x ∈ R.','Clear fractions with LCM 6.','x ≥ 6'),
+ mk(12,'Solve −3 ≤ (5 − 2x)/3 < 4, x ∈ R and represent on a number line.','Multiply by 3 throughout, then isolate x carefully.','−3.5 < x ≤ 7'),
+ mk(13,'Solve 4 − 3x ≥ x − 8, x ∈ W. How many whole numbers satisfy it?','Solve, then count the values.','x ∈ {0,1,2,3} — 4 whole numbers'),
+ mk(14,'Solve (x + 2)/3 − (x − 1)/4 ≤ 1, x ∈ R.','Use LCM 12 to clear both fractions.','x ≤ 1'),
+ mk(15,'Solve 2x + 3 < 11 and 3x − 1 ≥ x + 5 simultaneously, x ∈ Z.','Solve both; check whether any integer satisfies both.','x = 3'),
+ mk(16,'Solve 5 − 2(x − 1) ≤ 3x + 4, x ∈ R.','Expand carefully before collecting terms.','x ≥ 3/5'),
+ mk(17,'A number x satisfies both x + 7 > 12 and 2x − 3 < 19, x ∈ N. List all possible values.','Solve both, then intersect.','x ∈ {6,7,8,9,10}'),
+ mk(18,'Solve −2 ≤ 3 − x < 4, x ∈ Z.','Isolate x — you will need to flip the sign.','x ∈ {0,1,2,3,4,5}'),
+ mk(19,'Solve x/3 − 2 ≥ x/4 − 1, x ∈ R.','Clear fractions using LCM 12.','x ≥ 12'),
+ mk(20,'Solve 2(3x − 1) ≤ 3(2x + 1) − 7, x ∈ R. State whether the solution set is all reals, empty, or a proper subset.','Expand both sides fully before comparing.','Simplifies to −2 ≤ −4, which is always false — the solution set is empty')
+];
+
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A.',
+ 'Both A and R are true, but R is NOT the correct explanation of A.',
+ 'A is true, but R is false.',
+ 'A is false, but R is true.',
+ 'Both A and R are false.'
+];
+const AR=[
+ {a:'The solution set of x < 5, x ∈ N is {1, 2, 3, 4}.', r:'Natural numbers start from 1, and 5 itself is excluded because the inequality is strict.', ans:0, exp:'Both statements are true. N = {1,2,3,...}, and since x < 5 is strict, 5 is excluded — giving exactly {1,2,3,4}. R correctly explains why the set stops at 4.'},
+ {a:'Multiplying both sides of 3 < 7 by −2 gives −6 < −14.', r:'Multiplying both sides of an inequation by a negative number reverses the inequality sign.', ans:3, exp:'A is false: multiplying by −2 correctly gives −6 > −14, not −6 < −14. R, however, is a true and correctly stated rule — it is exactly why A\u2019s claimed direction is wrong.'},
+ {a:'The solution set of x ≤ 4, x ∈ W has exactly 5 elements.', r:'W is exactly the same set as N.', ans:2, exp:'A is true: W = {0,1,2,3,4,...}, so x ≤ 4 gives {0,1,2,3,4}, which has 5 elements. R is false — W (whole numbers) includes 0, while N (natural numbers) does not, so the two sets are not the same.'},
+ {a:'If a < b and c > 0, then ac < bc.', r:'The Addition Rule states that adding the same number to both sides of an inequation does not change its direction.', ans:1, exp:'Both statements are true on their own — multiplying by a positive number does preserve direction, and the Addition Rule is correctly stated. But R describes the Addition Rule, not the Multiplication Rule used in A, so it does not explain A.'},
+ {a:'The inequation 2x + 3 > 7 has solution x > 2 for x ∈ R.', r:'Subtracting 3 from both sides and then dividing by 2 does not change the inequality\u2019s direction, since 2 is positive.', ans:0, exp:'Both are true. 2x + 3 > 7 ⟹ 2x > 4 ⟹ x > 2, and dividing by the positive number 2 indeed keeps the direction unchanged — which is exactly why the final answer is x > 2, not x < 2.'},
+ {a:'A filled (solid) circle is used on the number line to represent the solution of x < 3.', r:'A filled circle indicates that the boundary point is included in the solution set.', ans:3, exp:'A is false: x < 3 is a strict inequality, so it needs an open circle at 3, not a filled one. R is a correct general fact about what filled circles represent — it just doesn\u2019t apply to this particular (strict) inequality.'},
+ {a:'The solution set of the combined inequation −2 ≤ x < 3, x ∈ Z is {−2, −1, 0, 1, 2}.', r:'In a combined inequation, both boundary conditions must be satisfied at the same time.', ans:0, exp:'Both are true. −2 ≤ x < 3 means x is at least −2 and strictly less than 3 simultaneously, which restricts integers to exactly {−2,−1,0,1,2} — precisely because both parts must hold together, as R states.'},
+ {a:'For any two real numbers a and b, at least two of the relations a<b, a=b, a>b can be true simultaneously.', r:'The Trichotomy Property states that exactly one of a<b, a=b, a>b holds true for any two real numbers.', ans:3, exp:'A is false — for real numbers, these three relations are mutually exclusive, so at most one (in fact exactly one) can hold, never two. R correctly states the Trichotomy Property, which is precisely what makes A false.'},
+ {a:'For x ∈ N, the inequation x − 5 < 0 has the solution set {1, 2, 3, 4}.', r:'Adding 5 to both sides of x − 5 < 0 gives x < 5, and restricting this to natural numbers gives {1, 2, 3, 4}.', ans:0, exp:'Both are true, and R lays out exactly the correct working: x − 5 < 0 ⟹ x < 5, and since x ∈ N = {1,2,3,...}, the solution set is {1,2,3,4}.'},
+ {a:'The inequation −3x ≥ 12 simplifies to x ≥ −4.', r:'Dividing both sides of an inequation by a negative number leaves the inequality sign unchanged.', ans:4, exp:'Both statements are false. Dividing −3x ≥ 12 by −3 must reverse the sign, giving x ≤ −4, not x ≥ −4 — so A is false. R is also false, since dividing by a negative number always reverses (not preserves) the inequality sign.'}
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (definitions / rules)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('definitionsGrid',DEFINITIONS);
+buildTheoremCards('rulesGrid',RULES);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=DEFINITIONS.concat(RULES);
+  let head='<tr><th>Definition / Rule</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Sign-flip pairs list
+const signflipLeft=document.getElementById('signflipLeft');
+const sfCard=el('div','card pad');
+SIGNFLIP_PAIRS.forEach(pair=>{
+  sfCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+signflipLeft.appendChild(sfCard);
+
+// Types of inequalities legend chips
+const typeLegend=document.getElementById('typeLegend');
+TYPE_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===0?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('typeName').textContent=item.label;
+    document.getElementById('typeFormula').textContent=item.formula;
+    document.getElementById('typeValue').textContent=item.value;
+    document.getElementById('typeGraph').textContent=item.graph;
+  });
+  typeLegend.appendChild(chip);
+});
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('li_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('li_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','ar-card');
+  card.innerHTML=`<div class="qtag">Question ${i+1}</div>
+  <div class="ar-block"><b>Assertion (A)</b>${item.a}</div>
+  <div class="ar-block"><b>Reason (R)</b>${item.r}</div>`;
+  const optWrap=el('div');
+  AR_OPTIONS.forEach((opt,oi)=>{
+    const letter=String.fromCharCode(97+oi);
+    const b=el('button','opt-btn',`(${letter}) ${opt}`);
+    b.addEventListener('click',()=>{
+      optWrap.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){ b.classList.add('correct'); recordQuiz(true); }
+      else{ b.classList.add('wrong'); optWrap.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false); }
+      expBox.classList.add('show');
+    });
+    optWrap.appendChild(b);
+  });
+  card.appendChild(optWrap);
+  const expBox=el('div','ar-explain','<b style="display:block;font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;color:var(--green);margin-bottom:.15rem;">Explanation</b>'+item.exp);
+  card.appendChild(expBox);
+  arList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase().replace(/\s+/g,'')===item.a.toLowerCase().replace(/\s+/g,'');
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('li_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('li_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+// Hero interactive instrument — drag the point along the number line
+const nlSvg=document.getElementById('nlSvg');
+const nlHandle=document.getElementById('nlHandle');
+const nlShade=document.getElementById('nlShade');
+const nlArrow=document.getElementById('nlArrow');
+const NL_X0=20, NL_X1=300, UNIT_PX=14; // range -10..10
+let nlValue=3, nlStrict=true;
+
+function drawTicks(){
+  const g=document.getElementById('nlTicks');
+  g.innerHTML='';
+  for(let v=-10; v<=10; v++){
+    const x=NL_X0+(v+10)*UNIT_PX;
+    const tickLen = (v%5===0)? 8: 4;
+    g.innerHTML+=`<line x1="${x}" y1="${100-tickLen}" x2="${x}" y2="${100+tickLen}" stroke="#E1D9C6" stroke-width="1"/>`;
+    if(v%5===0){ g.innerHTML+=`<text x="${x}" y="122" font-family="IBM Plex Mono" font-size="9" fill="#6B7A99" text-anchor="middle">${v}</text>`; }
+  }
+}
+drawTicks();
+
+function valueToX(v){ return NL_X0+(v+10)*UNIT_PX; }
+function xToValue(x){ return Math.round((x-NL_X0)/UNIT_PX)-10; }
+
+function setNL(v){
+  v=Math.max(-10,Math.min(10,v));
+  nlValue=v;
+  const x=valueToX(v);
+  nlHandle.setAttribute('cx',x);
+  nlHandle.setAttribute('fill', nlStrict? '#FAF8F2':'#C97A2B');
+  nlHandle.setAttribute('stroke','#C97A2B');
+  nlHandle.setAttribute('stroke-width', nlStrict? 3:2);
+  nlShade.setAttribute('x1',x);
+  nlShade.setAttribute('x2',NL_X1-6);
+  const sym= nlStrict? '&gt;':'≥';
+  document.getElementById('nlIneq').innerHTML='x '+sym+' '+v;
+  document.getElementById('nlBoundary').textContent=v;
+  document.getElementById('nlCircle').textContent= nlStrict? 'Open':'Filled';
+  document.getElementById('nlSet').innerHTML='{x : x '+sym+' '+v+', x ∈ R}';
+}
+let nlDragging=false;
+nlHandle.addEventListener('pointerdown',()=>nlDragging=true);
+window.addEventListener('pointerup',()=>nlDragging=false);
+nlSvg.addEventListener('pointermove',(e)=>{
+  if(!nlDragging) return;
+  const rect=nlSvg.getBoundingClientRect();
+  const vb=nlSvg.viewBox.baseVal;
+  const px=(e.clientX-rect.left)/rect.width*vb.width;
+  setNL(xToValue(px));
+});
+document.getElementById('nlStrict').addEventListener('click',()=>{
+  nlStrict=true;
+  document.getElementById('nlStrict').classList.add('on');
+  document.getElementById('nlNonStrict').classList.remove('on');
+  setNL(nlValue);
+});
+document.getElementById('nlNonStrict').addEventListener('click',()=>{
+  nlStrict=false;
+  document.getElementById('nlNonStrict').classList.add('on');
+  document.getElementById('nlStrict').classList.remove('on');
+  setNL(nlValue);
+});
+setNL(3);
+
+// Sign-flip rule slider
+const sfSlider=document.getElementById('sfSlider');
+function updateSF(){
+  const k=parseInt(sfSlider.value);
+  const a=2*k, b=5*k;
+  document.getElementById('sfK').textContent=k;
+  document.getElementById('sfA').textContent=a;
+  document.getElementById('sfB').textContent=b;
+  let rel;
+  if(k>0) rel='&lt;'; else if(k<0) rel='&gt;'; else rel='=';
+  document.getElementById('sfCheck').innerHTML=`2×${k} = ${a}, 5×${k} = ${b}, so ${a} ${rel} ${b}`;
+}
+sfSlider.addEventListener('input',updateSF); updateSF();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','types','definitions','rules','signflip','examples','conceptcheck','practice','pyq','assertionreasoning','mistakes','revision','flashcards','formula','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('li_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('li_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('li_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('li_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('li_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('li_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('li_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['li_sectionsRead','li_examplesOpened','li_quizStats','li_pz_l1','li_pz_l2','li_pz_l3','li_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
