@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arithmetic Progression — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+#apHandle{cursor:grab;}
+#apHandle:active{cursor:grabbing;}
+
+/* ===================== TYPES-OF-SEQUENCE CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:1.1rem; color:var(--ink-soft); margin:.3rem 0;}
+.result-box .rvalue{font-family:var(--font-display); font-size:1.45rem; font-weight:700; color:var(--ink);}
+.result-box .rgraph{font-family:var(--font-mono); font-size:.82rem; color:var(--ink-soft); margin-top:.4rem;}
+
+/* ===================== THEOREM/PROPERTY CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.92rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-card{border:1px solid var(--border); border-radius:12px; padding:1.1rem 1.2rem; background:var(--card); margin-bottom:1rem;}
+.ar-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.ar-block{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0;}
+.ar-block b{font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:.15rem;}
+.ar-explain{display:none; margin-top:.55rem; font-size:.87rem; padding:.55rem .7rem; border-radius:8px; background:var(--green-tint); border-left:3px solid var(--green);}
+.ar-explain.show{display:block;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.25rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:1rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formula){display:none !important;}
+  #formula{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">Σ Arithmetic <span>Progression</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="types" href="#types"><span class="dot"></span>Types of Sequences</a>
+    <a class="navlink" data-target="definitions" href="#definitions"><span class="dot"></span>Key Definitions</a>
+    <a class="navlink" data-target="rules" href="#rules"><span class="dot"></span>Formulas &amp; Rules</a>
+    <a class="navlink" data-target="sumformula" href="#sumformula"><span class="dot"></span>The Sum Formula</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="assertionreasoning" href="#assertionreasoning"><span class="dot"></span>Assertion &amp; Reasoning</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formula" href="#formula"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Arithmetic Progression</div>
+        <h1>Building predictable sequences,<br>one common difference at a time.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the handle up or down to change the common difference — watch all six bars grow, shrink, or even dip below zero instantly, and see the sequence, its 6th term, and the sum update live.</p>
+        <div class="hero-cta">
+          <a href="#types" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <svg id="apSvg" viewBox="0 0 320 200" style="width:100%; height:auto;">
+          <line x1="15" y1="110" x2="255" y2="110" stroke="#1B2A4A" stroke-width="1.5"/>
+          <g id="apBars"></g>
+          <line x1="280" y1="20" x2="280" y2="190" stroke="#E1D9C6" stroke-width="2"/>
+          <circle id="apHandle" cx="280" cy="76" r="9" fill="#C97A2B" stroke="#fff" stroke-width="2"/>
+          <text x="280" y="14" font-family="IBM Plex Mono" font-size="9" fill="#6B7A99" text-anchor="middle">d=+5</text>
+          <text x="280" y="200" font-family="IBM Plex Mono" font-size="9" fill="#6B7A99" text-anchor="middle">d=−5</text>
+        </svg>
+        <div class="instrument-readout">
+          <div>First Term (a) <b id="apA">2</b></div>
+          <div>Common Diff. (d) <b id="apD">3</b></div>
+          <div>Sequence <b id="apSeq">2, 5, 8, ...</b></div>
+          <div>6th Term <b id="apA6">17</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is an Arithmetic Progression?</h2>
+        <p class="lede">An Arithmetic Progression (AP) is a sequence of numbers in which every term after the first is obtained by adding a fixed number — the common difference — to the term before it. It's the mathematics of "steady, predictable change," whether that change is going up, down, or staying flat.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Anything that changes by the same fixed amount every step follows an AP — a salary that rises by a fixed increment each year, a stack of chairs with a fixed number added per row, a loan repaid in equal instalments. Once you spot the pattern, you can predict any term or find the total of any number of terms without listing them all out.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Simple interest growth per year</li>
+              <li>Seating rows in a stadium/theatre</li>
+              <li>Fixed monthly savings plans</li>
+              <li>Stacking patterns (bricks, logs)</li>
+              <li>Uniformly increasing distances</li>
+              <li>Depreciation with equal instalments</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 20V14M9 20V10M14 20V6M19 20V3"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Growing Bars</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><path d="M8 12h2M14 12h2"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Common Difference</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">nth Term</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#B4453C" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 4v16h16M4 16l5-5 3 3 6-7"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Sum of n Terms</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ Solving simple linear equations</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Substituting values into an algebraic formula</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Working with positive and negative integers</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. TYPES OF SEQUENCES ===================== -->
+    <section id="types">
+      <div class="section-head">
+        <div class="eyebrow">02 · Spotting the Pattern</div>
+        <h2>Types of Sequences</h2>
+        <p class="lede">Not every list of numbers is an AP. Click each example below to see whether the common difference stays constant — and what that means for the sequence.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">AP with Positive d</div>
+            <div class="rformula" id="typeFormula">2, 5, 8, 11, ...</div>
+            <div class="rvalue" id="typeValue">d = 3</div>
+            <div class="rgraph" id="typeGraph">Increasing sequence — each term 3 more than the last</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY DEFINITIONS ===================== -->
+    <section id="definitions">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Definitions &amp; Terms</h2>
+        <p class="lede">Five terms you'll meet in every AP problem — get comfortable with these before moving to the formulas.</p>
+      </div>
+      <div class="ratio-grid" id="definitionsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. FORMULAS & RULES ===================== -->
+    <section id="rules">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Formulas &amp; Rules</h2>
+        <p class="lede">Five formulas cover almost every AP question you'll face. The sum formula is the one you'll use most — it gets its own deep dive next.</p>
+      </div>
+      <div class="ratio-grid" id="rulesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. SUM FORMULA DEEP DIVE ===================== -->
+    <section id="sumformula">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>The Sum Formula</h2>
+        <p class="lede">S_n = n/2[2a + (n−1)d]. It comes from Gauss's trick — write the series forwards and backwards, add the two, and every pair sums to the same value. Drag the slider below to change n and watch the sum grow.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="sumformulaLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>Base AP: a = 4, d = 3. Drag the slider to change how many terms (n) you're summing, and watch S_n update using the formula.</p>
+            <input type="range" min="1" max="20" value="6" id="sfnSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>n = <b id="sfnN">6</b></span>
+              <span>last term = <b id="sfnLast">19</b></span>
+              <span>S_n = <b id="sfnSum">69</b></span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="sfnCheck">S_6 = 6/2 × (4+19) = 3 × 23 = 69</span> — pairing the first and last term always gives the same sum.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across sequence types, definitions, formulas, the sum identity, and general facts — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">08 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 9. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">09 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 10. ASSERTION & REASONING ===================== -->
+    <section id="assertionreasoning">
+      <div class="section-head">
+        <div class="eyebrow">10 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each statement is true on its own, and — if both are true — whether R actually explains A. Pick your option, then reveal the explanation.</p>
+      </div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 11. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">11 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">nth term: a_n = a + (n−1)d</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Common difference: d = a_(n+1) − a_n</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Arithmetic mean: A = (a+b)/2</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Three numbers in AP: a−d, a, a+d</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Sum Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">S_n = n/2[2a + (n−1)d]</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">S_n = n/2(a + l)</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">a_n = S_n − S_(n−1)</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Rules (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always find a and d first — almost every AP problem reduces to finding these two values.</li>
+              <li>When a problem gives you two terms, subtract their equations to eliminate a and solve for d first.</li>
+              <li>If you know S_n as a formula in n, get a_n via a_n = S_n − S_(n−1), and remember a_1 = S_1 separately.</li>
+              <li>For "three/four numbers in AP" problems, always represent them symmetrically (like a−d, a, a+d) to keep the algebra simple.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formula">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Arithmetic Progression — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Basics</h5>
+            <p>nth term: a_n = a + (n−1)d</p><p>Common difference: d = a_(n+1) − a_n</p>
+            <p>Arithmetic mean: A = (a+b)/2</p><p>Three numbers in AP: a−d, a, a+d</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Sum Formulas</h5>
+            <p>S_n = n/2[2a + (n−1)d]</p><p>S_n = n/2(a + l)</p>
+            <p>a_n = S_n − S_(n−1)</p><p>nth term from end: l − (n−1)d</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Special Sums</h5>
+            <p>1+2+3+...+n = n(n+1)/2</p>
+            <p>1+3+5+...+(2n−1) = n²</p>
+            <p>2+4+6+...+2n = n(n+1)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const DEFINITIONS=[
+ {name:'Sequence', color:'#3D5A80', statement:'An ordered list of numbers formed according to a definite rule, e.g. 2, 4, 6, 8, ...', trick:'Every AP is a sequence, but not every sequence is an AP.', ex:'1, 4, 9, 16, ... is a sequence (of squares), but not an AP.'},
+ {name:'Arithmetic Progression (AP)', color:'#2E7D5B', statement:'A sequence in which the difference between any two consecutive terms is constant throughout.', trick:'Check at least three consecutive differences before concluding it is an AP.', ex:'3, 7, 11, 15, ... is an AP with common difference 4.'},
+ {name:'Common Difference (d)', color:'#C97A2B', statement:'d = a_(n+1) − a_n — the fixed amount added to get from one term to the next.', trick:'d can be positive, negative, zero, or a fraction — never assume it must be a whole positive number.', ex:'For 20, 15, 10, 5, ..., d = 15 − 20 = −5.'},
+ {name:'General (nth) Term', color:'#3D5A80', statement:'a_n = a + (n−1)d, where a is the first term and d is the common difference.', trick:'The "(n−1)" is the single most common thing students forget — you add d only (n−1) times to reach the nth term.', ex:'For a=5, d=3: a_4 = 5 + 3(3) = 14.'},
+ {name:'Arithmetic Mean', color:'#2E7D5B', statement:'The middle term between two numbers a and b in AP: A = (a+b)/2.', trick:'This is exactly the same idea as a "middle value," but restricted to arithmetic (not geometric) progression.', ex:'The arithmetic mean of 8 and 20 is (8+20)/2 = 14.'}
+];
+const RULES=[
+ {name:'nth Term Formula', color:'#3D5A80', statement:'a_n = a + (n−1)d — gives the value of any term directly, without listing all the terms before it.', trick:'Use this whenever the question asks for "the Nth term" or "which term equals a given value."', ex:'For a=3, d=4, the 10th term is 3 + 9(4) = 39.'},
+ {name:'Sum of n Terms (form 1)', color:'#2E7D5B', statement:'S_n = n/2[2a + (n−1)d] — sums the first n terms using only a, d, and n.', trick:'Use this form when you know a and d but not the last term.', ex:'For a=1, d=1, n=10: S_10 = 5[2+9] = 55.'},
+ {name:'Sum of n Terms (form 2)', color:'#C97A2B', statement:'S_n = n/2(a + l), where l is the last (nth) term — an equivalent, often quicker, formula.', trick:'Use this form when the last term is already known or easy to find.', ex:'For a=34, l=10, n=13: S_13 = 13/2(44) = 286.'},
+ {name:'nth Term From the End', color:'#B4453C', statement:'If l is the last term, the nth term from the end is l − (n−1)d.', trick:'This avoids having to know the total number of terms in the AP.', ex:'For l=100, d=5, the 4th term from the end is 100 − 3(5) = 85.'},
+ {name:'Three Numbers in AP', color:'#3D5A80', statement:'Three consecutive AP terms can always be written as a−d, a, a+d — their sum is always 3a.', trick:'This symmetric form eliminates one unknown immediately when solving "three numbers" problems.', ex:'If three numbers in AP sum to 27, then a = 9 directly.'}
+];
+const SUM_PAIRS=[
+ ['nth term','a + (n−1)d'],['Sum (form 1)','n/2[2a+(n−1)d]'],['Sum (form 2)','n/2(a+l)'],['nth term from end','l−(n−1)d'],['Three numbers, sum','3a']
+];
+const TYPE_DATA=[
+ {label:'AP with Positive d', formula:'2, 5, 8, 11, ...', value:'d = 3', graph:'Increasing sequence — each term 3 more than the last'},
+ {label:'AP with Negative d', formula:'20, 15, 10, 5, ...', value:'d = −5', graph:'Decreasing sequence — each term 5 less than the last'},
+ {label:'Constant Sequence (d = 0)', formula:'7, 7, 7, 7, ...', value:'d = 0', graph:'Still a valid AP — every term is equal'},
+ {label:'Not an AP', formula:'1, 4, 9, 16, ...', value:'differences: 3, 5, 7, ...', graph:'Not constant — this is NOT an arithmetic progression'},
+ {label:'AP with Fractional d', formula:'1, 1.5, 2, 2.5, ...', value:'d = 0.5', graph:'The common difference need not be a whole number'},
+ {label:'Decreasing AP, Negative Terms', formula:'5, 2, −1, −4, ...', value:'d = −3', graph:'Terms can become negative as the sequence continues'}
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'Find the common difference of the AP 5, 9, 13, 17, ...',steps:['d = second term − first term = 9 − 5 = 4.','Check with the next pair: 13 − 9 = 4. ✓'],ans:'d = 4'},
+ {level:'easy',q:'Find the 10th term of the AP 3, 7, 11, 15, ...',steps:['Here a = 3, d = 4.','a_10 = a + (10−1)d = 3 + 9×4 = 3 + 36.'],ans:'39'},
+ {level:'easy',q:'Is the sequence 2, 4, 8, 16, ... an AP? Justify.',steps:['Difference between 1st and 2nd terms: 4 − 2 = 2.','Difference between 2nd and 3rd terms: 8 − 4 = 4.','Since the differences are not equal, the sequence is not an AP.'],ans:'No — the common difference is not constant'},
+ {level:'easy',q:'Find the number of terms in the AP 7, 10, 13, ..., 64.',steps:['Here a = 7, d = 3, and the last term a_n = 64.','64 = 7 + (n−1)3 ⟹ 57 = (n−1)3 ⟹ n−1 = 19.','So n = 20.'],ans:'20 terms'},
+ {level:'easy',q:'Find the sum of the first 10 natural numbers using the AP sum formula.',steps:['Here a = 1, d = 1, n = 10.','S_10 = 10/2[2(1) + 9(1)] = 5[2+9] = 5×11.'],ans:'55'},
+ {level:'easy',q:'Find the 15th term of the AP whose first term is 6 and common difference is −2.',steps:['a_15 = a + (15−1)d = 6 + 14×(−2) = 6 − 28.'],ans:'−22'},
+ {level:'medium',q:'Which term of the AP 21, 18, 15, ... is −81?',steps:['Here a = 21, d = −3, and a_n = −81.','21 + (n−1)(−3) = −81 ⟹ (n−1)(−3) = −102 ⟹ n−1 = 34.','So n = 35.'],ans:'The 35th term'},
+ {level:'medium',q:'Find the sum of the first 25 terms of the AP 8, 12, 16, ...',steps:['Here a = 8, d = 4, n = 25.','S_25 = 25/2[2(8) + 24(4)] = 25/2[16+96] = 25/2×112.'],ans:'1400'},
+ {level:'medium',q:'How many terms of the AP 24, 21, 18, ... must be taken so their sum is 78?',steps:['Here a = 24, d = −3. Set S_n = 78: n/2[48 + (n−1)(−3)] = 78.','Simplify: n(51 − 3n) = 156 ⟹ 3n² − 51n + 156 = 0 ⟹ n² − 17n + 52 = 0.','Factor: (n−4)(n−13) = 0, so n = 4 or n = 13.'],ans:'n = 4 or n = 13 (the sum returns to 78 as terms turn negative)'},
+ {level:'medium',q:'If the 3rd term of an AP is 7 and the 7th term is 19, find the AP.',steps:['a + 2d = 7 and a + 6d = 19.','Subtracting: 4d = 12 ⟹ d = 3.','Then a = 7 − 2(3) = 1.'],ans:'1, 4, 7, 10, ...'},
+ {level:'medium',q:'Find the sum: 34 + 32 + 30 + ... + 10.',steps:['Here a = 34, d = −2, l = 10.','Find n: 10 = 34 + (n−1)(−2) ⟹ n−1 = 12 ⟹ n = 13.','S_13 = 13/2(34+10) = 13/2×44.'],ans:'286'},
+ {level:'medium',q:'The 4th term of an AP is 0. Prove that its 25th term is triple its 11th term.',steps:['a + 3d = 0 ⟹ a = −3d.','a_25 = a + 24d = −3d + 24d = 21d.','a_11 = a + 10d = −3d + 10d = 7d, so a_25 / a_11 = 21d/7d = 3.'],ans:'Identity verified: a_25 = 3 × a_11'},
+ {level:'medium',q:'Find three numbers in AP whose sum is 27 and product is 504.',steps:['Let the numbers be a−d, a, a+d. Sum: 3a = 27 ⟹ a = 9.','Product: (9−d)(9)(9+d) = 504 ⟹ 9(81−d²) = 504 ⟹ 81−d² = 56.','So d² = 25 ⟹ d = ±5.'],ans:'4, 9, 14'},
+ {level:'hard',q:'The sum of the first n terms of an AP is given by S_n = 3n² + 5n. Find the AP.',steps:['a_1 = S_1 = 3+5 = 8.','a_2 = S_2 − S_1 = (12+10) − 8 = 22 − 8 = 14, so d = 14 − 8 = 6.'],ans:'8, 14, 20, 26, ... (a = 8, d = 6)'},
+ {level:'hard',q:'If the pth term of an AP is q and the qth term is p, find the (p+q)th term.',steps:['a + (p−1)d = q and a + (q−1)d = p.','Subtracting: (p−q)d = q−p ⟹ d = −1.','Then a = q − (p−1)(−1) = q + p − 1.','a_(p+q) = a + (p+q−1)d = (p+q−1) − (p+q−1) = 0.'],ans:'0'},
+ {level:'hard',q:'The sum of the first 7 terms of an AP is 63, and the sum of the next 7 terms is 161. Find the AP.',steps:['S_7 = 7/2[2a+6d] = 63 ⟹ a + 3d = 9.','S_14 = S_7 + 161 = 224. S_14 = 14/2[2a+13d] = 224 ⟹ 2a + 13d = 32.','Subtracting 2(a+3d)=18 from this: 7d = 14 ⟹ d = 2, then a = 3.'],ans:'3, 5, 7, 9, ... (a = 3, d = 2)'},
+ {level:'hard',q:'Find the sum of all three-digit natural numbers which are divisible by 7.',steps:['First 3-digit multiple of 7: 105. Last: 994.','Here a=105, d=7, l=994. n = (994−105)/7 + 1 = 127+1 = 128.','S_128 = 128/2(105+994) = 64×1099.'],ans:'70336'},
+ {level:'hard',q:'If the sum of the first n terms of an AP is 3n² − 4n, find its 20th term.',steps:['a_20 = S_20 − S_19.','S_20 = 3(400) − 80 = 1120. S_19 = 3(361) − 76 = 1007.','a_20 = 1120 − 1007.'],ans:'113'},
+ {level:'hard',q:'The interior angles of a quadrilateral are in AP with common difference 10°. Find the angles.',steps:['Let the angles be a, a+10, a+20, a+30.','Their sum must be 360°: 4a + 60 = 360 ⟹ a = 75.'],ans:'75°, 85°, 95°, 105°'},
+ {level:'hard',q:'Find the sum of all two-digit odd positive numbers.',steps:['First term = 11, last term = 99, d = 2.','n = (99−11)/2 + 1 = 44+1 = 45.','S_45 = 45/2(11+99) = 45/2×110.'],ans:'2475'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'nth Term',time:'3 min',q:'Find the 25th term of the AP 7, 13, 19, 25, ...',sol:'Here a=7, d=6. a_25 = 7 + 24×6 = 7 + 144 = 151.'},
+ {year:'2023',diff:'Hard',marks:4,topic:'Sum of n Terms',time:'7 min',q:'Find the sum of the first 30 terms of the AP 10, 7, 4, 1, ...',sol:'Here a=10, d=−3, n=30. S_30 = 15[20 + 29(−3)] = 15[20−87] = 15×(−67) = −1005.'},
+ {year:'2022',diff:'Medium',marks:3,topic:'Finding n',time:'5 min',q:'Which term of the AP 90, 87, 84, ... is the first negative term?',sol:'Here a=90, d=−3. Solve 90+(n−1)(−3) < 0, giving n > 31, so n=32 is the first negative term (a_32 = −3).'},
+ {year:'2022',diff:'Easy',marks:2,topic:'Common Difference',time:'3 min',q:'Find the common difference of the AP whose 4th term is 18 and 9th term is 38.',sol:'5d = 38 − 18 = 20, so d = 4.'},
+ {year:'2021',diff:'Hard',marks:4,topic:'Word Problem',time:'6 min',q:'A sum of ₹100 is deposited in the first year of a scheme, increasing by ₹50 every following year. Find the total deposited over the first 8 years.',sol:'Here a=100, d=50, n=8. S_8 = 4[200+350] = 4×550 = 2200.'},
+ {year:'2021',diff:'Medium',marks:3,topic:'Three Numbers in AP',time:'5 min',q:'The sum of three numbers in AP is 24 and their product is 440. Find the numbers.',sol:'3a=24 ⟹ a=8. (8−d)(8)(8+d)=440 ⟹ 64−d²=55 ⟹ d²=9 ⟹ d=±3, giving 5, 8, 11.'}
+];
+
+const MISTAKES=[
+ 'Confusing the nth term formula a_n = a + (n−1)d with a_n = a + nd — forgetting the crucial "minus 1."',
+ 'Using S_n = n/2(a+l) without first checking that l really is the nth term for the n being used.',
+ 'Assuming a sequence is an AP just from its first two terms, without checking that the difference stays constant.',
+ 'Sign errors when the common difference is negative — forgetting that later terms can become zero or negative.',
+ 'Mixing up "the sum of n terms" (S_n) with "the nth term" (a_n) — they answer completely different questions.'
+];
+
+const FLASH=[
+ {f:'Sequence', b:'An ordered list of numbers formed according to a definite rule'},
+ {f:'Arithmetic Progression (AP)', b:'A sequence in which the difference between consecutive terms is constant'},
+ {f:'Common difference (d)', b:'d = a_(n+1) − a_n, the same for every pair of consecutive terms'},
+ {f:'First term (a)', b:'The starting value of the AP, usually written a or a_1'},
+ {f:'nth term (general term)', b:'a_n = a + (n−1)d'},
+ {f:'Sum of n terms (form 1)', b:'S_n = n/2[2a + (n−1)d]'},
+ {f:'Sum of n terms (form 2)', b:'S_n = n/2(a + l), where l is the last term'},
+ {f:'nth term from the end', b:'l − (n−1)d, where l is the last term'},
+ {f:'Arithmetic mean', b:'The middle term between two numbers in AP: A = (a+b)/2'},
+ {f:'Three numbers in AP', b:'Can always be written as a−d, a, a+d — their sum is 3a'},
+ {f:'Increasing AP', b:'An AP where d > 0, so each term is larger than the one before'},
+ {f:'Decreasing AP', b:'An AP where d < 0, so each term is smaller than the one before'},
+ {f:'Constant sequence', b:'An AP with d = 0 — every term is the same'},
+ {f:'Finding a_n from S_n', b:'a_n = S_n − S_(n−1) for n ≥ 2, and a_1 = S_1'},
+ {f:"Gauss's pairing trick", b:'Adding the series to its reverse pairs every term with a partner summing to (a+l)'},
+ {f:'Assertion-Reasoning', b:'A question type with an Assertion (A) and a Reason (R); judge each and whether R explains A'}
+];
+
+const CC_MCQ=[
+ {t:'types',q:'Which of the following is an AP?',opts:['1, 4, 9, 16, ...','2, 4, 8, 16, ...','3, 7, 11, 15, ...','1, 1, 2, 3, ...'],a:2},
+ {t:'types',q:'The common difference of the AP 10, 7, 4, 1, ... is:',opts:['3','−3','7','−7'],a:1},
+ {t:'types',q:'A sequence where all terms are equal (e.g. 5, 5, 5, 5, ...) is:',opts:['not an AP','an AP with d = 0','a GP','undefined'],a:1},
+ {t:'definitions',q:'In an AP, the common difference is:',opts:['a_n − a_(n−1), always the same for any n','a_1 × a_2','the last term minus the first','always positive'],a:0},
+ {t:'definitions',q:'The general (nth) term of an AP is given by:',opts:['a + nd','a + (n−1)d','a × d^(n−1)','na + d'],a:1},
+ {t:'definitions',q:'The arithmetic mean between 8 and 20 is:',opts:['12','28','14','160'],a:2},
+ {t:'rules',q:'The sum of the first n terms of an AP with first term a and last term l is:',opts:['n(a+l)','n/2(a+l)','n/2(a−l)','(a+l)/n'],a:1},
+ {t:'rules',q:'The nth term of an AP from the end (with last term l) is:',opts:['l + (n−1)d','l − (n−1)d','a + (n−1)d','l × (n−1)d'],a:1},
+ {t:'rules',q:'If a−d, a, a+d are three consecutive terms of an AP, their sum is:',opts:['a','3a','3d','a+d'],a:1},
+ {t:'sumformula',q:'The formula S_n = n/2[2a+(n−1)d] is derived by:',opts:['multiplying all the terms','pairing the first and last terms after reversing the series','squaring the common difference','none of these'],a:1},
+ {t:'sumformula',q:'For the AP 1, 2, 3, ..., n, the sum S_n equals:',opts:['n²','n(n+1)','n(n+1)/2','n(n−1)/2'],a:2},
+ {t:'sumformula',q:'If a = 2, d = 3, n = 5, then S_5 equals:',opts:['35','40','45','50'],a:1},
+ {t:'general',q:'The 1st term of an AP is 5 and d = 3. Its 6th term is:',opts:['18','20','23','15'],a:1},
+ {t:'general',q:'If the sum of the first n terms of an AP is n², the AP is:',opts:['1, 2, 3, ...','1, 3, 5, ...','2, 4, 6, ...','3, 5, 7, ...'],a:1},
+ {t:'general',q:'The number of terms in the AP 7, 13, 19, ..., 205 is:',opts:['32','33','34','35'],a:2}
+];
+const CC_FIB=[
+ {t:'types',q:'In an AP, the difference between any two consecutive terms is always ______.',a:'constant'},
+ {t:'types',q:'The sequence 5, 5, 5, 5, ... is an AP with common difference ______.',a:'0'},
+ {t:'types',q:'A sequence is an AP only if the ______ between consecutive terms is the same throughout.',a:'difference'},
+ {t:'definitions',q:'The first term of an AP is usually denoted by the letter ______.',a:'a'},
+ {t:'definitions',q:'The common difference of an AP is usually denoted by the letter ______.',a:'d'},
+ {t:'definitions',q:'The nth term of an AP is also called its ______ term.',a:'general'},
+ {t:'rules',q:'The formula for the nth term of an AP is a_n = a + (n−1)______.',a:'d'},
+ {t:'rules',q:'The sum of the first n terms using the last term l is S_n = n/2 (a + ______).',a:'l'},
+ {t:'rules',q:'The nth term from the end of an AP (with last term l) is l − (n−1)______.',a:'d'},
+ {t:'sumformula',q:"Gauss's trick for summing an AP involves writing the series ______ and adding it to the original.",a:'reversed'},
+ {t:'sumformula',q:'The sum of the first n positive integers is n(n+1)/______.',a:'2'},
+ {t:'general',q:'If a = 4 and d = 5, the 3rd term of the AP is ______.',a:'14'},
+ {t:'general',q:'The common difference of the AP 100, 93, 86, ... is ______.',a:'-7'},
+ {t:'general',q:'Three numbers in AP can always be written as a−d, a, ______.',a:'a+d'},
+ {t:'general',q:'If S_10 = 145 and S_9 = 126 for an AP, its 10th term is ______.',a:'19'}
+];
+const CC_TF=[
+ {t:'types',q:'Every sequence is an arithmetic progression.',a:false},
+ {t:'types',q:'The common difference of an AP can be negative.',a:true},
+ {t:'types',q:'A constant sequence like 4, 4, 4, ... is a valid AP.',a:true},
+ {t:'definitions',q:'The common difference is found by subtracting a term from the next term.',a:true},
+ {t:'definitions',q:'The nth term formula a_n = a + (n−1)d works for any value of n, including n = 1.',a:true},
+ {t:'definitions',q:'The arithmetic mean of two numbers a and b is always (a×b)/2.',a:false},
+ {t:'rules',q:'The sum formula S_n = n/2[2a+(n−1)d] requires knowing the last term.',a:false},
+ {t:'rules',q:'The nth term from the end can be found without knowing the total number of terms, if the last term is known.',a:true},
+ {t:'rules',q:'If three numbers are in AP, their sum equals three times the middle term.',a:true},
+ {t:'sumformula',q:'Gauss\u2019s method pairs the first and last terms, the second and second-last, and so on — each pair having the same sum.',a:true},
+ {t:'sumformula',q:'S_n always increases as n increases, regardless of the common difference.',a:false},
+ {t:'general',q:'An AP with a negative common difference is called a decreasing AP.',a:true},
+ {t:'general',q:'The sum of the first n odd natural numbers is n².',a:true},
+ {t:'general',q:'It is possible for the sum of terms of an AP to first increase and then decrease as n grows.',a:true},
+ {t:'general',q:'A GP (geometric progression) is the same thing as an AP.',a:false}
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'Find the common difference of 4, 9, 14, 19, ...','Subtract consecutive terms.','d = 5'),
+ mk(2,'Find the 8th term of the AP 2, 5, 8, 11, ...','Use a_n = a + (n−1)d.','23'),
+ mk(3,'Is 3, 6, 12, 24, ... an AP?','Check whether the differences stay constant.','No — the differences are not constant'),
+ mk(4,'Find the 12th term of the AP with a = 7, d = −2.','Substitute directly into the formula.','−15'),
+ mk(5,'Find the number of terms in the AP 5, 8, 11, ..., 50.','Set a_n = 50 and solve for n.','16'),
+ mk(6,'Find the sum of the first 10 terms of the AP 1, 2, 3, ..., 10.','Use the sum formula, or add directly.','55'),
+ mk(7,'Find the 20th term of the AP 100, 95, 90, ...','Here d = −5.','5'),
+ mk(8,'Find the common difference if a_1 = 12 and a_2 = 7.','d = a_2 − a_1.','d = −5'),
+ mk(9,'Find the sum of the first 5 terms of the AP 3, 7, 11, 15, ...','Use S_n = n/2[2a+(n−1)d].','55'),
+ mk(10,'Find the 15th term of the AP with first term 0 and common difference 4.','Use a_n = a + (n−1)d.','56'),
+ mk(11,'How many terms are there in the AP 6, 10, 14, ..., 62?','Solve a_n = 62 for n.','15'),
+ mk(12,'Find the sum: 2 + 4 + 6 + ... + 20.','Here a=2, d=2, l=20.','110'),
+ mk(13,'Find the 9th term of the AP −5, −2, 1, 4, ...','Here d = 3.','19'),
+ mk(14,'Find the arithmetic mean of 10 and 24.','A = (a+b)/2.','17'),
+ mk(15,'Find the first term if the 5th term of an AP is 17 and d = 3.','a = a_5 − 4d.','5'),
+ mk(16,'Find the sum of the first 20 natural numbers.','Use n(n+1)/2.','210'),
+ mk(17,'Find the 6th term of the AP 50, 45, 40, ...','Here d = −5.','25'),
+ mk(18,'Find the common difference of an AP whose 3rd term is 9 and 5th term is 15.','Divide the difference of terms by the gap between them.','d = 3'),
+ mk(19,'Find the sum of the first 12 terms of the AP 4, 4, 4, 4, ...','This is a constant AP with d = 0.','48'),
+ mk(20,'Find the 10th term of the AP whose first term is −3 and common difference is 5.','Use a_n = a + (n−1)d.','42')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'Which term of the AP 3, 8, 13, ... is 78?','Solve a_n = 78 for n.','The 16th term'),
+ mk(2,'Find the sum of the first 30 terms of the AP 5, 9, 13, ...','Use the sum formula with a=5, d=4, n=30.','1890'),
+ mk(3,'How many terms of the AP 63, 60, 57, ... give a sum of 693?','Set up a quadratic equation in n.','n = 21 or n = 22'),
+ mk(4,'The 6th term of an AP is 19 and the 13th term is 47. Find the AP.','Form two equations and subtract.','−1, 3, 7, 11, ... (a=−1, d=4)'),
+ mk(5,'Find the sum: 50 + 48 + 46 + ... + 10.','Find n first, then use S_n = n/2(a+l).','630'),
+ mk(6,'The 4th and 9th terms of an AP are 15 and 30. Find its first term and common difference.','Subtract the two term equations.','a = 6, d = 3'),
+ mk(7,'If S_n = 2n² + 3n for an AP, find its 10th term.','Use a_10 = S_10 − S_9.','41'),
+ mk(8,'The sum of three consecutive AP terms is 27 and their product is 585. Find the terms.','Use a−d, a, a+d.','5, 9, 13'),
+ mk(9,'Find the number of multiples of 4 between 10 and 250.','Find the first and last multiples, then treat it as an AP.','60'),
+ mk(10,'The 7th term of an AP is 1 and the 10th term is −11. Find the common difference.','Divide by the gap of 3 terms.','d = −4'),
+ mk(11,'Find the sum of the first 25 odd natural numbers.','Here a=1, d=2, n=25.','625'),
+ mk(12,'The 17th term of an AP exceeds its 10th term by 21. Find the common difference.','Divide 21 by the gap of 7 terms.','d = 3'),
+ mk(13,'Find x if x+2, 2x+1, and 4x−1 are three consecutive AP terms.','The middle term is the average of its neighbours.','x = 1'),
+ mk(14,'Find the sum of all natural numbers between 1 and 100 divisible by 3.','Identify a, d, l for this AP.','1683'),
+ mk(15,'If S_6 = 42 and S_10 = 110 for an AP, find its first term and common difference.','Form and solve two simultaneous equations.','a = 2, d = 2'),
+ mk(16,'Find the middle term of the AP 1, 4, 7, ..., 151.','First find the total number of terms n.','76'),
+ mk(17,'Find the sum of the first 15 terms of the AP 20, 17, 14, ...','Here d = −3.','−15'),
+ mk(18,'Three numbers in AP have a sum of 24 and a sum of squares of 200. Find the numbers.','Use a−d, a, a+d and form two equations.','6, 8, 10'),
+ mk(19,'Find the sum of all two-digit multiples of 7.','Identify the first and last two-digit multiples of 7.','728'),
+ mk(20,'If S_p = q and S_q = p for an AP, find S_(p+q).','Subtract the two sum equations to find a and d in terms of p, q.','−(p+q)')
+];
+const PZ3=[ // Level 3 - ICSE exam
+ mk(1,'If S_n = 5n² + 3n for an AP, find the AP and its 15th term.','Find a_1 = S_1, then a_2 = S_2 − S_1 to get d.','a = 8, d = 10; a_15 = 148'),
+ mk(2,'The 8th term of an AP is half its 2nd term, and the 11th term exceeds one-third of its 4th term by 1. Find the 15th term.','Translate both conditions into equations in a and d.','a_15 = 3'),
+ mk(3,'Find the sum of all 3-digit numbers which leave remainder 2 when divided by 5.','Find the first and last such numbers, then apply the AP sum formula.','98910'),
+ mk(4,'If the ratio of the sums of the first m and first n terms of an AP is m²:n², prove that the ratio of the mth and nth terms is (2m−1):(2n−1).','Write both sums using the formula and simplify the ratio.','Identity verified: a_m : a_n = (2m−1) : (2n−1)'),
+ mk(5,'The sum of the first 7 terms of an AP is 63, and the sum of the next 7 terms is 161. Find the AP.','Use S_14 − S_7 = 161 as a second equation.','3, 5, 7, 9, ... (a = 3, d = 2)'),
+ mk(6,'A ladder has rungs 25 cm apart. The rungs decrease uniformly from 45 cm (bottom) to 25 cm (top), and the top and bottom rungs are 2.5 m apart. Find the number of rungs and the total wood used.','Use the spacing to find n, then apply the AP sum formula.','11 rungs; 385 cm of wood'),
+ mk(7,'Find the sum of all natural numbers strictly between 100 and 300 divisible by 4 or 5.','Use inclusion-exclusion with three separate AP sums (for 4, 5, and 20).','15800'),
+ mk(8,'The interior angles of a polygon are in AP. The smallest is 120°, the common difference is 5°, and the largest is 160°. Find the number of sides.','First find n from a_n=160, then check against the polygon angle-sum formula.','9 sides'),
+ mk(9,'The 5th and 9th terms of an AP are 4 and −12. Find the 15th term.','Form two equations and subtract to find d.','−36'),
+ mk(10,'Two APs share the same common difference. The first term of one is 3 more than the other\u2019s. Find the difference between their 100th terms.','Write both nth-term formulas and subtract.','3'),
+ mk(11,'If a, 9, b, 25 are four consecutive terms of an AP, find a and b.','Use the fact that the common difference is the same between every pair.','a = 1, b = 17'),
+ mk(12,'The sum of the first n terms of an AP is 3n² − n. Find the AP and verify that the 8th term is 44.','Use a_1 = S_1 and a_n = S_n − S_(n−1).','AP: 2, 8, 14, 20, ...; a_8 = 44 (verified)'),
+ mk(13,'If S_p = q and S_q = p for an AP (p≠q), show that S_(p+q) = −(p+q).','Subtract the two sum formulas to find a and d in terms of p and q.','Identity verified: S_(p+q) = −(p+q)'),
+ mk(14,'A man saves ₹32 in the first month and increases his savings by ₹4 every month after. In how many months does his total savings first exceed ₹2000?','Set up S_n > 2000 and solve the resulting quadratic inequality.','26 months'),
+ mk(15,'₹700 is to be given as seven cash prizes, each ₹20 less than the one before. Find the value of each prize.','Use S_7 = 700 with d = −20 to find the first prize.','₹160, 140, 120, 100, 80, 60, 40'),
+ mk(16,'Find the sum of all integers between 50 and 500 divisible by 7.','Find the first and last multiples of 7 in this range.','17696'),
+ mk(17,'The 3rd term of an AP equals twice its 5th term, and the 8th term is −20. Find the AP.','Form two equations and solve for a and d.','120, 100, 80, 60, ... (a=120, d=−20)'),
+ mk(18,'The sum of the first 6 terms of an AP is 36, and the sum of the first 16 terms is 256. Find the sum of the first 10 terms.','Form two equations for a and d, then compute S_10 directly.','100'),
+ mk(19,'A contractor employs 150 workers on day 1 of a 15-day project, reducing the number by 4 each following day. Find workers on day 10, and the total worker-days over 15 days.','Use the nth term formula for day 10, and the sum formula for the total.','Day 10: 114 workers; Total: 1830 worker-days'),
+ mk(20,'Prove that the sum of an AP with first term a, second term b, and last term c equals (a+c)(b+c−2a) / [2(b−a)].','Find d = b−a, then n from a_n = c, and substitute into S_n = n/2(a+c).','Identity verified: S = (a+c)(b+c−2a) / [2(b−a)]')
+];
+
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A.',
+ 'Both A and R are true, but R is NOT the correct explanation of A.',
+ 'A is true, but R is false.',
+ 'A is false, but R is true.',
+ 'Both A and R are false.'
+];
+const AR=[
+ {a:'The common difference of the AP 5, 5, 5, 5, ... is 0.', r:'A sequence with all equal terms is still classified as an arithmetic progression.', ans:0, exp:'Both statements are true. Consecutive terms are equal, so d = 5−5 = 0, and by definition an AP only requires a constant difference — zero qualifies. R correctly explains why A holds.'},
+ {a:'The 10th term of the AP 2, 4, 6, 8, ... is 22.', r:'The nth term of an AP is given by a_n = a + (n−1)d.', ans:3, exp:'A is false: here a=2, d=2, so a_10 = 2 + 9×2 = 20, not 22. R is a true and correctly stated formula — applying it correctly is exactly what shows A\u2019s claimed value is wrong.'},
+ {a:'The sequence 1, 4, 9, 16, 25, ... is an arithmetic progression.', r:'The differences between consecutive terms of this sequence are 3, 5, 7, 9, ..., which are not constant.', ans:3, exp:'A is false — this is the sequence of perfect squares, not an AP. R is true and correctly identifies exactly why: the differences keep growing instead of staying fixed.'},
+ {a:'For the AP 3, 7, 11, 15, ..., the sum of the first 5 terms is 55.', r:'The common difference of this AP equals the third term minus the first term, divided by two.', ans:1, exp:'Both statements are true — S_5 = 5/2[2(3)+4(4)] = 5/2×22 = 55, and (11−3)/2 = 4 does equal d. But R describes a method for finding d, not for computing the sum — so it does not explain why A\u2019s sum is 55.'},
+ {a:'If a, 9, b, 25 are four consecutive terms of an AP, then a = 1 and b = 17.', r:'In an AP, the common difference between any two consecutive terms is always the same.', ans:0, exp:'Both are true. Using the constant common-difference property from R: 9−a = b−9 = 25−b. Solving gives d=8, so a=1 and b=17 — R is exactly the principle that lets you derive A.'},
+ {a:'The sum of the first 5 terms of the AP 3, 7, 11, 15, 19 is 55.', r:'This is because the sum formula requires knowing the common ratio between consecutive terms.', ans:2, exp:'A is true — adding the five terms directly, or using S_5 = 5/2[2(3)+4(4)] = 55, confirms it. R is false: an AP uses a common DIFFERENCE, not a common ratio — common ratio is a Geometric Progression idea.'},
+ {a:'If the nth term of an AP is a_n = 3n + 2, then its common difference is 3.', r:'When the general term of an AP is written as a linear expression in n, the coefficient of n always equals the common difference.', ans:0, exp:'Both are true. Expanding a_n = a+(n−1)d = (a−d) + nd shows the coefficient of n is always d — here that coefficient is 3, confirming d=3, exactly as R explains.'},
+ {a:'The numbers 2, 8, 14 are in AP with a common difference of 5.', r:'For numbers in AP, the difference between the second and first term must equal the difference between the third and second term.', ans:3, exp:'A is false: 8−2=6 and 14−8=6, so the common difference is actually 6, not 5. R is a true and correctly stated property of AP — applying it correctly is what reveals A\u2019s error.'},
+ {a:'The sum of the first n odd natural numbers, 1+3+5+...+(2n−1), equals n².', r:'This can be proved by taking a=1, d=2, and applying S_n = n/2[2a+(n−1)d].', ans:0, exp:'Both are true. Substituting a=1, d=2 gives S_n = n/2[2+2(n−1)] = n/2×2n = n², so R gives exactly the correct method that proves A.'},
+ {a:'If S_7 = 63 for an AP with first term a = 3, then the common difference must be d = 3.', r:'For a fixed first term and number of terms, the sum S_n decreases as the common difference d increases.', ans:4, exp:'Both statements are false. Solving S_7=7/2[6+6d]=63 gives d=2, not 3, so A is false. R is also false — for a fixed a and n≥2, S_n actually increases as d increases, since the coefficient of d in the sum formula is positive.'}
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (definitions / rules)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('definitionsGrid',DEFINITIONS);
+buildTheoremCards('rulesGrid',RULES);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=DEFINITIONS.concat(RULES);
+  let head='<tr><th>Definition / Rule</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Sum-formula pairs list
+const sumformulaLeft=document.getElementById('sumformulaLeft');
+const sfCard=el('div','card pad');
+SUM_PAIRS.forEach(pair=>{
+  sfCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+sumformulaLeft.appendChild(sfCard);
+
+// Types of sequences legend chips
+const typeLegend=document.getElementById('typeLegend');
+TYPE_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===0?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('typeName').textContent=item.label;
+    document.getElementById('typeFormula').textContent=item.formula;
+    document.getElementById('typeValue').textContent=item.value;
+    document.getElementById('typeGraph').textContent=item.graph;
+  });
+  typeLegend.appendChild(chip);
+});
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('ap_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('ap_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','ar-card');
+  card.innerHTML=`<div class="qtag">Question ${i+1}</div>
+  <div class="ar-block"><b>Assertion (A)</b>${item.a}</div>
+  <div class="ar-block"><b>Reason (R)</b>${item.r}</div>`;
+  const optWrap=el('div');
+  AR_OPTIONS.forEach((opt,oi)=>{
+    const letter=String.fromCharCode(97+oi);
+    const b=el('button','opt-btn',`(${letter}) ${opt}`);
+    b.addEventListener('click',()=>{
+      optWrap.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){ b.classList.add('correct'); recordQuiz(true); }
+      else{ b.classList.add('wrong'); optWrap.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false); }
+      expBox.classList.add('show');
+    });
+    optWrap.appendChild(b);
+  });
+  card.appendChild(optWrap);
+  const expBox=el('div','ar-explain','<b style="display:block;font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;color:var(--green);margin-bottom:.15rem;">Explanation</b>'+item.exp);
+  card.appendChild(expBox);
+  arList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase().replace(/\s+/g,'')===item.a.toLowerCase().replace(/\s+/g,'');
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('ap_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('ap_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+// Hero interactive instrument — drag the handle to set the common difference
+const apSvg=document.getElementById('apSvg');
+const apHandle=document.getElementById('apHandle');
+const apBars=document.getElementById('apBars');
+const BAR_X=[30,65,100,135,170,205], BAR_W=26, BASE_Y=110, SCALE=6.5, A_FIXED=2;
+const TRACK_Y0=20, TRACK_Y1=190; // d = +5 at top, -5 at bottom
+
+function setD(d){
+  d=Math.max(-5,Math.min(5,d));
+  const y=TRACK_Y0+((5-d)/10)*(TRACK_Y1-TRACK_Y0);
+  apHandle.setAttribute('cy',y);
+
+  const terms=[];
+  for(let i=0;i<6;i++){ terms.push(A_FIXED+i*d); }
+
+  apBars.innerHTML='';
+  terms.forEach((val,i)=>{
+    const h=Math.abs(val)*SCALE;
+    const y0 = val>=0 ? BASE_Y-h : BASE_Y;
+    const fill = val>=0 ? '#C97A2B' : '#B4453C';
+    apBars.innerHTML+=`<rect x="${BAR_X[i]}" y="${y0}" width="${BAR_W}" height="${Math.max(h,1)}" rx="3" fill="${fill}"/>
+    <text x="${BAR_X[i]+BAR_W/2}" y="${BASE_Y+18}" font-family="IBM Plex Mono" font-size="9" fill="#6B7A99" text-anchor="middle">a${i+1}</text>
+    <text x="${BAR_X[i]+BAR_W/2}" y="${val>=0? y0-4 : BASE_Y+h+12}" font-family="IBM Plex Mono" font-size="9" fill="#1B2A4A" text-anchor="middle">${val}</text>`;
+  });
+
+  document.getElementById('apA').textContent=A_FIXED;
+  document.getElementById('apD').textContent=d;
+  document.getElementById('apSeq').textContent=terms.slice(0,3).join(', ')+', ...';
+  document.getElementById('apA6').textContent=terms[5];
+}
+let apDragging=false;
+apHandle.addEventListener('pointerdown',()=>apDragging=true);
+window.addEventListener('pointerup',()=>apDragging=false);
+apSvg.addEventListener('pointermove',(e)=>{
+  if(!apDragging) return;
+  const rect=apSvg.getBoundingClientRect();
+  const vb=apSvg.viewBox.baseVal;
+  const py=(e.clientY-rect.top)/rect.height*vb.height;
+  const d=5-((py-TRACK_Y0)/(TRACK_Y1-TRACK_Y0))*10;
+  setD(Math.round(d));
+});
+setD(3);
+
+// Sum formula slider
+const sfnSlider=document.getElementById('sfnSlider');
+function updateSFN(){
+  const n=parseInt(sfnSlider.value);
+  const a=4, d=3;
+  const last=a+(n-1)*d;
+  const sum=n/2*(2*a+(n-1)*d);
+  document.getElementById('sfnN').textContent=n;
+  document.getElementById('sfnLast').textContent=last;
+  document.getElementById('sfnSum').textContent=sum;
+  document.getElementById('sfnCheck').textContent=`S_${n} = ${n}/2 × (${a}+${last}) = ${n/2} × ${a+last} = ${sum}`;
+}
+sfnSlider.addEventListener('input',updateSFN); updateSFN();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','types','definitions','rules','sumformula','examples','conceptcheck','practice','pyq','assertionreasoning','mistakes','revision','flashcards','formula','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('ap_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('ap_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('ap_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('ap_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('ap_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('ap_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('ap_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['ap_sectionsRead','ap_examplesOpened','ap_quizStats','ap_pz_l1','ap_pz_l2','ap_pz_l3','ap_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
