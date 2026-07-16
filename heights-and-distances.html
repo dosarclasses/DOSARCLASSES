@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heights and Distances — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+#dividerHandle{cursor:grab;}
+#dividerHandle:active{cursor:grabbing;}
+
+/* ===================== TYPES CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:1.05rem; color:var(--ink-soft); margin:.3rem 0;}
+.result-box .rvalue{font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--ink);}
+
+/* ===================== THEOREM/RULE CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.92rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:1rem;}
+.ar-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.ar-statement{padding:.6rem .8rem; background:var(--paper); border-left:3px solid var(--ink-soft); border-radius:0 8px 8px 0; margin:.5rem 0; font-size:.92rem;}
+.ar-statement b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; display:block; margin-bottom:.15rem; letter-spacing:.05em;}
+.ar-explain{display:none; margin-top:.6rem; font-size:.86rem; padding:.55rem .7rem; border-radius:8px; background:var(--amber-tint); border-left:3px solid var(--amber);}
+.ar-explain.show{display:block;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.2rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:.95rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formula){display:none !important;}
+  #formula{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">🔭 <span>Heights &amp; Distances</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="types" href="#types"><span class="dot"></span>Types of Angles</a>
+    <a class="navlink" data-target="basics" href="#basics"><span class="dot"></span>Key Terms</a>
+    <a class="navlink" data-target="properties" href="#properties"><span class="dot"></span>Core Formulas</a>
+    <a class="navlink" data-target="combine" href="#combine"><span class="dot"></span>Two-Point Method</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="arsection" href="#arsection"><span class="dot"></span>Assertion &amp; Reasoning</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formula" href="#formula"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Heights and Distances</div>
+        <h1>Look up, look down,<br>find the answer.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the handle to change the angle of elevation to the top of a tower 15m away — watch the height, line of sight and tanθ update instantly.</p>
+        <div class="hero-cta">
+          <a href="#types" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <svg id="heroSvg" viewBox="0 0 320 210" style="width:100%; height:auto;">
+          <line x1="20" y1="190" x2="300" y2="190" stroke="#E1D9C6" stroke-width="2"/>
+          <circle cx="40" cy="190" r="3" fill="#1B2A4A"/>
+          <text x="40" y="205" font-family="IBM Plex Mono" font-size="10" fill="#1B2A4A" text-anchor="middle">A</text>
+          <line id="towerLine" x1="130" y1="190" x2="130" y2="132" stroke="#3D5A80" stroke-width="3"/>
+          <text x="130" y="205" font-family="IBM Plex Mono" font-size="10" fill="#3D5A80" text-anchor="middle">B</text>
+          <line id="losLine" x1="40" y1="190" x2="130" y2="132" stroke="#C97A2B" stroke-width="2" stroke-dasharray="4 2"/>
+          <path id="angleArc" d="" fill="none" stroke="#2E7D5B" stroke-width="1.5"/>
+          <line x1="70" y1="22" x2="300" y2="22" stroke="#E1D9C6" stroke-width="2"/>
+          <circle id="dividerHandle" cx="140" cy="22" r="9" fill="#C97A2B" stroke="#fff" stroke-width="2"/>
+          <text x="185" y="12" font-family="IBM Plex Mono" font-size="10" fill="#6B7A99" text-anchor="middle">drag to change the angle of elevation →</text>
+        </svg>
+        <div class="instrument-readout">
+          <div>Angle of Elevation <b id="rRatio">30.0°</b></div>
+          <div>Height of Tower <b id="rSimple">8.66 m</b></div>
+          <div>Line of Sight <b id="rDup">17.32 m</b></div>
+          <div>tanθ <b id="rFrac">0.577</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What are Heights and Distances?</h2>
+        <p class="lede">Heights and Distances is the practical application of trigonometry: using an observed angle — of elevation or depression — together with a known length, to work out a height or a distance that can't be measured directly. Every problem in this chapter reduces to the same shape: a right-angled triangle.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>You can't stretch a measuring tape to the top of a tower or across a river — but you can measure an angle with a simple instrument (a clinometer) and a distance along the ground. Trigonometric ratios turn that angle and distance into the height or distance you actually need.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Measuring the height of towers, buildings, hills</li>
+              <li>Navigation and surveying at sea and on land</li>
+              <li>Finding the width of a river without crossing it</li>
+              <li>Aviation and radar angle calculations</li>
+              <li>Combining two observations to pin down one unknown</li>
+              <li>Classic "cloud and lake" and "ladder" problems</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 20h16"/><path d="M4 20L16 6"/><path d="M4 20h8"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Elevation</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 6h16"/><path d="M4 6l12 14"/><path d="M4 6h8"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Depression</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="8" cy="8" r="3"/><path d="M10.5 10.5L20 20"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Line of Sight</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Two-Point Method</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ Basic trigonometric ratios (sin, cos, tan) for right-angled triangles</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Values of trig ratios for standard angles (30°, 45°, 60°)</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Pythagoras' theorem</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. TYPES OF ANGLES ===================== -->
+    <section id="types">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Types of Angles &amp; Relationships</h2>
+        <p class="lede">Click each item below to see exactly what relationship it describes, and a quick worked value for that type.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Angle of Elevation</div>
+            <div class="rformula" id="typeFormula">tanθ = Height / Base</div>
+            <div class="rvalue" id="typeValue">θ measured upward from horizontal</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY TERMS ===================== -->
+    <section id="basics">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Terms</h2>
+        <p class="lede">Every heights-and-distances question is built from the same handful of ideas. Learn what each one means before combining them into full formulas.</p>
+      </div>
+      <div class="ratio-grid" id="basicsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. CORE FORMULAS ===================== -->
+    <section id="properties">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Core Formulas</h2>
+        <p class="lede">Five rules cover almost every ICSE-style heights-and-distances question — from a single triangle to combining two observations.</p>
+      </div>
+      <div class="ratio-grid" id="propertiesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. TWO-POINT METHOD ===================== -->
+    <section id="combine">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>Combining Two Observations</h2>
+        <p class="lede">Many exam problems give two angles of elevation from two different points, in line with the object. You set up two tan equations sharing the same unknown height, then solve them together. Scale the classic 30°/60° example below by any factor k — the ratio between height and near-distance never changes, because it's always tan60°.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compdivLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>From two points on the same side of a tower, 20k m apart, the angles of elevation are 30° and 60°. Solving the two triangles together gives the near distance and the height in terms of k. Drag the slider to scale the whole figure by k, and watch both values scale together, since the triangles stay similar.</p>
+            <input type="range" min="1" max="10" value="1" id="compdivSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>Near distance = 10k = <b id="compdivA">10</b> m</span>
+              <span>Height = 10√3k ≈ <b id="compdivB">17.32</b> m</span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="compdivSum">Height ÷ Near distance = 1.732 (= tan60°)</span> — always tan60°, no matter what k is.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across angle types, key terms, core formulas, combined observations, and general facts — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. ASSERTION & REASONING ===================== -->
+    <section id="arsection">
+      <div class="section-head">
+        <div class="eyebrow">08 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each statement is true, and — if both are true — whether R actually explains A. Pick an option to see the correct answer and a short explanation.</p>
+      </div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 9. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">09 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 10. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">10 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 11. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">11 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Angle of elevation ⟹ measured upward from horizontal</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Angle of depression ⟹ measured downward from horizontal</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Height = Base × tanθ</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Rule Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Base = Height ÷ tanθ</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Line of Sight = Height ÷ sinθ = Base ÷ cosθ</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Depression from top = Elevation from bottom (alternate angles)</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Formulas (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always draw a clearly labelled right-angled triangle first, marking the angle, height, base and line of sight, before choosing a trig ratio.</li>
+              <li>Remember the angle of depression is measured from the observer's horizontal, not from the vertical drop — a common source of errors.</li>
+              <li>In two-point (combined) problems, set up both tanθ equations in terms of the same unknown height, then eliminate one variable algebraically.</li>
+              <li>Keep answers in exact surd form (like 10√3) until the final step, and only convert to a decimal at the end, to avoid rounding errors.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formula">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Heights and Distances — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Basic Ratios &amp; Angles</h5>
+            <p>Angle of Elevation: measured upward from horizontal</p><p>Angle of Depression: measured downward from horizontal</p>
+            <p>tanθ = Opposite / Adjacent = Height / Base</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Core Height &amp; Distance Formulas</h5>
+            <p>Height = Base × tanθ</p><p>Base = Height ÷ tanθ</p>
+            <p>Line of Sight = Height ÷ sinθ = Base ÷ cosθ</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Combined / Two-Point Problems</h5>
+            <p>Depression from top = Elevation from bottom</p><p>h = a ÷ (cotθ₁ − cotθ₂), for two points a apart</p>
+            <p>Cloud–lake height = h(tanβ+tanα)/(tanβ−tanα)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const BASIC_TERMS=[
+ {name:'Angle of Elevation', color:'#3D5A80', statement:'The angle between the horizontal line from the observer\'s eye and the line of sight to an object above it.', trick:'Always measured upward from the horizontal, never from the vertical.', ex:'Standing 20m from a tower and looking up at 30° to its top is an angle of elevation of 30°.'},
+ {name:'Angle of Depression', color:'#2E7D5B', statement:'The angle between the horizontal line from the observer\'s eye and the line of sight to an object below it.', trick:'Equal to the angle of elevation of the observer as seen from the lower point, because the two horizontals are parallel.', ex:'From a 50m cliff, looking down at a boat at 20° below the horizontal is an angle of depression of 20°.'},
+ {name:'Line of Sight', color:'#C97A2B', statement:'The straight line joining the observer\'s eye to the object being viewed.', trick:'It is always the hypotenuse of the right triangle formed with the horizontal and the vertical.', ex:'The line of sight from an observer to the top of a 15m tower, 20m away.'},
+ {name:'Horizontal Line', color:'#3D5A80', statement:'The fixed reference line at the observer\'s eye level, parallel to the ground, from which elevation and depression angles are always measured.', trick:'Never confuse the horizontal with the ground — they coincide only when the observer\'s eye is at ground level.', ex:'For an observer on a cliff-top, the horizontal is a level line at the cliff-top height, not at the base.'},
+ {name:'Right Triangle Setup', color:'#2E7D5B', statement:'Every heights-and-distances problem reduces to a right-angled triangle with the height as one leg, the horizontal distance as the other leg, and the line of sight as the hypotenuse.', trick:'Identify which side is opposite, adjacent, and the hypotenuse relative to the given angle before choosing sin, cos, or tan.', ex:'tanθ = opposite/adjacent = height/base.'}
+];
+const PROPERTY_RULES=[
+ {name:'Height from Elevation', color:'#3D5A80', statement:'Height = Base distance × tanθ, when the angle of elevation θ and the horizontal base distance are known.', trick:'Works only when the base is measured horizontally and the height perpendicular to it.', ex:'Base 25m, θ=30° ⟹ Height = 25×tan30° ≈ 14.43m.'},
+ {name:'Base from Elevation', color:'#2E7D5B', statement:'Base = Height ÷ tanθ, used when the height is known but the base distance is not.', trick:'Divide, don\'t multiply — the opposite operation of finding the height.', ex:'Height 20m, θ=40° ⟹ Base = 20/tan40° ≈ 23.83m.'},
+ {name:'Line of Sight Length', color:'#C97A2B', statement:'Line of Sight = Height ÷ sinθ = Base ÷ cosθ.', trick:'The line of sight is always the hypotenuse — the longest side of the triangle.', ex:'Height 10m, θ=30° ⟹ Line of Sight = 10/sin30° = 20m.'},
+ {name:'Alternate Angle Rule', color:'#3D5A80', statement:'The angle of depression from a higher point to a lower point equals the angle of elevation from the lower point to the higher point, because the two horizontal lines are parallel.', trick:'This lets you swap "depression from the top" for "elevation from the bottom" whenever convenient.', ex:'Angle of depression from a 40m tower to a car = angle of elevation from the car to the top of the tower.'},
+ {name:'Two-Point (Combined) Method', color:'#C97A2B', statement:'When two angles of elevation are given from two different points in line with the object, two right-triangle equations can be solved together to find both the height and the distance.', trick:'Set up both tanθ equations with the same unknown height, then eliminate one variable algebraically.', ex:'From points 20m apart, angles of elevation 30° and 60° combine to give the tower\'s exact height.'}
+];
+const HD_PAIRS=[
+ ['Angle of Elevation','Height = Base × tanθ'],['Angle of Depression','Equals the angle of elevation from the lower point'],['Line of Sight','Hypotenuse = Height ÷ sinθ = Base ÷ cosθ'],['Two Angles, Same Object','Two tanθ equations solved together'],['Base (unknown)','Base = Height ÷ tanθ']
+];
+const TYPE_DATA=[
+ {label:'Angle of Elevation', formula:'tanθ = Height / Base', value:'θ measured upward from horizontal'},
+ {label:'Angle of Depression', formula:'tanθ = Height / Base (looking down)', value:'θ measured downward from horizontal'},
+ {label:'Height from Elevation', formula:'Height = Base × tanθ', value:'Base 20m, θ=30° ⟹ Height ≈ 11.55m'},
+ {label:'Distance from Elevation', formula:'Base = Height ÷ tanθ', value:'Height 15m, θ=45° ⟹ Base = 15m'},
+ {label:'Line of Sight Length', formula:'Line of Sight = Height/sinθ = Base/cosθ', value:'Height 10m, θ=30° ⟹ Line of Sight = 20m'},
+ {label:'Depression = Elevation (Alt. Angles)', formula:'∠ from top to observer = ∠ from observer to top', value:'Always equal, by alternate angles'}
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'A ladder makes an angle of elevation of 60° with the ground, and its foot is 5m from the wall. Find the height it reaches on the wall.',steps:['Let the height reached be h.','tan60° = h/5.','h = 5 × tan60° = 5√3 ≈ 8.66m.'],ans:'≈ 8.66m'},
+ {level:'easy',q:'From a point 30m away from the foot of a tower, the angle of elevation of the top is 45°. Find the height of the tower.',steps:['tan45° = h/30.','Since tan45° = 1, h = 30m.'],ans:'30m'},
+ {level:'easy',q:'The angle of elevation of the sun is 30°. Find the length of the shadow cast by a pole 6m tall.',steps:['tan30° = 6/shadow.','shadow = 6/tan30° = 6√3 ≈ 10.39m.'],ans:'≈ 10.39m'},
+ {level:'easy',q:'A man observes the top of a tower at an angle of elevation of 45° from a point 50m from its base. Find the height of the tower.',steps:['tan45° = h/50.','Since tan45° = 1, h = 50m.'],ans:'50m'},
+ {level:'easy',q:'From the top of a cliff 40m high, the angle of depression of a boat is 20°. Using tan20°≈0.364, find the distance of the boat from the base of the cliff.',steps:['tan20° = 40/d.','d = 40/tan20° ≈ 40/0.364 ≈ 109.90m.'],ans:'≈ 109.90m'},
+ {level:'easy',q:'A tower is 15m high; from a point on the ground, the angle of elevation of its top is 30°. Find the distance of the point from the foot of the tower.',steps:['tan30° = 15/d.','d = 15/tan30° = 15√3 ≈ 25.98m.'],ans:'≈ 25.98m'},
+ {level:'medium',q:'Two points A and B are on the same side of a tower, in line with its foot; B is closer. If the tower is 50m high, and the angles of elevation from A and B are 30° and 60° respectively, find the distance AB.',steps:['BF = 50/tan60° ≈ 28.87m.','AF = 50/tan30° ≈ 86.60m.','AB = AF − BF ≈ 86.60 − 28.87 ≈ 57.74m.'],ans:'≈ 57.74m'},
+ {level:'medium',q:'From the top of a 100m tall building, the angle of depression of the top of a nearby pole is 30° and of its bottom is 60°. Find the height of the pole.',steps:['Horizontal distance d: tan60° = 100/d ⟹ d = 100/√3 ≈ 57.74m.','Vertical drop from building-top level to pole top: d × tan30° ≈ 57.74 × 0.577 ≈ 33.33m.','Pole height = 100 − 33.33 ≈ 66.67m.'],ans:'≈ 66.67m'},
+ {level:'medium',q:'A kite is flying at a height of 60m, attached to a string inclined at 60° to the horizontal. Find the length of the string.',steps:['sin60° = 60/L.','L = 60/sin60° ≈ 60/0.866 ≈ 69.28m.'],ans:'≈ 69.28m'},
+ {level:'medium',q:'The angle of elevation of the top of a tower from a point on the ground is 30°; on walking 20m towards the tower, the angle becomes 60°. Find the height of the tower.',steps:['Let x = distance from the nearer point; x√3 = h and (x+20) = h/√3.','Solving: x√3 = (x+20)/√3 ⟹ 3x = x+20 ⟹ x=10.','h = 10√3 ≈ 17.32m.'],ans:'≈ 17.32m'},
+ {level:'medium',q:'From the top of a lighthouse 75m high, the angles of depression of two ships on the same side are 30° and 45°. Find the distance between the ships.',steps:['Nearer ship: d₁ = 75/tan45° = 75m.','Farther ship: d₂ = 75/tan30° ≈ 129.90m.','Distance between ships = d₂ − d₁ ≈ 54.90m.'],ans:'≈ 54.90m'},
+ {level:'medium',q:'A vertical pole stands on level ground. From a point 15m from its base, the angle of elevation of the top is 42°. Using tan42°≈0.900, find the height of the pole.',steps:['h = 15 × tan42° ≈ 15 × 0.900.','h ≈ 13.5m.'],ans:'≈ 13.5m'},
+ {level:'medium',q:'The shadow of a tower is 40m longer when the sun\'s elevation is 30° than when it is 45°. Find the height of the tower.',steps:['At 45°: shadow = h. At 30°: shadow = h√3 (since tan30°=h/shadow).','h√3 − h = 40 ⟹ h(√3−1) = 40.','h = 40/(√3−1) ≈ 54.64m.'],ans:'≈ 54.64m'},
+ {level:'medium',q:'Two pillars of equal height stand on either side of a road 80m wide. From a point on the road between them, the angles of elevation of their tops are 60° and 30°. Find the height of the pillars and the position of the point.',steps:['Let x = distance to the 60° pillar; then 80−x = distance to the 30° pillar.','h = x√3 and h = (80−x)/√3 ⟹ 3x = 80−x ⟹ x = 20.','h = 20√3 ≈ 34.64m.'],ans:'Height ≈ 34.64m; the point is 20m from the 60° pillar (60m from the other)'},
+ {level:'medium',q:'From a point on level ground, the angle of elevation of the top of a 25m tower is 38°. Using tan38°≈0.781, find the distance of the point from the tower\'s base, to 1 decimal place.',steps:['d = 25/tan38° ≈ 25/0.781.','d ≈ 32.0m.'],ans:'≈ 32.0m'},
+ {level:'hard',q:'Prove that if the angle of elevation of the top of a tower changes from θ₁ to θ₂ (θ₂>θ₁) as the observer walks a distance a towards it, the height of the tower is h = a ÷ (cotθ₁ − cotθ₂).',steps:['Let the height be h and the final distance from the tower be x, so the initial distance was x+a.','tanθ₂ = h/x ⟹ x = h·cotθ₂. tanθ₁ = h/(x+a) ⟹ x+a = h·cotθ₁.','Subtracting: a = h·cotθ₁ − h·cotθ₂ = h(cotθ₁ − cotθ₂), so h = a/(cotθ₁ − cotθ₂).'],ans:'Identity proved algebraically'},
+ {level:'hard',q:'From the top of a building 60m high, the angle of depression of the top of a tower is 30° and of its base is 60°. Find the height of the tower and the horizontal distance between the building and the tower.',steps:['Horizontal distance d: tan60° = 60/d ⟹ d = 60/√3 = 20√3 ≈ 34.64m.','Vertical drop to the tower\'s top from building-top level: d × tan30° ≈ 34.64 × 0.577 ≈ 20m.','Tower height = 60 − 20 = 40m.'],ans:'Distance ≈ 34.64m; tower height = 40m'},
+ {level:'hard',q:'A man on a cliff observes a boat, approaching the point directly below him, at an angle of depression of 30°. Three minutes later, the angle of depression is 60°. Assuming uniform speed, find how much longer it will take the boat to reach the shore.',steps:['Let cliff height = h. Distance at first sighting = h·cot30° = h√3; at second sighting = h·cot60° = h/√3.','Distance covered in 3 min = h√3 − h/√3 = 2h/√3. Remaining distance = h/√3.','Time is proportional to distance at constant speed: remaining time = 3 × (remaining/covered) = 3 × (1/2) = 1.5 min.'],ans:'1.5 minutes (1 min 30 sec) more'},
+ {level:'hard',q:'Two ships sail on opposite sides of a 200m lighthouse, in line with its base. The angles of depression of the two ships are 60° and 45°. Find the distance between the ships.',steps:['Ship 1: d₁ = 200/tan60° ≈ 115.47m.','Ship 2: d₂ = 200/tan45° = 200m.','Since the ships are on opposite sides, distance = d₁ + d₂ ≈ 315.47m.'],ans:'≈ 315.47m'},
+ {level:'hard',q:'Prove that the height of a tower, observed from a point and from a point d meters closer, with angles of elevation α and β (β>α), satisfies h(cotα − cotβ) = d. Hence find h for α=30°, β=60°, d=15m.',steps:['Following the same derivation as the general two-point identity: h(cotα − cotβ) = d.','Substituting cot30° = √3, cot60° = 1/√3: h(√3 − 1/√3) = 15 ⟹ h(2/√3) = 15.','h = 15√3/2 ≈ 12.99m.'],ans:'Identity proved; h ≈ 12.99m'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Basic Elevation',time:'3 min',q:'The angle of elevation of the top of a tower from a point 40m away from its base is 30°. Find the height of the tower.',sol:'Height = 40 × tan30° = 40/√3 ≈ 23.09m.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Angle of Depression',time:'5 min',q:'From the top of a 50m cliff, the angle of depression of a boat is 25°. Using tan25°≈0.466, find the distance of the boat from the base of the cliff.',sol:'Distance = 50 ÷ tan25° ≈ 50 ÷ 0.466 ≈ 107.30m.'},
+ {year:'2022',diff:'Medium',marks:4,topic:'Two-Point Method',time:'6 min',q:'From two points 24m apart on the same side of a tower and in line with its base, the angles of elevation are 30° and 60°. Find the height of the tower.',sol:'Let the nearer distance be x; x√3 = x+24 ⟹ x(√3−1)=24 ⟹ x=12(√3+1). Height = x√3 = 36+12√3 ≈ 56.78m.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Cloud and Lake',time:'8 min',q:'The angle of elevation of a cloud from a point 100m above a lake is 30°, and the angle of depression of its reflection in the lake is 60°. Find the height of the cloud above the lake.',sol:'Using the standard identity, height = 100(tan60°+tan30°)/(tan60°−tan30°) = 200m.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Shadow Problem',time:'3 min',q:'Find the angle of elevation of the sun when the length of the shadow of a 15m pole is 15√3 m.',sol:'tanθ = 15/(15√3) = 1/√3 ⟹ θ = 30°.'},
+ {year:'2021',diff:'Hard',marks:4,topic:'Building and Tower',time:'8 min',q:'From the top of a 45m high building, the angle of depression of the top of a tower is 30° and of the bottom of the tower is 60°. Find the height of the tower.',sol:'Horizontal distance = 45/tan60° = 15√3. Drop to the tower\'s top = 15√3 × tan30° = 15m. Tower height = 45 − 15 = 30m.'}
+];
+
+const MISTAKES=[
+ 'Mixing up which side is "opposite" and which is "adjacent" to the given angle — always draw the triangle and label the angle before choosing sin, cos or tan.',
+ 'Forgetting that the angle of elevation and the angle of depression between the same two points are always equal (alternate angles), and treating them as unrelated.',
+ 'Using the observer\'s total height (eye level) when the problem intends height from the ground, or vice versa — read carefully whether the observer\'s own height should be added.',
+ 'In two-point problems, subtracting the two horizontal distances in the wrong order, or forgetting that the "nearer" point always corresponds to the larger angle of elevation.',
+ 'Rounding intermediate trigonometric values too early, which compounds into a noticeably wrong final answer — keep exact surd forms (like √3) until the last step.'
+];
+
+const FLASH=[
+ {f:'Angle of Elevation', b:'The angle between the horizontal and the line of sight, measured upward, when looking at an object above the observer'},
+ {f:'Angle of Depression', b:'The angle between the horizontal and the line of sight, measured downward, when looking at an object below the observer'},
+ {f:'Line of Sight', b:'The straight line joining the observer\'s eye to the object being viewed; it is the hypotenuse of the right triangle'},
+ {f:'Horizontal Line', b:'The level reference line at the observer\'s eye, from which elevation and depression angles are measured'},
+ {f:'Height = Base × tanθ', b:'The core formula linking height, horizontal distance and the angle of elevation'},
+ {f:'Base = Height ÷ tanθ', b:'Used when the height is known but the horizontal distance is not'},
+ {f:'Line of Sight = Height ÷ sinθ', b:'Also equals Base ÷ cosθ; always the longest side of the triangle'},
+ {f:'Alternate Angle Rule', b:'Angle of depression from a higher point equals the angle of elevation from the lower point to the higher point'},
+ {f:'Two-Point Method', b:'Using two angles of elevation from two known points to solve simultaneously for both height and distance'},
+ {f:'tan45°', b:'Equals 1, so height and base are equal whenever the elevation angle is exactly 45°'},
+ {f:'tan30°', b:'Equals 1/√3 ≈ 0.577'},
+ {f:'tan60°', b:'Equals √3 ≈ 1.732'},
+ {f:'cotθ', b:'Equals 1/tanθ; used in the two-point elevation formula h = a/(cotθ₁−cotθ₂)'},
+ {f:'Cloud and Lake Problem', b:'A classic combined problem using both an angle of elevation (to the cloud) and an angle of depression (to its reflection)'},
+ {f:'Flagstaff Problem', b:'A tower topped by a flagstaff, solved using two separate angles of elevation to the base and top of the flagstaff'},
+ {f:'Shadow and Sun\'s Elevation', b:'As the sun\'s angle of elevation decreases, shadows of fixed-height objects grow longer'}
+];
+
+const CC_MCQ=[
+ {t:'types',q:'The angle of elevation is measured:',opts:['Downward from the horizontal','Upward from the horizontal','From the vertical','Between two horizontals'],a:1},
+ {t:'types',q:'The angle of depression is measured:',opts:['Upward from the horizontal','From the ground','Downward from the horizontal','From the vertical'],a:2},
+ {t:'types',q:'If the angle of elevation of the sun decreases, the length of a shadow:',opts:['Decreases','Increases','Stays the same','Becomes zero'],a:1},
+ {t:'basics',q:'The line joining the observer\'s eye to the object viewed is called the:',opts:['Horizontal','Vertical','Line of sight','Base'],a:2},
+ {t:'basics',q:'In a heights-and-distances right triangle, the hypotenuse is always:',opts:['The height','The base','The line of sight','None of these'],a:2},
+ {t:'properties',q:'Height = Base × ______:',opts:['sinθ','cosθ','tanθ','cotθ'],a:2},
+ {t:'properties',q:'The line of sight length equals Height divided by:',opts:['tanθ','cosθ','sinθ','cotθ'],a:2},
+ {t:'properties',q:'The angle of depression from the top of a tower to a point on the ground equals:',opts:['The angle of elevation from that point to the top','Twice the angle of elevation','Half the angle of elevation','Always 90°'],a:0},
+ {t:'combine',q:'To find the height of a tower using angles of elevation from two points, you:',opts:['Use only one tan equation','Add the two angles','Set up two tan equations and solve them together','Ignore the base distance'],a:2},
+ {t:'combine',q:'If the angle of elevation increases as you walk towards an object, the object\'s height:',opts:['Also changes','Stays the same','Becomes negative','Cannot be determined'],a:1},
+ {t:'general',q:'If tanθ = 1, then θ equals:',opts:['30°','45°','60°','90°'],a:1},
+ {t:'general',q:'The value of tan60° is:',opts:['1','√3','1/√3','√2'],a:1},
+ {t:'general',q:'cot30° equals:',opts:['1/√3','√3','1','0'],a:1},
+ {t:'general',q:'The horizontal line at the observer\'s eye level is always:',opts:['Vertical','Parallel to the ground','Perpendicular to the ground','Equal to the line of sight'],a:1},
+ {t:'properties',q:'Base = Height ÷ ______:',opts:['sinθ','tanθ','secθ','cosecθ'],a:1}
+];
+const CC_FIB=[
+ {t:'types',q:'The angle of elevation is always measured ______ from the horizontal.',a:'upward'},
+ {t:'types',q:'The angle of depression is always measured ______ from the horizontal.',a:'downward'},
+ {t:'basics',q:'The straight line from the observer\'s eye to the object is called the ______ of sight.',a:'line'},
+ {t:'basics',q:'The side opposite the angle of elevation in the right triangle represents the ______.',a:'height'},
+ {t:'properties',q:'Height = Base × ______.',a:'tan'},
+ {t:'properties',q:'Base = Height ÷ ______.',a:'tan'},
+ {t:'properties',q:'Line of Sight = Height ÷ ______.',a:'sin'},
+ {t:'properties',q:'The angle of depression equals the angle of ______ from the lower point.',a:'elevation'},
+ {t:'combine',q:'When two angles of elevation are given from two points, we solve ______ equations together.',a:'two'},
+ {t:'combine',q:'As an observer walks towards a tower, the angle of elevation ______.',a:'increases'},
+ {t:'general',q:'tan45° = ______.',a:'1'},
+ {t:'general',q:'tan30° = 1/______.',a:'√3'},
+ {t:'general',q:'sin90° = ______.',a:'1'},
+ {t:'general',q:'The angle between the line of sight and the horizontal is called the angle of elevation or ______.',a:'depression'},
+ {t:'general',q:'cos0° = ______.',a:'1'}
+];
+const CC_TF=[
+ {t:'types',q:'The angle of elevation is measured downward from the horizontal.',a:false},
+ {t:'types',q:'The angle of depression is measured downward from the horizontal.',a:true},
+ {t:'types',q:'A longer shadow means a smaller angle of elevation of the sun (for a fixed height).',a:true},
+ {t:'basics',q:'The line of sight is always the shortest side of the right triangle.',a:false},
+ {t:'basics',q:'The height of the object is always the side opposite the angle of elevation.',a:true},
+ {t:'properties',q:'Height = Base × tanθ, where θ is the angle of elevation.',a:true},
+ {t:'properties',q:'The line of sight length is always less than the height of the object.',a:false},
+ {t:'properties',q:'The angle of depression from the top of a tower equals the angle of elevation from the base point to the top.',a:true},
+ {t:'combine',q:'Two different angles of elevation from two points can be used to find both the height and the distance of a tower.',a:true},
+ {t:'combine',q:'As you move away from a tower, the angle of elevation increases.',a:false},
+ {t:'general',q:'tan60° is greater than tan30°.',a:true},
+ {t:'general',q:'The horizontal and the line of sight are the same line.',a:false},
+ {t:'general',q:'sin90° = cos0° = 1.',a:true},
+ {t:'general',q:'cotθ = 1/tanθ.',a:true},
+ {t:'general',q:'The angle of elevation of the sun is greatest around noon, giving the shortest shadow.',a:true}
+];
+
+const AR=[
+ {a:'The angle of elevation of the top of a tower from a point on the ground increases as the observer walks towards the tower.', r:'For a fixed height, as the horizontal base distance decreases, tanθ = height/base increases, so θ increases.', ans:0, explain:'Both statements are true, and R correctly explains A: with height fixed, shrinking the base makes the ratio height/base larger, which forces θ itself to grow.'},
+ {a:'Two ships on opposite sides of a lighthouse, observed at angles of depression 30° and 60°, are always the same distance from the lighthouse\'s base.', r:'Since distance = height × cotθ, and cotθ increases as θ increases, a larger angle of depression always gives a larger distance from the base.', ans:4, explain:'Both statements are false. The distances are height×cot30° and height×cot60°, which are different since cot30°≠cot60°. R is also false: cotθ actually decreases as θ increases, so a larger angle of depression gives a smaller distance, not a larger one.'},
+ {a:'If the angle of elevation of the sun is 45°, the height of a pole is always equal to the length of its shadow.', r:'tan45° = 0.', ans:2, explain:'A is true: since tan45°=1, Height = Base×tan45° = Base, so the height equals the shadow length. But R is false — tan45° equals 1, not 0.'},
+ {a:'The line of sight is always the shortest side of the right triangle formed in a heights-and-distances problem.', r:'The line of sight is the hypotenuse of the right triangle, and the hypotenuse is always the longest side.', ans:3, explain:'A is false — the line of sight is the hypotenuse, which is the longest side, not the shortest. R is true and correctly explains why A is wrong.'},
+ {a:'As the angle of elevation of the sun decreases towards sunset, the length of the shadow of a fixed-height pole becomes shorter.', r:'The tangent of an angle decreases as the angle increases, so smaller angles give larger tanθ values.', ans:4, explain:'Both statements are false. As the sun\'s elevation angle decreases, shadows actually lengthen, not shorten (since shadow = height ÷ tanθ). R is also false: tangent is an increasing function on 0°–90°, so smaller angles give smaller tanθ, not larger.'},
+ {a:'In a two-point elevation problem, if the observer moves closer to the tower, the angle of elevation measured becomes larger than before.', r:'The height of the tower itself changes depending on where the observer stands.', ans:2, explain:'A is true — moving closer always increases the measured angle of elevation for a fixed height. R is false: the tower\'s height is fixed and does not depend on the observer\'s position; it is the angle, not the height, that changes.'},
+ {a:'As a boat approaches the base of a cliff, the angle of depression measured from the top of the cliff increases.', r:'For a fixed cliff height, as the horizontal distance to the boat decreases, tan(angle of depression) = height ÷ distance increases, so the angle itself increases.', ans:0, explain:'Both statements are true, and R correctly explains A: shrinking the distance while the height stays fixed increases the tangent ratio, which increases the angle.'},
+ {a:'The height of a tower can be found from two angles of elevation measured at two known points along the same line as the tower, without directly measuring the tower\'s height.', r:'A right-angled triangle has one 90° angle, and its two other acute angles always add up to 90°.', ans:1, explain:'Both statements are true independently — the two-point method really does work, and the fact about acute angles in a right triangle is correct — but R is a generic geometric fact that has nothing to do with why the two-point method solves for the height.'},
+ {a:'The angle of elevation of an object, as seen from an observer, is always different from the angle of depression of the observer, as seen from the object.', r:'Alternate angles formed between two parallel horizontal lines and a common transversal (the line of sight) are always equal.', ans:3, explain:'A is false — by the alternate-angle rule stated correctly in R, these two angles are actually always equal, not different. R itself is a true geometric fact.'},
+ {a:'A ladder leaning against a wall at a steeper angle (closer to 90° with the ground) reaches higher up the wall than the same-length ladder at a shallower angle.', r:'Height reached = Ladder length × sinθ, where θ is the angle with the ground, and sinθ increases as θ increases towards 90°.', ans:0, explain:'Both statements are true, and R correctly explains A: since sinθ grows as θ approaches 90°, a steeper ladder of the same length reaches a greater height on the wall.'}
+];
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A.',
+ 'Both A and R are true, but R is not the correct explanation of A.',
+ 'A is true, but R is false.',
+ 'A is false, but R is true.',
+ 'Both A and R are false.'
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'Find the height of a tower if the angle of elevation of its top from a point 20m away is 45°.','tan45° = 1.','20m'),
+ mk(2,'A ladder 10m long leans against a wall, making 60° with the ground. Find the height it reaches.','height = 10 × sin60°.','≈ 8.66m'),
+ mk(3,'The angle of elevation of the top of a pole from a point 15m away is 30°. Find the height of the pole.','h = 15 × tan30°.','≈ 8.66m'),
+ mk(4,'From the top of a 25m cliff, the angle of depression of a boat is 45°. Find the distance of the boat from the base.','tan45° = 1.','25m'),
+ mk(5,'A tower casts a shadow of 40m when the sun\'s angle of elevation is 30°. Find the height of the tower.','h = 40 × tan30°.','≈ 23.09m'),
+ mk(6,'Find the height of a pole whose 12m-long shadow is cast when the sun\'s elevation is 60°.','h = 12 × tan60°.','≈ 20.78m'),
+ mk(7,'The angle of elevation of a kite from a point on the ground is 60°, and the string is 40m long. Find the height of the kite.','h = 40 × sin60°.','≈ 34.64m'),
+ mk(8,'A man 1.6m tall stands 20m from a tower and observes its top at an angle of elevation of 30°. Find the total height of the tower.','h = 20 × tan30° + 1.6.','≈ 13.15m'),
+ mk(9,'Find the angle of elevation of the sun when the shadow of a 10m pole is 10m long.','tanθ = 10/10 = 1.','45°'),
+ mk(10,'From the top of a 30m building, the angle of depression of a car is 60°. Find the distance of the car from the building.','d = 30 ÷ tan60°.','≈ 17.32m'),
+ mk(11,'The angle of elevation of the top of a tower is 45° from a point 18m from its base. Find the tower\'s height.','tan45° = 1.','18m'),
+ mk(12,'A vertical stick 6m long casts a shadow 6√3 m long. Find the angle of elevation of the sun.','tanθ = 6/(6√3) = 1/√3.','30°'),
+ mk(13,'Find the height of a tower whose angle of elevation from a point 50m away is 37°, given tan37°≈0.754.','h = 50 × 0.754.','≈ 37.7m'),
+ mk(14,'From a point 10m from the base of a tower, the angle of elevation of the top of the tower (45°) and, from the same point, the angle of elevation of the top of a flagstaff on it (60°) are given. Find the flagstaff\'s height.','Tower height = 10×tan45°; total = 10×tan60°; flagstaff = total − tower.','≈ 7.32m'),
+ mk(15,'Find the line-of-sight distance from an observer to the top of a 9m tower if the angle of elevation is 30°.','LOS = 9 ÷ sin30°.','18m'),
+ mk(16,'From a point 100m from the base of a tower, the angle of elevation is 20°. Using tan20°≈0.364, find the height.','h = 100 × 0.364.','≈ 36.4m'),
+ mk(17,'Find the angle of elevation if a 15m tower\'s shadow is also 15m long.','tanθ = 15/15 = 1.','45°'),
+ mk(18,'A 21m tower casts a 21√3 m shadow. Find the sun\'s angle of elevation.','tanθ = 21/(21√3) = 1/√3.','30°'),
+ mk(19,'The angle of depression from a 60m tall lighthouse to a ship is 30°. Find the distance of the ship from the lighthouse\'s base.','d = 60 ÷ tan30°.','≈ 103.92m'),
+ mk(20,'A 6.5m ladder leans against a wall, making an angle of 50° with the ground. Using sin50°≈0.766, find the height it reaches.','h = 6.5 × 0.766.','≈ 4.98m')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'From two points 15m apart on the same side of a tower and in line with its base, the angles of elevation are 30° and 45°. Find the height of the tower.','Set up two tan equations for the near (45°) and far (30°) points.','≈ 20.49m'),
+ mk(2,'From the top of an 80m cliff, the angles of depression of two boats in line with the base are 45° and 30°. Find the distance between the boats.','d₁ = 80/tan45°, d₂ = 80/tan30°; subtract.','≈ 58.56m'),
+ mk(3,'A ladder 15m long just reaches the top of a wall, making an angle of 58° with the wall itself (not the ground). Using cos58°≈0.530, find the height of the wall.','Height = 15 × cos58° (angle measured from the wall).','≈ 7.95m'),
+ mk(4,'Two pillars of equal height stand on either side of a 100m wide road. From a point on the road, the angles of elevation are 60° and 30°. Find the height of the pillars and the position of the point.','x + (100−x) split using tan60° and tan30° equal to the same height.','Height ≈ 43.30m; point is 25m from the 60° pillar'),
+ mk(5,'The angle of elevation of the top of a tower from point A is 30°. On moving 20m towards the tower to point B, the angle becomes 60°. Find the height of the tower and the distance of B from the tower.','Use h = a/(cotθ₁−cotθ₂).','Height ≈ 17.32m; distance from B ≈ 10m'),
+ mk(6,'From the top of a 45m building, the angle of depression of the base of a tower is 60° and of its top is 30°. Find the height of the tower.','Find horizontal distance from tan60°, then the vertical drop using tan30°.','30m'),
+ mk(7,'A man on the deck of a ship, 12m above sea level, observes the angle of elevation of the top of a cliff as 45° and the angle of depression of its base as 30°. Find the height of the cliff.','Find distance using tan30°, then rise using tan45°, add the deck height.','≈ 32.78m'),
+ mk(8,'A tower stands on top of a 20m building. From a point on the ground, the angle of elevation of the top of the tower is 60° and of the top of the building is 45°. Find the height of the tower.','Distance = 20/tan45°; total height = distance×tan60°; tower = total − 20.','≈ 14.64m'),
+ mk(9,'From a point 25m from the foot of a tower, the angle of elevation of the top is 42°. Using tan42°≈0.900, find the height, then find the angle of elevation from a point twice as far.','First find height, then use the same height with double the distance.','Height = 22.5m; new angle ≈ 24°'),
+ mk(10,'A vertical tower is topped by a 6m flagstaff. From a point on the ground, the angles of elevation of the top and bottom of the flagstaff are 60° and 45°. Find the height of the tower.','Let tower height = h = distance (from tan45°); (h+6) = distance×tan60°.','≈ 8.20m'),
+ mk(11,'Two ships are on either side of a 150m lighthouse, in line with its base. The angles of depression are 60° and 45°. Find the distance between the ships.','Distances are on opposite sides — add them.','≈ 236.6m'),
+ mk(12,'The angle of elevation of the top of an unfinished tower, from a point 100m from its base, is 45°. How much higher must the tower be raised so the angle becomes 60° from the same point?','Current height = 100; needed height = 100×tan60°; find the difference.','≈ 73.2m'),
+ mk(13,'From the top of a hill, the angles of depression of two consecutive kilometre stones due east are 30° and 45°. Find the height of the hill.','Gap = 1000m; use the two-point method.','≈ 1366.03m'),
+ mk(14,'A boy flying a kite with a 100m string, inclined at 45°, lets out 50m more string, changing the angle to 30°. Find the increase in horizontal distance of the kite from him.','Find horizontal distance at both angles, then subtract.','Increase ≈ 59.19m'),
+ mk(15,'From two points 36m apart on the same side of a tower, the angles of elevation are complementary: 30° and 60°. Find the height of the tower, using h² = (product of the two distances).','Solve using the two-point method, or the complementary-angle identity h²=d₁×d₂.','h = 18√3 ≈ 31.18m'),
+ mk(16,'The angle of elevation of a cloud from a point 60m above a lake is 30°, and the angle of depression of its reflection in the lake is 60°. Find the height of the cloud above the lake.','Use the standard cloud–lake identity: height = h(tanβ+tanα)/(tanβ−tanα).','120m'),
+ mk(17,'A pole stands on top of a tower. From a point 25m from the foot of the tower, the angle of elevation of the top of the tower is 45° and of the top of the pole is 60°. Find the height of the pole.','Tower height = 25; total height = 25×tan60°; pole = total − 25.','≈ 18.30m'),
+ mk(18,'From a point on level ground, the angle of elevation of the top of a tower is 30°. After walking 40m directly towards the tower, it becomes 60°. Find the height of the tower.','Use the two-point formula with gap 40m.','20√3 ≈ 34.64m'),
+ mk(19,'From the top of a 60m tower on one bank of a river, the angle of depression of the top of another tower on the opposite bank is 30° and of its foot is 60°. Find the width of the river and the height of the second tower.','Width from tan60° (to foot); drop to second top from tan30°.','Width ≈ 34.64m; second tower ≈ 40m'),
+ mk(20,'A statue stands on a pedestal. From a point 9m from the base, the angle of elevation of the top of the statue is 60° and of the top of the pedestal is 45°. Find the height of the statue.','Pedestal height = 9; total = 9×tan60°; statue = total − 9.','≈ 6.59m')
+];
+const PZ3=[ // Level 3 - ICSE exam
+ mk(1,'Prove that the height of a tower, observed with angles of elevation α and β (β>α) from two points d meters apart, is h = d/(cotα−cotβ). Hence find h for α=30°, β=60°, d=20m.','Derive symbolically, then substitute the given values.','Identity proved; h = 10√3 ≈ 17.32m'),
+ mk(2,'From the top of a 90m lighthouse, the angles of depression of two ships in line with the base, on the same side, are 30° and 45°. Find the distance between the ships, and how long the nearer ship takes to reach the base at 5 m/min.','Find both distances, subtract for the gap, then use the nearer distance for time.','Gap ≈ 65.88m; time for nearer ship ≈ 18 min'),
+ mk(3,'A tower is topped by a flagstaff of height h. From a point on the plane, the angle of elevation of the bottom of the flagstaff is α and of the top is β. Prove that the tower\'s height is h·tanα/(tanβ−tanα). Hence find it for h=6m, α=45°, β=60°.','Derive symbolically, then substitute.','Identity proved; tower height ≈ 8.20m'),
+ mk(4,'Two towers face each other across a road of width w. From the top of the first tower (50m), the angle of depression of the top of the second is 30° and of its foot is 60°. Find w and the height of the second tower.','Use tan60° for the width from the foot, then tan30° for the height drop to the top.','w ≈ 28.87m; second tower ≈ 33.33m'),
+ mk(5,'Prove that if the angle of elevation of the top of a tower from a point is θ, and after walking a further distance a directly away it becomes φ (φ<θ), the tower\'s height is h = a/(cotφ−cotθ). Hence find h if θ=60°, φ=30°, a=15m.','Similar derivation to walking towards, but walking away instead.','Identity proved; h ≈ 12.99m'),
+ mk(6,'From a point on level ground, the angle of elevation of the top of a tower is 45° and of the top of an 8m flagstaff fixed on it is 60°, both from the same point at distance d. Find d and the tower\'s height h.','h = d (from tan45°); h+8 = d×tan60°. Solve.','h ≈ 10.93m; d ≈ 10.93m'),
+ mk(7,'A man on the deck of a ship, 10m above sea level, observes the angle of elevation of the top of a hill as 45° and the angle of depression of its base as 30°. Find the height of the hill above sea level and its distance from the ship, to 2 decimal places.','distance = 10/tan30°; rise = distance×tan45°; total height = rise + 10.','Distance ≈ 17.32m; height ≈ 27.32m'),
+ mk(8,'Two pillars of heights h₁ and h₂ stand on either side of a 150m wide road, exactly opposite each other. From the midpoint of the road, the angles of elevation of their tops are 60° and 30°. Find h₁ and h₂.','Midpoint distance to each pillar = 75m.','h₁ ≈ 129.90m; h₂ ≈ 43.30m'),
+ mk(9,'A boat is rowed away from a 100m lighthouse. The angle of depression changes from 60° to 30° in 2 minutes. Find the speed of the boat and its distance from the lighthouse at the 30° reading.','Find both distances, subtract, divide by time.','Distance at 30° ≈ 173.21m; speed ≈ 57.74 m/min'),
+ mk(10,'Prove that a tower of height h observed at the same horizontal level with angle of elevation θ has base distance h·cotθ, and find this distance for h=27m, θ=36° (tan36°≈0.727).','Derive from tanθ=h/d, so d=h/tanθ=h·cotθ.','Identity proved; d ≈ 37.14m'),
+ mk(11,'From the top and bottom of a 30m building, the angles of elevation of the top of a taller nearby tower are 45° and 60° respectively. Find the height of the tower and its distance from the building.','Set up two equations: tan60°=H/d and tan45°=(H−30)/d.','d ≈ 40.98m; H ≈ 70.98m'),
+ mk(12,'A pole stands vertically 12m from an observation point, with the angle of elevation θ such that tanθ = 5/12 (a 5-12-13 right triangle). Find the exact height of the pole and the line-of-sight length, without a calculator.','Recognize the 5-12-13 Pythagorean triple.','Height = 5m; line of sight = 13m'),
+ mk(13,'From a window 15m above the ground, the angle of depression of the base of an opposite house is 45° and the angle of elevation of its top is 30°. Find the height of the opposite house.','Street width = 15/tan45°; rise above window level = width×tan30°; total = 15 + rise.','≈ 23.66m'),
+ mk(14,'Prove that for two ships on opposite sides of a lighthouse of height h, with angles of depression α and β, the total distance between them is h(cotα+cotβ). Hence find it for h=120m, α=45°, β=60°.','Add the two individual distances h·cotα and h·cotβ.','Identity proved; distance ≈ 189.28m'),
+ mk(15,'A tower topped by a flagstaff is observed from a point 10m from the base. The angle of elevation of the flagstaff\'s top is 60° and of the tower\'s top is 45°. Find the flagstaff\'s height.','Tower height = 10; total = 10×tan60°; flagstaff = total − 10.','≈ 7.32m'),
+ mk(16,'A person on one bank of a river observes the angle of elevation of a tree on the opposite bank as 60°. Moving 40m away, the angle becomes 30°. Find the height of the tree and the width of the river.','Standard two-point method with a 40m gap.','Width ≈ 20m; height ≈ 34.64m'),
+ mk(17,'Two poles of equal height stand on either side of a 90m road. From a point on the road between them, the angles of elevation of the tops are 30° and 60°. Find the height of the poles and the distances from each pole.','Let x = distance to the 60° pole; height = x×tan60° = (90−x)×tan30°.','x = 22.5m; height ≈ 38.97m; distances 22.5m and 67.5m'),
+ mk(18,'From the top of a tower, the angles of depression of two cars on a straight road at the base, on the same side, are 45° and 60°. The cars are 50m apart. Find the height of the tower and the distance of the nearer car from the base.','Standard two-point method with a 50m gap.','Nearer distance ≈ 68.30m; height ≈ 118.30m'),
+ mk(19,'Prove that for two towers of heights h₁ and h₂ a known distance d apart, if the angle of elevation of the second tower\'s top from the first tower\'s top is θ, then h₂ = h₁ + d·tanθ. Hence find h₂ for h₁=20m, d=15m, θ=25° (tan25°≈0.466).','Derive directly from the right triangle at the top of tower 1.','Identity proved; h₂ ≈ 26.99m'),
+ mk(20,'A ladder rests against a wall at angle α to the ground. Its foot is pulled back by a, so it now rests at angle β (β<α) with the same length. Prove L = a/(cosβ−cosα), and find L for α=60°, β=30°, a=2m.','The horizontal distance covered by the foot is L·cosβ − L·cosα = a.','Identity proved; L ≈ 5.46m')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (basics / properties)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('basicsGrid',BASIC_TERMS);
+buildTheoremCards('propertiesGrid',PROPERTY_RULES);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=BASIC_TERMS.concat(PROPERTY_RULES);
+  let head='<tr><th>Definition / Formula</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Two-point pairs list
+const compdivLeft=document.getElementById('compdivLeft');
+const cpCard=el('div','card pad');
+HD_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+compdivLeft.appendChild(cpCard);
+
+// Types of Angles legend chips
+const typeLegend=document.getElementById('typeLegend');
+TYPE_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===0?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('typeName').textContent=item.label;
+    document.getElementById('typeFormula').textContent=item.formula;
+    document.getElementById('typeValue').textContent=item.value;
+  });
+  typeLegend.appendChild(chip);
+});
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('hd_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('hd_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase().replace(/\s+/g,'')===item.a.toLowerCase().replace(/\s+/g,'');
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','ar-card');
+  card.innerHTML=`<div class="qtag">Assertion &amp; Reasoning · Q${i+1}</div>
+  <div class="ar-statement"><b>Assertion (A)</b>${item.a}</div>
+  <div class="ar-statement"><b>Reason (R)</b>${item.r}</div>`;
+  const optsWrap=el('div');
+  AR_OPTIONS.forEach((opt,oi)=>{
+    const label='(' + 'abcde'[oi] + ') ' + opt;
+    const b=el('button','opt-btn',label);
+    b.addEventListener('click',()=>{
+      card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){b.classList.add('correct'); recordQuiz(true);}
+      else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false);}
+      card.querySelector('.ar-explain').classList.add('show');
+    });
+    optsWrap.appendChild(b);
+  });
+  card.appendChild(optsWrap);
+  card.appendChild(el('div','ar-explain','💡 '+item.explain));
+  arList.appendChild(card);
+});
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('hd_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('hd_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+// Hero interactive instrument — drag the handle to set the angle of elevation
+const heroSvg=document.getElementById('heroSvg');
+const dividerHandle=document.getElementById('dividerHandle');
+const towerLine=document.getElementById('towerLine');
+const losLine=document.getElementById('losLine');
+const angleArc=document.getElementById('angleArc');
+const TRACK_X0=70, TRACK_X1=300, ANGLE_MIN=15, ANGLE_MAX=65;
+const OBS_X=40, OBS_Y=190, TOWER_X=130, BASE_PX=90, BASE_M=15;
+function setAngle(deg){
+  deg=Math.max(ANGLE_MIN,Math.min(ANGLE_MAX,deg));
+  const rad=deg*Math.PI/180;
+  const px=TRACK_X0+(deg-ANGLE_MIN)/(ANGLE_MAX-ANGLE_MIN)*(TRACK_X1-TRACK_X0);
+  dividerHandle.setAttribute('cx',px);
+
+  const heightPxVisual=Math.min(150, BASE_PX*Math.tan(rad));
+  const topY=OBS_Y-heightPxVisual;
+  towerLine.setAttribute('y2',topY);
+  losLine.setAttribute('x2',TOWER_X);
+  losLine.setAttribute('y2',topY);
+
+  const r=20;
+  const arcX=OBS_X+r*Math.cos(rad);
+  const arcY=OBS_Y-r*Math.sin(rad);
+  angleArc.setAttribute('d',`M ${OBS_X+r} ${OBS_Y} A ${r} ${r} 0 0 0 ${arcX} ${arcY}`);
+
+  const height_m=BASE_M*Math.tan(rad);
+  const los_m=BASE_M/Math.cos(rad);
+  document.getElementById('rRatio').textContent=deg.toFixed(1)+'°';
+  document.getElementById('rSimple').textContent=height_m.toFixed(2)+' m';
+  document.getElementById('rDup').textContent=los_m.toFixed(2)+' m';
+  document.getElementById('rFrac').textContent=Math.tan(rad).toFixed(3);
+}
+let dragging=false;
+dividerHandle.addEventListener('pointerdown',()=>dragging=true);
+window.addEventListener('pointerup',()=>dragging=false);
+heroSvg.addEventListener('pointermove',(e)=>{
+  if(!dragging) return;
+  const rect=heroSvg.getBoundingClientRect();
+  const vb=heroSvg.viewBox.baseVal;
+  const px=(e.clientX-rect.left)/rect.width*vb.width;
+  const deg=ANGLE_MIN+(px-TRACK_X0)/(TRACK_X1-TRACK_X0)*(ANGLE_MAX-ANGLE_MIN);
+  setAngle(deg);
+});
+setAngle(30);
+
+// Two-point (combining observations) slider
+const compdivSlider=document.getElementById('compdivSlider');
+function updateCompdiv(){
+  const k=parseInt(compdivSlider.value);
+  const near=10*k;
+  const height=10*Math.sqrt(3)*k;
+  document.getElementById('compdivA').textContent=near;
+  document.getElementById('compdivB').textContent=height.toFixed(2);
+  document.getElementById('compdivSum').textContent=`Height ÷ Near distance = ${(height/near).toFixed(3)} (= tan60°)`;
+}
+compdivSlider.addEventListener('input',updateCompdiv); updateCompdiv();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','types','basics','properties','combine','examples','conceptcheck','arsection','practice','pyq','mistakes','revision','flashcards','formula','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('hd_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('hd_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('hd_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('hd_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('hd_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('hd_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('hd_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['hd_sectionsRead','hd_examplesOpened','hd_quizStats','hd_pz_l1','hd_pz_l2','hd_pz_l3','hd_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
