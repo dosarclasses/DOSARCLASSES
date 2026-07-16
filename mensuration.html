@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mensuration — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+#mnSlider{width:100%; margin-top:.6rem;}
+
+/* ===================== FORMULA CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:1.02rem; color:var(--ink-soft); margin:.3rem 0;}
+.result-box .rvalue{font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--ink);}
+
+/* ===================== THEOREM/RULE CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.92rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:1rem;}
+.ar-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.ar-statement{padding:.6rem .8rem; background:var(--paper); border-left:3px solid var(--ink-soft); border-radius:0 8px 8px 0; margin:.5rem 0; font-size:.92rem;}
+.ar-statement b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; display:block; margin-bottom:.15rem; letter-spacing:.05em;}
+.ar-explain{display:none; margin-top:.6rem; font-size:.86rem; padding:.55rem .7rem; border-radius:8px; background:var(--amber-tint); border-left:3px solid var(--amber);}
+.ar-explain.show{display:block;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.25rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:1rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formula){display:none !important;}
+  #formula{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">✛ <span>Mensuration</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="formulas" href="#formulas"><span class="dot"></span>Core Formulas</a>
+    <a class="navlink" data-target="basics" href="#basics"><span class="dot"></span>Key Terms</a>
+    <a class="navlink" data-target="theorems" href="#theorems"><span class="dot"></span>Theorems &amp; Rules</a>
+    <a class="navlink" data-target="conserve" href="#conserve"><span class="dot"></span>Melting &amp; Recasting</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="arsection" href="#arsection"><span class="dot"></span>Assertion &amp; Reasoning</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formula" href="#formula"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Mensuration</div>
+        <h1>Every solid has<br>a measure.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the slider to stretch the cylinder's height — watch its curved surface area, total surface area and volume update instantly, while the radius stays fixed.</p>
+        <div class="hero-cta">
+          <a href="#formulas" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <svg id="heroSvg" viewBox="0 0 320 200" style="width:100%; height:auto;">
+          <line x1="10" y1="185" x2="310" y2="185" stroke="#E1D9C6" stroke-width="2"/>
+          <ellipse id="cylBottom" cx="160" cy="170" rx="55" ry="15" fill="#F3DDBB" stroke="#3D5A80" stroke-width="2"/>
+          <line id="cylLeft" x1="105" y1="170" x2="105" y2="70" stroke="#C97A2B" stroke-width="2"/>
+          <line id="cylRight" x1="215" y1="170" x2="215" y2="70" stroke="#C97A2B" stroke-width="2"/>
+          <ellipse id="cylTop" cx="160" cy="70" rx="55" ry="15" fill="#FFFFFF" stroke="#3D5A80" stroke-width="2"/>
+          <text id="labelDims" x="160" y="200" font-family="IBM Plex Mono" font-size="11" fill="#3D5A80" font-weight="700" text-anchor="middle">r = 4 cm, h = 8 cm</text>
+          <text x="160" y="15" font-family="IBM Plex Mono" font-size="11" fill="#6B7A99" text-anchor="middle">drag the slider below to change the height ↓</text>
+        </svg>
+        <input type="range" id="mnSlider" min="3" max="12" value="8" step="1">
+        <div class="instrument-readout">
+          <div>Curved Surface Area <b id="rCSA">201.06 cm²</b></div>
+          <div>Total Surface Area <b id="rTSA">301.59 cm²</b></div>
+          <div>Volume <b id="rVol">402.12 cm³</b></div>
+          <div>Volume in Litres <b id="rLitres">0.40 L</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is Mensuration?</h2>
+        <p class="lede">Mensuration is the branch of mathematics concerned with measuring geometric figures — their lengths, areas and volumes. This chapter extends the two-dimensional measurement of circles into three dimensions, covering the cylinder, cone, sphere, hemisphere and frustum.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Every solid object around us — a water tank, an ice-cream cone, a ball, a bucket — can be approximated by one of a handful of standard shapes. Once you know the surface area and volume formulas for these shapes, you can find how much material is needed to build something, how much liquid it can hold, or what happens when one solid is melted and reshaped into another.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Finding the capacity of tanks, buckets and silos</li>
+              <li>Estimating material needed for construction</li>
+              <li>Melting and recasting metals into new shapes</li>
+              <li>Packaging and manufacturing design</li>
+              <li>Calculating paint or canvas required to cover a surface</li>
+              <li>Engineering and architectural design</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><rect x="5" y="4" width="14" height="16" rx="7" ry="3"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Cylinder</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M12 3 L20 19 A8 3 0 0 1 4 19 Z"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Cone</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="8"/><ellipse cx="12" cy="12" rx="8" ry="3"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Sphere</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M6 20 L9 4 H15 L18 20 Z"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Frustum</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ The area and circumference of a circle</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ The Pythagoras theorem</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Basic algebraic substitution and simplification</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. CORE FORMULAS ===================== -->
+    <section id="formulas">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Core Formulas</h2>
+        <p class="lede">Click each formula below to see exactly what it computes.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Volume of a Cylinder</div>
+            <div class="rformula" id="typeFormula">Volume of a right circular cylinder with radius r and height h</div>
+            <div class="rvalue" id="typeValue">V = πr²h</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY TERMS ===================== -->
+    <section id="basics">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Terms</h2>
+        <p class="lede">Every mensuration question is built from these five ideas. Learn what each one means before combining them into formulas.</p>
+      </div>
+      <div class="ratio-grid" id="basicsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. THEOREMS & RULES ===================== -->
+    <section id="theorems">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Theorems &amp; Rules</h2>
+        <p class="lede">Six solids cover almost every ICSE-style mensuration question — from a water tank to a melted-and-recast sculpture.</p>
+      </div>
+      <div class="ratio-grid" id="propertiesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. MELTING & RECASTING ===================== -->
+    <section id="conserve">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>Melting, Recasting &amp; Conservation of Volume</h2>
+        <p class="lede">When a solid is melted down and recast into a different shape, its volume never changes — only its surface area and dimensions do. Slide the radius of the new cylinder below and watch its height adjust automatically to keep the volume locked to the original sphere.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compdivLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>A solid sphere of radius 6 cm is melted completely and recast into a right circular cylinder. Drag the slider to choose the radius of the new cylinder — its height changes automatically so that the volume always stays exactly equal to the original sphere's volume.</p>
+            <input type="range" min="2" max="10" value="4" id="compdivSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>Cylinder radius = <b id="compdivA">4</b> cm</span>
+              <span>Cylinder height = <b id="compdivB">18.00</b> cm</span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="compdivSum">Sphere volume = (4/3)π(6)³ ≈ 904.32 cm³, so the cylinder's volume πr²h is forced to equal 904.32 cm³ no matter which radius you pick.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">22 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across core formulas, key terms, theorems, solids, and general facts — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. ASSERTION & REASONING ===================== -->
+    <section id="arsection">
+      <div class="section-head">
+        <div class="eyebrow">08 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each statement is true, and — if both are true — whether R actually explains A. Pick an option to see the correct answer and a short explanation.</p>
+      </div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 9. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">09 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 10. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">10 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 11. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">11 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Cylinder: CSA = 2πrh, TSA = 2πr(h+r), V = πr²h</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Cone: l = √(r²+h²), CSA = πrl, V = (1/3)πr²h</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Sphere: SA = 4πr², V = (4/3)πr³</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Rule Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Hemisphere: CSA = 2πr², TSA = 3πr², V = (2/3)πr³</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Frustum: V = (1/3)πh(r₁²+r₂²+r₁r₂)</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Melting &amp; recasting: volume before = volume after</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Rules (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always check whether the diameter or the radius has been given — halve the diameter before substituting into any formula.</li>
+              <li>Never confuse the slant height (l) with the vertical height (h) of a cone; volume always needs the vertical height.</li>
+              <li>In melting-and-recasting problems, equate volumes, never surface areas — the material is conserved, not the outer skin.</li>
+              <li>Keep units consistent throughout a question; convert everything to the same unit before applying a formula.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formula">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Mensuration — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Cylinder</h5>
+            <p>CSA = 2πrh</p><p>TSA = 2πr(h + r)</p>
+            <p>Volume = πr²h</p><p>Hollow cylinder volume = π(R²−r²)h</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Cone &amp; Frustum</h5>
+            <p>l = √(r² + h²)</p><p>CSA = πrl, TSA = πr(l + r)</p>
+            <p>Volume = (1/3)πr²h</p><p>Frustum: l = √[h²+(r₁−r₂)²], V = (1/3)πh(r₁²+r₂²+r₁r₂)</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Sphere &amp; Hemisphere</h5>
+            <p>Sphere: SA = 4πr², V = (4/3)πr³</p>
+            <p>Hemisphere: CSA = 2πr², TSA = 3πr²</p>
+            <p>Hemisphere Volume = (2/3)πr³</p><p>Melting &amp; recasting: volume is always conserved</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/22</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const BASIC_TERMS=[
+ {name:'Radius (r)', color:'#3D5A80', statement:'The distance from the centre of a circular cross-section — the base of a cylinder or cone, or the sphere itself — to any point on its boundary.', trick:'For a sphere or hemisphere, r is the only measurement needed — there is no separate height.', ex:'A cylindrical tank with radius 7 cm has a circular base of area πr² = 154 cm² (using π = 22/7).'},
+ {name:'Height / Altitude (h)', color:'#2E7D5B', statement:'The perpendicular distance between the two parallel circular ends of a cylinder or frustum, or between the base and the apex (vertex) of a cone.', trick:'Height is always measured perpendicular to the base — never confuse it with the slant height of a cone.', ex:'A cone with base radius 3 cm and height 4 cm has volume (1/3)π(3)²(4) = 12π cm³.'},
+ {name:'Slant Height (l)', color:'#C97A2B', statement:'The distance from the apex of a cone (or the top rim of a frustum) to a point on the edge of the base circle, measured along the curved surface — related to radius and height by Pythagoras: l = √(r²+h²).', trick:'Slant height only exists for cones and frustums; a cylinder has no slant height because its side is already vertical.', ex:'A cone with r = 3 cm, h = 4 cm has slant height l = √(9+16) = 5 cm.'},
+ {name:'Curved &amp; Total Surface Area', color:'#3D5A80', statement:'The curved surface area (CSA) is the area of only the curved part of a solid, excluding flat circular ends; the total surface area (TSA) adds the area of every flat face, so TSA = CSA + area of the base(s).', trick:'For a closed cylinder, TSA = CSA + 2 circular ends; for a cone, TSA = CSA + 1 circular base; a hemisphere has both a curved face and one flat circular face.', ex:'A cylinder with CSA = 2πrh and two circular ends of area πr² each has TSA = 2πrh + 2πr² = 2πr(h+r).'},
+ {name:'Volume', color:'#2E7D5B', statement:'The amount of three-dimensional space enclosed by a solid, measured in cubic units.', trick:'When a solid is melted and recast into another shape, the volume stays exactly the same even though the surface area usually changes.', ex:'Melting a sphere of radius 6 cm and recasting it into a cylinder of radius 4 cm: volume of sphere = (4/3)π(6)³ = 288π cm³, which must equal the volume of the new cylinder.'}
+];
+const PROPERTY_RULES=[
+ {name:'Cylinder', color:'#3D5A80', statement:'A solid with two equal, parallel circular bases connected by a curved surface perpendicular to the bases; every cross-section parallel to the base is an identical circle.', trick:'CSA = 2πrh, TSA = 2πr(h+r), Volume = πr²h — remember TSA simply adds the two circular ends to the CSA.', ex:'A cylinder with r = 7 cm, h = 10 cm has CSA = 440 cm², TSA = 748 cm², Volume = 1540 cm³ (π = 22/7).'},
+ {name:'Cone', color:'#2E7D5B', statement:'A solid with a single circular base tapering smoothly to a single point (the apex), with slant height related to radius and height by l² = r² + h².', trick:'CSA = πrl, TSA = πr(l+r), Volume = (1/3)πr²h — a cone always has exactly one-third the volume of a cylinder with the same base and height.', ex:'A cone with r = 3 cm, h = 4 cm has l = 5 cm, CSA = 15π cm², Volume = 12π cm³.'},
+ {name:'Sphere', color:'#C97A2B', statement:'A perfectly round solid in which every point on the surface is equidistant from a fixed centre point, that distance being the radius.', trick:'Surface Area = 4πr², Volume = (4/3)πr³ — a sphere has no flat face at all, so its CSA and TSA are the same.', ex:'A sphere of radius 7 cm has surface area 616 cm² and volume 4312/3 cm³ ≈ 1437.33 cm³ (π = 22/7).'},
+ {name:'Hemisphere', color:'#3D5A80', statement:'Exactly half of a sphere, obtained by cutting it with a plane through its centre, leaving one curved face and one flat circular face.', trick:'CSA = 2πr² (curved part only), TSA = 3πr² (curved + flat base), Volume = (2/3)πr³ — always half the sphere\'s volume.', ex:'A hemisphere of radius 7 cm has CSA = 308 cm², TSA = 462 cm², Volume = 718.67 cm³ (π = 22/7).'},
+ {name:'Frustum of a Cone', color:'#2E7D5B', statement:'The portion of a cone that remains after its top is sliced off by a plane parallel to the base, leaving two parallel circular faces of different radii r₁ (larger) and r₂ (smaller).', trick:'Slant height l = √[h²+(r₁−r₂)²]; CSA = π(r₁+r₂)l; Volume = (1/3)πh(r₁²+r₂²+r₁r₂) — setting r₂ = 0 reduces every frustum formula back to the plain cone formula.', ex:'A bucket-shaped frustum with r₁ = 15 cm, r₂ = 5 cm, h = 24 cm has slant height 26 cm and volume 5720 cm³ (π = 22/7).'},
+ {name:'Melting &amp; Recasting (Conversion of Solids)', color:'#C97A2B', statement:'When a solid object is melted down and reshaped into one or more different solids, the total amount of material — and hence the total volume — stays exactly the same, even though the surface area and outward appearance change completely.', trick:'Always set (sum of original volumes) = (sum of new volumes) and solve for the unknown dimension; never equate surface areas in these problems.', ex:'Three spheres of radii 6 cm, 8 cm and 10 cm melted into one sphere give a new radius R where R³ = 6³+8³+10³ = 1728, so R = 12 cm.'}
+];
+const COMPDIV_PAIRS=[
+ ['Cylinder Volume','πr²h'],['Cone Volume','(1/3)πr²h'],['Sphere Volume','(4/3)πr³'],['Hemisphere Volume','(2/3)πr³'],['Frustum Volume','(1/3)πh(r₁²+r₂²+r₁r₂)']
+];
+const TYPE_DATA=[
+ {label:'Volume of a Cylinder', formula:'Volume of a right circular cylinder with radius r and height h', value:'V = πr²h'},
+ {label:'Total Surface Area of a Cylinder', formula:'Curved surface plus the two circular ends', value:'TSA = 2πr(h + r)'},
+ {label:'Volume of a Cone', formula:'Volume of a right circular cone with radius r and height h', value:'V = (1/3)πr²h'},
+ {label:'Slant Height &amp; CSA of a Cone', formula:'Slant height from Pythagoras, then curved surface area', value:'l = √(r²+h²), CSA = πrl'},
+ {label:'Volume of a Sphere', formula:'Volume of a solid sphere with radius r', value:'V = (4/3)πr³'},
+ {label:'Volume of a Hemisphere', formula:'Volume of a solid hemisphere with radius r', value:'V = (2/3)πr³'}
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'Find the curved surface area of a cylinder with radius 7 cm and height 10 cm. (Use π = 22/7)',steps:['CSA = 2πrh = 2 × 22/7 × 7 × 10.','CSA = 440 cm².'],ans:'440 cm²'},
+ {level:'easy',q:'Find the volume of a cylinder with radius 7 cm and height 10 cm. (Use π = 22/7)',steps:['V = πr²h = 22/7 × 7² × 10.','V = 22/7 × 49 × 10 = 1540 cm³.'],ans:'1540 cm³'},
+ {level:'easy',q:'Find the volume of a cone with radius 6 cm and height 7 cm. (Use π = 22/7)',steps:['V = (1/3)πr²h = (1/3) × 22/7 × 36 × 7.','V = (1/3) × 22 × 36 = 264 cm³.'],ans:'264 cm³'},
+ {level:'easy',q:'A cone has base radius 3 cm and height 4 cm. Find its slant height.',steps:['l = √(r² + h²) = √(9 + 16) = √25.'],ans:'l = 5 cm'},
+ {level:'easy',q:'Find the surface area of a sphere of radius 7 cm. (Use π = 22/7)',steps:['SA = 4πr² = 4 × 22/7 × 49.','SA = 616 cm².'],ans:'616 cm²'},
+ {level:'easy',q:'Find the volume of a sphere of radius 3 cm. (Use π = 3.14)',steps:['V = (4/3)πr³ = (4/3) × 3.14 × 27.'],ans:'V ≈ 113.04 cm³'},
+ {level:'medium',q:'Find the total surface area of a cone with radius 7 cm and slant height 25 cm. (Use π = 22/7)',steps:['TSA = πr(l + r) = 22/7 × 7 × (25 + 7).','TSA = 22 × 32 = 704 cm².'],ans:'704 cm²'},
+ {level:'medium',q:'Find the curved surface area of a solid hemisphere of radius 10.5 cm. (Use π = 22/7)',steps:['CSA = 2πr² = 2 × 22/7 × 10.5².','CSA = 2 × 22/7 × 110.25 = 693 cm².'],ans:'693 cm²'},
+ {level:'medium',q:'Find the volume of a hemisphere of radius 6 cm. (Use π = 3.14)',steps:['V = (2/3)πr³ = (2/3) × 3.14 × 216.'],ans:'V ≈ 452.16 cm³'},
+ {level:'medium',q:'The curved surface area of a cylinder of height 25 cm is 1100 cm². Find its radius. (Use π = 22/7)',steps:['CSA = 2πrh ⟹ 1100 = 2 × 22/7 × r × 25.','r = 1100 × 7/(2 × 22 × 25) = 7700/1100.'],ans:'r = 7 cm'},
+ {level:'medium',q:'A cone has base area 154 cm² and height 12 cm. Find its volume.',steps:['V = (1/3) × base area × h = (1/3) × 154 × 12.'],ans:'V = 616 cm³'},
+ {level:'medium',q:'Find the radius of a sphere whose volume is 38808 cm³. (Use π = 22/7)',steps:['(4/3)πr³ = 38808 ⟹ r³ = 38808 × 3 × 7/(4 × 22).','r³ = 9261 = 21³.'],ans:'r = 21 cm'},
+ {level:'medium',q:'A sphere of radius 6 cm is melted and recast into a cylinder of radius 4 cm. Find the height of the cylinder.',steps:['Volume is conserved: (4/3)π(6)³ = π(4)²h.','288π = 16πh ⟹ h = 18.'],ans:'h = 18 cm'},
+ {level:'medium',q:'A cone has volume 1232 cm³ and height 24 cm. Find its base radius. (Use π = 22/7)',steps:['(1/3)πr²h = 1232 ⟹ r² = 1232 × 3 × 7/(22 × 24).','r² = 49.'],ans:'r = 7 cm'},
+ {level:'medium',q:'Find the total surface area of a solid hemisphere of radius 7 cm. (Use π = 22/7)',steps:['TSA = 3πr² = 3 × 22/7 × 49.'],ans:'TSA = 462 cm²'},
+ {level:'medium',q:'A cylindrical tank of radius 1.4 m holds water to a depth of 2 m. Find the volume of water in litres. (Use π = 22/7, 1 m³ = 1000 L)',steps:['V = πr²h = 22/7 × 1.4² × 2.','V = 22/7 × 1.96 × 2 = 12.32 m³.'],ans:'12,320 litres'},
+ {level:'hard',q:'A bucket is in the shape of a frustum with radii 15 cm and 5 cm and height 24 cm. Find its slant height and volume. (Use π = 22/7)',steps:['l = √[h² + (r₁−r₂)²] = √(576 + 100) = √676 = 26 cm.','V = (1/3)πh(r₁²+r₂²+r₁r₂) = (1/3) × 22/7 × 24 × (225+25+75).','V = (1/3) × 22/7 × 24 × 325 = 5720 cm³.'],ans:'l = 26 cm, V = 5720 cm³'},
+ {level:'hard',q:'Three solid spheres of radii 6 cm, 8 cm and 10 cm are melted and recast into a single solid sphere. Find the radius of the new sphere.',steps:['Total volume is conserved: (4/3)π(6³+8³+10³) = (4/3)πR³.','6³+8³+10³ = 216+512+1000 = 1728 = 12³.'],ans:'R = 12 cm'},
+ {level:'hard',q:'A solid is in the shape of a cone mounted on a hemisphere of the same radius 7 cm; the cone has height 24 cm. Find the total surface area of the solid. (Use π = 22/7)',steps:['Slant height of cone: l = √(7²+24²) = √(49+576) = √625 = 25 cm.','Total surface = CSA of cone + CSA of hemisphere = πrl + 2πr².','= 22/7 × 7 × 25 + 2 × 22/7 × 49 = 550 + 308 = 858 cm².'],ans:'858 cm²'},
+ {level:'hard',q:'A right circular cylinder of radius 3.5 cm and height 10 cm has a hemisphere of the same radius scooped out from each of its two flat ends. Find the volume of the remaining solid. (Use π = 22/7)',steps:['Volume of cylinder = πr²h = 22/7 × 12.25 × 10 = 385 cm³.','Volume of two hemispheres removed = 2 × (2/3)πr³ = (4/3) × 22/7 × 42.875 ≈ 179.67 cm³.','Remaining volume = 385 − 179.67.'],ans:'≈ 205.33 cm³'},
+ {level:'hard',q:'Rainwater from a roof of dimensions 22 m × 20 m drains into a cylindrical vessel of diameter 2 m. If the rainfall is 3 cm, find the height the water rises in the vessel. (Use π = 22/7)',steps:['Volume of rainwater = 22 × 20 × 0.03 = 13.2 m³.','This fills the cylinder: πr²h = 13.2, with r = 1 m.','22/7 × 1 × h = 13.2 ⟹ h = 13.2 × 7/22.'],ans:'h = 4.2 m'},
+ {level:'hard',q:'A cone of height 24 cm and base radius 6 cm is carved out from a solid cylinder of the same radius and height. Find the volume of the remaining solid. (Use π = 22/7)',steps:['Volume of cylinder = πr²h = 22/7 × 36 × 24 ≈ 2715.43 cm³.','Volume of cone = (1/3)πr²h ≈ 905.14 cm³.','Remaining volume = cylinder − cone = two-thirds of the cylinder\'s volume.'],ans:'≈ 1810.29 cm³'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Cylinder',time:'3 min',q:'Find the volume of a cylinder of radius 7 cm and height 15 cm. (Use π = 22/7)',sol:'V = πr²h = 22/7 × 49 × 15 = 2310 cm³.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Cone',time:'5 min',q:'A cone has radius 6 cm and slant height 10 cm. Find its curved surface area and total surface area. (Use π = 3.14)',sol:'CSA = πrl = 3.14 × 6 × 10 = 188.4 cm². TSA = CSA + πr² = 188.4 + 3.14×36 = 301.44 cm².'},
+ {year:'2022',diff:'Medium',marks:3,topic:'Sphere &amp; Hemisphere',time:'5 min',q:'Find the volume of a hemisphere of radius 21 cm. (Use π = 22/7)',sol:'V = (2/3)πr³ = (2/3) × 22/7 × 9261 = 19,404 cm³.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Frustum',time:'7 min',q:'A bucket in the form of a frustum has radii 20 cm and 12 cm and height 15 cm. Find its volume. (Use π = 22/7)',sol:'V = (1/3)πh(r₁²+r₂²+r₁r₂) = (1/3) × 22/7 × 15 × (400+144+240) = 12,320 cm³.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Sphere',time:'3 min',q:'Find the surface area of a sphere whose radius is 14 cm. (Use π = 22/7)',sol:'SA = 4πr² = 4 × 22/7 × 196 = 2464 cm².'},
+ {year:'2021',diff:'Hard',marks:4,topic:'Combination of Solids',time:'7 min',q:'A solid toy is in the form of a hemisphere surmounted by a cone of the same radius 3.5 cm; the total height of the toy is 15.5 cm. Find the volume of the toy. (Use π = 22/7)',sol:'Cone height = 15.5 − 3.5 = 12 cm. Cone volume = 154 cm³, hemisphere volume ≈ 89.83 cm³, total ≈ 243.83 cm³.'}
+];
+
+const MISTAKES=[
+ 'Confusing the slant height (l) with the vertical height (h) of a cone — using l in the volume formula instead of h, when volume always needs the perpendicular height.',
+ 'Forgetting to add the base area(s) when the total surface area (TSA) is asked for, and giving only the curved surface area (CSA) instead.',
+ 'Using the diameter in place of the radius in a formula — always halve the diameter before substituting into any surface area or volume formula.',
+ 'Equating surface areas instead of volumes in melting-and-recasting problems — only volume is conserved when a solid is melted and reshaped, not surface area.',
+ 'Mixing up units — writing a surface area answer in cm³ or a volume answer in cm², instead of matching square units to area and cubic units to volume.'
+];
+
+const FLASH=[
+ {f:'Cylinder Volume', b:'V = πr²h'},
+ {f:'Cylinder CSA', b:'2πrh'},
+ {f:'Cylinder TSA', b:'2πr(h + r)'},
+ {f:'Cone Volume', b:'(1/3)πr²h'},
+ {f:'Cone Slant Height', b:'l = √(r² + h²)'},
+ {f:'Cone CSA', b:'πrl'},
+ {f:'Cone TSA', b:'πr(l + r)'},
+ {f:'Sphere Surface Area', b:'4πr²'},
+ {f:'Sphere Volume', b:'(4/3)πr³'},
+ {f:'Hemisphere CSA', b:'2πr²'},
+ {f:'Hemisphere TSA', b:'3πr²'},
+ {f:'Hemisphere Volume', b:'(2/3)πr³'},
+ {f:'Frustum Slant Height', b:'l = √[h² + (r₁ − r₂)²]'},
+ {f:'Frustum CSA', b:'π(r₁ + r₂)l'},
+ {f:'Frustum Volume', b:'(1/3)πh(r₁²+r₂²+r₁r₂)'},
+ {f:'Melting &amp; Recasting Rule', b:'Volume before = Volume after (surface area may change)'}
+];
+
+const CC_MCQ=[
+ {t:'formulas',q:'The volume of a right circular cylinder of radius r and height h is:',opts:['πr²h','2πrh','πrl','(1/3)πr²h'],a:0},
+ {t:'formulas',q:'The curved surface area of a cone with radius r and slant height l is:',opts:['πr²','πrl','2πrl','πr(l+r)'],a:1},
+ {t:'formulas',q:'The volume of a sphere of radius r is:',opts:['4πr²','(4/3)πr³','(2/3)πr³','πr³'],a:1},
+ {t:'basics',q:'The slant height of a cone is related to its radius and height by:',opts:['l = r + h','l² = r² + h²','l = r × h','l = r − h'],a:1},
+ {t:'basics',q:'The flat circular face of a hemisphere is included in its:',opts:['Curved surface area only','Total surface area only','Neither CSA nor TSA','Both CSA and TSA'],a:1},
+ {t:'basics',q:'A frustum is formed when a cone is cut by a plane:',opts:['Through its apex','Parallel to its base','Perpendicular to its base','Through its centre only'],a:1},
+ {t:'theorems',q:'When a solid is melted and recast into another shape, the quantity that stays constant is:',opts:['Surface area','Volume','Curved surface area','Height'],a:1},
+ {t:'theorems',q:'The total surface area of a solid hemisphere of radius r is:',opts:['2πr²','3πr²','4πr²','πr²'],a:1},
+ {t:'theorems',q:'The volume of a frustum with radii r₁, r₂ and height h is:',opts:['πh(r₁+r₂)','(1/3)πh(r₁²+r₂²+r₁r₂)','πh(r₁²+r₂²)','(1/3)πr²h'],a:1},
+ {t:'solids',q:'A cylinder and a cone have the same radius and height. The volume of the cone is:',opts:['Equal to the cylinder','Twice the cylinder','One-third of the cylinder','Three times the cylinder'],a:2},
+ {t:'solids',q:'The ratio of the volume of a sphere to the volume of a cylinder that exactly circumscribes it (same radius, height = diameter) is:',opts:['1:1','2:3','3:2','1:3'],a:1},
+ {t:'general',q:'If the radius of a sphere is doubled, its volume becomes:',opts:['2 times','4 times','6 times','8 times'],a:3},
+ {t:'general',q:'The units of total surface area are always:',opts:['Linear units','Square units','Cubic units','No units'],a:1},
+ {t:'general',q:'The units of volume are always:',opts:['Linear units','Square units','Cubic units','No units'],a:2},
+ {t:'formulas',q:'The curved surface area of a right circular cylinder of radius r and height h is:',opts:['πr²h','2πrh','πr(h+r)','2πr(h+r)'],a:1}
+];
+const CC_FIB=[
+ {t:'formulas',q:'The volume of a cylinder is πr²h, where h stands for the ______ of the cylinder.',a:'height'},
+ {t:'formulas',q:'The slant height of a cone is found using the ______ theorem.',a:'pythagoras'},
+ {t:'formulas',q:'The curved surface area of a sphere equals its total surface area since a sphere has ______ flat faces.',a:'0'},
+ {t:'basics',q:'A frustum has ______ circular parallel faces of different radii.',a:'two'},
+ {t:'basics',q:'The flat face of a solid hemisphere is a ______.',a:'circle'},
+ {t:'basics',q:'A cone has exactly ______ vertex (apex).',a:'one'},
+ {t:'theorems',q:'When a solid is melted and recast, its ______ remains unchanged.',a:'volume'},
+ {t:'theorems',q:'The total surface area of a hemisphere equals ______ times πr².',a:'3'},
+ {t:'theorems',q:'The volume of a hemisphere is ______ the volume of a sphere of the same radius.',a:'half'},
+ {t:'solids',q:'A cone with the same base radius and height as a cylinder has ______ the volume of the cylinder.',a:'1/3'},
+ {t:'general',q:'If the radius of a sphere is tripled, its volume becomes ______ times as large.',a:'27'},
+ {t:'general',q:'The curved surface area of a solid is always measured in ______ units.',a:'square'},
+ {t:'general',q:'The volume of a solid is always measured in ______ units.',a:'cubic'},
+ {t:'formulas',q:'For a frustum, the slant height is l = √[h² + (r₁ − r₂)²], where h is the ______ of the frustum.',a:'height'},
+ {t:'formulas',q:'The formula V = (4/3)πr³ gives the volume of a ______.',a:'sphere'}
+];
+const CC_TF=[
+ {t:'formulas',q:'The volume of a cylinder is πr²h.',a:true},
+ {t:'formulas',q:'The curved surface area of a cone is 2πrl.',a:false},
+ {t:'formulas',q:'The volume of a sphere is (4/3)πr³.',a:true},
+ {t:'basics',q:'A hemisphere has a curved surface and a flat circular face.',a:true},
+ {t:'basics',q:'A cylinder has a slant height, just like a cone does.',a:false},
+ {t:'basics',q:'A frustum has two parallel circular faces of equal radius.',a:false},
+ {t:'theorems',q:'When a solid is melted and recast into another shape, its surface area always stays the same.',a:false},
+ {t:'theorems',q:'The total surface area of a solid hemisphere is 3πr².',a:true},
+ {t:'theorems',q:'The volume of a cone is one-third the volume of a cylinder with the same base and height.',a:true},
+ {t:'solids',q:'Doubling the radius of a sphere doubles its volume.',a:false},
+ {t:'solids',q:'A frustum\'s volume formula reduces to a cone\'s volume formula when one radius becomes zero.',a:true},
+ {t:'general',q:'Volume is always expressed in square units.',a:false},
+ {t:'general',q:'Surface area is always expressed in square units.',a:true},
+ {t:'general',q:'The radius used in any mensuration formula must first be halved if the diameter is given.',a:true},
+ {t:'general',q:'A sphere has a flat circular face, just like a hemisphere does.',a:false}
+];
+
+const AR=[
+ {a:'The volume of a cylinder with radius 7 cm and height 10 cm is 1540 cm³.', r:'The volume of a cylinder is V = πr²h, and substituting r = 7, h = 10 with π = 22/7 gives 22/7 × 49 × 10 = 1540 cm³.', ans:0, explain:'Both statements are true, and R correctly explains A — direct substitution into the volume formula gives exactly 1540 cm³.'},
+ {a:'The total surface area of a solid hemisphere of radius r is 3πr².', r:'The total surface area of a hemisphere is its curved surface area (2πr²) plus the area of its flat circular base (πr²).', ans:0, explain:'Both statements are true, and R correctly explains A: 2πr² + πr² = 3πr².'},
+ {a:'A frustum is obtained by cutting a cone with a plane parallel to its base.', r:'Every cross-section of a cone parallel to its base is a circle.', ans:1, explain:'Both statements are true, but R — though a correct general fact about cones — does not specifically explain why cutting parallel to the base leaves two parallel circular faces of different radii, which is the defining feature of a frustum described in A.'},
+ {a:'The volume of a sphere of radius 21 cm is 38808 cm³ (using π = 22/7).', r:'A sphere is a solid where every point on its surface is equidistant from a fixed centre point.', ans:1, explain:'Both statements are true — the volume calculation checks out, and the definition of a sphere in R is correct. But R is simply the definition of a sphere; it does not explain how the specific value 38808 cm³ was calculated.'},
+ {a:'The curved surface area of a cone with radius 7 cm and slant height 25 cm is 550 cm² (using π = 22/7).', r:'The curved surface area of a cone is given by CSA = πr²l.', ans:2, explain:'A is true: CSA = πrl = 22/7 × 7 × 25 = 550 cm². But R is false — it states the formula incorrectly as πr²l; the correct formula is CSA = πrl, using r to the first power only.'},
+ {a:'Melting three spheres of radii 6 cm, 8 cm and 10 cm and recasting them into one sphere gives a new sphere of radius 12 cm.', r:'When solids are melted and recast, the total surface area is always conserved, allowing the new radius to be found directly from the surface areas.', ans:2, explain:'A is true — since 6³+8³+10³ = 216+512+1000 = 1728 = 12³, the new radius is indeed 12 cm. But R is false — it is volume, not surface area, that is conserved during melting and recasting.'},
+ {a:'A cone and a cylinder with the same base radius and the same height always have equal volumes.', r:'The volume of a cone is exactly one-third the volume of a cylinder that shares its base radius and height.', ans:3, explain:'A is false — a cone\'s volume is only one-third of such a cylinder\'s volume, never equal to it. R is true and correctly states this 1:3 relationship, which is precisely why A is false.'},
+ {a:'A cylinder has a slant height, just like a cone does.', r:'The curved (lateral) surface of a right circular cylinder is already perpendicular to its base, so there is no slanted edge to measure.', ans:3, explain:'A is false — only cones and frustums have a slant height; a cylinder\'s side is vertical, not slanted, so it has no slant height at all. R is true and correctly explains why.'},
+ {a:'Doubling the radius of a sphere doubles its volume.', r:'The volume of a sphere is directly proportional to its radius, V ∝ r.', ans:4, explain:'Both statements are false. Since volume depends on the cube of the radius (V ∝ r³, not r), doubling the radius multiplies the volume by 2³ = 8, not 2 — so A is false, and R\'s claim of direct proportionality to r is also false.'},
+ {a:'A sphere has a flat circular face, just like a hemisphere does.', r:'Every solid of revolution formed by rotating a shape about an axis must have at least one flat face.', ans:4, explain:'Both statements are false. A sphere has no flat face at all, unlike a hemisphere which has one flat circular face. R\'s general claim is also false — a full sphere is itself a solid of revolution with zero flat faces, directly contradicting it.'}
+];
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A.',
+ 'Both A and R are true, but R is not the correct explanation of A.',
+ 'A is true, but R is false.',
+ 'A is false, but R is true.',
+ 'Both A and R are false.'
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'Find the CSA of a cylinder of radius 7 cm and height 5 cm. (Use π = 22/7)','CSA = 2πrh.','220 cm²'),
+ mk(2,'Find the volume of a cylinder of radius 7 cm and height 5 cm. (Use π = 22/7)','V = πr²h.','770 cm³'),
+ mk(3,'Find the volume of a cone with radius 3 cm and height 7 cm. (Use π = 22/7)','V = (1/3)πr²h.','66 cm³'),
+ mk(4,'Find the slant height of a cone with radius 6 cm and height 8 cm.','Apply the Pythagoras theorem.','l = 10 cm'),
+ mk(5,'Find the CSA of a cone with radius 6 cm and slant height 10 cm. (Use π = 3.14)','CSA = πrl.','188.4 cm²'),
+ mk(6,'Find the surface area of a sphere of radius 3.5 cm. (Use π = 22/7)','SA = 4πr².','154 cm²'),
+ mk(7,'Find the volume of a sphere of radius 3 cm. (Use π = 3.14)','V = (4/3)πr³.','≈113.04 cm³'),
+ mk(8,'Find the CSA of a hemisphere of radius 7 cm. (Use π = 22/7)','CSA = 2πr².','308 cm²'),
+ mk(9,'Find the TSA of a hemisphere of radius 7 cm. (Use π = 22/7)','TSA = 3πr².','462 cm²'),
+ mk(10,'Find the volume of a hemisphere of radius 3 cm. (Use π = 3.14)','V = (2/3)πr³.','≈56.52 cm³'),
+ mk(11,'A cylinder has radius 4 cm and height 10 cm. Find its volume in terms of π.','Leave the answer as a multiple of π.','160π cm³'),
+ mk(12,'Find the height of a cylinder of radius 5 cm and volume 550 cm³. (Use π = 22/7)','h = V/(πr²).','h = 7 cm'),
+ mk(13,'A cone has radius 5 cm and height 12 cm. Find its slant height.','This is the classic 5-12-13 Pythagoras triple.','l = 13 cm'),
+ mk(14,'Find the volume of a cone with radius 7 cm and height 3 cm. (Use π = 22/7)','V = (1/3)πr²h.','154 cm³'),
+ mk(15,'A sphere has radius 4.5 cm. Find its diameter.','Diameter = 2 × radius.','9 cm'),
+ mk(16,'State the formula for the volume of a frustum with radii r₁, r₂ and height h.','Recall the theorem card for frustums.','V = (1/3)πh(r₁²+r₂²+r₁r₂)'),
+ mk(17,'Find the CSA of a cylinder of radius 2 cm and height 14 cm. (Use π = 22/7)','CSA = 2πrh.','176 cm²'),
+ mk(18,'A hemisphere has radius 6 cm. Find its volume in terms of π.','Leave the answer as a multiple of π.','144π cm³'),
+ mk(19,'Find the radius of a sphere whose surface area is 616 cm². (Use π = 22/7)','r² = SA/(4π).','r = 7 cm'),
+ mk(20,'State the ratio of the volumes of a cone, a hemisphere and a cylinder that share the same base radius and the same height equal to that radius.','Recall the classic 1:2:3 ratio.','Cone : Hemisphere : Cylinder = 1 : 2 : 3')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'Find the TSA of a cylinder of radius 7 cm and height 10 cm. (Use π = 22/7)','TSA = 2πr(h+r).','748 cm²'),
+ mk(2,'A cone has volume 100.48 cm³ and height 6 cm. Find its radius. (Use π = 3.14)','r² = 3V/(πh).','r = 4 cm'),
+ mk(3,'Find the TSA of a cone with radius 5 cm and slant height 13 cm. (Use π = 3.14)','TSA = πr(l+r).','282.6 cm²'),
+ mk(4,'A sphere of radius 6 cm is melted and recast into a cylinder of radius 3 cm. Find the height of the cylinder.','Equate the volumes before and after.','h = 32 cm'),
+ mk(5,'Find the volume of a hemisphere whose CSA is 1232 cm². (Use π = 22/7)','First find the radius from the CSA formula.','r = 14 cm, V ≈ 5749.33 cm³'),
+ mk(6,'A frustum has radii 10 cm and 5 cm, and height 12 cm. Find its slant height.','Use Pythagoras with h and (r₁−r₂).','l = 13 cm'),
+ mk(7,'Find the volume of a cone whose base circumference is 44 cm and height is 12 cm. (Use π = 22/7)','Use the circumference to find r first.','r = 7 cm, V = 616 cm³'),
+ mk(8,'A sphere and a cube have equal volumes; the cube has side 6 cm. Find the sphere\'s radius. (Use π = 22/7)','Equate the volumes and solve for r³.','r ≈ 3.72 cm'),
+ mk(9,'A cone has radius 7 cm and volume 1232 cm³. Find its height, slant height and curved surface area. (Use π = 22/7)','Find h from the volume formula first, then use Pythagoras for l.','h = 24 cm, l = 25 cm, CSA = 550 cm²'),
+ mk(10,'Find the volume of a hemispherical bowl of radius 3.5 cm. (Use π = 22/7)','V = (2/3)πr³.','≈89.83 cm³'),
+ mk(11,'A solid sphere of radius 6 cm is melted and recast into small spheres of radius 1.5 cm each. Find the number of small spheres formed.','Divide the total volume by one small sphere\'s volume.','64 spheres'),
+ mk(12,'Find the radius of a cylinder whose volume is 2310 cm³ and height is 15 cm. (Use π = 22/7)','r² = V/(πh).','r = 7 cm'),
+ mk(13,'A cone has height 15 cm and volume 1570 cm³. Find its radius. (Use π = 3.14)','r² = 3V/(πh).','r = 10 cm'),
+ mk(14,'A hemisphere and a cone have equal base radius 6 cm and equal volume. Find the height of the cone.','Equate (2/3)πr³ with (1/3)πr²h.','h = 12 cm'),
+ mk(15,'A solid hemisphere has volume 19,404 cm³. Find its radius and total surface area. (Use π = 22/7)','First find r from the volume formula.','r = 21 cm, TSA = 4158 cm²'),
+ mk(16,'A frustum has radii 6 cm and 3 cm and slant height 5 cm. Find its curved surface area. (Use π = 3.14)','CSA = π(r₁+r₂)l.','141.3 cm²'),
+ mk(17,'A cylinder and a cone have equal radii and equal volumes. If the cylinder\'s height is 4 cm, find the cone\'s height.','Equate πr²(4) with (1/3)πr²h.','h = 12 cm'),
+ mk(18,'A hollow cylindrical pipe has length 21 cm, external radius 4 cm and internal radius 3 cm. Find the volume of metal used. (Use π = 22/7)','V = π(R²−r²) × length.','462 cm³'),
+ mk(19,'A sphere\'s volume is numerically equal to its surface area. Find its radius.','Equate (4/3)πr³ with 4πr².','r = 3 units'),
+ mk(20,'Find the volume of a frustum with radii 7 cm and 3 cm and height 9 cm. (Use π = 22/7)','V = (1/3)πh(r₁²+r₂²+r₁r₂).','≈744.86 cm³')
+];
+const PZ3=[ // Level 3 - ICSE exam
+ mk(1,'A bucket in the form of a frustum has radii 20 cm and 12 cm, and height 15 cm. Find its capacity in litres. (Use π = 22/7, 1 L = 1000 cm³)','Use the frustum volume formula, then convert.','12.32 litres'),
+ mk(2,'A solid metallic sphere of radius 10.5 cm is melted and recast into cones, each of radius 3.5 cm and height 3 cm. Find the number of cones formed.','Divide the sphere\'s volume by one cone\'s volume.','126 cones'),
+ mk(3,'A cylindrical vessel of radius 6 cm contains water to a height of 10 cm. A solid metallic sphere of radius 3 cm is dropped into it. Find the rise in water level.','The rise in volume equals the sphere\'s volume.','1 cm'),
+ mk(4,'A conical tent has base radius 7 m and height 24 m. Find the area of canvas needed to make it. (Use π = 22/7)','Canvas = CSA of the cone; find the slant height first.','550 m²'),
+ mk(5,'Water flows through a cylindrical pipe of internal radius 1 cm at 6 m/s into an empty cylindrical tank of radius 60 cm. Find the time taken to fill the tank to a height of 2 m.','Equate the flow volume per second to the tank\'s target volume.','20 minutes'),
+ mk(6,'A hemispherical bowl of internal radius 9 cm is full of liquid, which is poured into cylindrical bottles of radius 1.5 cm and height 4 cm. How many bottles are needed?','Divide the bowl\'s volume by one bottle\'s volume.','54 bottles'),
+ mk(7,'The radii of the ends of a frustum are 14 cm and 7 cm and its slant height is 10 cm. Find its curved surface area. (Use π = 22/7)','CSA = π(r₁+r₂)l.','660 cm²'),
+ mk(8,'A solid iron cuboid of dimensions 4.4 m × 2.6 m × 1 m is melted to form a solid cylinder of height 1 m. Find the radius of the cylinder. (Use π = 22/7)','Equate the cuboid\'s volume to the cylinder\'s volume.','≈1.91 m'),
+ mk(9,'Find the volume of the largest right circular cone that can be cut from a cube of edge 7 cm. (Use π = 22/7)','The cone\'s base diameter and height both equal 7 cm.','≈89.83 cm³'),
+ mk(10,'Two cones have heights in the ratio 1:3 and radii in the ratio 3:1. Find the ratio of their volumes.','Volume is proportional to r²h.','3:1'),
+ mk(11,'A cylindrical bucket of height 32 cm and radius 18 cm is emptied onto the ground, forming a conical heap of height 24 cm. Find the radius of the heap.','Equate the cylinder\'s volume to the cone\'s volume.','r = 36 cm'),
+ mk(12,'Find the ratio of the volume of a cube of side a to the volume of a sphere that exactly fits inside it (sphere diameter = a).','The sphere\'s radius is a/2.','6 : π'),
+ mk(13,'A right circular cylinder has height equal to its diameter. If its volume is 2156 cm³, find its radius. (Use π = 22/7)','Substitute h = 2r into the volume formula and solve r³.','r = 7 cm'),
+ mk(14,'A hollow cylindrical tube open at both ends has external diameter 10 cm, thickness 1 cm and length 21 cm. Find the volume of metal used. (Use π = 22/7)','Volume = π(R²−r²) × length, with R = 5 cm, r = 4 cm.','594 cm³'),
+ mk(15,'A cone has slant height 26 cm and base radius 10 cm. Find its height.','h = √(l²−r²).','h = 24 cm'),
+ mk(16,'The volumes of two spheres are in the ratio 64:27. Find the ratio of their surface areas.','Find the ratio of radii first (cube root), then square it.','16:9'),
+ mk(17,'A conical vessel with base radius 6 cm and height 8 cm is full of water, which is poured into a cylindrical vessel of radius 4 cm. Find the height to which the water rises.','Equate the cone\'s volume to the cylinder\'s volume.','h = 6 cm'),
+ mk(18,'Three metallic cubes of edges 3 cm, 4 cm and 5 cm are melted to form a single cube. Find the edge of the new cube.','Add the three volumes and take the cube root.','edge = 6 cm'),
+ mk(19,'A solid cone-on-hemisphere toy (radius 3.5 cm for both, cone height 6 cm) stands upright inside a full cylindrical vessel of the same radius and height 10 cm, touching the bottom. Find the volume of water left in the cylinder. (Use π = 22/7)','Water left = cylinder volume − (cone volume + hemisphere volume).','≈218.17 cm³'),
+ mk(20,'A metallic sphere of radius 4.2 cm is melted and recast into a cylinder of radius 6 cm. Find the height of the cylinder.','Equate the volumes before and after.','h ≈ 2.744 cm')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (basics / theorems)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('basicsGrid',BASIC_TERMS);
+buildTheoremCards('propertiesGrid',PROPERTY_RULES);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=BASIC_TERMS.concat(PROPERTY_RULES);
+  let head='<tr><th>Definition / Rule</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Melting & Recasting pairs list
+const compdivLeft=document.getElementById('compdivLeft');
+const cpCard=el('div','card pad');
+COMPDIV_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+compdivLeft.appendChild(cpCard);
+
+// Core Formulas legend chips
+const typeLegend=document.getElementById('typeLegend');
+TYPE_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===0?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('typeName').textContent=item.label;
+    document.getElementById('typeFormula').textContent=item.formula;
+    document.getElementById('typeValue').textContent=item.value;
+  });
+  typeLegend.appendChild(chip);
+});
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('mn_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('mn_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase().replace(/\s+/g,'')===item.a.toLowerCase().replace(/\s+/g,'');
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','ar-card');
+  card.innerHTML=`<div class="qtag">Assertion &amp; Reasoning · Q${i+1}</div>
+  <div class="ar-statement"><b>Assertion (A)</b>${item.a}</div>
+  <div class="ar-statement"><b>Reason (R)</b>${item.r}</div>`;
+  const optsWrap=el('div');
+  AR_OPTIONS.forEach((opt,oi)=>{
+    const label='(' + 'abcde'[oi] + ') ' + opt;
+    const b=el('button','opt-btn',label);
+    b.addEventListener('click',()=>{
+      card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){b.classList.add('correct'); recordQuiz(true);}
+      else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false);}
+      card.querySelector('.ar-explain').classList.add('show');
+    });
+    optsWrap.appendChild(b);
+  });
+  card.appendChild(optsWrap);
+  card.appendChild(el('div','ar-explain','💡 '+item.explain));
+  arList.appendChild(card);
+});
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('mn_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('mn_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').innerHTML=item.f;
+  document.getElementById('flashBack').innerHTML=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+/* ============================================================
+   HERO INSTRUMENT — slider changes cylinder height, recomputes CSA/TSA/Volume
+============================================================ */
+const cylTop=document.getElementById('cylTop');
+const cylBottom=document.getElementById('cylBottom');
+const cylLeft=document.getElementById('cylLeft');
+const cylRight=document.getElementById('cylRight');
+const labelDims=document.getElementById('labelDims');
+const mnSlider=document.getElementById('mnSlider');
+const R_CM=4, BASE_Y=170, PX_PER_CM=10;
+function setHeight(hVal){
+  const topY = BASE_Y - hVal*PX_PER_CM;
+  cylTop.setAttribute('cy',topY);
+  cylLeft.setAttribute('y2',topY);
+  cylRight.setAttribute('y2',topY);
+  labelDims.textContent=`r = ${R_CM} cm, h = ${hVal} cm`;
+
+  const PI=Math.PI;
+  const csa=2*PI*R_CM*hVal;
+  const tsa=2*PI*R_CM*(hVal+R_CM);
+  const vol=PI*R_CM*R_CM*hVal;
+  const litres=vol/1000;
+
+  document.getElementById('rCSA').textContent=csa.toFixed(2)+' cm²';
+  document.getElementById('rTSA').textContent=tsa.toFixed(2)+' cm²';
+  document.getElementById('rVol').textContent=vol.toFixed(2)+' cm³';
+  document.getElementById('rLitres').textContent=litres.toFixed(2)+' L';
+}
+mnSlider.addEventListener('input',()=>setHeight(parseInt(mnSlider.value)));
+setHeight(parseInt(mnSlider.value));
+
+// Melting & Recasting slider (sphere melted into a cylinder — volume invariant demo)
+const compdivSlider=document.getElementById('compdivSlider');
+const SPHERE_R=6;
+const SPHERE_VOL=(4/3)*Math.PI*Math.pow(SPHERE_R,3);
+function updateCompdiv(){
+  const r=parseInt(compdivSlider.value);
+  const h=SPHERE_VOL/(Math.PI*r*r);
+  document.getElementById('compdivA').textContent=r;
+  document.getElementById('compdivB').textContent=h.toFixed(2);
+  document.getElementById('compdivSum').textContent=`Sphere volume = (4/3)π(6)³ ≈ ${SPHERE_VOL.toFixed(2)} cm³, so the cylinder's volume πr²h is forced to equal ${SPHERE_VOL.toFixed(2)} cm³ no matter which radius you pick (currently r = ${r} cm, h = ${h.toFixed(2)} cm).`;
+}
+compdivSlider.addEventListener('input',updateCompdiv); updateCompdiv();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','formulas','basics','theorems','conserve','examples','conceptcheck','arsection','practice','pyq','mistakes','revision','flashcards','formula','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('mn_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('mn_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('mn_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('mn_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('mn_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('mn_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('mn_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['mn_sectionsRead','mn_examplesOpened','mn_quizStats','mn_pz_l1','mn_pz_l2','mn_pz_l3','mn_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>

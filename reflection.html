@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reflection — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+#rfSlider{width:100%; margin-top:.6rem;}
+
+/* ===================== FORMULA CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:1.02rem; color:var(--ink-soft); margin:.3rem 0;}
+.result-box .rvalue{font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--ink);}
+
+/* ===================== THEOREM/RULE CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.92rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:1rem;}
+.ar-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.ar-statement{padding:.6rem .8rem; background:var(--paper); border-left:3px solid var(--ink-soft); border-radius:0 8px 8px 0; margin:.5rem 0; font-size:.92rem;}
+.ar-statement b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; display:block; margin-bottom:.15rem; letter-spacing:.05em;}
+.ar-explain{display:none; margin-top:.6rem; font-size:.86rem; padding:.55rem .7rem; border-radius:8px; background:var(--amber-tint); border-left:3px solid var(--amber);}
+.ar-explain.show{display:block;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.25rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:1rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formula){display:none !important;}
+  #formula{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">✛ <span>Reflection</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="formulas" href="#formulas"><span class="dot"></span>Core Formulas</a>
+    <a class="navlink" data-target="basics" href="#basics"><span class="dot"></span>Key Terms</a>
+    <a class="navlink" data-target="theorems" href="#theorems"><span class="dot"></span>Theorems &amp; Rules</a>
+    <a class="navlink" data-target="area" href="#area"><span class="dot"></span>Invariant Points</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="arsection" href="#arsection"><span class="dot"></span>Assertion &amp; Reasoning</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formula" href="#formula"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Reflection</div>
+        <h1>Every point has<br>a mirror image.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the slider to slide point P along the plane — watch its image P′ in the x-axis update instantly, always the same perpendicular distance on the other side.</p>
+        <div class="hero-cta">
+          <a href="#formulas" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <svg id="heroSvg" viewBox="0 0 320 200" style="width:100%; height:auto;">
+          <line x1="10" y1="100" x2="310" y2="100" stroke="#E1D9C6" stroke-width="2"/>
+          <line x1="160" y1="10" x2="160" y2="190" stroke="#E1D9C6" stroke-width="2"/>
+          <text x="300" y="112" font-family="IBM Plex Mono" font-size="10" fill="#6B7A99">x</text>
+          <text x="165" y="18" font-family="IBM Plex Mono" font-size="10" fill="#6B7A99">y</text>
+          <line id="segPP" x1="196" y1="46" x2="196" y2="154" stroke="#C97A2B" stroke-width="2" stroke-dasharray="4 3"/>
+          <circle id="ptP" cx="196" cy="46" r="5" fill="#3D5A80"/>
+          <circle id="ptM" cx="196" cy="100" r="3.5" fill="#A15E1B"/>
+          <circle id="ptPp" cx="196" cy="154" r="5" fill="#2E7D5B"/>
+          <text id="labelP" x="202" y="42" font-family="IBM Plex Mono" font-size="11" fill="#3D5A80" font-weight="700">P(2,3)</text>
+          <text id="labelPp" x="202" y="166" font-family="IBM Plex Mono" font-size="11" fill="#2E7D5B" font-weight="700">P′(2,-3)</text>
+          <text x="160" y="200" font-family="IBM Plex Mono" font-size="9" fill="#6B7A99" text-anchor="middle">mirror line: x-axis ↓</text>
+        </svg>
+        <input type="range" id="rfSlider" min="-6" max="6" value="2" step="1">
+        <div class="instrument-readout">
+          <div>Object P <b id="rObject">(2, 3)</b></div>
+          <div>Image P′ <b id="rImage">(2, -3)</b></div>
+          <div>Midpoint on axis <b id="rMid">(2, 0)</b></div>
+          <div>PM = MP′ <b id="rEqual">3 = 3</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is Reflection?</h2>
+        <p class="lede">Reflection is a transformation that produces the mirror image of a point or figure across a fixed line — every point moves to a new position on the opposite side of that line, at exactly the same perpendicular distance, so the whole figure "flips" without changing its size or shape.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Reflection is the simplest of the geometric transformations, yet it is the building block for understanding symmetry, congruence, and later, rotations and translations. On the coordinate plane, each of the standard mirror lines — the x-axis, the y-axis, the origin, and lines like x = a or y = b — gives a simple algebraic rule connecting an object's coordinates to its image's coordinates, so reflection problems become pure calculation rather than careful drawing.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Mirror and symmetry designs in art and architecture</li>
+              <li>Computer graphics and animation (sprite flipping)</li>
+              <li>Optics — how light reflects off a plane surface</li>
+              <li>Testing whether a figure has a line of symmetry</li>
+              <li>Understanding congruent and invariant figures</li>
+              <li>Foundation for rotation and translation transformations</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><line x1="12" y1="2" x2="12" y2="22"/><circle cx="7" cy="8" r="1.6" fill="#C97A2B"/><circle cx="17" cy="8" r="1.6" fill="#C97A2B"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Reflection in a Line</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="17" cy="7" r="2"/><circle cx="7" cy="17" r="2"/><line x1="15.5" y1="8.5" x2="8.5" y2="15.5" stroke-dasharray="2 2"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Object &amp; Image</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="2" fill="#2E7D5B"/><circle cx="12" cy="12" r="8"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Invariant Points</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7" stroke-dasharray="2 2"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Congruent Figures</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ How to plot a point on the Cartesian plane</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ The four quadrants and their sign patterns</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ The distance and midpoint formulas</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. CORE FORMULAS ===================== -->
+    <section id="formulas">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Core Formulas</h2>
+        <p class="lede">Click each reflection rule below to see exactly what it does to a point's coordinates, and a worked example of it in action.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Reflection in the x-axis</div>
+            <div class="rformula" id="typeFormula">Image of P(x,y) in the x-axis</div>
+            <div class="rvalue" id="typeValue">P′(x, −y)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY TERMS ===================== -->
+    <section id="basics">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Terms</h2>
+        <p class="lede">Every reflection question is built from these five ideas. Learn what each one means before combining them into rules.</p>
+      </div>
+      <div class="ratio-grid" id="basicsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. THEOREMS & RULES ===================== -->
+    <section id="theorems">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Theorems &amp; Rules</h2>
+        <p class="lede">Six results cover almost every ICSE-style reflection question — from a simple axis flip to reflecting in any horizontal or vertical line.</p>
+      </div>
+      <div class="ratio-grid" id="propertiesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. INVARIANT POINTS ===================== -->
+    <section id="area">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>Invariant Points</h2>
+        <p class="lede">An invariant point is a point that reflects onto itself — this can only happen if the point already lies exactly on the mirror line. Slide the point Q below along the x-axis and watch its image coincide with it exactly, no matter where you place it.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compdivLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>The point Q(x, 0) always lies on the x-axis, whatever value x takes. Reflecting Q in the x-axis only changes the sign of its y-coordinate — but since y is already 0, the sign change does nothing. Drag the slider to move Q and watch the image land exactly on top of Q every time.</p>
+            <input type="range" min="-6" max="6" value="2" id="compdivSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>Point Q = (<b id="compdivA">2</b>, 0)</span>
+              <span>Image Q′ = (<b id="compdivB">2</b>, 0)</span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="compdivSum">Q(2,0) reflects to Q′(2,0) — the same point, because Q already lies on the mirror line (the x-axis).</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across core formulas, key terms, theorems, invariant-point facts, and general facts — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (14)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. ASSERTION & REASONING ===================== -->
+    <section id="arsection">
+      <div class="section-head">
+        <div class="eyebrow">08 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each statement is true, and — if both are true — whether R actually explains A. Pick an option to see the correct answer and a short explanation.</p>
+      </div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 9. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">09 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 10. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">10 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 11. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">11 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">x-axis: P(x,y) → P′(x,−y)</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">y-axis: P(x,y) → P′(−x,y)</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Origin: P(x,y) → P′(−x,−y)</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Line y=x: P(x,y) → P′(y,x)</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Rule Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Line x=a: P(x,y) → P′(2a−x, y)</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Line y=b: P(x,y) → P′(x, 2b−y)</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Invariant point ⟺ point lies on the mirror line</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Rules (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Learn which single coordinate changes for each rule — reflection in the x-axis flips y, reflection in the y-axis flips x, and never the other way round.</li>
+              <li>For x = a or y = b, always use "2a − x" or "2b − y" — do not just flip the sign as if a or b were zero.</li>
+              <li>To check for an invariant point, plug the coordinates into the reflection rule and see if the image equals the original point.</li>
+              <li>Reflecting in the x-axis and then the y-axis (in either order) always gives the same result as reflecting once in the origin.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formula">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Reflection — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Reflection in the Axes</h5>
+            <p>x-axis: (x,y) → (x,−y)</p><p>y-axis: (x,y) → (−x,y)</p>
+            <p>Origin: (x,y) → (−x,−y)</p><p>Line y=x: (x,y) → (y,x)</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Reflection in a Line</h5>
+            <p>Line x=a: (x,y) → (2a−x, y)</p><p>Line y=b: (x,y) → (x, 2b−y)</p>
+            <p>y unchanged for x=a; x unchanged for y=b</p><p>Object → Image, marked with a prime</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Invariant Points &amp; Properties</h5>
+            <p>Invariant point ⟺ lies on mirror line</p><p>x-axis reflection then y-axis reflection = origin reflection</p>
+            <p>Reflection preserves length and angle</p><p>Segment PP′ ⟂ mirror line, bisected by it</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const BASIC_TERMS=[
+ {name:'Object', color:'#3D5A80', statement:'The original point, line or figure before any transformation is applied to it.', trick:'Objects are usually labelled with plain letters (A, B, C…); their images get a prime symbol.', ex:'In "the image of A(2,3) under reflection in the x-axis is A′(2,−3)", A is the object.'},
+ {name:'Image', color:'#2E7D5B', statement:'The new point, line or figure obtained after reflection — congruent to the object, but reversed in orientation across the mirror line.', trick:'Always mark images with a prime symbol so a diagram never confuses object and image.', ex:'The image of P(4,5) reflected in the x-axis is P′(4,−5).'},
+ {name:'Line of Reflection (Mirror Line)', color:'#C97A2B', statement:'The fixed line about which every point of the object is reflected; every object point and its image are equidistant from this line, on opposite sides, measured along the perpendicular.', trick:'The segment joining a point to its image is always perpendicular to the mirror line and is bisected by it.', ex:'For reflection in the y-axis, the y-axis itself is the mirror line.'},
+ {name:'Invariant Point', color:'#3D5A80', statement:'A point that maps onto itself under a reflection — this happens exactly when the point lies on the line of reflection.', trick:'To find invariant points instantly, set the reflected coordinate equal to the original one; it reveals which axis or line the point must sit on.', ex:'(7,0) is invariant under reflection in the x-axis, since its image (7,−0) = (7,0).'},
+ {name:'Congruent Figures', color:'#2E7D5B', statement:'The object and its image always have exactly the same size and shape, since reflection preserves length and angle, though the orientation is reversed like a mirror image.', trick:'Because reflection preserves distance, you can check a reflection is correct by confirming AB = A′B′ for every pair of points.', ex:'Triangle ABC and its reflected image A′B′C′ have equal corresponding sides and angles.'}
+];
+const PROPERTY_RULES=[
+ {name:'Reflection in the x-axis', color:'#3D5A80', statement:'Reflecting a point P(x,y) in the x-axis keeps the x-coordinate unchanged and reverses the sign of the y-coordinate, since the image lies the same perpendicular distance below the axis as P is above it.', trick:'"x-axis reflection flips y" — the axis name matches the coordinate that stays fixed.', ex:'Image of (3,4) in the x-axis = (3,−4).'},
+ {name:'Reflection in the y-axis', color:'#2E7D5B', statement:'Reflecting P(x,y) in the y-axis keeps the y-coordinate unchanged and reverses the sign of the x-coordinate.', trick:'"y-axis reflection flips x" — the axis name matches the coordinate that stays fixed.', ex:'Image of (3,4) in the y-axis = (−3,4).'},
+ {name:'Reflection in the Origin', color:'#C97A2B', statement:'Reflecting P(x,y) in the origin reverses the sign of both coordinates — equivalent to reflecting in the x-axis and then in the y-axis, in either order.', trick:'Origin reflection is the same as a 180° rotation about the origin — both signs flip together.', ex:'Image of (4,5) in the origin = (−4,−5).'},
+ {name:'Reflection in the line y = x', color:'#3D5A80', statement:'Reflecting P(x,y) in the line y = x simply swaps the two coordinates.', trick:'"Swap and go" — there are no sign changes at all for this rule.', ex:'Image of (2,5) in y = x = (5,2).'},
+ {name:'Reflection in the line x = a', color:'#2E7D5B', statement:'Reflecting P(x,y) in the vertical line x = a keeps y unchanged; the new x-coordinate is found from 2a − x, since a must be the midpoint of P and its image.', trick:'New x = 2a − (old x); y never changes for a vertical mirror line.', ex:'Image of (1,4) in x = 3 = (5,4).'},
+ {name:'Reflection in the line y = b', color:'#C97A2B', statement:'Reflecting P(x,y) in the horizontal line y = b keeps x unchanged; the new y-coordinate is 2b − y.', trick:'New y = 2b − (old y); x never changes for a horizontal mirror line.', ex:'Image of (3,1) in y = 4 = (3,7).'}
+];
+const COMPDIV_PAIRS=[
+ ['Reflection in the x-axis','Invariant points ⟺ y = 0 (the whole x-axis)'],['Reflection in the y-axis','Invariant points ⟺ x = 0 (the whole y-axis)'],['Reflection in the Origin','Invariant point ⟺ only (0,0)'],['Reflection in the line y = x','Invariant points ⟺ x = y (the whole line)'],['Reflection in the line x = a','Invariant points ⟺ every point on the line x = a']
+];
+const TYPE_DATA=[
+ {label:'Reflection in the x-axis', formula:'Image of P(x,y) in the x-axis', value:'P′(x, −y)'},
+ {label:'Reflection in the y-axis', formula:'Image of P(x,y) in the y-axis', value:'P′(−x, y)'},
+ {label:'Reflection in the Origin', formula:'Image of P(x,y) in the origin', value:'P′(−x, −y)'},
+ {label:'Reflection in the line y = x', formula:'Image of P(x,y) in the line y = x', value:'P′(y, x)'},
+ {label:'Reflection in the line x = a', formula:'Image of P(x,y) in the vertical line x = a', value:'P′(2a − x, y)'},
+ {label:'Reflection in the line y = b', formula:'Image of P(x,y) in the horizontal line y = b', value:'P′(x, 2b − y)'}
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'Find the image of P(3,4) reflected in the x-axis.',steps:['Apply the rule (x,y) → (x,−y).','x stays 3, y changes sign from 4 to −4.'],ans:'P′(3, −4)'},
+ {level:'easy',q:'Find the image of P(3,4) reflected in the y-axis.',steps:['Apply the rule (x,y) → (−x,y).','x changes sign from 3 to −3, y stays 4.'],ans:'P′(−3, 4)'},
+ {level:'easy',q:'Find the image of P(−6,2) reflected in the y-axis.',steps:['Apply the rule (x,y) → (−x,y).','x changes sign from −6 to 6, y stays 2.'],ans:'P′(6, 2)'},
+ {level:'easy',q:'Find the image of P(4,5) reflected in the origin.',steps:['Apply the rule (x,y) → (−x,−y).','Both coordinates change sign.'],ans:'P′(−4, −5)'},
+ {level:'easy',q:'Find the image of P(2,5) reflected in the line y = x.',steps:['Apply the rule (x,y) → (y,x).','Swap the two coordinates.'],ans:'P′(5, 2)'},
+ {level:'medium',q:'Find the image of P(1,4) reflected in the line x = 3.',steps:['Apply the rule (x,y) → (2a−x, y) with a = 3.','New x = 2(3) − 1 = 5; y stays 4.'],ans:'P′(5, 4)'},
+ {level:'medium',q:'Find the image of P(6,2) reflected in the line x = 2.',steps:['Apply the rule (x,y) → (2a−x, y) with a = 2.','New x = 2(2) − 6 = −2; y stays 2.'],ans:'P′(−2, 2)'},
+ {level:'medium',q:'Find the image of P(3,1) reflected in the line y = 4.',steps:['Apply the rule (x,y) → (x, 2b−y) with b = 4.','New y = 2(4) − 1 = 7; x stays 3.'],ans:'P′(3, 7)'},
+ {level:'medium',q:'Find the image of P(5,9) reflected in the line y = 2.',steps:['Apply the rule (x,y) → (x, 2b−y) with b = 2.','New y = 2(2) − 9 = −5; x stays 5.'],ans:'P′(5, −5)'},
+ {level:'medium',q:'Reflect P(−2,−7) in the x-axis, then reflect the resulting image in the y-axis. Find the final image.',steps:['Reflect in the x-axis: (−2,−7) → (−2,7).','Reflect that image in the y-axis: (−2,7) → (2,7).'],ans:'Final image (2, 7)'},
+ {level:'medium',q:'A point P(a,4) is reflected in the x-axis to P′(3,b). Find a and b.',steps:['The x-coordinate is unchanged by an x-axis reflection, so a = 3.','The y-coordinate reverses sign, so b = −4.'],ans:'a = 3, b = −4'},
+ {level:'medium',q:'A point Q(5,k) is reflected in the y-axis to Q′(m,8). Find m and k.',steps:['The y-coordinate is unchanged by a y-axis reflection, so k = 8.','The x-coordinate reverses sign, so m = −5.'],ans:'m = −5, k = 8'},
+ {level:'medium',q:'Which of the points (4,7), (4,−2) and (5,0) are invariant under reflection in the line x = 4?',steps:['An invariant point under reflection in x = 4 must have x-coordinate exactly 4, since y is unaffected.','(4,7) and (4,−2) both satisfy x = 4; (5,0) does not.'],ans:'(4,7) and (4,−2) are invariant; (5,0) is not'},
+ {level:'medium',q:'Reflect the point P(2,−3) in the origin, then find the distance between P and its image.',steps:['Image = (−2,3).','Distance = √[(2−(−2))² + (−3−3)²] = √(16+36) = √52.'],ans:'Distance = 2√13 units (≈ 7.21 units)'},
+ {level:'hard',q:'Triangle ABC has vertices A(1,2), B(4,2), C(4,6). Find its area, then reflect it in the x-axis and find the area of the image triangle.',steps:['Area of ABC = ½|1(2−6)+4(6−2)+4(2−2)| = ½|−4+16+0| = 6 sq units.','Image vertices: A′(1,−2), B′(4,−2), C′(4,−6).','Reflection is a rigid transformation, so the image area is also 6 sq units.'],ans:'Area of ABC = 6 sq units; area of image = 6 sq units'},
+ {level:'hard',q:'The point P(x,y) reflects in the line y = x to P′(7,−2). Find P.',steps:['Reflection in y = x swaps the coordinates, so it is its own inverse.','Swapping (7,−2) back gives P.'],ans:'P(−2, 7)'},
+ {level:'hard',q:'Points A(2,3) and B(2,−3) are reflections of each other in some line. Identify the line.',steps:['Midpoint of AB = ((2+2)/2, (3−3)/2) = (2, 0), which lies on the x-axis.','Segment AB is vertical, so it is perpendicular to the x-axis — matching the mirror-line property.'],ans:'The line of reflection is the x-axis'},
+ {level:'hard',q:'A(1,5) is reflected in the line x = −1 to get A′. A′ is then reflected in the x-axis to get A″. Find A″.',steps:['Reflect in x = −1: new x = 2(−1) − 1 = −3; y stays 5, so A′(−3,5).','Reflect A′ in the x-axis: (−3,5) → (−3,−5).'],ans:'A″(−3, −5)'},
+ {level:'hard',q:'Find k so that the point (k,3) is invariant when reflected in the line x = 5.',steps:['An invariant point under reflection in a vertical line x = a must have x-coordinate exactly a, since y is unaffected.','So k must equal 5.'],ans:'k = 5'},
+ {level:'hard',q:'The vertices of quadrilateral PQRS are P(1,1), Q(5,1), R(5,4), S(1,4). Find the image quadrilateral under reflection in the origin, and state whether it is congruent to PQRS.',steps:['Apply (x,y) → (−x,−y) to each vertex.','P′(−1,−1), Q′(−5,−1), R′(−5,−4), S′(−1,−4).','Reflection preserves length and angle, so P′Q′R′S′ is congruent to PQRS.'],ans:'P′(−1,−1), Q′(−5,−1), R′(−5,−4), S′(−1,−4); congruent to PQRS'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Reflection in the x-axis',time:'3 min',q:'Find the image of the point (5,−3) when reflected in the x-axis.',sol:'The x-coordinate is unchanged and the y-coordinate reverses sign: image = (5,3).'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Reflection in a Line',time:'5 min',q:'Find the image of the point (2,−4) when reflected in the line y = 1.',sol:'New y = 2(1) − (−4) = 6; x stays 2. Image = (2,6).'},
+ {year:'2022',diff:'Medium',marks:3,topic:'Invariant Points',time:'4 min',q:'Write down the coordinates of the image of A(3,−2) under reflection in the origin, and state whether A is an invariant point of this reflection.',sol:'Image = (−3,2). Since (−3,2) ≠ (3,−2), A is not an invariant point.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Reflection & Congruency',time:'7 min',q:'The points A(2,3), B(6,3), C(6,7) are vertices of a triangle. Find the images A′, B′, C′ under reflection in the y-axis, and state one geometric property preserved by this reflection.',sol:'A′(−2,3), B′(−6,3), C′(−6,7). Reflection preserves lengths and angles, so triangle A′B′C′ is congruent to triangle ABC.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Reflection in y = x',time:'3 min',q:'Find the image of the point (−4,9) under reflection in the line y = x.',sol:'Reflection in y = x swaps the coordinates: image = (9,−4).'},
+ {year:'2021',diff:'Hard',marks:4,topic:'Reflection in x = a',time:'6 min',q:'The image of the point P(h,3) under reflection in the line x = −2 is P′(−9,3). Find the value of h.',sol:'2(−2) − h = −9 ⟹ −4 − h = −9 ⟹ h = 5.'}
+];
+
+const MISTAKES=[
+ 'Confusing which coordinate stays fixed and which changes sign — remembering "x-axis reflection flips y" backwards and flipping x instead.',
+ 'Forgetting that reflection in x = a or y = b needs the formula 2a − x (or 2b − y), and instead just changing the sign of the coordinate as if a or b were zero.',
+ 'Assuming any point can be invariant under any reflection — an invariant point must lie exactly on the line of reflection, not just satisfy part of the transformation.',
+ 'Treating reflection in the origin as if only one coordinate changes sign, instead of remembering that both coordinates flip.',
+ 'Mixing up "object" and "image" labels when writing coordinates, losing track of which point is P and which is P′, especially in multi-step (double) reflections.'
+];
+
+const FLASH=[
+ {f:'Object', b:'The original point or figure before reflection'},
+ {f:'Image', b:'The new point or figure obtained after reflection; congruent to the object, marked with a prime'},
+ {f:'Line of Reflection (Mirror Line)', b:'The fixed line about which reflection occurs; the perpendicular bisector of every point-image pair'},
+ {f:'Invariant Point', b:'A point that maps onto itself; it must lie exactly on the mirror line'},
+ {f:'Reflection in the x-axis', b:'P(x,y) → P′(x, −y)'},
+ {f:'Reflection in the y-axis', b:'P(x,y) → P′(−x, y)'},
+ {f:'Reflection in the Origin', b:'P(x,y) → P′(−x, −y)'},
+ {f:'Reflection in the line y = x', b:'P(x,y) → P′(y, x)'},
+ {f:'Reflection in the line x = a', b:'P(x,y) → P′(2a − x, y)'},
+ {f:'Reflection in the line y = b', b:'P(x,y) → P′(x, 2b − y)'},
+ {f:'Invariant points — reflection in the x-axis', b:'Every point with y = 0 (the whole x-axis)'},
+ {f:'Invariant points — reflection in the y-axis', b:'Every point with x = 0 (the whole y-axis)'},
+ {f:'Invariant point — reflection in the Origin', b:'Only the point (0,0)'},
+ {f:'x-axis reflection then y-axis reflection', b:'Equivalent to a single reflection in the origin'},
+ {f:'Congruent Figures', b:'Object and image have equal size and shape; reflection preserves length and angle'},
+ {f:'Segment joining a point and its image', b:'Always perpendicular to the mirror line, and bisected by it'}
+];
+
+const CC_MCQ=[
+ {t:'formulas',q:'The image of P(x,y) reflected in the x-axis is:',opts:['(x,−y)','(−x,y)','(−x,−y)','(y,x)'],a:0},
+ {t:'formulas',q:'The image of P(x,y) reflected in the y-axis is:',opts:['(x,−y)','(−x,y)','(−x,−y)','(y,x)'],a:1},
+ {t:'formulas',q:'The image of P(x,y) reflected in the origin is:',opts:['(x,−y)','(−x,y)','(−x,−y)','(y,x)'],a:2},
+ {t:'formulas',q:'The image of P(x,y) reflected in the line y = x is:',opts:['(x,−y)','(−x,y)','(−x,−y)','(y,x)'],a:3},
+ {t:'basics',q:'The original point before reflection is called the:',opts:['Image','Object','Invariant point','Mirror'],a:1},
+ {t:'basics',q:'The point obtained after reflection is called the:',opts:['Object','Image','Axis','Origin'],a:1},
+ {t:'basics',q:'A point that maps onto itself under a reflection is called:',opts:['An image point','An invariant point','An origin point','A congruent point'],a:1},
+ {t:'theorems',q:'Reflecting P(x,y) in the vertical line x = a gives the image:',opts:['(2a−x, y)','(x, 2a−y)','(a−x, y)','(x, a−y)'],a:0},
+ {t:'theorems',q:'Reflecting P(x,y) in the horizontal line y = b gives the image:',opts:['(2b−x, y)','(x, 2b−y)','(x, −b−y)','(−b−x, y)'],a:1},
+ {t:'theorems',q:'Reflection in the x-axis followed by reflection in the y-axis is equivalent to:',opts:['Reflection in y = x','Reflection in the origin','No transformation at all','Reflection in x = a'],a:1},
+ {t:'invariant',q:'The invariant points under reflection in the x-axis are:',opts:['Only the origin','All points with x = 0','All points with y = 0','No points at all'],a:2},
+ {t:'invariant',q:'The invariant point under reflection in the origin is:',opts:['Every point on the plane','Only (0,0)','Every point on the x-axis','Every point on the y-axis'],a:1},
+ {t:'invariant',q:'The point (k,5) is invariant under reflection in the line x = 4. The value of k is:',opts:['5','4','−4','0'],a:1},
+ {t:'general',q:'Reflection is a transformation that preserves:',opts:['Only angles, not lengths','Only lengths, not angles','Both lengths and angles (shape and size)','Neither lengths nor angles'],a:2},
+ {t:'general',q:'The segment joining a point to its image under reflection is always:',opts:['Parallel to the mirror line','Perpendicular to the mirror line, and bisected by it','Twice the length of the mirror line','Unrelated to the mirror line'],a:1}
+];
+const CC_FIB=[
+ {t:'formulas',q:'Reflecting P(x,y) in the x-axis gives the image (x, ______).',a:'-y'},
+ {t:'formulas',q:'Reflecting P(x,y) in the y-axis gives the image (______, y).',a:'-x'},
+ {t:'formulas',q:'Reflecting P(x,y) in the origin gives the image (−x, ______).',a:'-y'},
+ {t:'formulas',q:'Reflecting P(x,y) in the line y = x swaps the coordinates to give (______, x).',a:'y'},
+ {t:'basics',q:'The original point before a transformation is called the ______.',a:'object'},
+ {t:'basics',q:'The point after reflection is usually marked with a ______ symbol on its label.',a:'prime'},
+ {t:'basics',q:'A point lying exactly on the mirror line is called an ______ point.',a:'invariant'},
+ {t:'theorems',q:'Reflection in the vertical line x = a sends P(x,y) to (2a − x, ______).',a:'y'},
+ {t:'theorems',q:'Reflection in the horizontal line y = b sends P(x,y) to (x, 2b − ______).',a:'y'},
+ {t:'theorems',q:'Reflecting a point first in the x-axis and then in the y-axis gives the same result as reflecting once in the ______.',a:'origin'},
+ {t:'invariant',q:'Every point on the x-axis is invariant under reflection in the ______.',a:'x-axis'},
+ {t:'invariant',q:'The only invariant point under reflection in the origin is ______.',a:'(0,0)'},
+ {t:'invariant',q:'The point (7,k) is invariant under reflection in the line y = 3 only if k = ______.',a:'3'},
+ {t:'general',q:'Reflection preserves both the size and the ______ of a figure.',a:'shape'},
+ {t:'general',q:'The line joining an object point to its image is always ______ to the mirror line.',a:'perpendicular'}
+];
+const CC_TF=[
+ {t:'formulas',q:'Reflecting a point in the x-axis changes the sign of its x-coordinate.',a:false},
+ {t:'formulas',q:'Reflecting a point in the y-axis leaves the y-coordinate unchanged.',a:true},
+ {t:'formulas',q:'Reflecting a point in the origin changes the sign of both coordinates.',a:true},
+ {t:'formulas',q:'Reflecting P(x,y) in the line y = x gives the image (x,y) itself, unchanged.',a:false},
+ {t:'basics',q:'The image of a point is always identical to the object point.',a:false},
+ {t:'basics',q:'An invariant point must lie exactly on the line of reflection.',a:true},
+ {t:'basics',q:'Reflection can change the shape of a figure.',a:false},
+ {t:'theorems',q:'Reflecting P(x,y) in the line x = a leaves the y-coordinate unchanged.',a:true},
+ {t:'theorems',q:'Reflecting P(x,y) in the line y = b leaves the x-coordinate unchanged.',a:true},
+ {t:'theorems',q:'Reflection in the x-axis followed by reflection in the y-axis gives the same image as reflection in the line y = x.',a:false},
+ {t:'invariant',q:'Every point with y = 0 is invariant under reflection in the x-axis.',a:true},
+ {t:'invariant',q:'The point (0,0) is the only invariant point under reflection in the x-axis.',a:false},
+ {t:'general',q:'Reflection preserves distances between points.',a:true},
+ {t:'general',q:'The segment joining an object point and its image can lie parallel to the mirror line.',a:false}
+];
+
+const AR=[
+ {a:'The image of the point P(3,−5) under reflection in the x-axis is (3,5).', r:'Reflection in the x-axis keeps the x-coordinate unchanged and reverses the sign of the y-coordinate.', ans:0, explain:'Both statements are true, and R correctly explains why A holds — only the y-coordinate changes sign, giving (3,5).'},
+ {a:'The image of P(2,7) under reflection in the y-axis is (−2,7).', r:'The Cartesian plane is divided into four quadrants by its two axes.', ans:1, explain:'Both statements are true — the image is indeed (−2,7). But R is a general fact about the coordinate plane and does not explain why this particular reflection rule works.'},
+ {a:'The point (4,0) is invariant under reflection in the y-axis.', r:'A point is invariant under a reflection only if it lies exactly on the line of reflection.', ans:3, explain:'A is false — (4,0) does not lie on the y-axis since x ≠ 0, so it is not invariant there; its image is (−4,0), different from itself. R is a true, general statement about invariant points.'},
+ {a:'Reflecting a point first in the x-axis and then the resulting image in the y-axis gives the same result as reflecting the original point once in the origin.', r:'Reflection in the origin reverses the sign of both coordinates of a point.', ans:0, explain:'Both are true, and R explains A: applying the x-axis rule then the y-axis rule flips both signs in turn, which is exactly what a single origin reflection does.'},
+ {a:'The image of P(5,−2) under reflection in the line x = 3 is (1,−2).', r:'Reflection in the vertical line x = a sends (x,y) to (2a−x, y).', ans:0, explain:'Both true and R explains A directly: 2(3) − 5 = 1, so the image is (1,−2), matching the rule stated in R exactly.'},
+ {a:'Every point on the coordinate plane is an invariant point under reflection in the origin.', r:'Reflection in the origin reverses the sign of both coordinates.', ans:3, explain:'A is false — only the single point (0,0) is invariant under reflection in the origin, since it is the only point equal to its own sign-reversed pair. R is a true statement about how the transformation works.'},
+ {a:'The image of the point (6,2) under reflection in the line y = x is (2,6).', r:'Reflection in the line y = x always leaves a point exactly where it was.', ans:2, explain:'A is true — swapping the coordinates of (6,2) gives (2,6). But R is false, since reflection in y = x only leaves a point unchanged when x = y; otherwise the coordinates swap and the point does move.'},
+ {a:'The segment joining a point and its image under any reflection is always perpendicular to the mirror line.', r:'A reflection is a rigid transformation, so it preserves distances and angles.', ans:1, explain:'Both statements are true, but R (a general property of rigid transformations) does not directly explain the specific perpendicularity fact in A — that comes from how the mirror line bisects the segment at a right angle, not merely from preserving distances and angles in general.'},
+ {a:'The point P(−3,−3) is an invariant point under reflection in the origin.', r:'A point is invariant under reflection in the origin only if it equals (0,0).', ans:3, explain:'A is false — the image of P(−3,−3) under origin reflection is (3,3), which is different from P, so P is not invariant. R is true: the origin itself is the only invariant point under this reflection.'},
+ {a:'The image of the point (0,4) under reflection in the line y = 4 is (0,4) itself.', r:'Every point lying on the line of reflection is an invariant point.', ans:0, explain:'Both are true, and R explains A directly: since (0,4) has y = 4, it lies exactly on the mirror line y = 4, so by definition it must map to itself.'}
+];
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A.',
+ 'Both A and R are true, but R is not the correct explanation of A.',
+ 'A is true, but R is false.',
+ 'A is false, but R is true.',
+ 'Both A and R are false.'
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'Find the image of (2,5) reflected in the x-axis.','Keep x unchanged, flip the sign of y.','(2, −5)'),
+ mk(2,'Find the image of (2,5) reflected in the y-axis.','Keep y unchanged, flip the sign of x.','(−2, 5)'),
+ mk(3,'Find the image of (−3,6) reflected in the origin.','Flip the sign of both coordinates.','(3, −6)'),
+ mk(4,'Find the image of (7,−2) reflected in the line y = x.','Swap the coordinates.','(−2, 7)'),
+ mk(5,'Find the image of (0,9) reflected in the x-axis.','x = 0 stays 0; flip the sign of y.','(0, −9)'),
+ mk(6,'Find the image of (−5,0) reflected in the y-axis.','y = 0 stays 0; flip the sign of x.','(5, 0)'),
+ mk(7,'Is the point (0,6) invariant under reflection in the y-axis?','Check whether x = 0.','Yes, invariant since x = 0'),
+ mk(8,'Is the point (6,0) invariant under reflection in the y-axis?','Check whether x = 0.','No — its image is (−6,0)'),
+ mk(9,'Find the image of (4,4) reflected in the line y = x.','Swapping equal coordinates changes nothing.','(4, 4) — invariant'),
+ mk(10,'Find the image of (3,−8) reflected in the origin.','Flip the sign of both coordinates.','(−3, 8)'),
+ mk(11,'State the rule for reflecting a point in the x-axis.','Which coordinate flips sign?','(x,y) → (x,−y)'),
+ mk(12,'State the rule for reflecting a point in the y-axis.','Which coordinate flips sign?','(x,y) → (−x,y)'),
+ mk(13,'Find the image of (10,−1) reflected in the x-axis.','Keep x, flip the sign of y.','(10, 1)'),
+ mk(14,'Find the image of (−4,−9) reflected in the y-axis.','Keep y, flip the sign of x.','(4, −9)'),
+ mk(15,'A point and its image under reflection in the x-axis are (5,3) and (5,k). Find k.','The y-coordinate flips sign.','k = −3'),
+ mk(16,'A point and its image under reflection in the y-axis are (h,7) and (−2,7). Find h.','The x-coordinate flips sign.','h = 2'),
+ mk(17,'Find the image of the origin (0,0) reflected in the x-axis.','The origin is invariant under every axis reflection.','(0, 0)'),
+ mk(18,'Find the image of (1,1) reflected in the origin.','Flip the sign of both coordinates.','(−1, −1)'),
+ mk(19,'Name the point that is invariant under reflection in the origin.','Only one point qualifies.','(0, 0)'),
+ mk(20,'Find the image of (9,−9) reflected in the line y = x.','Swap the coordinates.','(−9, 9)')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'Find the image of (2,3) reflected in the line x = 5.','New x = 2a − x with a = 5.','(8, 3)'),
+ mk(2,'Find the image of (7,−1) reflected in the line x = 1.','New x = 2a − x with a = 1.','(−5, −1)'),
+ mk(3,'Find the image of (4,6) reflected in the line y = 2.','New y = 2b − y with b = 2.','(4, −2)'),
+ mk(4,'Find the image of (−1,9) reflected in the line y = −3.','New y = 2b − y with b = −3.','(−1, −15)'),
+ mk(5,'Find k so that (k,5) is invariant under reflection in the line x = 6.','An invariant point\'s x-coordinate must equal a.','k = 6'),
+ mk(6,'Find k so that (3,k) is invariant under reflection in the line y = −2.','An invariant point\'s y-coordinate must equal b.','k = −2'),
+ mk(7,'The image of P(a,3) under reflection in the x-axis is (7,b). Find a and b.','x unchanged, y flips sign.','a = 7, b = −3'),
+ mk(8,'The image of Q(5,c) under reflection in the y-axis is (d,9). Find c and d.','y unchanged, x flips sign.','c = 9, d = −5'),
+ mk(9,'Reflect (2,−6) first in the x-axis, then reflect the image in the y-axis. Find the final image.','Apply one rule, then the other to the result.','(2,6) then (−2, 6)'),
+ mk(10,'Reflect (3,4) in the origin directly, and separately reflect it in the x-axis then the y-axis. Show both give the same image.','Origin reflection = x-axis reflection followed by y-axis reflection.','Both give (−3, −4)'),
+ mk(11,'Find the image of (0,−5) reflected in the line x = 2.','A vertical mirror line does not affect y.','(4, −5)'),
+ mk(12,'Find the image of (8,0) reflected in the line y = 3.','A horizontal mirror line does not affect x.','(8, 6)'),
+ mk(13,'A point P(4,9) reflects to P′(4,−3) under reflection in a horizontal line y = b. Find b.','Use new y = 2b − y and solve for b.','b = 3'),
+ mk(14,'A point Q(−6,5) reflects to Q′(2,5) under reflection in a vertical line x = a. Find a.','Use new x = 2a − x and solve for a.','a = −2'),
+ mk(15,'Find the image of (5,5) reflected in the line y = x, and state what you notice.','Think about what happens when x = y.','(5,5) — invariant, since it already lies on the mirror line'),
+ mk(16,'Triangle ABC has A(1,2), B(4,2), C(4,5). Find the image of vertex C only, reflected in the x-axis.','Apply the x-axis rule to C alone.','(4, −5)'),
+ mk(17,'Find the midpoint of the point (6,8) and its image under reflection in the x-axis.','The midpoint of any point and its axis-image lies on the axis.','(6, 0)'),
+ mk(18,'Find the midpoint of the point (−3,7) and its image under reflection in the y-axis.','The midpoint lies on the mirror line.','(0, 7)'),
+ mk(19,'Find the image of (0,0) reflected in the line x = 4.','The origin is not invariant under this mirror line.','(8, 0)'),
+ mk(20,'Find the image of (2,−3) reflected in the line y = 1, then check whether the image lies above or below the mirror line.','Compare the new y-coordinate with b = 1.','Image (2,5); it lies above y = 1, since the original point was below it')
+];
+const PZ3=[ // Level 3 - ICSE Exam
+ mk(1,'The vertices of triangle ABC are A(2,1), B(5,1), C(5,4). Find the image triangle A′B′C′ under reflection in the x-axis, and find the area of triangle ABC using the coordinate formula.','Reflect each vertex using the x-axis rule; the area formula is unaffected by which triangle you use.','A′(2,−1), B′(5,−1), C′(5,−4); Area of ABC = 4.5 sq units'),
+ mk(2,'Find the image of the point P(3,−4) under reflection in the line x = −2, and find the distance PP′.','Use the x = a rule, then apply the distance formula between P and its image.','P′(−7,−4); distance PP′ = 10 units'),
+ mk(3,'A point A(4,6) is reflected in the y-axis to get A₁. A₁ is then reflected in the x-axis to get A₂. Find A₂ and state the single transformation that maps A directly to A₂.','Apply each reflection step by step, then compare with the origin rule.','A₁(−4,6); A₂(−4,−6); a single reflection in the origin maps A directly to A₂'),
+ mk(4,'Find the values of a and b if the image of the point (a,4) under reflection in the line x = 3 is (7,b).','Set up two equations, one for each coordinate rule.','a = −1, b = 4'),
+ mk(5,'Triangle PQR has P(1,3), Q(5,3), R(3,7). Find the image triangle under reflection in the line y = 3, and identify which vertices are invariant.','Check which vertices already satisfy y = 3.','P′(1,3), Q′(5,3), R′(3,−1); P and Q are invariant since they already lie on the mirror line y = 3'),
+ mk(6,'The point (2h−1, 3) is invariant under reflection in the y-axis. Find h.','An invariant point under y-axis reflection must have x = 0.','h = 1/2'),
+ mk(7,'A(3,2) and its image A′(3,−8) are given. Find the equation of the line of reflection.','The mirror line is horizontal and passes through the midpoint of AA′.','Midpoint = (3,−3), so the mirror line is y = −3'),
+ mk(8,'The image of the point (p,q) under reflection in the origin is (6,−9). Find p + q.','Apply the origin rule in reverse.','p = −6, q = 9, so p + q = 3'),
+ mk(9,'A square has vertices A(0,0), B(4,0), C(4,4), D(0,4). Find the image square under reflection in the line y = x, and describe what you notice about vertices A and C.','Swap the coordinates of each vertex; check which vertices already satisfy x = y.','A′(0,0), B′(0,4), C′(4,4), D′(4,0); A and C already lie on y = x, so they are invariant'),
+ mk(10,'Find the coordinates of the point which is equidistant from A(3,4) and its image A′ under reflection in the x-axis, and which itself lies on the x-axis.','Think about where the mirror line meets the perpendicular from A to its image.','(3, 0) — the midpoint of AA′, which always lies on the mirror line'),
+ mk(11,'The segment joining P(2,5) and Q(2,−5) is reflected in the x-axis. Find the image segment, and state whether the segment as a whole is invariant, even though the individual points may move.','Reflect each endpoint, then compare the resulting segment with the original one.','P′(2,−5), Q′(2,5); the image segment occupies exactly the same set of points as PQ, since P and Q simply swap places, so the segment as a whole is invariant'),
+ mk(12,'Find the image of the point (5,5) reflected first in the line x = 2, and then the resulting image reflected in the line x = 2 again.','Think about what happens when you apply the same reflection twice.','(5,5) — the original point, since reflecting twice in the same line undoes the first reflection'),
+ mk(13,'Find a if the point (a,−3) reflected in the x-axis lies on the line x = 7.','Reflection in the x-axis does not change the x-coordinate at all.','a = 7'),
+ mk(14,'A(1,2), B(4,6). Find the image of the midpoint of AB under reflection in the y-axis.','Find the midpoint first, then reflect that single point.','Midpoint (2.5, 4); image (−2.5, 4)'),
+ mk(15,'The image of a triangle under reflection in the origin has vertices (−1,−2), (−4,−2), (−4,−5). Find the vertices of the original triangle.','Apply the origin rule in reverse — it is its own inverse.','(1,2), (4,2), (4,5)'),
+ mk(16,'Find the coordinates of the point which reflects onto itself under both reflection in the x-axis and reflection in the y-axis simultaneously.','The point must satisfy both invariant conditions at once.','(0,0), since it needs y = 0 (invariant under the x-axis) and x = 0 (invariant under the y-axis)'),
+ mk(17,'A rectangle has vertices A(1,1), B(6,1), C(6,3), D(1,3). Find the perimeter of the image rectangle after reflection in the line y = x, and compare it with the perimeter of ABCD.','Reflection preserves all lengths, so compute the original perimeter directly.','Perimeter of ABCD = 2(5+2) = 14 units; the image rectangle has exactly the same perimeter'),
+ mk(18,'Find b if the point (4,b), when reflected in the line y = −1, produces an image whose y-coordinate is 5.','Use new y = 2b_line − y and solve.','b = −7'),
+ mk(19,'Two points A(3,2) and B(3,−6) are reflections of each other in a horizontal line. Find the equation of that line and verify it is equidistant from both points.','The line must pass through the midpoint of AB.','Midpoint = (3,−2), so the line is y = −2; distance from A = 4, distance from B = 4 ✓'),
+ mk(20,'A triangle with vertices (0,0), (6,0), (0,8) is reflected in the origin. Find the area of the image triangle without recomputing the area formula from scratch.','Recall what reflection does to area.','24 sq units — same as the original triangle, since reflection preserves area (original area = ½×6×8 = 24)')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (basics / theorems)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('basicsGrid',BASIC_TERMS);
+buildTheoremCards('propertiesGrid',PROPERTY_RULES);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=BASIC_TERMS.concat(PROPERTY_RULES);
+  let head='<tr><th>Definition / Rule</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Invariant Points pairs list
+const compdivLeft=document.getElementById('compdivLeft');
+const cpCard=el('div','card pad');
+COMPDIV_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+compdivLeft.appendChild(cpCard);
+
+// Core Formulas legend chips
+const typeLegend=document.getElementById('typeLegend');
+TYPE_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===0?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('typeName').textContent=item.label;
+    document.getElementById('typeFormula').textContent=item.formula;
+    document.getElementById('typeValue').textContent=item.value;
+  });
+  typeLegend.appendChild(chip);
+});
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('rf_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('rf_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase().replace(/\s+/g,'')===item.a.toLowerCase().replace(/\s+/g,'');
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','ar-card');
+  card.innerHTML=`<div class="qtag">Assertion &amp; Reasoning · Q${i+1}</div>
+  <div class="ar-statement"><b>Assertion (A)</b>${item.a}</div>
+  <div class="ar-statement"><b>Reason (R)</b>${item.r}</div>`;
+  const optsWrap=el('div');
+  AR_OPTIONS.forEach((opt,oi)=>{
+    const label='(' + 'abcde'[oi] + ') ' + opt;
+    const b=el('button','opt-btn',label);
+    b.addEventListener('click',()=>{
+      card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){b.classList.add('correct'); recordQuiz(true);}
+      else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false);}
+      card.querySelector('.ar-explain').classList.add('show');
+    });
+    optsWrap.appendChild(b);
+  });
+  card.appendChild(optsWrap);
+  card.appendChild(el('div','ar-explain','💡 '+item.explain));
+  arList.appendChild(card);
+});
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('rf_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('rf_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+/* ============================================================
+   HERO INSTRUMENT — slider moves point P, recomputes its image in the x-axis
+============================================================ */
+const ptP=document.getElementById('ptP');
+const ptPp=document.getElementById('ptPp');
+const ptM=document.getElementById('ptM');
+const segPP=document.getElementById('segPP');
+const labelP=document.getElementById('labelP');
+const labelPp=document.getElementById('labelPp');
+const rfSlider=document.getElementById('rfSlider');
+const ORIGIN_PX=160, ORIGIN_PY=100, SCALE=18;
+function toPx(pt){ return {px: ORIGIN_PX + pt.x*SCALE, py: ORIGIN_PY - pt.y*SCALE}; }
+function setPointP(xVal){
+  const P={x:xVal,y:3};
+  const Pp={x:xVal,y:-3};
+  const M={x:xVal,y:0};
+  const pP=toPx(P), pPp=toPx(Pp), pM=toPx(M);
+  ptP.setAttribute('cx',pP.px); ptP.setAttribute('cy',pP.py);
+  ptPp.setAttribute('cx',pPp.px); ptPp.setAttribute('cy',pPp.py);
+  ptM.setAttribute('cx',pM.px); ptM.setAttribute('cy',pM.py);
+  segPP.setAttribute('x1',pP.px); segPP.setAttribute('y1',pP.py);
+  segPP.setAttribute('x2',pPp.px); segPP.setAttribute('y2',pPp.py);
+  labelP.setAttribute('x',pP.px+6); labelP.setAttribute('y',pP.py-8);
+  labelP.textContent=`P(${P.x},${P.y})`;
+  labelPp.setAttribute('x',pPp.px+6); labelPp.setAttribute('y',pPp.py+16);
+  labelPp.textContent=`P′(${Pp.x},${Pp.y})`;
+
+  document.getElementById('rObject').textContent=`(${P.x}, ${P.y})`;
+  document.getElementById('rImage').textContent=`(${Pp.x}, ${Pp.y})`;
+  document.getElementById('rMid').textContent=`(${M.x}, ${M.y})`;
+  document.getElementById('rEqual').textContent=`3 = 3`;
+}
+rfSlider.addEventListener('input',()=>setPointP(parseInt(rfSlider.value)));
+setPointP(parseInt(rfSlider.value));
+
+// Invariant Points slider
+const compdivSlider=document.getElementById('compdivSlider');
+function updateCompdiv(){
+  const x=parseInt(compdivSlider.value);
+  document.getElementById('compdivA').textContent=x;
+  document.getElementById('compdivB').textContent=x;
+  document.getElementById('compdivSum').textContent=`Q(${x},0) reflects to Q′(${x},0) — the same point, because Q already lies on the mirror line (the x-axis).`;
+}
+compdivSlider.addEventListener('input',updateCompdiv); updateCompdiv();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','formulas','basics','theorems','area','examples','conceptcheck','arsection','practice','pyq','mistakes','revision','flashcards','formula','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('rf_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('rf_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('rf_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('rf_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('rf_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('rf_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('rf_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['rf_sectionsRead','rf_examplesOpened','rf_quizStats','rf_pz_l1','rf_pz_l2','rf_pz_l3','rf_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
