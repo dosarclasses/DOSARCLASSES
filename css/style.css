@@ -113,3 +113,56 @@ max-width:100%;
 display:block;
 
 }
+/* ===========================
+   Navigation
+=========================== */
+
+.navbar{
+
+padding:15px 0;
+
+background:white!important;
+
+}
+
+.navbar-brand img{
+
+border-radius:50%;
+
+}
+
+.nav-link{
+
+font-weight:500;
+
+color:#1F2937!important;
+
+transition:.3s;
+
+}
+
+.nav-link:hover{
+
+color:#F97316!important;
+
+}
+
+.navbar .btn{
+
+padding:10px 28px;
+
+border-radius:30px;
+
+background:#F97316;
+
+border:none;
+
+font-weight:600;
+
+}
+
+.navbar .btn:hover{
+
+background:#12355B;
+
+}
