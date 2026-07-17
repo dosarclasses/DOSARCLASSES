@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistics — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+#statSlider{width:100%; margin-top:.6rem;}
+
+/* ===================== FORMULA CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:1.02rem; color:var(--ink-soft); margin:.3rem 0;}
+.result-box .rvalue{font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--ink);}
+
+/* ===================== THEOREM/RULE CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.92rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:1rem;}
+.ar-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.ar-statement{padding:.6rem .8rem; background:var(--paper); border-left:3px solid var(--ink-soft); border-radius:0 8px 8px 0; margin:.5rem 0; font-size:.92rem;}
+.ar-statement b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; display:block; margin-bottom:.15rem; letter-spacing:.05em;}
+.ar-explain{display:none; margin-top:.6rem; font-size:.86rem; padding:.55rem .7rem; border-radius:8px; background:var(--amber-tint); border-left:3px solid var(--amber);}
+.ar-explain.show{display:block;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.25rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:1rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formula){display:none !important;}
+  #formula{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">✛ <span>Statistics</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="formulas" href="#formulas"><span class="dot"></span>Core Formulas</a>
+    <a class="navlink" data-target="basics" href="#basics"><span class="dot"></span>Key Terms</a>
+    <a class="navlink" data-target="theorems" href="#theorems"><span class="dot"></span>Theorems &amp; Rules</a>
+    <a class="navlink" data-target="empirical" href="#empirical"><span class="dot"></span>Empirical Relationship</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="arsection" href="#arsection"><span class="dot"></span>Assertion &amp; Reasoning</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formula" href="#formula"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Statistics</div>
+        <h1>Every data set<br>has a centre.</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the slider to change the assumed mean A — watch d, fd and the final computed mean update, and notice the answer never actually changes no matter which A you pick.</p>
+        <div class="hero-cta">
+          <a href="#formulas" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <svg id="heroSvg" viewBox="0 0 320 200" style="width:100%; height:auto;">
+          <line x1="10" y1="170" x2="310" y2="170" stroke="#E1D9C6" stroke-width="2"/>
+          <rect x="40" y="128" width="50" height="42" fill="#F3DDBB" stroke="#3D5A80" stroke-width="1.5"/>
+          <rect x="100" y="103" width="50" height="67" fill="#F3DDBB" stroke="#3D5A80" stroke-width="1.5"/>
+          <rect x="160" y="70" width="50" height="100" fill="#F3DDBB" stroke="#3D5A80" stroke-width="1.5"/>
+          <rect x="220" y="128" width="50" height="42" fill="#F3DDBB" stroke="#3D5A80" stroke-width="1.5"/>
+          <text x="65" y="184" font-family="IBM Plex Mono" font-size="10" fill="#6B7A99" text-anchor="middle">5</text>
+          <text x="125" y="184" font-family="IBM Plex Mono" font-size="10" fill="#6B7A99" text-anchor="middle">15</text>
+          <text x="185" y="184" font-family="IBM Plex Mono" font-size="10" fill="#6B7A99" text-anchor="middle">25</text>
+          <text x="245" y="184" font-family="IBM Plex Mono" font-size="10" fill="#6B7A99" text-anchor="middle">35</text>
+          <line id="aMarker" x1="65" y1="60" x2="65" y2="172" stroke="#C97A2B" stroke-width="2" stroke-dasharray="4,3"/>
+          <text id="aLabel" x="65" y="52" font-family="IBM Plex Mono" font-size="11" fill="#A15E1B" font-weight="700" text-anchor="middle">A = 5</text>
+          <text x="160" y="15" font-family="IBM Plex Mono" font-size="11" fill="#6B7A99" text-anchor="middle">drag the slider below to move the assumed mean A ↓</text>
+        </svg>
+        <input type="range" id="statSlider" min="5" max="35" value="5" step="10">
+        <div class="instrument-readout">
+          <div>Assumed Mean A <b id="rA">5</b></div>
+          <div>Σfd <b id="rSfd">470</b></div>
+          <div>Mean = A + Σfd/Σf <b id="rMean">20.67</b></div>
+          <div>Total Frequency Σf <b id="rSf">30</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is Statistics?</h2>
+        <p class="lede">Statistics is the branch of mathematics dealing with collecting, organizing and summarizing data. This chapter focuses on measures of central tendency — the mean, median and mode — for both ungrouped and grouped data, along with cumulative frequency and the ogive.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Raw data — marks of a class, daily temperatures, sales figures — is hard to interpret on its own. A single representative number, called a measure of central tendency, summarizes the whole data set at a glance. Different measures (mean, median, mode) each capture "the centre" in a different way, and knowing which one to use — and how to compute it from a grouped table — is the core skill of this chapter.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Summarizing exam marks or survey results</li>
+              <li>Comparing performance across groups</li>
+              <li>Reading cumulative frequency (ogive) graphs</li>
+              <li>Market research and quality control</li>
+              <li>Government census and population data</li>
+              <li>Weather and sports statistics reporting</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 20 V10 M9 20 V6 M14 20 V13 M19 20 V4"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Mean</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="4" cy="18" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="14" cy="6" r="1.6"/><circle cx="19" cy="15" r="1.6"/><path d="M9 12 L14 6" stroke-dasharray="2,2"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Median</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 20 V14 M9 20 V4 M14 20 V15 M19 20 V16"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Mode</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M3 20 Q9 20 12 12 T21 4"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Ogive</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ How to read a frequency distribution table</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ Basic arithmetic and fraction simplification</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ How to plot points on a graph</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. CORE FORMULAS ===================== -->
+    <section id="formulas">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Core Formulas</h2>
+        <p class="lede">Click each formula below to see exactly what it computes.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Mean (Direct Method)</div>
+            <div class="rformula" id="typeFormula">Mean of a grouped frequency distribution</div>
+            <div class="rvalue" id="typeValue">x̄ = Σfx/Σf</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY TERMS ===================== -->
+    <section id="basics">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Terms</h2>
+        <p class="lede">Every statistics question is built from these five ideas. Learn what each one means before combining them into formulas.</p>
+      </div>
+      <div class="ratio-grid" id="basicsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. THEOREMS & RULES ===================== -->
+    <section id="theorems">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Theorems &amp; Rules</h2>
+        <p class="lede">Six results cover almost every ICSE-style statistics question — from a simple average to reading an ogive.</p>
+      </div>
+      <div class="ratio-grid" id="propertiesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. EMPIRICAL RELATIONSHIP ===================== -->
+    <section id="empirical">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>The Empirical Relationship</h2>
+        <p class="lede">For a moderately skewed distribution, the mean, median and mode are connected by Mode = 3Median − 2Mean. Slide the mean below (with the median fixed at 30) and watch the mode recompute automatically from the formula.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compdivLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>A distribution has median fixed at 30. Drag the slider to choose different values for the mean, and watch the mode update instantly using Mode = 3Median − 2Mean. This relationship is a well-tested approximation for moderately skewed data, not an exact identity — but ICSE questions generally expect you to apply it directly.</p>
+            <input type="range" min="20" max="40" value="28" id="compdivSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>Mean = <b id="compdivA">28</b></span>
+              <span>Mode = <b id="compdivB">34</b></span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="compdivSum">Median is fixed at 30, so Mode = 3(30) − 2(28) = 90 − 56 = 34 — sliding the mean always recomputes the mode from the same formula.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">22 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across core formulas, key terms, theorems, statistics facts, and general facts — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (15)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. ASSERTION & REASONING ===================== -->
+    <section id="arsection">
+      <div class="section-head">
+        <div class="eyebrow">08 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each statement is true, and — if both are true — whether R actually explains A. Pick an option to see the correct answer and a short explanation.</p>
+      </div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 9. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">09 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 10. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">10 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 11. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">11 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Mean (Direct): x̄ = Σfx/Σf</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Mean (Step-Deviation): x̄ = A + (Σfu/Σf)×h</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Median (Grouped): l + [(N/2−cf)/f]×h</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Rule Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Mode (Grouped): l + [(f1−f0)/(2f1−f0−f2)]×h</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Empirical: Mode = 3Median − 2Mean</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Quartiles: Q1 at N/4, Q3 at 3N/4</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Rules (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always use the class mark (mid-value), never the class interval itself, when substituting x into the mean formula.</li>
+              <li>Locate the median class using cumulative frequency and N/2, not the ordinary frequency alone.</li>
+              <li>The modal class is the one with the highest ordinary frequency, not the highest cumulative frequency.</li>
+              <li>Remember to multiply back by h at the end of the step-deviation method — forgetting this is the single most common mistake.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formula">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Statistics — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Mean</h5>
+            <p>Direct: x̄ = Σfx/Σf</p><p>Assumed Mean: x̄ = A + Σfd/Σf, d = x − A</p>
+            <p>Step-Deviation: x̄ = A + (Σfu/Σf)×h, u = (x−A)/h</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Median &amp; Mode</h5>
+            <p>Median (grouped): l + [(N/2−cf)/f]×h</p><p>Mode (grouped): l + [(f1−f0)/(2f1−f0−f2)]×h</p>
+            <p>Ungrouped median: middle value (odd n) or average of two middle values (even n)</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Ogive &amp; Empirical Relation</h5>
+            <p>Cumulative frequency: running total of frequencies</p><p>Q1 at N/4, Q3 at 3N/4 (read from an ogive)</p>
+            <p>Empirical relation: Mode = 3Median − 2Mean</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/22</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const BASIC_TERMS=[
+ {name:'Class Interval &amp; Class Mark', color:'#3D5A80', statement:'A class interval is a range of values (like 10-20) into which raw data is grouped; its class mark (or mid-value) is the average of its upper and lower limits.', trick:'Always substitute the class mark, never the interval itself, into the mean formula.', ex:'The class mark of 20-30 is (20+30)/2 = 25.'},
+ {name:'Frequency (f)', color:'#2E7D5B', statement:'The number of observations that fall within a particular class interval or take a particular value.', trick:'The sum of all frequencies, Σf, always equals the total number of observations, N.', ex:'If the class 10-20 contains 8 students, its frequency is 8.'},
+ {name:'Cumulative Frequency (cf)', color:'#C97A2B', statement:'The running total of frequencies up to and including a given class — it always increases (or stays the same) as you move to higher classes.', trick:'The cumulative frequency of the very last class always equals N, the total number of observations.', ex:'If frequencies are 5, 8, 12, the cumulative frequencies are 5, 13, 25.'},
+ {name:'Ogive', color:'#3D5A80', statement:'A smooth curve obtained by plotting cumulative frequency against the upper class boundary — used to read off the median and quartiles graphically.', trick:'A "less than" ogive rises from left to right; a "more than" ogive falls from left to right, and their intersection point gives the median.', ex:'Plotting the points (10,5), (20,13), (30,25)... and joining them smoothly gives a less-than ogive.'},
+ {name:'Measures of Central Tendency', color:'#2E7D5B', statement:'Single representative values — the mean, median and mode — that summarize an entire data set with one number describing its "centre".', trick:'Mean uses every value and is sensitive to outliers; median is the middle value and resists outliers; mode is simply the most frequent value.', ex:'For the data 2, 3, 3, 4, 100, the mean is skewed by the outlier 100, but the median (3) and mode (3) are not.'}
+];
+const PROPERTY_RULES=[
+ {name:'Mean — Direct Method', color:'#3D5A80', statement:'The mean of a grouped frequency distribution is found by multiplying each class mark by its frequency, summing these products, and dividing by the total frequency.', trick:'x̄ = Σfx/Σf — always use the class mark for x, and double-check that Σf matches the given total N.', ex:'For classes with midpoints 5,15,25,35 and frequencies 5,8,12,5, the mean is 620/30 ≈ 20.67.'},
+ {name:'Mean — Step-Deviation Method', color:'#2E7D5B', statement:'A faster way to find the mean for large numbers by first shrinking each class mark using u = (x−A)/h, where A is an assumed mean and h is the class width, then scaling back at the end.', trick:'x̄ = A + (Σfu/Σf) × h — never forget the final multiplication by h; forgetting it is the most common mistake in this method.', ex:'With A = 25, h = 10, the step-deviation method gives the same mean as the direct method: ≈20.67.'},
+ {name:'Median — Grouped Data', color:'#C97A2B', statement:'The value that divides an ordered grouped data set into two equal halves, found by locating the class where the cumulative frequency first reaches or exceeds N/2.', trick:'Median = l + [(N/2 − cf)/f] × h, where l is the lower boundary of the median class, cf is the cumulative frequency before it, and f is its own frequency.', ex:'For a median class with l=20, cf=13, f=15, h=10, N=40: median = 20 + [(20−13)/15]×10 ≈ 24.67.'},
+ {name:'Mode — Grouped Data', color:'#3D5A80', statement:'The value that occurs most often, found for grouped data using the modal class — the class interval with the highest frequency.', trick:'Mode = l + [(f1−f0)/(2f1−f0−f2)] × h, where f1 is the modal class frequency, f0 the frequency before it, and f2 the frequency after it.', ex:'For a modal class with l=20, f1=12, f0=8, f2=5, h=10: mode = 20 + [4/11]×10 ≈ 23.64.'},
+ {name:'Quartiles &amp; the Ogive', color:'#2E7D5B', statement:'Quartiles divide an ordered data set into four equal parts; the lower quartile Q1 sits at the N/4 th position and the upper quartile Q3 at the 3N/4 th position, both readable directly from an ogive.', trick:'The median is simply the second quartile, Q2, sitting at the N/2 th position — the same value read from the ogive at half of N.', ex:'For N=80, Q1 is read off the ogive at the 20th value and Q3 at the 60th value.'},
+ {name:'Empirical Relationship', color:'#C97A2B', statement:'For a moderately skewed distribution, the mean, median and mode satisfy the approximate relationship Mode = 3Median − 2Mean, letting you find any one measure if the other two are known.', trick:'This is an approximation, not an exact algebraic identity — use it only when the actual mode or median cannot be computed directly from the data.', ex:'If mean = 25.6 and median = 27, then mode ≈ 3(27) − 2(25.6) = 29.8.'}
+];
+const COMPDIV_PAIRS=[
+ ['Mean (Direct)','Σfx/Σf'],['Mean (Step-Deviation)','A + (Σfu/Σf)×h'],['Median (Grouped)','l + [(N/2−cf)/f]×h'],['Mode (Grouped)','l + [(f1−f0)/(2f1−f0−f2)]×h'],['Empirical Relation','Mode = 3Median − 2Mean']
+];
+const TYPE_DATA=[
+ {label:'Mean (Direct Method)', formula:'Mean of a grouped frequency distribution', value:'x̄ = Σfx/Σf'},
+ {label:'Mean (Step-Deviation Method)', formula:'Mean using an assumed mean A and class width h', value:'x̄ = A + (Σfu/Σf) × h'},
+ {label:'Median (Grouped Data)', formula:'Median using the median class, l, cf and f', value:'Median = l + [(N/2−cf)/f] × h'},
+ {label:'Mode (Grouped Data)', formula:'Mode using the modal class, l, f1, f0, f2', value:'Mode = l + [(f1−f0)/(2f1−f0−f2)] × h'},
+ {label:'Quartiles from an Ogive', formula:'Positions of the lower and upper quartiles', value:'Q1 at N/4, Q3 at 3N/4'},
+ {label:'Empirical Relationship', formula:'Connects the mean, median and mode', value:'Mode = 3Median − 2Mean'}
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'Find the mean of the numbers 4, 8, 10, 12, 16.',steps:['Sum = 4+8+10+12+16 = 50.','Mean = 50/5.'],ans:'mean = 10'},
+ {level:'easy',q:'Find the mean of the ungrouped frequency distribution: values 2,3,4,5 with frequencies 3,4,5,3.',steps:['Σf = 3+4+5+3 = 15.','Σfx = 2(3)+3(4)+4(5)+5(3) = 6+12+20+15 = 53.','Mean = 53/15.'],ans:'mean ≈ 3.53'},
+ {level:'easy',q:'Find the median of the data 5, 7, 9, 3, 8.',steps:['Arrange in order: 3, 5, 7, 8, 9.','With n = 5 (odd), the median is the middle (3rd) value.'],ans:'median = 7'},
+ {level:'easy',q:'Find the median of the data 4, 8, 6, 10.',steps:['Arrange in order: 4, 6, 8, 10.','With n = 4 (even), the median is the average of the 2nd and 3rd values: (6+8)/2.'],ans:'median = 7'},
+ {level:'easy',q:'Find the mode of the data 2, 3, 3, 4, 5, 3, 6.',steps:['Count how many times each value appears: 3 appears three times, more than any other value.'],ans:'mode = 3'},
+ {level:'easy',q:'Find the class mark of the class interval 20-30.',steps:['Class mark = (lower limit + upper limit)/2 = (20+30)/2.'],ans:'class mark = 25'},
+ {level:'medium',q:'Find the mean by the direct method for the grouped data: classes 0-10,10-20,20-30,30-40 with frequencies 5,8,12,5.',steps:['Class marks: 5,15,25,35. Σf = 5+8+12+5 = 30.','Σfx = 5(5)+8(15)+12(25)+5(35) = 25+120+300+175 = 620.','Mean = 620/30.'],ans:'mean ≈ 20.67'},
+ {level:'medium',q:'Find the mean by the assumed mean method for the same data as above, taking A = 25.',steps:['d = x−A for each class mark: −20,−10,0,10.','fd: 5(−20)=−100, 8(−10)=−80, 12(0)=0, 5(10)=50; Σfd = −130.','Mean = A + Σfd/Σf = 25 + (−130/30).'],ans:'mean ≈ 20.67 (matches the direct method)'},
+ {level:'medium',q:'Find the mean using the step-deviation method for the same data, with A = 25, h = 10.',steps:['u = (x−A)/h: −2,−1,0,1.','fu: 5(−2)=−10, 8(−1)=−8, 12(0)=0, 5(1)=5; Σfu = −13.','Mean = A + (Σfu/Σf)×h = 25 + (−13/30)(10).'],ans:'mean ≈ 20.67'},
+ {level:'medium',q:'Find the median of the grouped data: classes 0-10,10-20,20-30,30-40,40-50 with frequencies 5,8,15,7,5 (N=40).',steps:['Cumulative frequencies: 5,13,28,35,40.','N/2 = 20, which first reaches in the class 20-30 (l=20, cf=13, f=15, h=10).','Median = 20 + [(20−13)/15]×10.'],ans:'median ≈ 24.67'},
+ {level:'medium',q:'Find the mode of the grouped data: classes 0-10,10-20,20-30,30-40 with frequencies 5,8,12,5.',steps:['The modal class (highest frequency) is 20-30, with f1=12, f0=8, f2=5, l=20, h=10.','Mode = 20 + [(12−8)/(2×12−8−5)]×10.'],ans:'mode ≈ 23.64'},
+ {level:'medium',q:'Given mean = 25.6 and median = 27, use the empirical relationship to find the mode.',steps:['Mode = 3Median − 2Mean = 3(27) − 2(25.6).'],ans:'mode = 29.8'},
+ {level:'medium',q:'Find the missing frequency f for the grouped data: classes 0-10,10-20,20-30,30-40 with frequencies 5,f,10,8 and mean = 20.',steps:['Class marks 5,15,25,35; Σf = 23+f; Σfx = 25+15f+250+280 = 555+15f.','Set the mean equation: (555+15f)/(23+f) = 20.','555+15f = 460+20f ⟹ 95 = 5f.'],ans:'f = 19'},
+ {level:'medium',q:'Find the median class and median for the grouped data: classes 10-20,20-30,30-40,40-50,50-60 with frequencies 4,6,10,8,2 (N=30).',steps:['Cumulative frequencies: 4,10,20,28,30.','N/2 = 15, which first reaches in the class 30-40 (l=30, cf=10, f=10, h=10).','Median = 30 + [(15−10)/10]×10.'],ans:'median = 35'},
+ {level:'medium',q:'For an ogive constructed from N = 80 observations, state the positions (not values) of the lower and upper quartiles.',steps:['Q1 lies at the N/4 th position = 80/4.','Q3 lies at the 3N/4 th position = 3(80)/4.'],ans:'Q1 at the 20th value, Q3 at the 60th value'},
+ {level:'medium',q:'Find the weighted mean of marks 40, 50, 60, 70 with weights (credits) 2, 3, 1, 4.',steps:['Σ(w×x) = 40(2)+50(3)+60(1)+70(4) = 80+150+60+280 = 570.','Σw = 2+3+1+4 = 10.','Weighted mean = 570/10.'],ans:'weighted mean = 57'},
+ {level:'hard',q:'Using the step-deviation method, find the mean for the grouped data: classes 0-10,10-20,20-30,30-40,40-50,50-60 with frequencies 5,10,18,30,20,17 (assume A=35, h=10).',steps:['Class marks: 5,15,25,35,45,55; u = (x−35)/10 gives −3,−2,−1,0,1,2.','fu: 5(−3)=−15, 10(−2)=−20, 18(−1)=−18, 30(0)=0, 20(1)=20, 17(2)=34; Σfu = 1.','Mean = 35 + (1/100)×10.'],ans:'mean = 35.1'},
+ {level:'hard',q:'Find the median for the same data as above (frequencies 5,10,18,30,20,17, N=100).',steps:['Cumulative frequencies: 5,15,33,63,83,100.','N/2 = 50, which first reaches in the class 30-40 (l=30, cf=33, f=30, h=10).','Median = 30 + [(50−33)/30]×10.'],ans:'median ≈ 35.67'},
+ {level:'hard',q:'Find the mode for the same data as above.',steps:['The modal class (highest frequency, 30) is 30-40, with f1=30, f0=18, f2=20, l=30, h=10.','Mode = 30 + [(30−18)/(2×30−18−20)]×10.'],ans:'mode ≈ 35.45'},
+ {level:'hard',q:'Using the mean and median from the previous two examples, check how closely the empirical relationship predicts the mode.',steps:['Empirical mode = 3Median − 2Mean = 3(35.67) − 2(35.1).','This gives ≈36.81, compared to the directly computed mode of ≈35.45.'],ans:'The two values are close but not identical — the relationship is only an approximation'},
+ {level:'hard',q:'A cumulative frequency table gives cf = 5,15,33,63,83,100 at upper class boundaries 10,20,30,40,50,60. Using linear interpolation on the ogive, estimate the number of students scoring less than 25 marks.',steps:['At boundary 20, cf = 15; at boundary 30, cf = 33.','Interpolating at x = 25: cf ≈ 15 + [(25−20)/10]×(33−15) = 15 + 9.'],ans:'≈ 24 students'},
+ {level:'hard',q:'Given mean = 30 and mode = 24, use the empirical relationship to find the median.',steps:['Mode = 3Median − 2Mean ⟹ 24 = 3Median − 2(30).','3Median = 24 + 60 = 84.'],ans:'median = 28'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Mean',time:'3 min',q:'Find the mean of the first 10 natural numbers.',sol:'Sum = 1+2+...+10 = 55. Mean = 55/10 = 5.5.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Median (Grouped Data)',time:'5 min',q:'Find the median for the frequency distribution: classes 0-10,10-20,20-30,30-40,40-50 with frequencies 3,8,15,9,5 (N=40).',sol:'Cumulative frequencies: 3,11,26,35,40. N/2=20 falls in class 20-30 (l=20,cf=11,f=15,h=10). Median = 20+[(20−11)/15]×10 = 26.'},
+ {year:'2022',diff:'Medium',marks:3,topic:'Mode (Grouped Data)',time:'5 min',q:'Find the mode for the frequency distribution: classes 0-20,20-40,40-60,60-80,80-100 with frequencies 5,12,20,10,3.',sol:'Modal class 40-60 (f1=20,f0=12,f2=10,l=40,h=20). Mode = 40+[(20−12)/(40−12−10)]×20 ≈ 48.89.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Mean (Step-Deviation Method)',time:'7 min',q:'Using the step-deviation method, find the mean for classes 0-10,10-20,20-30,30-40,40-50,50-60 with frequencies 6,10,16,14,8,6 (assume A=35, h=10).',sol:'u = −3,−2,−1,0,1,2; fu sums to −34; Σf = 60. Mean = 35 + (−34/60)×10 ≈ 29.33.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Median (Ungrouped Data)',time:'3 min',q:'Find the median of the data: 12, 18, 9, 15, 21, 7.',sol:'Sorted: 7,9,12,15,18,21 (n=6, even). Median = (12+15)/2 = 13.5.'},
+ {year:'2021',diff:'Hard',marks:4,topic:'Ogive &amp; Quartiles',time:'7 min',q:'The cumulative frequency table for 50 students is: less than 10: 4, less than 20: 10, less than 30: 22, less than 40: 38, less than 50: 50. Using an ogive, estimate the median.',sol:'N/2=25 falls in the class 30-40 (l=30,cf=22,f=16,h=10). Median = 30+[(25−22)/16]×10 ≈ 31.88.'}
+];
+
+const MISTAKES=[
+ 'Forgetting to use the class mark (mid-value) instead of the class interval itself when computing the mean of grouped data.',
+ 'Using the wrong cumulative frequency when locating the median class — always compare against N/2, not N itself.',
+ 'Choosing the modal class based on the highest cumulative frequency instead of the highest ordinary frequency.',
+ 'Forgetting to multiply back by the class width h at the end of the step-deviation method, leaving the mean expressed only in terms of u.',
+ 'Treating the empirical relationship Mode = 3Median − 2Mean as an exact formula — it is only an approximation for moderately skewed distributions.'
+];
+
+const FLASH=[
+ {f:'Mean (Direct Method)', b:'x̄ = Σfx/Σf'},
+ {f:'Mean (Assumed Mean Method)', b:'x̄ = A + Σfd/Σf, where d = x − A'},
+ {f:'Mean (Step-Deviation Method)', b:'x̄ = A + (Σfu/Σf) × h, where u = (x−A)/h'},
+ {f:'Class Mark', b:'(Upper limit + Lower limit)/2'},
+ {f:'Median (Ungrouped, odd n)', b:'The middle value after arranging the data in order'},
+ {f:'Median (Ungrouped, even n)', b:'The average of the two middle values'},
+ {f:'Median (Grouped Data)', b:'l + [(N/2 − cf)/f] × h'},
+ {f:'Mode (Grouped Data)', b:'l + [(f1−f0)/(2f1−f0−f2)] × h'},
+ {f:'Cumulative Frequency', b:'The running total of frequencies up to a class'},
+ {f:'Ogive', b:'A graph of cumulative frequency against the upper class boundary'},
+ {f:'Lower Quartile (Q1)', b:'The value at the N/4 th position'},
+ {f:'Upper Quartile (Q3)', b:'The value at the 3N/4 th position'},
+ {f:'Empirical Relationship', b:'Mode = 3Median − 2Mean'},
+ {f:'Range', b:'Highest value − Lowest value'},
+ {f:'Class Width (h)', b:'Upper limit − Lower limit of a class interval'},
+ {f:'Weighted Mean', b:'Σ(w×x)/Σw'}
+];
+
+const CC_MCQ=[
+ {t:'formulas',q:'The mean of a grouped distribution using the direct method is:',opts:['Σx/n','Σfx/Σf','Σf/Σx','Σfx'],a:1},
+ {t:'formulas',q:'The step-deviation method uses the substitution:',opts:['u = x − A','u = (x − A)/h','u = (x + A)/h','u = Ax/h'],a:1},
+ {t:'formulas',q:'The formula for the median of grouped data is:',opts:['l + [(N/2−cf)/f] × h','l + [(N−cf)/f] × h','l + [cf/f] × h','l + [(N/2)/f] × h'],a:0},
+ {t:'basics',q:'The class mark of the interval 30-40 is:',opts:['30','35','40','70'],a:1},
+ {t:'basics',q:'The running total of frequencies up to the end of a class is called its:',opts:['Class mark','Cumulative frequency','Range','Class width'],a:1},
+ {t:'basics',q:'A graph of cumulative frequency against the upper class boundary is called a(n):',opts:['Bar graph','Histogram','Ogive','Pie chart'],a:2},
+ {t:'theorems',q:'The modal class of a grouped distribution is the class with the:',opts:['Highest cumulative frequency','Lowest frequency','Highest frequency','Smallest class width'],a:2},
+ {t:'theorems',q:'The empirical relationship between mean, median and mode is:',opts:['Mode = 3Mean − 2Median','Mode = 3Median − 2Mean','Mean = 3Mode − 2Median','Median = 3Mode − 2Mean'],a:1},
+ {t:'theorems',q:'The lower quartile Q1 corresponds to the value at position:',opts:['N/2','N/4','3N/4','N'],a:1},
+ {t:'stats',q:'For an odd number of ungrouped observations, the median is:',opts:['The average of all values','The middle value after arranging in order','The most frequent value','The range divided by 2'],a:1},
+ {t:'stats',q:'If n is even, the median of ungrouped data is:',opts:['The single middle value','The average of the two middle values','The mode','The mean'],a:1},
+ {t:'general',q:'The mode of a data set is:',opts:['The middle value','The average value','The most frequently occurring value','The range of values'],a:2},
+ {t:'general',q:'The range of a data set is:',opts:['Highest value + Lowest value','Highest value − Lowest value','Mean − Median','Sum of all values'],a:1},
+ {t:'formulas',q:'In the assumed mean method, d stands for:',opts:['x + A','x − A','x/A','A/x'],a:1},
+ {t:'formulas',q:'The upper quartile Q3 corresponds to the value at position:',opts:['N/4','N/2','3N/4','N'],a:2}
+];
+const CC_FIB=[
+ {t:'formulas',q:'In the mean formula x̄ = Σfx/Σf, x represents the ______ of each class.',a:'class mark'},
+ {t:'formulas',q:'In the step-deviation method, the mean formula ends by multiplying by the class ______.',a:'width'},
+ {t:'formulas',q:'The assumed mean method uses A to denote the ______ mean.',a:'assumed'},
+ {t:'basics',q:'The class mark of an interval is the ______ of its upper and lower limits.',a:'average'},
+ {t:'basics',q:'A running total of frequencies is called the ______ frequency.',a:'cumulative'},
+ {t:'basics',q:'A cumulative frequency curve is also called a(n) ______.',a:'ogive'},
+ {t:'theorems',q:'The modal class is the class interval with the highest ______.',a:'frequency'},
+ {t:'theorems',q:'The empirical relationship states that Mode = 3Median − 2______.',a:'mean'},
+ {t:'theorems',q:'The lower quartile is found at the N/______ th position.',a:'4'},
+ {t:'stats',q:'For an even number of ungrouped values, the median is the ______ of the two middle values.',a:'average'},
+ {t:'stats',q:'The most frequently occurring value in a data set is called the ______.',a:'mode'},
+ {t:'general',q:'The range of a data set equals the highest value minus the ______ value.',a:'lowest'},
+ {t:'general',q:'In d = x − A, A stands for the ______ mean.',a:'assumed'},
+ {t:'general',q:'The upper quartile is found at the 3N/______ th position.',a:'4'},
+ {t:'formulas',q:'The formula for the median of grouped data is l + [(N/2 − cf)/f] × ______.',a:'h'}
+];
+const CC_TF=[
+ {t:'formulas',q:'The direct method for finding the mean uses x̄ = Σfx/Σf.',a:true},
+ {t:'formulas',q:'The step-deviation method never needs to be multiplied back by the class width.',a:false},
+ {t:'formulas',q:'The assumed mean A can be any convenient class mark, not necessarily the actual mean.',a:true},
+ {t:'basics',q:'The class mark is the same as the class width.',a:false},
+ {t:'basics',q:'The cumulative frequency at the last class always equals the total number of observations, N.',a:true},
+ {t:'basics',q:'An ogive is a straight-line graph.',a:false},
+ {t:'theorems',q:'The modal class is chosen using cumulative frequency, not ordinary frequency.',a:false},
+ {t:'theorems',q:'Mode = 3Median − 2Mean is always exactly true for every data set.',a:false},
+ {t:'theorems',q:'The median divides an ordered data set into two equal halves.',a:true},
+ {t:'stats',q:'For 7 ungrouped observations arranged in order, the median is the 4th value.',a:true},
+ {t:'stats',q:'A data set can have more than one mode.',a:true},
+ {t:'general',q:'The mean is always one of the values actually present in the data set.',a:false},
+ {t:'general',q:'The range only depends on the highest and lowest values, not on any value in between.',a:true},
+ {t:'general',q:'Quartiles divide an ordered data set into four equal parts.',a:true},
+ {t:'general',q:'The median is always affected heavily by extreme outlier values, more than the mean.',a:false}
+];
+
+const AR=[
+ {a:'The mean of the data 4, 8, 10, 12, 16 is 10.', r:'The mean is found by dividing the sum of all observations by the number of observations, and (4+8+10+12+16)/5 = 50/5 = 10.', ans:0, explain:'Both statements are true, and R correctly explains A — direct substitution into the mean formula gives exactly 10.'},
+ {a:'The median of the data 4, 6, 8, 10 is 7.', r:'For an even number of ordered observations, the median is the average of the two middle values, here (6+8)/2 = 7.', ans:0, explain:'Both statements are true, and R correctly explains A.'},
+ {a:'The mode of the data 2, 3, 3, 4, 5, 3, 6 is 3.', r:'The mean of a data set is the sum of all observations divided by their number.', ans:1, explain:'Both statements are true — the mode is indeed 3, and the definition of the mean given in R is also correct. But R describes the mean, not the mode, so it does not explain why 3 is the mode of this particular data set.'},
+ {a:'An ogive can be used to estimate the median of grouped data.', r:'A cumulative frequency curve is called an ogive.', ans:1, explain:'Both statements are true — an ogive can indeed be used to read off the median, and the definition of an ogive in R is correct. But R merely defines what an ogive is; it does not explain the specific procedure of estimating the median from it.'},
+ {a:'For the grouped data with modal class 20-30 (f1=12), preceding frequency f0=8, following frequency f2=5 and class width 10, the mode is 23.64.', r:'The formula for the mode of grouped data is Mode = l + [(f1+f0)/(2f1−f0−f2)] × h.', ans:2, explain:'A is true: Mode = 20 + [(12−8)/(2×12−8−5)] × 10 = 20 + 3.64 = 23.64. But R is false — it states the numerator incorrectly as (f1+f0); the correct formula uses (f1−f0) in the numerator.'},
+ {a:'The empirical relationship gives Mode = 29.8 when Mean = 25.6 and Median = 27.', r:'The empirical relationship for any data set is Mode = 2Median − 3Mean.', ans:2, explain:'A is true: 3(27) − 2(25.6) = 81 − 51.2 = 29.8. But R is false — it states the relationship backwards; the correct empirical relationship is Mode = 3Median − 2Mean, not 2Median − 3Mean.'},
+ {a:'The class mark of the interval 30-40 is 30.', r:'The class mark of an interval is the average of its upper and lower limits.', ans:3, explain:'A is false — the class mark of 30-40 is (30+40)/2 = 35, not 30. R is true and correctly states the rule that would give the right answer if applied.'},
+ {a:'In the step-deviation method, the final mean formula does not need to be multiplied by the class width h.', r:'The step-deviation substitution is u = (x − A)/h, which already divides by h when converting from x to u.', ans:3, explain:'A is false — since u was obtained by dividing by h, the formula must multiply back by h at the end: mean = A + (Σfu/Σf) × h. R is true and correctly explains why this final multiplication is needed.'},
+ {a:'The mean of any data set is always equal to one of the actual observations in that data set.', r:'The mean is calculated by picking the middle-most observation once the data is arranged in order.', ans:4, explain:'Both statements are false. The mean can fall between the actual data values and generally need not match any single observation — for the data 4, 8, 10, 12, 16 the mean happens to be 10, but this is a coincidence, not a rule. R also incorrectly describes the median\'s procedure, not the mean\'s.'},
+ {a:'A data set can never have more than one mode.', r:'Cumulative frequency always decreases as you move to higher classes in a distribution.', ans:4, explain:'Both statements are false. A data set can be bimodal or multimodal, having two or more values that occur with the same highest frequency, so A is false. R is also false — cumulative frequency is a running total, so it never decreases; it always stays the same or increases as you move to higher classes.'}
+];
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A.',
+ 'Both A and R are true, but R is not the correct explanation of A.',
+ 'A is true, but R is false.',
+ 'A is false, but R is true.',
+ 'Both A and R are false.'
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'Find the mean of 3, 5, 7, 9, 11.','Sum the values and divide by how many there are.','mean = 7'),
+ mk(2,'Find the mean of 10, 20, 30, 40.','Sum the values and divide by 4.','mean = 25'),
+ mk(3,'Find the median of 5, 9, 3, 7, 11.','Arrange the values in order first.','median = 7'),
+ mk(4,'Find the median of 8, 12, 4, 16.','Average the two middle values after ordering.','median = 10'),
+ mk(5,'Find the mode of 2, 4, 4, 6, 4, 8.','Which value repeats most often?','mode = 4'),
+ mk(6,'Find the class mark of the interval 10-20.','Average of the two limits.','15'),
+ mk(7,'Find the class width of the interval 25-40.','Upper limit minus lower limit.','15'),
+ mk(8,'Find the range of the data 12, 45, 7, 89, 34.','Highest value minus lowest value.','82'),
+ mk(9,'State the formula for the mean by the direct method.','Recall the theorem card.','x̄ = Σfx/Σf'),
+ mk(10,'State the formula for the median of grouped data.','Recall the theorem card.','Median = l + [(N/2−cf)/f]×h'),
+ mk(11,'Find the mean of the numbers 6, 6, 6, 6, 6.','All the values are identical.','mean = 6'),
+ mk(12,'If N = 50, at what position does the median lie for grouped data?','Use N/2.','25th position'),
+ mk(13,'If N = 60, at what position does the lower quartile Q1 lie?','Use N/4.','15th position'),
+ mk(14,'Find the mode of the data 7, 7, 9, 9, 9, 11.','Which value occurs most often?','mode = 9'),
+ mk(15,'Find the mean of the first five natural numbers.','1+2+3+4+5, then divide by 5.','mean = 3'),
+ mk(16,'State the empirical relationship between mean, median and mode.','Recall the theorem card.','Mode = 3Median − 2Mean'),
+ mk(17,'Find the median of 21, 15, 18, 24, 30.','Arrange the values in order first.','median = 21'),
+ mk(18,'What is the class mark of the interval 0-10?','Average of the two limits.','5'),
+ mk(19,'Find the cumulative frequency after the first three classes with frequencies 4, 6, 10.','Add the frequencies successively.','20'),
+ mk(20,'Which graph is used to estimate the median and quartiles from grouped data?','Recall the definition from Key Terms.','Ogive (cumulative frequency curve)')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'Find the mean of the grouped data: classes 0-10, 10-20, 20-30 with frequencies 4, 6, 10 (midpoints 5, 15, 25).','Use Σfx/Σf.','mean = 18'),
+ mk(2,'Using the assumed mean method with A = 15, find the mean of the same data as above.','Mean = A + Σfd/Σf.','mean = 18'),
+ mk(3,'Using the step-deviation method with A = 15, h = 10, find the mean of the same data.','u = (x−A)/h.','mean = 18'),
+ mk(4,'Find the median of the grouped data: classes 0-10,...,40-50 with frequencies 5, 8, 15, 7, 5 (N=40).','Locate the median class using cumulative frequency.','median ≈ 24.67'),
+ mk(5,'Find the mode of the grouped data: classes 0-10, 10-20, 20-30, 30-40 with frequencies 5, 8, 12, 5.','Identify the modal class first.','mode ≈ 23.64'),
+ mk(6,'If mean = 25.6 and median = 27, use the empirical relationship to find the mode.','Mode = 3Median − 2Mean.','mode = 29.8'),
+ mk(7,'If mean = 30 and mode = 24, use the empirical relationship to find the median.','Rearrange Mode = 3Median − 2Mean.','median = 28'),
+ mk(8,'Find the missing frequency f for the grouped data: classes 0-10,10-20,20-30,30-40 with frequencies 5, f, 10, 8 and mean = 20.','Set up the mean equation and solve for f.','f = 19'),
+ mk(9,'Find the median class and median for data: classes 10-20,...,50-60 with frequencies 4, 6, 10, 8, 2 (N=30).','N/2 = 15; find where the cumulative frequency first reaches 15.','median = 35'),
+ mk(10,'Find the positions (not values) of Q1 and Q3 for grouped data with N = 80.','Use N/4 and 3N/4.','Q1 at the 20th value, Q3 at the 60th value'),
+ mk(11,'Find the weighted mean of marks 40, 50, 60, 70 with weights 2, 3, 1, 4.','Σ(w×x)/Σw.','weighted mean = 57'),
+ mk(12,'A cumulative frequency table has cf values 5, 15, 33, 63, 83, 100 at upper boundaries 10, 20, ..., 60. Estimate the number of students scoring less than 25 marks using linear interpolation.','Interpolate between the cf at 20 and the cf at 30.','≈ 24 students'),
+ mk(13,'Find the mean of the grouped data: classes 20-30, 30-40, 40-50 with frequencies 8, 12, 10 (midpoints 25, 35, 45).','Use Σfx/Σf.','mean ≈ 35.67'),
+ mk(14,'Find the mode of the grouped data: classes 0-20, 20-40, 40-60, 60-80, 80-100 with frequencies 5, 12, 20, 10, 3.','Identify the modal class first.','mode ≈ 48.89'),
+ mk(15,'Find the median for the frequency distribution: classes 0-10,10-20,20-30,30-40,40-50 with frequencies 3, 8, 15, 9, 5 (N=40).','Locate the median class using cumulative frequency.','median = 26'),
+ mk(16,'Using step-deviation with A = 35, h = 10, find the mean for classes 0-10,...,50-60 with frequencies 6, 10, 16, 14, 8, 6.','u = (x−A)/h, then scale back by h.','mean ≈ 29.33'),
+ mk(17,'A grouped table has classes of width 10 starting at 0 and ending at 60. How many classes are there?','Divide the total range by the class width.','6 classes'),
+ mk(18,'If a data set has 25 observations arranged in order, at which position is the median?','For odd n, the median is at the (n+1)/2 th position.','13th position'),
+ mk(19,'Find the mean of 12 observations whose sum is 180.','Mean = sum/count.','mean = 15'),
+ mk(20,'The mode of a distribution is 36 and the mean is 30. Use the empirical relationship to find the median.','Rearrange Mode = 3Median − 2Mean.','median = 32')
+];
+const PZ3=[ // Level 3 - ICSE exam
+ mk(1,'Using the step-deviation method, find the mean for classes 0-10,...,50-60 with frequencies 5, 10, 18, 30, 20, 17 (assume A=35, h=10).','Carefully build the u and fu columns across all six classes.','mean = 35.1'),
+ mk(2,'Find the median for the same data as Q1 above.','Build the cumulative frequency table first.','median ≈ 35.67'),
+ mk(3,'Find the mode for the same data as Q1 above.','Identify the modal class (highest frequency).','mode ≈ 35.45'),
+ mk(4,'For the distribution in Q1-Q3, verify whether the empirical relationship gives a mode close to the value computed directly.','Compute 3×median − 2×mean and compare with the direct mode.','≈ 36.81, close to the direct value of 35.45 (only an approximation)'),
+ mk(5,'A cumulative frequency table for 50 students is: less than 10: 4, less than 20: 10, less than 30: 22, less than 40: 38, less than 50: 50. Estimate the median.','N/2 = 25; find the class where cf first reaches or exceeds 25.','median ≈ 31.88'),
+ mk(6,'Using the same table as Q5, estimate the lower quartile Q1.','N/4 = 12.5; locate the class containing the 12.5th value.','Q1 ≈ 22.08'),
+ mk(7,'Using the same table as Q5, estimate the upper quartile Q3.','3N/4 = 37.5; locate the class containing the 37.5th value.','Q3 ≈ 39.69'),
+ mk(8,'Find the mean of a distribution given Σfx = 1250 and Σf = 50.','Mean = Σfx/Σf.','mean = 25'),
+ mk(9,'The marks of 60 students are grouped into 6 classes of equal width 10 starting from 0, with frequencies 3, 9, 15, 18, 10, 5. Find the mean using the step-deviation method (A=35).','Use midpoints 5,15,25,35,45,55.','mean ≈ 31.33'),
+ mk(10,'For the same data as Q9, find the median.','Build the cumulative frequency table: 3, 12, 27, 45, 55, 60; use N/2 = 30.','median ≈ 31.67'),
+ mk(11,'For the same data as Q9, find the mode.','Identify the modal class (highest frequency, 18).','mode ≈ 32.73'),
+ mk(12,'Two sections of a class have mean marks 62 and 68, with 30 and 20 students respectively. Find the combined mean.','Use the combined mean formula (n1x̄1+n2x̄2)/(n1+n2).','combined mean = 64.4'),
+ mk(13,'The mean of 20 observations is 15, but one observation of value 25 was misread as 35. Find the correct mean.','Adjust the total sum by the difference between the correct and incorrect values.','corrected mean = 14.5'),
+ mk(14,'A grouped table has N = 120 with frequencies 10, f1, 30, f2, 8 for five classes, given f1 = f2. Find f1 and f2.','Use N = Σf to form one equation, then substitute f1 = f2.','f1 = f2 = 36'),
+ mk(15,'A distribution has classes of unequal width: 0-10, 10-30, 30-60 with frequencies 8, 24, 54. Find the frequency density (frequency ÷ class width) of each class.','Divide each frequency by its own class width.','0.8, 1.2, 1.8 respectively'),
+ mk(16,'If Σf = 40 and the assumed mean A = 28 gives Σfd = −40 (where d = x−A), find the actual mean.','Mean = A + Σfd/Σf.','mean = 27'),
+ mk(17,'The median of a distribution is 46.5, with l=40, f=20, cf=25, h=10. Find N.','Rearrange the median formula to solve for N.','N = 76'),
+ mk(18,'An ogive for 90 students shows 54 students scored less than 40 marks and 72 students scored less than 50 marks. Find the number of students scoring between 40 and 50.','Subtract the two cumulative frequencies.','18 students'),
+ mk(19,'Find the mode using the empirical relationship if a distribution has mean 146.5 and median 130.83.','Apply Mode = 3Median − 2Mean.','mode ≈ 99.49'),
+ mk(20,'Two ogives (less-than and more-than type) for the same data intersect at a point. What does the x-coordinate of that point represent?','Think about where cumulative frequency from both directions must balance.','the median of the data')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (basics / theorems)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('basicsGrid',BASIC_TERMS);
+buildTheoremCards('propertiesGrid',PROPERTY_RULES);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=BASIC_TERMS.concat(PROPERTY_RULES);
+  let head='<tr><th>Definition / Rule</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Empirical Relationship pairs list
+const compdivLeft=document.getElementById('compdivLeft');
+const cpCard=el('div','card pad');
+COMPDIV_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+compdivLeft.appendChild(cpCard);
+
+// Core Formulas legend chips
+const typeLegend=document.getElementById('typeLegend');
+TYPE_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===0?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('typeName').textContent=item.label;
+    document.getElementById('typeFormula').textContent=item.formula;
+    document.getElementById('typeValue').textContent=item.value;
+  });
+  typeLegend.appendChild(chip);
+});
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('st_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('st_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase().replace(/\s+/g,'')===item.a.toLowerCase().replace(/\s+/g,'');
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','ar-card');
+  card.innerHTML=`<div class="qtag">Assertion &amp; Reasoning · Q${i+1}</div>
+  <div class="ar-statement"><b>Assertion (A)</b>${item.a}</div>
+  <div class="ar-statement"><b>Reason (R)</b>${item.r}</div>`;
+  const optsWrap=el('div');
+  AR_OPTIONS.forEach((opt,oi)=>{
+    const label='(' + 'abcde'[oi] + ') ' + opt;
+    const b=el('button','opt-btn',label);
+    b.addEventListener('click',()=>{
+      card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){b.classList.add('correct'); recordQuiz(true);}
+      else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false);}
+      card.querySelector('.ar-explain').classList.add('show');
+    });
+    optsWrap.appendChild(b);
+  });
+  card.appendChild(optsWrap);
+  card.appendChild(el('div','ar-explain','💡 '+item.explain));
+  arList.appendChild(card);
+});
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('st_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('st_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').innerHTML=item.f;
+  document.getElementById('flashBack').innerHTML=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+/* ============================================================
+   HERO INSTRUMENT — slider moves the assumed mean A, recomputes d, fd, mean
+============================================================ */
+const aMarker=document.getElementById('aMarker');
+const aLabel=document.getElementById('aLabel');
+const statSlider=document.getElementById('statSlider');
+const MIDS=[5,15,25,35], FREQS=[5,8,12,5];
+const X_MAP={5:65,15:125,25:185,35:245};
+function setA(aVal){
+  const x=X_MAP[aVal];
+  aMarker.setAttribute('x1',x); aMarker.setAttribute('x2',x);
+  aLabel.setAttribute('x',x);
+  aLabel.textContent=`A = ${aVal}`;
+
+  let sf=0, sfd=0;
+  MIDS.forEach((m,i)=>{
+    const d=m-aVal;
+    sf+=FREQS[i];
+    sfd+=FREQS[i]*d;
+  });
+  const mean=aVal + sfd/sf;
+
+  document.getElementById('rA').textContent=aVal;
+  document.getElementById('rSfd').textContent=sfd;
+  document.getElementById('rMean').textContent=mean.toFixed(2);
+  document.getElementById('rSf').textContent=sf;
+}
+statSlider.addEventListener('input',()=>setA(parseInt(statSlider.value)));
+setA(parseInt(statSlider.value));
+
+// Empirical Relationship slider (median fixed, mean varies, mode recomputed)
+const compdivSlider=document.getElementById('compdivSlider');
+const FIXED_MEDIAN=30;
+function updateCompdiv(){
+  const mn=parseInt(compdivSlider.value);
+  const mode=3*FIXED_MEDIAN - 2*mn;
+  document.getElementById('compdivA').textContent=mn;
+  document.getElementById('compdivB').textContent=mode;
+  document.getElementById('compdivSum').textContent=`Median is fixed at 30, so Mode = 3(30) − 2(${mn}) = 90 − ${2*mn} = ${mode} — sliding the mean always recomputes the mode from the same formula.`;
+}
+compdivSlider.addEventListener('input',updateCompdiv); updateCompdiv();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','formulas','basics','theorems','empirical','examples','conceptcheck','arsection','practice','pyq','mistakes','revision','flashcards','formula','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('st_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('st_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('st_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('st_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('st_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('st_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('st_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['st_sectionsRead','st_examplesOpened','st_quizStats','st_pz_l1','st_pz_l2','st_pz_l3','st_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>

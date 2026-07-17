@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probability — ICSE Class 10 Mathematics | Learn · Visualize · Practice · Master</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+<script>
+  window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] } };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" id="MathJax-script" async></script>
+
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root{
+  --paper:#FAF8F2;
+  --paper-line:#E7E0D0;
+  --ink:#1B2A4A;
+  --ink-soft:#3D5A80;
+  --ink-faint:#6B7A99;
+  --amber:#C97A2B;
+  --amber-dark:#A15E1B;
+  --amber-tint:#F3DDBB;
+  --green:#2E7D5B;
+  --green-tint:#DDEFE5;
+  --red:#B4453C;
+  --red-tint:#F7E1DE;
+  --card:#FFFFFF;
+  --border:#E1D9C6;
+  --radius:14px;
+  --shadow: 0 2px 10px rgba(27,42,74,.06), 0 1px 2px rgba(27,42,74,.05);
+  --font-display:'Spectral', Georgia, serif;
+  --font-body:'Inter', -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--ink);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size:32px 32px;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); font-weight:700;}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--amber-dark); font-weight:600;
+}
+a{color:var(--ink-soft);}
+::selection{background:var(--amber-tint);}
+:focus-visible{outline:3px solid var(--amber); outline-offset:2px;}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} html{scroll-behavior:auto;} }
+
+/* ===================== TOP BAR / READING PROGRESS ===================== */
+#readbar{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--amber),var(--green)); width:0%; z-index:2000; transition:width .1s linear;}
+.topnav{
+  position:sticky; top:0; z-index:1500; background:rgba(250,248,242,.9); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border); padding:.6rem 1.2rem;
+}
+.topnav .brand{font-family:var(--font-display); font-weight:700; font-size:1.15rem; color:var(--ink);}
+.topnav .brand span{color:var(--amber);}
+
+/* ===================== LAYOUT ===================== */
+.shell{display:grid; grid-template-columns:250px 1fr; gap:0; max-width:1360px; margin:0 auto;}
+@media (max-width:991px){ .shell{grid-template-columns:1fr;} }
+
+/* ---- Sidebar ---- */
+.sidebar{
+  position:sticky; top:56px; align-self:start; height:calc(100vh - 56px); overflow-y:auto;
+  padding:1.6rem 1rem 2rem 1.4rem; border-right:1px solid var(--border);
+}
+@media (max-width:991px){ .sidebar{position:relative; height:auto; top:0; border-right:none; border-bottom:1px solid var(--border);} }
+.sidebar .sec-label{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; color:var(--ink-faint); text-transform:uppercase; margin:1.1rem 0 .4rem;}
+.navlink{
+  display:flex; align-items:center; gap:.55rem; padding:.42rem .6rem; border-radius:9px; font-size:.88rem;
+  color:var(--ink-soft); text-decoration:none; font-weight:500; border-left:2px solid transparent;
+}
+.navlink:hover{background:var(--amber-tint); color:var(--amber-dark);}
+.navlink.active{background:var(--card); border-left:2px solid var(--amber); color:var(--ink); box-shadow:var(--shadow);}
+.navlink .dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex:none;}
+.navlink.done .dot{background:var(--green);}
+
+/* ---- Main ---- */
+main{padding:0 clamp(1rem,3vw,2.6rem) 4rem;}
+section{scroll-margin-top:70px; padding-top:2.6rem;}
+.section-head{margin-bottom:1.4rem;}
+.section-head h2{font-size:clamp(1.5rem,2.4vw,2.1rem); margin:.2rem 0 .3rem;}
+.section-head p.lede{color:var(--ink-soft); font-size:1rem; max-width:62ch;}
+
+.card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow);}
+.pad{padding:1.4rem 1.5rem;}
+
+/* ===================== HERO ===================== */
+.hero{
+  padding:2.6rem clamp(1rem,3vw,2.6rem) 1rem; display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center;
+}
+@media (max-width:900px){ .hero{grid-template-columns:1fr;} }
+.hero h1{font-size:clamp(2.1rem,4.2vw,3.2rem); line-height:1.06; margin-bottom:.6rem;}
+.hero .sub{font-family:var(--font-mono); color:var(--amber-dark); letter-spacing:.06em; font-size:.95rem; margin-bottom:1rem;}
+.hero p.desc{color:var(--ink-soft); max-width:52ch; margin-bottom:1.4rem;}
+.hero-cta{display:flex; gap:.7rem; flex-wrap:wrap;}
+.btn-amber{background:var(--amber); border:none; color:#fff; font-weight:600; padding:.65rem 1.3rem; border-radius:10px;}
+.btn-amber:hover{background:var(--amber-dark); color:#fff;}
+.btn-outline-ink{border:1.5px solid var(--ink); color:var(--ink); background:transparent; font-weight:600; padding:.6rem 1.25rem; border-radius:10px;}
+.btn-outline-ink:hover{background:var(--ink); color:#fff;}
+
+/* Instrument (signature element) */
+.instrument{background:var(--card); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:1.1rem;}
+.instrument-readout{display:flex; justify-content:space-between; flex-wrap:wrap; gap:.4rem; font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--border); margin-top:.7rem; padding-top:.7rem;}
+.instrument-readout b{color:var(--ink); font-size:.92rem; display:block;}
+#pbSlider{width:100%; margin-top:.6rem;}
+
+/* ===================== FORMULA CHIP PANEL ===================== */
+.circ-wrap{display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;}
+.circ-legend{flex:1; min-width:240px; display:flex; flex-direction:column; gap:.5rem;}
+.circ-chip{display:flex; align-items:center; gap:.6rem; padding:.55rem .8rem; border-radius:10px; border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:.86rem;}
+.circ-chip .sw{width:14px; height:14px; border-radius:4px; flex:none; background:var(--amber);}
+.circ-chip:hover, .circ-chip.active{background:var(--amber-tint); border-color:var(--amber);}
+.result-box{flex:1; min-width:260px; background:var(--paper); border:1px dashed var(--border); border-radius:12px; padding:1.4rem; text-align:center;}
+.result-box .rname{font-family:var(--font-mono); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark);}
+.result-box .rformula{font-family:var(--font-mono); font-size:1.02rem; color:var(--ink-soft); margin:.3rem 0;}
+.result-box .rvalue{font-family:var(--font-display); font-size:1.3rem; font-weight:700; color:var(--ink);}
+
+/* ===================== THEOREM/RULE CARDS ===================== */
+.ratio-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.1rem;}
+.ratio-card{border-radius:var(--radius); padding:1.2rem 1.3rem; border:1px solid var(--border); background:var(--card); box-shadow:var(--shadow); border-top:4px solid var(--c,var(--amber));}
+.ratio-card h4{display:flex; align-items:center; justify-content:space-between; font-size:1.1rem; margin-bottom:.3rem;}
+.ratio-card .formula{font-family:var(--font-mono); background:var(--paper); border:1px dashed var(--border); border-radius:8px; padding:.55rem .7rem; margin:.5rem 0; font-size:.92rem; line-height:1.4;}
+.ratio-card .trick{font-size:.82rem; color:var(--ink-soft); background:var(--amber-tint); border-radius:8px; padding:.4rem .6rem; margin-top:.5rem;}
+.ratio-card .ex{font-size:.85rem; margin-top:.5rem; color:var(--ink-soft);}
+
+/* ===================== TABLE ===================== */
+.ref-table{width:100%; border-collapse:separate; border-spacing:0; font-family:var(--font-mono); font-size:.86rem;}
+.ref-table th, .ref-table td{padding:.65rem .7rem; text-align:left; border-bottom:1px solid var(--border);}
+.ref-table th{background:var(--ink); color:#fff; font-family:var(--font-body); font-weight:600; letter-spacing:.03em;}
+.ref-table td.name-col{font-weight:700; color:var(--amber-dark); white-space:nowrap;}
+
+/* ===================== PAIRS LIST ===================== */
+.comp-pair{display:flex; align-items:center; gap:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.7rem;}
+.comp-pair .eq{font-family:var(--font-mono); font-size:1.02rem;}
+.comp-pair .arrow{color:var(--amber); font-size:1.3rem;}
+
+/* ===================== WORKED EXAMPLES ===================== */
+.ex-card{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1rem; background:var(--card);}
+.ex-head{display:flex; justify-content:space-between; align-items:center; padding:.9rem 1.2rem; cursor:pointer; gap:.8rem;}
+.ex-head .num{font-family:var(--font-mono); color:var(--amber-dark); font-weight:700;}
+.ex-badge{font-size:.68rem; font-family:var(--font-mono); text-transform:uppercase; padding:.15rem .55rem; border-radius:20px; letter-spacing:.06em;}
+.badge-easy{background:var(--green-tint); color:var(--green);}
+.badge-med{background:var(--amber-tint); color:var(--amber-dark);}
+.badge-hard{background:var(--red-tint); color:var(--red);}
+.ex-body{padding:0 1.2rem 1.1rem; display:none;}
+.ex-body.open{display:block;}
+.step-box{border-left:3px solid var(--ink-soft); background:var(--paper); border-radius:0 8px 8px 0; padding:.55rem .8rem; margin:.5rem 0; font-size:.92rem;}
+.step-box b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.75rem; text-transform:uppercase; display:block; margin-bottom:.15rem;}
+.final-answer{border-left:3px solid var(--green); background:var(--green-tint); border-radius:0 8px 8px 0; padding:.6rem .8rem; margin-top:.6rem; font-weight:600;}
+
+/* ===================== QUIZ / CONCEPT CHECK ===================== */
+.quiz-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:.9rem;}
+.quiz-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.opt-btn{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--paper); border-radius:8px; padding:.45rem .7rem; margin-top:.4rem; font-size:.9rem;}
+.opt-btn:hover{border-color:var(--amber);}
+.opt-btn.correct{background:var(--green-tint); border-color:var(--green); font-weight:600;}
+.opt-btn.wrong{background:var(--red-tint); border-color:var(--red);}
+.fib-input{border:1px solid var(--border); border-radius:8px; padding:.35rem .6rem; font-family:var(--font-mono); width:140px;}
+.tf-btns button{margin-right:.5rem;}
+.feedback{font-size:.82rem; margin-top:.4rem; font-weight:600;}
+
+/* ===================== ASSERTION & REASONING ===================== */
+.ar-card{border:1px solid var(--border); border-radius:12px; padding:1rem 1.1rem; background:var(--card); margin-bottom:1rem;}
+.ar-card .qtag{font-family:var(--font-mono); font-size:.68rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.06em;}
+.ar-statement{padding:.6rem .8rem; background:var(--paper); border-left:3px solid var(--ink-soft); border-radius:0 8px 8px 0; margin:.5rem 0; font-size:.92rem;}
+.ar-statement b{color:var(--ink-soft); font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; display:block; margin-bottom:.15rem; letter-spacing:.05em;}
+.ar-explain{display:none; margin-top:.6rem; font-size:.86rem; padding:.55rem .7rem; border-radius:8px; background:var(--amber-tint); border-left:3px solid var(--amber);}
+.ar-explain.show{display:block;}
+
+/* ===================== PRACTICE ZONE ===================== */
+.pz-tabs .nav-link{color:var(--ink-soft); font-weight:600; border-radius:10px 10px 0 0;}
+.pz-tabs .nav-link.active{background:var(--card); color:var(--ink); border-color:var(--border) var(--border) var(--card);}
+.pq-card{border:1px solid var(--border); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.8rem; background:var(--card);}
+.pq-top{display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem;}
+.pq-actions{display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.6rem;}
+.pq-actions button{font-size:.78rem; padding:.28rem .65rem; border-radius:7px; border:1px solid var(--border); background:var(--paper);}
+.pq-actions button:hover{border-color:var(--amber);}
+.pq-actions button.on{background:var(--amber); color:#fff; border-color:var(--amber);}
+.pq-hint, .pq-sol{display:none; margin-top:.55rem; font-size:.88rem; padding:.55rem .7rem; border-radius:8px;}
+.pq-hint{background:var(--amber-tint);}
+.pq-sol{background:var(--green-tint);}
+.pq-hint.show, .pq-sol.show{display:block;}
+
+/* ===================== PYQ ===================== */
+.pyq-card{border:1px solid var(--border); border-radius:12px; background:var(--card); margin-bottom:.8rem;}
+.pyq-meta{display:flex; gap:.5rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin:.4rem 0;}
+.pyq-meta span{background:var(--paper); border:1px solid var(--border); border-radius:20px; padding:.15rem .6rem;}
+
+/* ===================== MISTAKES ===================== */
+.mistake{display:flex; gap:.8rem; padding:.9rem 1rem; border:1px solid var(--red-tint); background:#fffaf9; border-radius:12px; margin-bottom:.7rem;}
+.mistake .x{color:var(--red); font-size:1.3rem; flex:none;}
+
+/* ===================== FLASHCARDS ===================== */
+.flash-stage{perspective:1400px; max-width:460px; margin:0 auto;}
+.flash-card{position:relative; height:260px; transform-style:preserve-3d; transition:transform .5s; cursor:pointer;}
+.flash-card.flipped{transform:rotateY(180deg);}
+.flash-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; display:flex; align-items:center; justify-content:center; text-align:center; padding:1.6rem; box-shadow:var(--shadow); border:1px solid var(--border);}
+.flash-front{background:var(--ink); color:#fff; font-family:var(--font-display); font-size:1.25rem;}
+.flash-back{background:var(--amber-tint); transform:rotateY(180deg); font-family:var(--font-mono); font-size:1rem; color:var(--ink);}
+.flash-controls{display:flex; justify-content:center; gap:.6rem; margin-top:1rem;}
+.flash-controls button{border:1px solid var(--border); background:var(--card); border-radius:9px; padding:.45rem 1rem; font-weight:600;}
+.flash-controls button:hover{border-color:var(--amber);}
+
+/* ===================== FORMULA SHEET ===================== */
+.formula-sheet{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:2rem;}
+.fs-col h5{font-family:var(--font-mono); font-size:.85rem; text-transform:uppercase; letter-spacing:.06em; color:var(--amber-dark); border-bottom:1px solid var(--border); padding-bottom:.3rem; margin-top:1.1rem;}
+.fs-col p{font-family:var(--font-mono); font-size:.86rem; margin:.25rem 0; line-height:1.4;}
+@media print{
+  body{background:#fff !important;}
+  .topnav,.sidebar,.hero,.hero-cta,.no-print,.instrument{display:none !important;}
+  section:not(#formula){display:none !important;}
+  #formula{display:block !important; padding:0;}
+  .shell{display:block !important;}
+}
+
+/* ===================== PROGRESS ===================== */
+.stat-card{border:1px solid var(--border); border-radius:12px; padding:1rem; background:var(--card); text-align:center;}
+.stat-card .num{font-family:var(--font-mono); font-size:1.7rem; font-weight:700; color:var(--ink);}
+.stat-card .lbl{font-size:.76rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em;}
+
+.footer-note{text-align:center; font-size:.8rem; color:var(--ink-faint); padding:2rem 0 1rem;}
+</style>
+</head>
+<body>
+
+<div id="readbar"></div>
+
+<nav class="topnav d-flex justify-content-between align-items-center">
+  <div class="brand">✛ <span>Probability</span> <small style="font-family:var(--font-mono);font-size:.6rem;color:var(--ink-faint);">· ICSE Class 10</small></div>
+  <div class="d-none d-md-flex align-items-center gap-3" style="font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft);">
+    <span id="topProgressLabel">0% read</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sec-label">Learn</div>
+    <a class="navlink" data-target="intro" href="#intro"><span class="dot"></span>Introduction</a>
+    <a class="navlink" data-target="formulas" href="#formulas"><span class="dot"></span>Core Formulas</a>
+    <a class="navlink" data-target="basics" href="#basics"><span class="dot"></span>Key Terms</a>
+    <a class="navlink" data-target="theorems" href="#theorems"><span class="dot"></span>Theorems &amp; Rules</a>
+    <a class="navlink" data-target="area" href="#area"><span class="dot"></span>Complementary Events</a>
+
+    <div class="sec-label">Practice</div>
+    <a class="navlink" data-target="examples" href="#examples"><span class="dot"></span>Worked Examples</a>
+    <a class="navlink" data-target="conceptcheck" href="#conceptcheck"><span class="dot"></span>Concept Check</a>
+    <a class="navlink" data-target="arsection" href="#arsection"><span class="dot"></span>Assertion &amp; Reasoning</a>
+    <a class="navlink" data-target="practice" href="#practice"><span class="dot"></span>Practice Zone</a>
+    <a class="navlink" data-target="pyq" href="#pyq"><span class="dot"></span>Previous Years</a>
+    <a class="navlink" data-target="mistakes" href="#mistakes"><span class="dot"></span>Common Mistakes</a>
+
+    <div class="sec-label">Master</div>
+    <a class="navlink" data-target="revision" href="#revision"><span class="dot"></span>Quick Revision</a>
+    <a class="navlink" data-target="flashcards" href="#flashcards"><span class="dot"></span>Flash Cards</a>
+    <a class="navlink" data-target="formula" href="#formula"><span class="dot"></span>Formula Sheet</a>
+    <a class="navlink" data-target="progress" href="#progress"><span class="dot"></span>Progress</a>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Chapter · Probability</div>
+        <h1>How likely<br>is it, exactly?</h1>
+        <div class="sub">LEARN · VISUALIZE · PRACTICE · MASTER</div>
+        <p class="desc">Drag the slider to change how many balls in the bag of 10 are red — watch the probability of drawing red update instantly, as a fraction, decimal and percentage.</p>
+        <div class="hero-cta">
+          <a href="#formulas" class="btn-amber">Start Learning</a>
+          <a href="#practice" class="btn-outline-ink">Jump to Practice</a>
+        </div>
+      </div>
+
+      <div class="instrument">
+        <svg id="heroSvg" viewBox="0 0 320 200" style="width:100%; height:auto;">
+          <rect x="30" y="30" width="260" height="140" rx="18" fill="none" stroke="#E1D9C6" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="160" y="20" font-family="IBM Plex Mono" font-size="10" fill="#6B7A99" text-anchor="middle">a bag of 10 balls</text>
+          <g id="ballsGroup"></g>
+        </svg>
+        <input type="range" id="pbSlider" min="0" max="10" value="4" step="1">
+        <div class="instrument-readout">
+          <div>Favourable n(E) <b id="pFav">4</b></div>
+          <div>Total n(S) <b id="pTotal">10</b></div>
+          <div>P(red) as fraction <b id="pFrac">4/10 = 2/5</b></div>
+          <div>P(red) as percent <b id="pPct">40%</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1. INTRODUCTION ===================== -->
+    <section id="intro">
+      <div class="section-head">
+        <div class="eyebrow">01 · Foundations</div>
+        <h2>What is Probability?</h2>
+        <p class="lede">Probability is a number between 0 and 1 that measures how likely an event is to happen. It turns everyday phrases like "unlikely", "even chance" and "certain" into precise fractions, by comparing the number of outcomes we want against the total number of equally likely outcomes possible.</p>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-7">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Why does it matter?</h4>
+            <p>Once an experiment's outcomes are known to be equally likely, every question about chance becomes a counting problem — count the favourable outcomes, count the total outcomes, and divide. This classical definition is the foundation for every later idea in probability, from weather forecasting and insurance to genetics and quality control, and at the ICSE level it is applied to simple, everyday experiments: coins, dice, cards, and bags of coloured balls.</p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card pad h-100">
+            <h4 style="font-size:1.1rem;">Where it's used</h4>
+            <ul class="mb-0" style="padding-left:1.1rem;">
+              <li>Weather forecasts ("70% chance of rain")</li>
+              <li>Games of chance — cards, dice, lotteries</li>
+              <li>Insurance and risk assessment</li>
+              <li>Quality control and sampling in factories</li>
+              <li>Genetics and inherited traits</li>
+              <li>Sports statistics and match predictions</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#C97A2B" stroke-width="1.6" style="margin:0 auto .4rem;"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1.3" fill="#C97A2B"/><circle cx="15" cy="15" r="1.3" fill="#C97A2B"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Sample Space</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" style="margin:0 auto .4rem;"><circle cx="12" cy="12" r="9"/><path d="M12 3 A9 9 0 0 1 20 15 L12 12 Z" fill="#3D5A80" stroke="none"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">P(E) = n(E)/n(S)</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#2E7D5B" stroke-width="1.6" style="margin:0 auto .4rem;"><rect x="3" y="10" width="18" height="4" rx="2"/><circle cx="4.5" cy="12" r="2.2" fill="#2E7D5B"/><circle cx="19.5" cy="12" r="2.2" fill="#B4453C"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">0 ≤ P(E) ≤ 1</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="card pad text-center">
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.6" style="margin:0 auto .4rem;"><path d="M4 16 L9 6 L14 12 L20 4"/><circle cx="20" cy="4" r="1.4" fill="#1B2A4A"/></svg>
+            <div style="font-size:.85rem; font-weight:600;">Complementary Events</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad mt-3">
+        <h4 style="font-size:1.05rem;">Before you continue — you should already know:</h4>
+        <div class="row">
+          <div class="col-md-4"><p class="mb-1">✓ How to simplify a fraction to its lowest terms</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ How to count and list outcomes systematically</p></div>
+          <div class="col-md-4"><p class="mb-1">✓ A standard deck of cards and a fair die/coin</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. CORE FORMULAS ===================== -->
+    <section id="formulas">
+      <div class="section-head">
+        <div class="eyebrow">02 · The Instrument</div>
+        <h2>Core Formulas</h2>
+        <p class="lede">Click each formula below to see exactly what it computes, and a worked example of it in action.</p>
+      </div>
+
+      <div class="card pad">
+        <div class="circ-wrap">
+          <div class="circ-legend" id="typeLegend"></div>
+          <div class="result-box">
+            <div class="rname" id="typeName">Classical Definition of Probability</div>
+            <div class="rformula" id="typeFormula">Probability of an event E</div>
+            <div class="rvalue" id="typeValue">P(E) = n(E) / n(S)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. KEY TERMS ===================== -->
+    <section id="basics">
+      <div class="section-head">
+        <div class="eyebrow">03 · Definitions</div>
+        <h2>Key Terms</h2>
+        <p class="lede">Every probability question is built from these five ideas. Learn what each one means before combining them into formulas.</p>
+      </div>
+      <div class="ratio-grid" id="basicsGrid"></div>
+    </section>
+
+    <!-- ===================== 4. THEOREMS & RULES ===================== -->
+    <section id="theorems">
+      <div class="section-head">
+        <div class="eyebrow">04 · Reference</div>
+        <h2>Theorems &amp; Rules</h2>
+        <p class="lede">Six results cover almost every ICSE-style probability question — from the basic definition to reading probabilities off a standard deck of cards.</p>
+      </div>
+      <div class="ratio-grid" id="propertiesGrid"></div>
+    </section>
+
+    <!-- ===================== 5. COMPLEMENTARY EVENTS ===================== -->
+    <section id="area">
+      <div class="section-head">
+        <div class="eyebrow">05 · Identity</div>
+        <h2>Complementary Events</h2>
+        <p class="lede">However you split a sample space into an event E and its complement "not E", the two probabilities always add up to exactly 1. Slide below to change how many balls in a bag of 10 are red, and watch P(red) and P(not red) move — but their sum never budges from 1.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6" id="compdivLeft"></div>
+        <div class="col-md-6">
+          <div class="card pad">
+            <h4 style="font-size:1.05rem;">Animated example</h4>
+            <p>A bag has 10 balls in total; x of them are red and the rest are not. P(red) = x/10 and P(not red) = (10−x)/10. Drag the slider to change x and watch the two probabilities trade off, while their sum stays locked at exactly 1.</p>
+            <input type="range" min="0" max="10" value="3" id="compdivSlider" class="form-range">
+            <div class="d-flex justify-content-between font-mono" style="font-family:var(--font-mono); font-size:.85rem;">
+              <span>Red balls x = <b id="compdivA">3</b></span>
+              <span>P(red) + P(not red) = <b id="compdivB">1</b></span>
+            </div>
+            <div class="step-box mt-2">
+              <b>Check</b>
+              <span id="compdivSum">P(red) = 3/10, P(not red) = 7/10, sum = 3/10 + 7/10 = 1</span> — however x changes, the two probabilities always add up to exactly 1.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. WORKED EXAMPLES ===================== -->
+    <section id="examples">
+      <div class="section-head">
+        <div class="eyebrow">06 · Practice</div>
+        <h2>Worked Examples</h2>
+        <p class="lede">20 fully solved problems, easy to exam-level. Click any question to expand its step-by-step solution.</p>
+      </div>
+      <div id="exampleList"></div>
+    </section>
+
+    <!-- ===================== 7. CONCEPT CHECK ===================== -->
+    <section id="conceptcheck">
+      <div class="section-head">
+        <div class="eyebrow">07 · Check Yourself</div>
+        <h2>Concept Check</h2>
+        <p class="lede">Quick-fire questions across core formulas, key terms, theorems, dice facts, and general facts — instant feedback, no scrolling required.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ccMCQ">MCQ (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccFIB">Fill in the Blank (15)</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ccTF">True / False (14)</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="ccMCQ"></div>
+        <div class="tab-pane fade" id="ccFIB"></div>
+        <div class="tab-pane fade" id="ccTF"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. ASSERTION & REASONING ===================== -->
+    <section id="arsection">
+      <div class="section-head">
+        <div class="eyebrow">08 · Reason It Out</div>
+        <h2>Assertion &amp; Reasoning</h2>
+        <p class="lede">Each question gives an Assertion (A) and a Reason (R). Decide whether each statement is true, and — if both are true — whether R actually explains A. Pick an option to see the correct answer and a short explanation.</p>
+      </div>
+      <div id="arList"></div>
+    </section>
+
+    <!-- ===================== 9. PRACTICE ZONE ===================== -->
+    <section id="practice">
+      <div class="section-head">
+        <div class="eyebrow">09 · Build Fluency</div>
+        <h2>Practice Zone</h2>
+        <p class="lede">60 questions across three levels. Use Hint before Show Solution, and Bookmark anything you want to revisit — your marks are saved automatically.</p>
+      </div>
+      <ul class="nav nav-tabs pz-tabs mb-3">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pzL1">Level 1 · Easy</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL2">Level 2 · Medium</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#pzL3">Level 3 · ICSE Exam</button></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="pzL1"></div>
+        <div class="tab-pane fade" id="pzL2"></div>
+        <div class="tab-pane fade" id="pzL3"></div>
+      </div>
+    </section>
+
+    <!-- ===================== 10. PYQ ===================== -->
+    <section id="pyq">
+      <div class="section-head">
+        <div class="eyebrow">10 · Exam Pattern</div>
+        <h2>Previous Year Questions</h2>
+        <p class="lede">Representative ICSE-style questions grouped by year, in the original difficulty and marks pattern. Model solutions follow the same step format as the worked examples above.</p>
+      </div>
+      <div id="pyqList"></div>
+    </section>
+
+    <!-- ===================== 11. MISTAKES ===================== -->
+    <section id="mistakes">
+      <div class="section-head">
+        <div class="eyebrow">11 · Avoid These</div>
+        <h2>Common Mistakes</h2>
+      </div>
+      <div id="mistakeList"></div>
+    </section>
+
+    <!-- ===================== 12. REVISION ===================== -->
+    <section id="revision">
+      <div class="section-head">
+        <div class="eyebrow">12 · One Page</div>
+        <h2>Quick Revision</h2>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Key Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">P(E) = n(E) / n(S)</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">0 ≤ P(E) ≤ 1</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Sure event: P(E) = 1</p>
+            <p class="mt-2 mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Impossible event: P(E) = 0</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card pad h-100">
+            <h4 style="font-size:1rem;">Rule Facts</h4>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">P(E) + P(not E) = 1</p>
+            <p class="mb-1" style="font-family:var(--font-mono); font-size:.85rem;">Deck of cards: 52 total, 26 red, 26 black</p>
+            <p class="mb-0" style="font-family:var(--font-mono); font-size:.85rem;">Face cards: 12 (J, Q, K in each suit)</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">All Definitions &amp; Rules (memorize this)</h4>
+            <div style="overflow-x:auto;"><table class="ref-table" id="revisionTable"></table></div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad">
+            <h4 style="font-size:1rem;">Exam Tips</h4>
+            <ul class="mb-0">
+              <li>Always write the sample space (or at least count n(S) carefully) before counting favourable outcomes — it prevents silly counting errors.</li>
+              <li>For "not E" questions, it is often faster to find P(E) first and subtract from 1, rather than counting the complement directly.</li>
+              <li>Memorise the deck-of-cards facts (52 total, 4 suits of 13, 12 face cards, 4 of each rank) — they appear in almost every card-based question.</li>
+              <li>Always simplify your final probability fraction to its lowest terms, and double check it lies between 0 and 1.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 13. FLASHCARDS ===================== -->
+    <section id="flashcards">
+      <div class="section-head">
+        <div class="eyebrow">13 · Rapid Recall</div>
+        <h2>Flash Cards</h2>
+        <p class="lede">Click a card to flip it.</p>
+      </div>
+      <div class="flash-stage">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-face flash-front" id="flashFront">Front</div>
+          <div class="flash-face flash-back" id="flashBack">Back</div>
+        </div>
+        <div class="flash-controls">
+          <button id="fcPrev">← Previous</button>
+          <button id="fcShuffle">⤮ Shuffle</button>
+          <button id="fcNext">Next →</button>
+        </div>
+        <p class="text-center mt-2" style="font-family:var(--font-mono); font-size:.8rem; color:var(--ink-faint);"><span id="fcIndex">1</span> / <span id="fcTotal">16</span></p>
+      </div>
+    </section>
+
+    <!-- ===================== 14. FORMULA SHEET ===================== -->
+    <section id="formula">
+      <div class="section-head d-flex justify-content-between align-items-end flex-wrap gap-2">
+        <div>
+          <div class="eyebrow">14 · Printable</div>
+          <h2>Formula Sheet</h2>
+        </div>
+        <div class="no-print">
+          <button class="btn-outline-ink" onclick="window.print()">🖨 Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="formula-sheet">
+        <h3 style="font-size:1.3rem; text-align:center; margin-bottom:0;">Probability — Formula Sheet</h3>
+        <p style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;">ICSE Class 10 Mathematics</p>
+        <div class="row">
+          <div class="col-md-4 fs-col">
+            <h5>Basic Definitions</h5>
+            <p>P(E) = n(E) / n(S)</p><p>0 ≤ P(E) ≤ 1</p>
+            <p>Sure event: P(E) = 1</p><p>Impossible event: P(E) = 0</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Complementary Events</h5>
+            <p>P(E) + P(not E) = 1</p><p>P(not E) = 1 − P(E)</p>
+            <p>Single die: n(S) = 6</p><p>Two coins: n(S) = 4</p>
+          </div>
+          <div class="col-md-4 fs-col">
+            <h5>Standard Deck of Cards</h5>
+            <p>Total cards = 52; 4 suits of 13</p><p>Red cards = 26; Black cards = 26</p>
+            <p>Face cards = 12 (J, Q, K × 4 suits)</p><p>Each rank (e.g. Aces, Kings) = 4 cards</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 15. PROGRESS ===================== -->
+    <section id="progress">
+      <div class="section-head">
+        <div class="eyebrow">15 · Your Journey</div>
+        <h2>Progress Tracker</h2>
+        <p class="lede">Saved automatically to this browser using Local Storage — no login required.</p>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statSections">0/15</div><div class="lbl">Sections Read</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statExamples">0/20</div><div class="lbl">Examples Opened</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statPractice">0/60</div><div class="lbl">Practice Attempted</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat-card"><div class="num" id="statAccuracy">—</div><div class="lbl">Quiz Accuracy</div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Overall Completion</h4>
+            <canvas id="chartDoughnut" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="card pad text-center">
+            <h4 style="font-size:.95rem;">Activity Breakdown</h4>
+            <canvas id="chartBar" height="220"></canvas>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card pad d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span style="font-family:var(--font-mono); font-size:.85rem;">Study time this session: <b id="studyTime">00:00</b></span>
+            <button class="btn-outline-ink no-print" id="resetProgress">Reset Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Original content prepared for the ICSE Class 10 Mathematics Learning Portal · aligned to the M.L. Aggarwal syllabus sequence · not reproduced from any copyrighted text.</p>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const BASIC_TERMS=[
+ {name:'Experiment (Trial)', color:'#3D5A80', statement:'An action or process — such as tossing a coin, rolling a die, or drawing a card — whose result cannot be predicted with certainty in advance.', trick:'Every probability question begins by naming the experiment clearly; get this wrong and the whole sample space can go wrong.', ex:'Tossing a fair coin once is an experiment; the single toss itself is called a trial.'},
+ {name:'Sample Space (S)', color:'#2E7D5B', statement:'The set of all possible outcomes of an experiment; n(S) denotes the total number of outcomes in it.', trick:'List the sample space carefully for compound experiments — missing or repeating an outcome is the most common source of errors.', ex:'For a single die, S = {1,2,3,4,5,6}, so n(S) = 6.'},
+ {name:'Event (E)', color:'#C97A2B', statement:'A particular outcome or collection of outcomes we are interested in; formally, any subset of the sample space.', trick:'An event can contain just one outcome (a "simple event") or several (a "compound event") — the counting method is the same either way.', ex:'"Getting an even number" on a die is the event E = {2,4,6}.'},
+ {name:'Equally Likely Outcomes', color:'#3D5A80', statement:'Outcomes that all have exactly the same chance of occurring, so no single outcome is favoured over another.', trick:'The classical formula P(E) = n(E)/n(S) only works when this condition holds — always check the experiment is "fair" (a fair coin, an unbiased die, a well-shuffled deck).', ex:'Each of the six faces of a fair die is equally likely to show up.'},
+ {name:'Favourable Outcomes', color:'#2E7D5B', statement:'The outcomes among the full sample space that actually satisfy the given event; counted as n(E).', trick:'Count favourable outcomes directly from the sample space, not from your intuition about "likely" results.', ex:'For "getting a number greater than 4" on a die, the favourable outcomes are {5,6}, so n(E) = 2.'}
+];
+const PROPERTY_RULES=[
+ {name:'Classical Definition of Probability', color:'#3D5A80', statement:'For an experiment with equally likely outcomes, the probability of an event E is the number of favourable outcomes divided by the total number of outcomes in the sample space.', trick:'Always identify n(S) and n(E) separately before dividing — writing the fraction the wrong way round is a very common slip.', ex:'On a single die, P(getting a 4) = 1/6, since n(E)=1 and n(S)=6.'},
+ {name:'Range of Probability', color:'#2E7D5B', statement:'For any event E, the probability P(E) always lies between 0 and 1, inclusive.', trick:'If your answer to a probability question is negative or greater than 1, you have made an arithmetic or counting error — go back and check.', ex:'P(any event) can never be, say, 1.5 or −0.2.'},
+ {name:'Sure Event', color:'#C97A2B', statement:'An event that is certain to happen — every outcome in the sample space satisfies it — has probability exactly 1.', trick:'If E = S (the whole sample space), then P(E) = n(S)/n(S) = 1.', ex:'"Getting a number from 1 to 6" when a die is thrown is a sure event, P = 1.'},
+ {name:'Impossible Event', color:'#3D5A80', statement:'An event that can never happen — no outcome in the sample space satisfies it — has probability exactly 0.', trick:'If n(E) = 0, then P(E) = 0/n(S) = 0, regardless of how large n(S) is.', ex:'"Getting a 7" when a single die is thrown is an impossible event, P = 0.'},
+ {name:'Complementary Events', color:'#2E7D5B', statement:'For any event E, the event "not E" (E does not happen) is its complement, and the two probabilities always add up to 1.', trick:'It is often quicker to compute P(not E) and subtract from 1, rather than counting the complementary outcomes directly.', ex:'If P(rain tomorrow) = 0.3, then P(no rain tomorrow) = 1 − 0.3 = 0.7.'},
+ {name:'Probability with a Standard Deck of Cards', color:'#C97A2B', statement:'A standard deck has 52 cards in 4 suits (hearts, diamonds, clubs, spades) of 13 cards each; hearts and diamonds are red, clubs and spades are black; each suit has one Jack, Queen and King (12 face cards in total) and one card of each rank from Ace to 10.', trick:'Memorise this table once — nearly every card-based question is just a counting exercise built on top of it.', ex:'P(drawing a king) = 4/52 = 1/13, since there is exactly one king in each of the 4 suits.'}
+];
+const COMPDIV_PAIRS=[
+ ['P(E)','n(E) / n(S)'],['P(not E)','1 − P(E)'],['P(sure event)','1'],['P(impossible event)','0'],['P(E) + P(not E)','always equals 1']
+];
+const TYPE_DATA=[
+ {label:'Classical Definition of Probability', formula:'Probability of an event E', value:'P(E) = n(E) / n(S)'},
+ {label:'Range of Probability', formula:'For any event E', value:'0 ≤ P(E) ≤ 1'},
+ {label:'Probability of a Sure Event', formula:'An event certain to occur', value:'P(E) = 1'},
+ {label:'Probability of an Impossible Event', formula:'An event that can never occur', value:'P(E) = 0'},
+ {label:'Complementary Events', formula:'Event E and its complement "not E"', value:'P(E) + P(not E) = 1'},
+ {label:'Probability with a Die', formula:'Single fair die, 6 equally likely outcomes', value:'P(E) = n(E) / 6'}
+];
+
+const EXAMPLES=[
+ {level:'easy',q:'A die is thrown once. Find the probability of getting an even number.',steps:['Sample space S = {1,2,3,4,5,6}, so n(S) = 6.','Favourable outcomes E = {2,4,6}, so n(E) = 3.'],ans:'P(E) = 3/6 = 1/2'},
+ {level:'easy',q:'A coin is tossed once. Find the probability of getting a head.',steps:['Sample space S = {H,T}, so n(S) = 2.','Favourable outcome E = {H}, so n(E) = 1.'],ans:'P(E) = 1/2'},
+ {level:'easy',q:'A die is thrown once. Find the probability of getting a number greater than 4.',steps:['Favourable outcomes E = {5,6}, so n(E) = 2.','n(S) = 6.'],ans:'P(E) = 2/6 = 1/3'},
+ {level:'easy',q:'One card is drawn from a well-shuffled deck of 52 playing cards. Find the probability that it is a king.',steps:['n(S) = 52.','There are 4 kings in a deck, so n(E) = 4.'],ans:'P(E) = 4/52 = 1/13'},
+ {level:'easy',q:'A bag contains 5 red balls and 3 blue balls. One ball is drawn at random. Find the probability that it is red.',steps:['Total balls n(S) = 5 + 3 = 8.','Favourable outcomes n(E) = 5 (red balls).'],ans:'P(E) = 5/8'},
+ {level:'medium',q:'A die is thrown once. Find the probability of getting a prime number.',steps:['Prime numbers on a die are {2,3,5}, so n(E) = 3.','n(S) = 6.'],ans:'P(E) = 3/6 = 1/2'},
+ {level:'medium',q:'A card is drawn from a pack of 52 cards. Find the probability that it is a red card.',steps:['Red cards = hearts + diamonds = 13 + 13 = 26, so n(E) = 26.','n(S) = 52.'],ans:'P(E) = 26/52 = 1/2'},
+ {level:'medium',q:'Two coins are tossed together. Find the probability of getting exactly one head.',steps:['Sample space S = {HH, HT, TH, TT}, so n(S) = 4.','Favourable outcomes (exactly one head) = {HT, TH}, so n(E) = 2.'],ans:'P(E) = 2/4 = 1/2'},
+ {level:'medium',q:'Two coins are tossed together. Find the probability of getting at least one head.',steps:['"At least one head" means all outcomes except TT: {HH, HT, TH}, so n(E) = 3.','n(S) = 4.'],ans:'P(E) = 3/4'},
+ {level:'medium',q:'A bag contains 4 red, 3 blue and 3 green balls. One ball is drawn at random. Find the probability that it is not blue.',steps:['Total balls n(S) = 4 + 3 + 3 = 10.','n(blue) = 3, so P(blue) = 3/10.','P(not blue) = 1 − 3/10 = 7/10.'],ans:'P(E) = 7/10'},
+ {level:'medium',q:'Tickets numbered 1 to 20 are placed in a box and one is drawn at random. Find the probability that the number on it is a multiple of 3.',steps:['Multiples of 3 from 1 to 20: {3,6,9,12,15,18}, so n(E) = 6.','n(S) = 20.'],ans:'P(E) = 6/20 = 3/10'},
+ {level:'medium',q:'A card is drawn from a pack of 52 cards. Find the probability that it is a face card.',steps:['Face cards are jack, queen and king in each of the 4 suits: 3 × 4 = 12, so n(E) = 12.','n(S) = 52.'],ans:'P(E) = 12/52 = 3/13'},
+ {level:'medium',q:'A bag contains 4 red balls and some blue balls. If the probability of drawing a red ball is 2/5, find the number of blue balls.',steps:['Total balls = n(red) ÷ P(red) = 4 ÷ (2/5) = 10.','Number of blue balls = 10 − 4 = 6.'],ans:'6 blue balls'},
+ {level:'hard',q:'A die is thrown once. Find the probability that the number is neither a multiple of 3 nor a perfect square.',steps:['Multiples of 3 on a die: {3,6}. Perfect squares on a die: {1,4}.','Union of these excluded outcomes: {1,3,4,6}, so the remaining favourable outcomes are {2,5}, giving n(E) = 2.'],ans:'P(E) = 2/6 = 1/3'},
+ {level:'hard',q:'Two dice are thrown together. Find the probability that the sum of the numbers is 7.',steps:['Total outcomes when two dice are thrown = 36.','Pairs giving a sum of 7: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1), so n(E) = 6.'],ans:'P(E) = 6/36 = 1/6'},
+ {level:'hard',q:'A bag contains 3 red and 5 white balls and some black balls. If the probability of not drawing a red ball is 4/5, find the number of black balls.',steps:['P(not red) = 4/5, so P(red) = 1/5.','Total balls = n(red) ÷ P(red) = 3 ÷ (1/5) = 15.','Black balls = 15 − 3 − 5 = 7.'],ans:'7 black balls'},
+ {level:'hard',q:'A card is drawn from a well-shuffled pack of 52 cards. Find the probability that it is neither a king nor a queen.',steps:['Kings + Queens = 4 + 4 = 8.','Remaining favourable outcomes = 52 − 8 = 44, so n(E) = 44.'],ans:'P(E) = 44/52 = 11/13'},
+ {level:'hard',q:'Tickets numbered 1 to 50 are placed in a bag. A ticket is drawn at random. Find the probability that the number on it is a multiple of 6.',steps:['Multiples of 6 from 1 to 50: {6,12,18,24,30,36,42,48}, so n(E) = 8.','n(S) = 50.'],ans:'P(E) = 8/50 = 4/25'},
+ {level:'hard',q:'Two coins are tossed together. Find the probability of getting no head, and verify that P(no head) + P(at least one head) = 1.',steps:['Sample space = {HH, HT, TH, TT}, n(S) = 4.','"No head" is only TT, so P(no head) = 1/4.','P(at least one head) = 3/4 (found earlier); sum = 1/4 + 3/4 = 1.'],ans:'P(no head) = 1/4; the sum confirms the complementary rule'},
+ {level:'hard',q:'A box contains cards numbered 1 to 20. One card is drawn at random. Find the probability that the number is a perfect square, and state whether this event and "not a perfect square" are complementary.',steps:['Perfect squares from 1 to 20: {1,4,9,16}, so n(E) = 4.','P(E) = 4/20 = 1/5.','Since every card is either a perfect square or not, the two events are complementary: P(not perfect square) = 1 − 1/5 = 4/5.'],ans:'P(E) = 1/5; the events are complementary'}
+];
+
+const PYQ=[
+ {year:'2023',diff:'Easy',marks:2,topic:'Probability with a Die',time:'3 min',q:'A die is thrown once. Find the probability of getting a number less than 3.',sol:'Favourable outcomes {1,2}, so n(E) = 2; n(S) = 6. P = 2/6 = 1/3.'},
+ {year:'2023',diff:'Medium',marks:3,topic:'Probability with Cards',time:'4 min',q:'A card is drawn from a well-shuffled pack of 52 cards. Find the probability that it is either a heart or a spade.',sol:'Hearts + spades = 13 + 13 = 26; P = 26/52 = 1/2.'},
+ {year:'2022',diff:'Medium',marks:3,topic:'Complementary Events',time:'4 min',q:'The probability of a student passing an exam is 0.72. Find the probability of the student not passing.',sol:'P(not pass) = 1 − 0.72 = 0.28.'},
+ {year:'2022',diff:'Hard',marks:4,topic:'Bag of Balls (Algebra)',time:'6 min',q:'A bag contains some red balls and 8 blue balls. If the probability of drawing a blue ball is 2/5, find the total number of balls in the bag, and hence the number of red balls.',sol:'Total = 8 ÷ (2/5) = 20; red balls = 20 − 8 = 12.'},
+ {year:'2021',diff:'Easy',marks:2,topic:'Coins',time:'3 min',q:'Two coins are tossed together. Find the probability of getting exactly two heads.',sol:'Only HH gives two heads, n(E) = 1; n(S) = 4. P = 1/4.'},
+ {year:'2021',diff:'Hard',marks:4,topic:'Probability with Tickets',time:'5 min',q:'Tickets numbered 1 to 30 are put in a box. A ticket is drawn at random. Find the probability that the number on it is a multiple of 5.',sol:'Multiples of 5 from 1 to 30: {5,10,15,20,25,30}, n(E) = 6; n(S) = 30. P = 6/30 = 1/5.'}
+];
+
+const MISTAKES=[
+ 'Writing down the count of favourable outcomes alone as the "probability", without dividing by the total number of outcomes in the sample space.',
+ 'Forgetting to list the sample space carefully for compound experiments (like two coins), which leads to missing or double-counting outcomes such as HT and TH.',
+ 'Assuming every card, ball, or ticket in a problem is equally likely without checking that the experiment guarantees "well-shuffled" or "at random" conditions.',
+ 'Confusing P(E) with P(not E) when a question asks for the complementary event — always re-read whether it wants the event itself or "not that event".',
+ 'Leaving a probability answer as an unsimplified fraction, instead of reducing it to its lowest terms.'
+];
+
+const FLASH=[
+ {f:'Experiment (Trial)', b:'An action whose outcome cannot be predicted with certainty in advance'},
+ {f:'Sample Space (S)', b:'The set of all possible outcomes of an experiment; n(S) is the total count'},
+ {f:'Event (E)', b:'The particular outcome(s) of interest; a subset of the sample space'},
+ {f:'Equally Likely Outcomes', b:'Outcomes that all have the same chance of occurring'},
+ {f:'Favourable Outcomes', b:'Outcomes that satisfy the given event; counted as n(E)'},
+ {f:'Classical Definition of Probability', b:'P(E) = n(E) / n(S)'},
+ {f:'Range of Probability', b:'0 ≤ P(E) ≤ 1 for any event E'},
+ {f:'Sure Event', b:'An event certain to happen; P(E) = 1'},
+ {f:'Impossible Event', b:'An event that can never happen; P(E) = 0'},
+ {f:'Complementary Events', b:'P(E) + P(not E) = 1'},
+ {f:'Sample Space of a Single Die', b:'{1,2,3,4,5,6}, n(S) = 6'},
+ {f:'Sample Space of Two Coins', b:'{HH, HT, TH, TT}, n(S) = 4'},
+ {f:'Standard Deck of Cards', b:'52 cards, 4 suits of 13 each, 26 red and 26 black'},
+ {f:'Face Cards', b:'Jack, Queen, King in each suit = 12 face cards in a deck'},
+ {f:'Two Dice Thrown Together', b:'36 equally likely outcomes'},
+ {f:'Probability as a Percentage', b:'Multiply P(E) by 100 to express it as a percentage'}
+];
+
+const CC_MCQ=[
+ {t:'formulas',q:'The probability of an event E is given by:',opts:['n(S)/n(E)','n(E)/n(S)','n(E)+n(S)','n(E)−n(S)'],a:1},
+ {t:'formulas',q:'For any event E, the value of P(E) always lies in the range:',opts:['−1 to 1','0 to 1','1 to 10','0 to 100'],a:1},
+ {t:'formulas',q:'If E and "not E" are complementary events, then P(E) + P(not E) equals:',opts:['0','0.5','1','2'],a:2},
+ {t:'basics',q:'The set of all possible outcomes of an experiment is called the:',opts:['Event','Sample space','Trial','Favourable outcome'],a:1},
+ {t:'basics',q:'A single performance of an experiment, like one toss of a coin, is called a:',opts:['Sample space','Event','Trial','Outcome set'],a:2},
+ {t:'basics',q:'Outcomes that have exactly the same chance of occurring are called:',opts:['Favourable outcomes','Complementary outcomes','Equally likely outcomes','Sure outcomes'],a:2},
+ {t:'theorems',q:'An event that is certain to happen has a probability of:',opts:['0','0.5','1','Undefined'],a:2},
+ {t:'theorems',q:'An event that can never happen has a probability of:',opts:['0','0.5','1','−1'],a:0},
+ {t:'theorems',q:'A standard deck of playing cards contains how many cards in total?',opts:['13','26','48','52'],a:3},
+ {t:'theorems',q:'The number of face cards in a standard deck of 52 cards is:',opts:['4','8','12','16'],a:2},
+ {t:'dice',q:'When a single fair die is thrown once, the total number of equally likely outcomes is:',opts:['4','5','6','36'],a:2},
+ {t:'dice',q:'The probability of getting an even number on a single throw of a die is:',opts:['1/6','1/3','1/2','2/3'],a:2},
+ {t:'general',q:'If two coins are tossed together, the total number of outcomes in the sample space is:',opts:['2','3','4','8'],a:2},
+ {t:'general',q:'The probability of drawing a red card from a standard deck of 52 cards is:',opts:['1/4','1/2','1/13','1/26'],a:1},
+ {t:'general',q:'A bag has 4 red balls and 6 blue balls. The probability of drawing a blue ball is:',opts:['2/5','3/5','1/2','7/10'],a:1}
+];
+const CC_FIB=[
+ {t:'formulas',q:'P(E) = n(E) / ______.',a:'n(s)'},
+ {t:'formulas',q:'The probability of any event always lies between 0 and ______.',a:'1'},
+ {t:'formulas',q:'P(E) + P(not E) = ______.',a:'1'},
+ {t:'basics',q:'The set of all possible outcomes of an experiment is called the ______.',a:'sample space'},
+ {t:'basics',q:'A single performance of an experiment is called a ______.',a:'trial'},
+ {t:'basics',q:'Outcomes with an equal chance of occurring are called ______ outcomes.',a:'equally likely'},
+ {t:'theorems',q:'An event that is certain to occur has probability ______.',a:'1'},
+ {t:'theorems',q:'An event that can never occur has probability ______.',a:'0'},
+ {t:'theorems',q:'A standard deck of playing cards has ______ cards in total.',a:'52'},
+ {t:'theorems',q:'A standard deck of cards has ______ face cards.',a:'12'},
+ {t:'dice',q:'A single die has ______ faces, giving that many equally likely outcomes.',a:'6'},
+ {t:'dice',q:'The sample space when two dice are thrown together has ______ outcomes.',a:'36'},
+ {t:'general',q:'When two coins are tossed together, the sample space has ______ outcomes.',a:'4'},
+ {t:'general',q:'A standard deck of 52 cards has ______ red cards.',a:'26'},
+ {t:'general',q:'The complement of an event E is usually written as ______.',a:'not e'}
+];
+const CC_TF=[
+ {t:'formulas',q:'Probability can be a negative number.',a:false},
+ {t:'formulas',q:'The probability of an event can be greater than 1.',a:false},
+ {t:'formulas',q:'P(E) + P(not E) always equals 1.',a:true},
+ {t:'basics',q:'The sample space of tossing a single coin is {H, T}.',a:true},
+ {t:'basics',q:'An event is always the entire sample space.',a:false},
+ {t:'basics',q:'Favourable outcomes are always fewer than or equal to the total outcomes.',a:true},
+ {t:'theorems',q:'A sure event has a probability of 0.',a:false},
+ {t:'theorems',q:'An impossible event has a probability of 0.',a:true},
+ {t:'theorems',q:'A standard deck of cards has 4 kings.',a:true},
+ {t:'theorems',q:'A standard deck of cards has 16 face cards.',a:false},
+ {t:'dice',q:'The probability of getting a number greater than 6 on a single die is 0.',a:true},
+ {t:'dice',q:'The sample space of a single die has 6 equally likely outcomes.',a:true},
+ {t:'general',q:'Tossing two coins together has the same sample space as tossing one coin twice.',a:true},
+ {t:'general',q:'Drawing a card from a well-shuffled deck means all 52 cards are equally likely to be drawn.',a:true}
+];
+
+const AR=[
+ {a:'The probability of getting an even number on a single throw of a die is 1/2.', r:'A die has 6 equally likely outcomes, of which 3 (2,4,6) are even.', ans:0, explain:'Both are true, and R explains A directly: P(even) = 3/6 = 1/2, exactly matching the count R describes.'},
+ {a:'The probability of drawing a king from a well-shuffled deck of 52 cards is 4/52.', r:'A standard deck of cards has four suits, each containing 13 cards.', ans:1, explain:'Both statements are true — there are indeed 4 kings among 52 cards. But R describes the suit size and does not by itself explain why there are exactly 4 kings; that comes from there being one king per suit, not from each suit having 13 cards.'},
+ {a:'The probability of an impossible event is 1.', r:'The probability of any event lies between 0 and 1.', ans:3, explain:'A is false — an impossible event has probability 0, not 1. R is a true general fact about the range of probability, but it does not support the false claim in A.'},
+ {a:'If two coins are tossed together, the probability of getting at least one head is 3/4.', r:'The sample space for tossing two coins is {HH, HT, TH, TT}, and only TT has no head.', ans:0, explain:'Both are true, and R explains A: 3 of the 4 equally likely outcomes have at least one head, giving 3/4.'},
+ {a:'The probability of drawing a red card or a black card from a standard deck is 1.', r:'Every card in a standard deck is either red or black, so this event is the entire sample space.', ans:0, explain:'Both are true, and R explains A directly — since every one of the 52 cards is red or black, this event is a sure event with probability 1.'},
+ {a:'A bag has 4 red and 6 blue balls; the probability of drawing a red ball is 3/5.', r:'The classical probability of an event is the number of favourable outcomes divided by the total number of outcomes.', ans:3, explain:'A is false — the correct probability of drawing red is 4/10 = 2/5, not 3/5. R is a true, correctly stated general rule (the classical definition of probability).'},
+ {a:'The probability of getting a sum of 13 when two dice are thrown together is 0.', r:'The highest possible sum when two dice are thrown together is 12.', ans:0, explain:'Both are true, and R explains A directly: since 13 exceeds the maximum possible sum of 12, no outcome in the 36-outcome sample space gives a sum of 13, making it an impossible event.'},
+ {a:'P(E) and P(not E) can both equal 0.6 for the same event E.', r:'P(E) + P(not E) always equals 1 for any event E.', ans:3, explain:'A is false — since P(E) + P(not E) must equal 1, they cannot both be 0.6 (which would sum to 1.2). R is the true rule that actually rules out A.'},
+ {a:'The probability of drawing a face card from a standard deck of 52 cards is 12/52.', r:'The face cards in a deck are the jack, queen and king of each of the 4 suits.', ans:0, explain:'Both are true, and R explains A: 3 face cards per suit × 4 suits = 12 face cards, giving P = 12/52.'},
+ {a:'If a bag contains only red balls, the probability of drawing a blue ball from it is 1.', r:'An event that can never occur has a probability of 0.', ans:3, explain:'A is false — drawing a blue ball from a bag with no blue balls at all is impossible, so its probability is 0, not 1. R is a true statement that in fact contradicts A rather than supporting it.'}
+];
+const AR_OPTIONS=[
+ 'Both A and R are true, and R is the correct explanation of A.',
+ 'Both A and R are true, but R is not the correct explanation of A.',
+ 'A is true, but R is false.',
+ 'A is false, but R is true.',
+ 'Both A and R are false.'
+];
+
+function mk(n,q,hint,ans){return {n,q,hint,ans};}
+const PZ1=[ // Level 1 - easy
+ mk(1,'A die is thrown once. Find the probability of getting the number 5.','Only one favourable outcome out of 6.','1/6'),
+ mk(2,'A coin is tossed once. Find the probability of getting a tail.','1 favourable outcome out of 2.','1/2'),
+ mk(3,'A die is thrown once. Find the probability of getting an odd number.','List the odd numbers on a die.','1/2'),
+ mk(4,'A bag contains 3 red balls and 2 blue balls. Find the probability of drawing a red ball.','Total balls = 3 + 2.','3/5'),
+ mk(5,'A die is thrown once. Find the probability of getting a number less than 4.','List the numbers 1, 2, 3.','1/2'),
+ mk(6,'A card is drawn from a pack of 52 cards. Find the probability that it is an ace.','There are 4 aces in a deck.','1/13'),
+ mk(7,'A die is thrown once. Find the probability of getting the number 7.','Think about what numbers actually appear on a die.','0 (impossible event)'),
+ mk(8,'A coin is tossed once. Find the probability of getting a head or a tail.','Every outcome satisfies this.','1 (sure event)'),
+ mk(9,'A bag contains 6 white balls only. Find the probability of drawing a black ball.','There are no black balls in the bag.','0'),
+ mk(10,'A die is thrown once. Find the probability of getting a number ≤ 6.','Every face satisfies this condition.','1'),
+ mk(11,'A bag contains 4 red and 4 green balls. Find the probability of drawing a green ball.','Total balls = 8.','1/2'),
+ mk(12,'A card is drawn from a pack of 52 cards. Find the probability that it is a queen.','There are 4 queens.','1/13'),
+ mk(13,'A die is thrown once. Find the probability of getting the number 2 or 3.','Count both favourable outcomes.','1/3'),
+ mk(14,'Ten tickets numbered 1 to 10 are placed in a box. Find the probability of drawing the ticket numbered 6.','Only one favourable outcome.','1/10'),
+ mk(15,'A coin is tossed once. Find the probability of not getting a head.','Use the complementary event rule.','1/2'),
+ mk(16,'A bag has 2 red, 3 blue and 5 yellow balls. Find the probability of drawing a yellow ball.','Total balls = 2 + 3 + 5.','1/2'),
+ mk(17,'A die is thrown once. Find the probability of getting a number that is a multiple of 2.','List the multiples of 2 on a die.','1/2'),
+ mk(18,'A card is drawn from a pack of 52 cards. Find the probability that it is a heart.','There are 13 hearts.','1/4'),
+ mk(19,'Five cards numbered 1 to 5 are placed in a box. Find the probability of drawing an even-numbered card.','List the even numbers among 1-5.','2/5'),
+ mk(20,'A die is thrown once. Find P(not getting a 6).','Use the complementary event rule.','5/6')
+];
+const PZ2=[ // Level 2 - medium
+ mk(1,'A bag contains 5 red, 4 blue and 3 green balls. Find the probability that the ball drawn is not green.','Use the complementary rule with total = 12.','3/4'),
+ mk(2,'Two coins are tossed together. Find the probability of getting exactly one tail.','List the sample space of two coins.','1/2'),
+ mk(3,'A die is thrown once. Find the probability of getting a number that is a multiple of 3.','List the multiples of 3 on a die.','1/3'),
+ mk(4,'A card is drawn from a pack of 52 cards. Find the probability that it is neither a heart nor a diamond.','Hearts and diamonds together make up the red cards.','1/2'),
+ mk(5,'Tickets numbered 1 to 25 are placed in a box. Find the probability that the ticket drawn bears a number that is a multiple of 5.','List the multiples of 5 up to 25.','1/5'),
+ mk(6,'A bag contains some red balls and 12 green balls. If the probability of drawing a green ball is 3/5, find the total number of balls in the bag.','Total = n(green) ÷ P(green).','20'),
+ mk(7,'A card is drawn from a pack of 52 cards. Find the probability that it is a black face card.','Face cards occur in every suit; only 2 suits are black.','6/52 = 3/26'),
+ mk(8,'A die is thrown once. Find the probability of getting a number that is neither a 1 nor a 6.','Use the complementary rule with 2 excluded outcomes.','2/3'),
+ mk(9,'Two coins are tossed together. Find the probability of getting at most one head.','"At most one" includes zero heads and exactly one head.','3/4'),
+ mk(10,'A bag contains 8 balls, some red and some blue. If the probability of drawing a red ball is 3/8, find the number of blue balls.','Find the red count first, then subtract from the total.','5'),
+ mk(11,'A die is thrown once. Find the probability of getting a perfect square number.','Check which numbers 1-6 are perfect squares.','1/3'),
+ mk(12,'From a pack of 52 cards, one card is drawn. Find the probability that it is a card of spades or a card of clubs.','Spades and clubs together make up the black cards.','1/2'),
+ mk(13,'Tickets numbered 1 to 40 are placed in a bag. Find the probability that the ticket drawn is a multiple of 7.','List the multiples of 7 up to 40.','5/40 = 1/8'),
+ mk(14,'A bag contains 3 red, 2 white and 5 black balls. One ball is drawn at random. Find the probability that it is red or white.','Add the favourable counts for both colours.','5/10 = 1/2'),
+ mk(15,'A die is thrown once. Find the probability that the number is greater than 2 and less than 6.','List the numbers strictly between 2 and 6.','1/2'),
+ mk(16,'A card is drawn from a pack of 52 cards. Find the probability that it is a jack of a red suit.','There is one jack in each suit, and only 2 suits are red.','2/52 = 1/26'),
+ mk(17,'A box contains cards numbered 2 to 21. One card is drawn at random. Find the probability that the number is a prime number.','Carefully list the primes between 2 and 21.','8/20 = 2/5'),
+ mk(18,'Two coins are tossed together. Find the probability of getting the same result on both.','"Same result" means HH or TT.','1/2'),
+ mk(19,'A bag has 4 red and some blue balls. If P(blue) = 3/7, find the number of blue balls.','Use P(red) to find the total balls first.','3'),
+ mk(20,'A die is thrown once. Find the probability of getting a number that is either even or a multiple of 3.','List the even numbers and multiples of 3, then combine without double-counting.','4/6 = 2/3')
+];
+const PZ3=[ // Level 3 - ICSE Exam
+ mk(1,'A bag contains 5 red, 6 white and 4 blue balls. One ball is drawn at random. Find the probability that it is (i) red, (ii) not blue, (iii) white or red.','Total = 15; use the classical formula for each part separately.','(i) 5/15 = 1/3, (ii) 11/15, (iii) 11/15'),
+ mk(2,'Two dice are thrown together. Find the probability that the sum of the numbers is at least 10.','List the pairs from the 36-outcome sample space with sum ≥ 10.','6/36 = 1/6'),
+ mk(3,'A card is drawn from a well-shuffled pack of 52 cards. Find the probability that it is neither a king nor a queen.','Subtract kings and queens together from the total.','44/52 = 11/13'),
+ mk(4,'A bag contains 3 red and 5 white balls and some black balls. If the probability of not drawing a red ball is 4/5, find the number of black balls.','First find the total balls from P(red), then subtract the known colours.','7'),
+ mk(5,'Two coins are tossed together. Find the probability of getting at least one tail, and verify P(at least one tail) + P(no tail) = 1.','List all 4 outcomes, then find the two complementary probabilities.','P(at least one tail) = 3/4; P(no tail) = 1/4; sum = 1'),
+ mk(6,'Tickets numbered 1 to 50 are placed in a box. One ticket is drawn at random. Find the probability that the number on it is a multiple of 6.','Carefully list all multiples of 6 up to 50.','8/50 = 4/25'),
+ mk(7,'A die is thrown once. Find the probability that the number obtained is neither a multiple of 3 nor a perfect square.','Combine the two excluded sets carefully, watching for overlap.','2/6 = 1/3'),
+ mk(8,'A bag contains a certain number of red balls and 8 blue balls. If the probability of drawing a blue ball is 2/5, find the total number of balls and the number of red balls.','Use the blue-ball probability to find the total first.','Total = 20; red = 12'),
+ mk(9,'A card is drawn from a pack of 52 well-shuffled cards. Find the probability that it is (i) a red king, (ii) a black face card, (iii) neither a heart nor a king.','Work out each count separately, being careful not to double-count the king of hearts in part (iii).','(i) 2/52 = 1/26, (ii) 6/52 = 3/26, (iii) 36/52 = 9/13'),
+ mk(10,'A box contains cards numbered 1 to 30. One card is drawn at random. Find the probability that the number is a multiple of 3 or a multiple of 5.','Add the counts for each, then subtract the numbers counted twice (multiples of both).','14/30 = 7/15'),
+ mk(11,'Two dice are thrown together. Find the probability of getting a doublet (both dice showing the same number).','List the 6 doublets directly.','6/36 = 1/6'),
+ mk(12,'The probability of a certain cricket team winning a match is 0.62. Find the probability that the team does not win the match, and state which rule of probability you used.','Apply the complementary events rule.','P(not win) = 0.38, using P(E) + P(not E) = 1'),
+ mk(13,'A bag contains red, blue and green balls only, in the ratio 2:3:5, with 20 balls in total. Find the number of each colour, then the probability of drawing a green ball.','Use the ratio to split 20 balls into equal parts.','red = 4, blue = 6, green = 10; P(green) = 10/20 = 1/2'),
+ mk(14,'From a pack of 52 cards, all the face cards are removed and the remaining cards are shuffled. One card is drawn from what remains. Find the probability that it is an ace.','Recompute the new (reduced) sample space first.','Remaining total = 52 − 12 = 40; P(ace) = 4/40 = 1/10'),
+ mk(15,'Two dice are thrown together. Find the probability that the product of the two numbers shown is 12.','List all ordered pairs whose product is 12.','(2,6),(3,4),(4,3),(6,2) → 4/36 = 1/9'),
+ mk(16,'A bag has 40 balls, some red and the rest blue. If the probability of drawing a red ball is 0.3, find the number of red balls and the number of blue balls.','Multiply the total by the probability to get the favourable count.','red = 12, blue = 28'),
+ mk(17,'A card is drawn from a pack of 52 cards. Find the probability that it is a card of a black suit or a card bearing an even number (2,4,6,8,10).','Count black cards, even-numbered cards, then subtract the overlap (black even cards) carefully.','36/52 = 9/13'),
+ mk(18,'A number is chosen at random from the integers 1 to 100. Find the probability that it is a perfect square.','List the perfect squares up to 100.','10/100 = 1/10'),
+ mk(19,'Two dice are thrown together. Find the probability that neither die shows a 6.','It may be easier to find the complementary probability first.','P(at least one 6) = 11/36, so P(neither shows 6) = 25/36'),
+ mk(20,'A bag contains white and red balls only. If the probability of drawing a white ball is thrice the probability of drawing a red ball, and there are 24 balls in total, find the number of balls of each colour.','Set up a ratio between white and red probabilities, then split the total accordingly.','white : red = 3 : 1, so white = 18, red = 6')
+];
+
+/* ============================================================
+   RENDERERS
+============================================================ */
+function el(tag,cls,html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e;}
+
+// Theorem cards (basics / theorems)
+function buildTheoremCards(containerId, data){
+  const grid=document.getElementById(containerId);
+  data.forEach(r=>{
+    const c=el('div','ratio-card');
+    c.style.setProperty('--c',r.color);
+    c.innerHTML=`<h4>${r.name}</h4>
+    <div class="formula">${r.statement}</div>
+    <div class="ex">Example: ${r.ex}</div>
+    <div class="trick">💡 ${r.trick}</div>`;
+    grid.appendChild(c);
+  });
+}
+buildTheoremCards('basicsGrid',BASIC_TERMS);
+buildTheoremCards('propertiesGrid',PROPERTY_RULES);
+
+// Revision table
+function buildRevisionTable(id){
+  const t=document.getElementById(id);
+  const all=BASIC_TERMS.concat(PROPERTY_RULES);
+  let head='<tr><th>Definition / Rule</th><th>Statement</th></tr>';
+  let rows=all.map(r=>`<tr><td class="name-col">${r.name}</td><td>${r.statement}</td></tr>`).join('');
+  t.innerHTML=head+rows;
+}
+buildRevisionTable('revisionTable');
+
+// Complementary Events pairs list
+const compdivLeft=document.getElementById('compdivLeft');
+const cpCard=el('div','card pad');
+COMPDIV_PAIRS.forEach(pair=>{
+  cpCard.appendChild(el('div','comp-pair','<span class="eq">'+pair[0]+'</span><span class="arrow">→</span><span class="eq">'+pair[1]+'</span>'));
+});
+compdivLeft.appendChild(cpCard);
+
+// Core Formulas legend chips
+const typeLegend=document.getElementById('typeLegend');
+TYPE_DATA.forEach((item,i)=>{
+  const chip=el('div','circ-chip'+(i===0?' active':''),'<span class="sw"></span>'+item.label);
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#typeLegend .circ-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('typeName').textContent=item.label;
+    document.getElementById('typeFormula').textContent=item.formula;
+    document.getElementById('typeValue').textContent=item.value;
+  });
+  typeLegend.appendChild(chip);
+});
+
+// Worked examples
+const exList=document.getElementById('exampleList');
+let examplesOpened=new Set(JSON.parse(localStorage.getItem('pb_examplesOpened')||'[]'));
+EXAMPLES.forEach((ex,i)=>{
+  const badge= ex.level==='easy'?'badge-easy':ex.level==='medium'?'badge-med':'badge-hard';
+  const card=el('div','ex-card');
+  card.innerHTML=`<div class="ex-head"><div><span class="num">Q${i+1}.</span> ${ex.q}</div><span class="ex-badge ${badge}">${ex.level}</span></div>
+  <div class="ex-body" id="exbody${i}">
+    ${ex.steps.map((s,si)=>`<div class="step-box"><b>Step ${si+1}</b>${s}</div>`).join('')}
+    <div class="final-answer">Final Answer: ${ex.ans}</div>
+  </div>`;
+  card.querySelector('.ex-head').addEventListener('click',()=>{
+    const body=card.querySelector('.ex-body');
+    body.classList.toggle('open');
+    examplesOpened.add(i);
+    localStorage.setItem('pb_examplesOpened',JSON.stringify([...examplesOpened]));
+    updateProgress();
+  });
+  exList.appendChild(card);
+});
+
+// PYQ
+const pyqList=document.getElementById('pyqList');
+PYQ.forEach((p,i)=>{
+  const card=el('div','pyq-card pad');
+  card.innerHTML=`<div style="font-weight:700; font-family:var(--font-mono); color:var(--amber-dark);">ICSE ${p.year}</div>
+  <div class="pyq-meta"><span>Difficulty: ${p.diff}</span><span>Marks: ${p.marks}</span><span>Topic: ${p.topic}</span><span>Est. Time: ${p.time}</span></div>
+  <p style="margin-bottom:.4rem;">${p.q}</p>
+  <button class="opt-btn" style="width:auto; display:inline-block;" data-i="${i}">Show Model Solution</button>
+  <div class="pq-sol" id="pyqSol${i}">${p.sol}</div>`;
+  card.querySelector('button').addEventListener('click',()=>{
+    document.getElementById('pyqSol'+i).classList.toggle('show');
+  });
+  pyqList.appendChild(card);
+});
+
+// Mistakes
+const mistakeList=document.getElementById('mistakeList');
+MISTAKES.forEach(m=>{
+  mistakeList.appendChild(el('div','mistake','<span class="x">✕</span><span>'+m+'</span>'));
+});
+
+// Concept check builders
+function buildMCQ(container,data){
+  data.forEach((item,i)=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .4rem;">${item.q}</div>`;
+    item.opts.forEach((o,oi)=>{
+      const b=el('button','opt-btn',o);
+      b.addEventListener('click',()=>{
+        card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+        if(oi===item.a){b.classList.add('correct'); recordQuiz(true);}
+        else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.a].classList.add('correct'); recordQuiz(false);}
+      });
+      card.appendChild(b);
+    });
+    container.appendChild(card);
+  });
+}
+function buildFIB(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <input class="fib-input" placeholder="type answer">
+    <button class="opt-btn" style="width:auto; display:inline-block; margin-left:.5rem;">Check</button>
+    <div class="feedback"></div>`;
+    const input=card.querySelector('input');
+    const fb=card.querySelector('.feedback');
+    card.querySelector('button').addEventListener('click',()=>{
+      const ok=input.value.trim().toLowerCase().replace(/\s+/g,'')===item.a.toLowerCase().replace(/\s+/g,'');
+      fb.textContent= ok? '✓ Correct!' : '✕ Correct answer: '+item.a;
+      fb.style.color= ok? 'var(--green)':'var(--red)';
+      recordQuiz(ok);
+    });
+    container.appendChild(card);
+  });
+}
+function buildTF(container,data){
+  data.forEach(item=>{
+    const card=el('div','quiz-card');
+    card.innerHTML=`<div class="qtag">${item.t}</div><div style="font-weight:600; margin:.2rem 0 .5rem;">${item.q}</div>
+    <div class="tf-btns"><button class="opt-btn" style="width:auto; display:inline-block;" data-v="true">True</button>
+    <button class="opt-btn" style="width:auto; display:inline-block;" data-v="false">False</button></div>
+    <div class="feedback"></div>`;
+    const fb=card.querySelector('.feedback');
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const val=btn.dataset.v==='true';
+        const ok= val===item.a;
+        card.querySelectorAll('button').forEach(b=>b.disabled=true);
+        btn.classList.add(ok?'correct':'wrong');
+        fb.textContent= ok? '✓ Correct!' : ('✕ Correct answer: '+(item.a?'True':'False'));
+        fb.style.color= ok? 'var(--green)':'var(--red)';
+        recordQuiz(ok);
+      });
+    });
+    container.appendChild(card);
+  });
+}
+buildMCQ(document.getElementById('ccMCQ'),CC_MCQ);
+buildFIB(document.getElementById('ccFIB'),CC_FIB);
+buildTF(document.getElementById('ccTF'),CC_TF);
+
+// Assertion & Reasoning
+const arList=document.getElementById('arList');
+AR.forEach((item,i)=>{
+  const card=el('div','ar-card');
+  card.innerHTML=`<div class="qtag">Assertion &amp; Reasoning · Q${i+1}</div>
+  <div class="ar-statement"><b>Assertion (A)</b>${item.a}</div>
+  <div class="ar-statement"><b>Reason (R)</b>${item.r}</div>`;
+  const optsWrap=el('div');
+  AR_OPTIONS.forEach((opt,oi)=>{
+    const label='(' + 'abcde'[oi] + ') ' + opt;
+    const b=el('button','opt-btn',label);
+    b.addEventListener('click',()=>{
+      card.querySelectorAll('.opt-btn').forEach(x=>x.disabled=true);
+      if(oi===item.ans){b.classList.add('correct'); recordQuiz(true);}
+      else{b.classList.add('wrong'); card.querySelectorAll('.opt-btn')[item.ans].classList.add('correct'); recordQuiz(false);}
+      card.querySelector('.ar-explain').classList.add('show');
+    });
+    optsWrap.appendChild(b);
+  });
+  card.appendChild(optsWrap);
+  card.appendChild(el('div','ar-explain','💡 '+item.explain));
+  arList.appendChild(card);
+});
+
+// Practice zone
+function buildPractice(container,data,levelKey){
+  let done=JSON.parse(localStorage.getItem('pb_pz_'+levelKey)||'{}');
+  data.forEach(item=>{
+    const key='q'+item.n;
+    const card=el('div','pq-card');
+    card.innerHTML=`<div class="pq-top"><div><b style="font-family:var(--font-mono); color:var(--amber-dark);">Q${item.n}.</b> ${item.q}</div></div>
+    <div class="pq-actions">
+      <button data-act="hint">Hint</button>
+      <button data-act="sol">Show Solution</button>
+      <button data-act="bookmark">🔖 Bookmark</button>
+      <button data-act="later">⏱ Attempt Later</button>
+      <button data-act="done">✓ Mark Attempted</button>
+    </div>
+    <div class="pq-hint">💡 ${item.hint}</div>
+    <div class="pq-sol">✅ Answer: ${item.ans}</div>`;
+    if(done[key]) card.querySelector('[data-act="done"]').classList.add('on');
+    card.querySelector('[data-act="hint"]').onclick=e=>card.querySelector('.pq-hint').classList.toggle('show');
+    card.querySelector('[data-act="sol"]').onclick=e=>card.querySelector('.pq-sol').classList.toggle('show');
+    card.querySelector('[data-act="bookmark"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="later"]').onclick=e=>e.target.classList.toggle('on');
+    card.querySelector('[data-act="done"]').onclick=e=>{
+      e.target.classList.toggle('on');
+      done[key]=e.target.classList.contains('on');
+      localStorage.setItem('pb_pz_'+levelKey,JSON.stringify(done));
+      updateProgress();
+    };
+    container.appendChild(card);
+  });
+}
+buildPractice(document.getElementById('pzL1'),PZ1,'l1');
+buildPractice(document.getElementById('pzL2'),PZ2,'l2');
+buildPractice(document.getElementById('pzL3'),PZ3,'l3');
+
+// Flashcards
+let fcIndex=0, fcOrder=FLASH.map((_,i)=>i);
+const flashCard=document.getElementById('flashCard');
+function renderFlash(){
+  const item=FLASH[fcOrder[fcIndex]];
+  document.getElementById('flashFront').textContent=item.f;
+  document.getElementById('flashBack').textContent=item.b;
+  document.getElementById('fcIndex').textContent=fcIndex+1;
+  document.getElementById('fcTotal').textContent=FLASH.length;
+  flashCard.classList.remove('flipped');
+}
+flashCard.addEventListener('click',()=>flashCard.classList.toggle('flipped'));
+document.getElementById('fcNext').onclick=()=>{fcIndex=(fcIndex+1)%FLASH.length; renderFlash();};
+document.getElementById('fcPrev').onclick=()=>{fcIndex=(fcIndex-1+FLASH.length)%FLASH.length; renderFlash();};
+document.getElementById('fcShuffle').onclick=()=>{fcOrder.sort(()=>Math.random()-0.5); fcIndex=0; renderFlash();};
+renderFlash();
+
+/* ============================================================
+   HERO INSTRUMENT — slider sets how many balls (of 10) are favourable (red)
+============================================================ */
+const ballsGroup=document.getElementById('ballsGroup');
+const BALL_POS=[[70,70],[120,70],[170,70],[220,70],[270,70],[70,135],[120,135],[170,135],[220,135],[270,135]];
+BALL_POS.forEach((pos,i)=>{
+  const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx',pos[0]); c.setAttribute('cy',pos[1]); c.setAttribute('r','16');
+  c.setAttribute('id','ball'+i);
+  c.setAttribute('fill','#3D5A80');
+  c.setAttribute('stroke','#1B2A4A'); c.setAttribute('stroke-width','1');
+  ballsGroup.appendChild(c);
+});
+function gcd(a,b){ return b===0? a : gcd(b, a%b); }
+function setFavorable(n){
+  for(let i=0;i<10;i++){
+    document.getElementById('ball'+i).setAttribute('fill', i<n? '#C97A2B' : '#3D5A80');
+  }
+  const g = n===0? 10 : gcd(n,10);
+  const simpN = n/g, simpD = 10/g;
+  document.getElementById('pFav').textContent=n;
+  document.getElementById('pTotal').textContent=10;
+  document.getElementById('pFrac').textContent= (simpD===10)? `${n}/10` : `${n}/10 = ${simpN}/${simpD}`;
+  document.getElementById('pPct').textContent=(n*10)+'%';
+}
+document.getElementById('pbSlider').addEventListener('input',e=>setFavorable(parseInt(e.target.value)));
+setFavorable(parseInt(document.getElementById('pbSlider').value));
+
+// Complementary Events slider
+const compdivSlider=document.getElementById('compdivSlider');
+function updateCompdiv(){
+  const x=parseInt(compdivSlider.value);
+  const notx=10-x;
+  document.getElementById('compdivA').textContent=x;
+  document.getElementById('compdivB').textContent='1';
+  document.getElementById('compdivSum').textContent=`P(red) = ${x}/10, P(not red) = ${notx}/10, sum = ${x}/10 + ${notx}/10 = 1`;
+}
+compdivSlider.addEventListener('input',updateCompdiv); updateCompdiv();
+
+/* ============================================================
+   PROGRESS TRACKING
+============================================================ */
+const SECTION_IDS=['intro','formulas','basics','theorems','area','examples','conceptcheck','arsection','practice','pyq','mistakes','revision','flashcards','formula','progress'];
+let sectionsRead=new Set(JSON.parse(localStorage.getItem('pb_sectionsRead')||'[]'));
+let quizStats=JSON.parse(localStorage.getItem('pb_quizStats')||'{"correct":0,"total":0}');
+
+function recordQuiz(ok){
+  quizStats.total++; if(ok) quizStats.correct++;
+  localStorage.setItem('pb_quizStats',JSON.stringify(quizStats));
+  updateProgress();
+}
+
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const id=entry.target.id;
+    const link=document.querySelector(`.navlink[data-target="${id}"]`);
+    if(entry.isIntersecting){
+      document.querySelectorAll('.navlink').forEach(l=>l.classList.remove('active'));
+      if(link) link.classList.add('active');
+      sectionsRead.add(id);
+      localStorage.setItem('pb_sectionsRead',JSON.stringify([...sectionsRead]));
+      if(link) link.classList.add('done');
+      updateProgress();
+    }
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+SECTION_IDS.forEach(id=>{ const s=document.getElementById(id); if(s) observer.observe(s); });
+
+// mark done dots on load
+sectionsRead.forEach(id=>{ const l=document.querySelector(`.navlink[data-target="${id}"]`); if(l) l.classList.add('done'); });
+
+// Reading progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('readbar').style.width=pct+'%';
+  document.getElementById('topProgressLabel').textContent=Math.round(pct)+'% read';
+});
+
+let doughnutChart, barChart;
+function updateProgress(){
+  let pzDone=0;
+  ['l1','l2','l3'].forEach(k=>{
+    const d=JSON.parse(localStorage.getItem('pb_pz_'+k)||'{}');
+    pzDone+=Object.values(d).filter(Boolean).length;
+  });
+  const exDone=examplesOpened.size;
+  const secDone=sectionsRead.size;
+
+  document.getElementById('statSections').textContent=`${secDone}/${SECTION_IDS.length}`;
+  document.getElementById('statExamples').textContent=`${exDone}/${EXAMPLES.length}`;
+  document.getElementById('statPractice').textContent=`${pzDone}/60`;
+  document.getElementById('statAccuracy').textContent= quizStats.total? Math.round(quizStats.correct/quizStats.total*100)+'%' : '—';
+
+  const overall=Math.round(((secDone/SECTION_IDS.length)+(exDone/EXAMPLES.length)+(pzDone/60))/3*100);
+
+  if(!doughnutChart){
+    doughnutChart=new Chart(document.getElementById('chartDoughnut'),{
+      type:'doughnut',
+      data:{labels:['Completed','Remaining'],datasets:[{data:[overall,100-overall],backgroundColor:['#C97A2B','#E7E0D0'],borderWidth:0}]},
+      options:{plugins:{legend:{display:false}},cutout:'72%'}
+    });
+  } else { doughnutChart.data.datasets[0].data=[overall,100-overall]; doughnutChart.update(); }
+
+  if(!barChart){
+    barChart=new Chart(document.getElementById('chartBar'),{
+      type:'bar',
+      data:{labels:['Sections','Examples','Practice Qs'],datasets:[{label:'Completed',data:[secDone,exDone,pzDone],backgroundColor:'#3D5A80',borderRadius:6},
+      {label:'Total',data:[SECTION_IDS.length,EXAMPLES.length,60],backgroundColor:'#E7E0D0',borderRadius:6}]},
+      options:{plugins:{legend:{position:'bottom'}},scales:{y:{beginAtZero:true}}}
+    });
+  } else { barChart.data.datasets[0].data=[secDone,exDone,pzDone]; barChart.update(); }
+}
+updateProgress();
+
+// Study time
+let seconds=parseInt(localStorage.getItem('pb_studySeconds')||'0');
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    seconds++;
+    localStorage.setItem('pb_studySeconds',seconds);
+    const m=String(Math.floor(seconds/60)).padStart(2,'0'), s=String(seconds%60).padStart(2,'0');
+    document.getElementById('studyTime').textContent=`${m}:${s}`;
+  }
+},1000);
+
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(confirm('Reset all saved progress on this device?')){
+    ['pb_sectionsRead','pb_examplesOpened','pb_quizStats','pb_pz_l1','pb_pz_l2','pb_pz_l3','pb_studySeconds'].forEach(k=>localStorage.removeItem(k));
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
