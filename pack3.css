@@ -1,0 +1,9 @@
+body{font-family:Arial,sans-serif;background:#f4f7fb;padding:40px}
+h2{text-align:center;margin:30px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px}
+.course,.goalcard{background:#fff;padding:25px;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,.08);text-align:center}
+.progress{height:10px;background:#ddd;border-radius:10px;overflow:hidden;margin:15px 0}
+.progress span{display:block;height:100%;background:#2563eb;width:0}
+.timeline{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.timeline div{flex:1;min-width:120px;background:#fff;padding:20px;border-radius:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.btn{display:inline-block;background:#ff6b00;color:#fff;padding:12px 24px;border-radius:30px;text-decoration:none;border:none;cursor:pointer}

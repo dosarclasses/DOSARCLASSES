@@ -1,0 +1,1 @@
+window.onload=()=>{setTimeout(()=>{document.querySelectorAll('.progress span').forEach((e,i)=>{if(i==0)e.style.width='25%';else if(e.id==='goalBar')e.style.width='40%';});},300);}
